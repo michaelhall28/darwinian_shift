@@ -1,0 +1,40 @@
+H ANDN920101
+D alpha-CH chemical shifts (Andersen et al., 1992)
+R PMID:1575719
+A Andersen, N.H., Cao, B. and Chen, C.
+T Peptide/protein structure analysis using the chemical shift index method: 
+  upfield alpha-CH values reveal dynamic helices and aL sites
+J Biochem. and Biophys. Res. Comm. 184, 1008-1014 (1992)
+C BUNA790102    0.949
+I    A/L     R/K     N/M     D/F     C/P     Q/S     E/T     G/W     H/Y     I/V
+    4.35    4.38    4.75    4.76    4.65    4.37    4.29    3.97    4.63    3.95
+    4.17    4.36    4.52    4.66    4.44    4.50    4.35    4.70    4.60    3.95
+//
+H ARGP820101
+D Hydrophobicity index (Argos et al., 1982)
+R PMID:7151796
+A Argos, P., Rao, J.K.M. and Hargrave, P.A.
+T Structural prediction of membrane-bound proteins
+J Eur. J. Biochem. 128, 565-575 (1982)
+C JOND750101    1.000  SIMZ760101    0.967  GOLD730101    0.936
+  TAKK010101    0.906  MEEJ810101    0.891  ROSM880104    0.872
+  CIDH920105    0.867  LEVM760106    0.865  CIDH920102    0.862
+  MEEJ800102    0.855  MEEJ810102    0.853  ZHOH040101    0.841
+  CIDH920103    0.827  PLIV810101    0.820  CIDH920104    0.819
+  LEVM760107    0.806  NOZY710101    0.800  GUYH850103   -0.808
+  PARJ860101   -0.835  WOLS870101   -0.838  BULH740101   -0.854
+I    A/L     R/K     N/M     D/F     C/P     Q/S     E/T     G/W     H/Y     I/V
+    0.61    0.60    0.06    0.46    1.07      0.    0.47    0.07    0.61    2.22
+    1.53    1.15    1.18    2.02    1.95    0.05    0.05    2.65    1.88    1.32
+//
+H ARGP820102
+D Signal sequence helical potential (Argos et al., 1982)
+R PMID:7151796
+A Argos, P., Rao, J.K.M. and Hargrave, P.A.
+T Structural prediction of membrane-bound proteins
+J Eur. J. Biochem. 128, 565-575 (1982)
+C ARGP820103    0.961  KYTJ820101    0.803  JURD980101    0.802
+I    A/L     R/K     N/M     D/F     C/P     Q/S     E/T     G/W     H/Y     I/V
+    1.18    0.20    0.23    0.05    1.89    0.72    0.11    0.49    0.31    1.45
+    3.23    0.06    2.67    1.96    0.76    0.97    0.84    0.77    0.39    1.08
+//

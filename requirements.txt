@@ -1,0 +1,13 @@
+numpy
+pandas
+statsmodels
+pybedtools
+adjusttext
+seaborn
+mdanalysis
+xmlschema
+requests
+wget
+pybigwig
+prody
+sqlalchemy

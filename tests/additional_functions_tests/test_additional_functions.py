@@ -60,7 +60,7 @@ def test_get_uniprot_domains():
                                                                            min_gap=0, last_residue=3000)
 
     # output new test file. Do not uncomment unless results have changed and confident new results are correct
-    pickle.dump(res, open(os.path.join(FILE_DIR, "uniprot_bins.pickle"), 'wb'))
+    # pickle.dump(res, open(os.path.join(FILE_DIR, "uniprot_bins.pickle"), 'wb'))
 
     expected = pickle.load(open(os.path.join(FILE_DIR, "uniprot_bins.pickle"), 'rb'))
     assert res == expected

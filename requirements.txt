@@ -11,3 +11,4 @@ wget
 pybigwig
 prody
 sqlalchemy
+xlrd

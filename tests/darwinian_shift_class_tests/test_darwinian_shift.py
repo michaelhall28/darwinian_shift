@@ -138,7 +138,7 @@ def test_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, 
     # pickle.dump(d.results, open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'wb'))
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "scored_data_{}.pickle".format(test_name)), 'rb'))
-    assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected))
+    assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected), check_dtype=False)
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'rb'))
     assert_frame_equal(sort_dataframe(d.results), sort_dataframe(expected))
@@ -184,7 +184,7 @@ def test_section_input_process(sections, lookup):
     # pickle.dump(d.results, open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'wb'))
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "scored_data_{}.pickle".format(test_name)), 'rb'))
-    assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected))
+    assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected), check_dtype=False)
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'rb'))
     assert_frame_equal(sort_dataframe(d.results), sort_dataframe(expected))

@@ -130,7 +130,8 @@ class Section:
         # Check for mismatching reference bases
         self._check_mismatches()
 
-        self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left')
+        self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left',
+                                           on=['pos', 'ref', 'mut'], suffixes=['_input', ''])
         self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['null_exists'])]
         self.observed_mutations = self.observed_mutations.drop('null_exists', axis=1)
         self.null_mutations = self.null_mutations.drop('null_exists', axis=1)
@@ -170,11 +171,9 @@ class Section:
             self.null_scores = self.null_mutations['score'].values
 
             # Match the observed mutations with the null mutations.
-            self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, on=['pos', 'ref', 'mut'],
+            self.observed_mutations = pd.merge(self.observed_mutations,
+                                               self.null_mutations[['pos', 'ref', 'mut', 'score']], on=['pos', 'ref', 'mut'],
                                                how='left', suffixes=["_x", ""])
-            # Tidy up the duplicate columns
-            cols_to_drop = [c for c in self.observed_mutations.columns if c.endswith("_x")]
-            self.observed_mutations = self.observed_mutations.drop(cols_to_drop, axis=1)
 
             # Exclude all cases without a score. These haven't matched against a null mutation.
             self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['score'])]
@@ -420,7 +419,10 @@ class Section:
                                        base_marker_size, observed_alpha, hotspots_in_foreground, marker=observed_marker)
 
         plt.xlabel('Residue')
-        plt.ylabel(self.project.lookup.name)
+        try:
+            plt.ylabel(self.project.lookup.name)
+        except AttributeError as e:
+            pass
         if xlim is not None:
             ax.set_xlim(xlim)
 
@@ -456,7 +458,10 @@ class Section:
             data=data, cut=0,
             bw=violinplot_bw, palette=self._get_seaborn_colour_palette(colours, len(spectra) + 1))
         plt.xticks(range(len(data)), ['Expected\n' + spectrum.name for spectrum in spectra]  + ['Observed'])
-        plt.ylabel(self.project.lookup.name)
+        try:
+            plt.ylabel(self.project.lookup.name)
+        except AttributeError as e:
+            pass
         if plot_scale is not None:
             plt.yscale(plot_scale)
         if show_plot:
@@ -477,7 +482,10 @@ class Section:
         sns.boxplot(
             data=data, palette=self._get_seaborn_colour_palette(colours, len(spectra) + 1))
         plt.xticks(range(len(data)), ['Expected\n' + spectrum.name for spectrum in spectra] + ['Observed'])
-        plt.ylabel(self.project.lookup.name)
+        try:
+            plt.ylabel(self.project.lookup.name)
+        except AttributeError as e:
+            pass
         if plot_scale is not None:
             plt.yscale(plot_scale)
         if show_plot:
@@ -511,7 +519,10 @@ class Section:
                                                            alpha=CI_alpha)
             plt.fill_between(xvals, ci_low, ci_high, color=colours[0], alpha=0.1)
 
-        plt.xlabel(self.project.lookup.name)
+        try:
+            plt.xlabel(self.project.lookup.name)
+        except AttributeError as e:
+            pass
         plt.ylabel('CDF')
         if show_legend:
             if legend_args is None:
@@ -973,7 +984,11 @@ class Section:
                                            marker=observed_marker)
 
             ax.set_xlabel('Mutation rate')
-            ax.set_ylabel(self.project.lookup.name)
+            try:
+                ax.set_ylabel(self.project.lookup.name)
+            except AttributeError as e:
+                pass
+
             if xlim is not None:
                 ax.set_xlim(xlim)
             else:

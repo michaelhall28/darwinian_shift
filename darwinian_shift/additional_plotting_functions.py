@@ -182,11 +182,17 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
     if xlabel is not None:
         plt.xlabel(xlabel)
     else:
-        plt.xlabel(section1.project.lookup.name)
+        try:
+            plt.xlabel(section1.project.lookup.name)
+        except AttributeError as e:
+            pass
     if ylabel is not None:
         plt.ylabel(ylabel)
     else:
-        plt.ylabel(section2.project.lookup.name)
+        try:
+            plt.ylabel(section2.project.lookup.name)
+        except AttributeError as e:
+            pass
 
     if xlim is not None:
         plt.xlim(xlim)

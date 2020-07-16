@@ -42,8 +42,11 @@ class ProDyLookup:
 
     def setup_project(self, project):
         if self.pdb_directory is None:
-            self.pdb_directory = project.pdb_directory
-            pathPDBFolder(self.pdb_directory)
+            if project.pdb_directory is not None:
+                self.pdb_directory = project.pdb_directory
+            else:
+                self.pdb_directory = '.'
+        pathPDBFolder(self.pdb_directory)
         if self.sifts_directory is None:
             self.sifts_directory = project.sifts_directory
         if self.download_sifts is None:
@@ -51,6 +54,20 @@ class ProDyLookup:
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations)
+
+    def _parsePDB(self, pdb_id, pdb_chain=None, subset=None):
+        # a wrapper for prody.parsePDB
+        try:
+            atoms = parsePDB(os.path.join(self.pdb_directory, pdb_id + '.pdb'), chain=pdb_chain, subset=subset)
+        except OSError as e:
+            # If cannot find an uncompressed pdb file, try to find the compressed file.
+            try:
+                atoms = parsePDB(os.path.join(self.pdb_directory, pdb_id + '.pdb.gz'), chain=pdb_chain,
+                              subset=subset)
+            except OSError as e:
+                # Try downloading the file if not found locally.
+                atoms = parsePDB(pdb_id, chain=pdb_chain, subset=subset)
+        return atoms
 
     def _get_anm(self, ca):
         anm = ANM()
@@ -87,13 +104,25 @@ class ProDyLookup:
         return self._PRS(ca)[1]
 
     def _solvent_accessibility(self, pdb_id, pdb_chain, ca):
-        pdb = parsePDB(pdb_id)  # Read in the whole structure
+        pdb = self._parsePDB(pdb_id)  # Read in the whole structure
         dssp_path = os.path.join(self.dssp_directory, "{}.dssp".format(pdb_id.lower()))
+
         if not os.path.exists(dssp_path):
-            cmd = "wget ftp://ftp.cmbi.ru.nl/pub/molbio/data/dssp/{}.dssp -O {}".format(pdb_id.lower(),
+            # If the file isn't already there, try to download it.
+            try:
+                cmd = "wget ftp://ftp.cmbi.ru.nl/pub/molbio/data/dssp/{}.dssp -O {}".format(pdb_id.lower(),
                                                                                         dssp_path)
-            subprocess.run(cmd, shell=True, check=True)
+                subprocess.run(cmd, shell=True, check=True)
+            except subprocess.CalledProcessError as e:
+                # Could not download the file. Calculate it instead.
+                try:
+                    execDSSP(os.path.join(self.pdb_directory, pdb_id + '.pdb'), outputname=dssp_path[:-5])
+                except FileNotFoundError as e:
+                    # If cannot find an uncompressed pdb file, try to find the compressed file.
+                    execDSSP(os.path.join(self.pdb_directory, pdb_id + '.pdb.gz'), outputname=dssp_path[:-5])
+
         dssp = parseDSSP(dssp_path, pdb)
+
         return dssp[pdb_chain].ca.getData('dssp_acc')  # The solvent accessibility for each residue
 
     def _get_scores(self, pdb_id, pdb_chain, df):
@@ -102,7 +131,8 @@ class ProDyLookup:
         if pdb_chain is None:
             raise ValueError('Must specify which chain in a pdb file')
         sifts = get_sifts_alignment_for_chain(pdb_id, pdb_chain, self.sifts_directory, self.download_sifts)
-        ca = parsePDB(pdb_id, chain=pdb_chain, subset='calpha')  # Read in the alpha carbons
+        ca = self._parsePDB(pdb_id, pdb_chain, subset='calpha')
+
         if sifts is None:
             scores = None
         else:

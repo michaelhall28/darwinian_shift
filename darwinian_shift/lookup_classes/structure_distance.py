@@ -13,12 +13,13 @@ class StructureDistanceLookup:
     # The targets do not have to be alpha-carbons - depends entirely on the given string.
     # Where alternative locations for an alpha-carbon exist in the pdb file, will use the average position.
     def __init__(self, pdb_directory=None, sifts_directory=None, download_sifts=None, boolean=False,
-                 target_key='target_selection', name=None):
+                 target_key='target_selection', name=None, distance_to_alpha_carbons=False):
         self.pdb_directory = pdb_directory
         self.sifts_directory = sifts_directory
         self.download_sifts = download_sifts
         self.boolean = boolean  # Return True/False for in the target rather than a distance from it
         self.target_key = target_key
+        self.distance_to_alpha_carbons = distance_to_alpha_carbons
         if name is None and self.boolean:
             self.name = 'In target residues'
         elif name is None:
@@ -55,21 +56,22 @@ class StructureDistanceLookup:
                                           self.download_sifts)
         null_residues_original = null_residues['residue']  # Just take the cases that are defined in the structure
         pdb_positions = null_residues['pdb position'].values
-        null_residues = u.select_atoms('protein and segid {} and name CA and resid {}'.format(pdb_chain,
-                                                                                              " ".join(
-                                                                                                  ['{:.0f}'.format(r)
-                                                                                                   for r in
-                                                                                                   pdb_positions])))
 
-        arr = distance_array(target_residues.positions, null_residues.positions)
+        null_selection = 'protein and segid {} and resid {}'.format(pdb_chain, " ".join(['{:.0f}'.format(r)
+                                                                                         for r in pdb_positions]))
+        if self.distance_to_alpha_carbons:
+            null_selection += " and name CA"
+        null_atoms = u.select_atoms(null_selection)
+
+        arr = distance_array(target_residues.positions, null_atoms.positions)
         distances = arr.min(axis=0)
-        distance_df = pd.DataFrame({'pdb_residue': null_residues.resids, 'distance': distances})
+        # Get the distance from the closest atom in each residue (will just be the alpha-carbon if distance_to_alpha_carbons=True)
+        distance_df = pd.DataFrame({'pdb_residue': null_atoms.resids, 'distance': distances}).groupby('pdb_residue').agg(min).reset_index()
         original_resids = pd.DataFrame({'residue': null_residues_original, 'pdb_residue': pdb_positions})
         merge_distance_df = pd.merge(distance_df, original_resids, on='pdb_residue', how='left')
-        averaged_distance_df = merge_distance_df.groupby('residue').agg('mean')
 
         # Apply back to the null
-        merge_df = pd.merge(df, averaged_distance_df, on='residue', how='left')
+        merge_df = pd.merge(df, merge_distance_df, on='residue', how='left')
         if self.boolean:
             return (merge_df['distance'] == 0).values.astype(float)
         return merge_df['distance'].values

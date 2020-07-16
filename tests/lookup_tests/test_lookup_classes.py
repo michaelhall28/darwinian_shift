@@ -186,8 +186,6 @@ def test_prody_lookup(pdb_seq_object):
                          download_sifts=False, quiet=True)
 
         res = pr(pdb_seq_object)
-        # print(res)
-        # print(sum([1 for r in res if not np.isnan(r)]))
 
         # Save reference results if they have been deliberately changed
         # np.save(os.path.join(FILE_DIR, 'reference_{}_exclude_ends_results'.format(prody_metric)), res)
@@ -199,7 +197,7 @@ def test_prody_lookup(pdb_seq_object):
 
 def test_residue_distance_lookup(pdb_seq_object):
     dist_lookup = StructureDistanceLookup(pdb_directory=TEST_DATA_DIR,
-                                          sifts_directory=TEST_DATA_DIR)
+                                          sifts_directory=TEST_DATA_DIR, distance_to_alpha_carbons=True)
     pdb_seq_object.target_selection = "protein and segid A and resid 1531 1532"
 
     res = dist_lookup(pdb_seq_object)
@@ -212,6 +210,20 @@ def test_residue_distance_lookup(pdb_seq_object):
     np.testing.assert_almost_equal(expected, res)
 
 
+def test_residue_distance_lookup2(pdb_seq_object):
+    dist_lookup = StructureDistanceLookup(pdb_directory=TEST_DATA_DIR,
+                                          sifts_directory=TEST_DATA_DIR, distance_to_alpha_carbons=False)
+    pdb_seq_object.target_selection = "protein and segid A and resid 1531 1532"
+
+    res = dist_lookup(pdb_seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_residue_distance_results2'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_residue_distance_results2.npy'))
+
+    np.testing.assert_almost_equal(expected, res)
+
 def test_residue_distance_lookup_bool(pdb_seq_object):
     dist_lookup = StructureDistanceLookup(pdb_directory=TEST_DATA_DIR,
                                           sifts_directory=TEST_DATA_DIR, boolean=True)
@@ -220,9 +232,9 @@ def test_residue_distance_lookup_bool(pdb_seq_object):
     res = dist_lookup(pdb_seq_object)
 
     # Save reference results if they have been deliberately changed
-    np.save(os.path.join(FILE_DIR, 'reference_residue_distance_results2'), res)
+    # np.save(os.path.join(FILE_DIR, 'reference_residue_distance_results_bool'), res)
 
-    expected = np.load(os.path.join(FILE_DIR, 'reference_residue_distance_results2.npy'))
+    expected = np.load(os.path.join(FILE_DIR, 'reference_residue_distance_results_bool.npy'))
 
     np.testing.assert_almost_equal(expected, res)
 
@@ -234,7 +246,7 @@ def test_sequence_distance_lookup(pdb_seq_object):
     res = dist_lookup(pdb_seq_object)
 
     # Save reference results if they have been deliberately changed
-    np.save(os.path.join(FILE_DIR, 'reference_sequence_distance_results'), res)
+    # np.save(os.path.join(FILE_DIR, 'reference_sequence_distance_results'), res)
 
     expected = np.load(os.path.join(FILE_DIR, 'reference_sequence_distance_results.npy'))
 
@@ -248,7 +260,7 @@ def test_sequence_distance_lookup_bool(pdb_seq_object):
     res = dist_lookup(pdb_seq_object)
 
     # Save reference results if they have been deliberately changed
-    np.save(os.path.join(FILE_DIR, 'reference_sequence_distance_results2'), res)
+    # np.save(os.path.join(FILE_DIR, 'reference_sequence_distance_results2'), res)
 
     expected = np.load(os.path.join(FILE_DIR, 'reference_sequence_distance_results2.npy'))
 

@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import binom_test
 from statsmodels.stats.multitest import multipletests
+import requests
 
 
 example_feature_types = ('signal peptide', 'chain', 'topological domain', 'topological domain',
@@ -237,3 +238,75 @@ def annotate_data(ds_object, output_file=None, verbose=False, annotation_separat
 
 
 
+
+# Functions to get pdb structure details from Uniprot and the PDBe API
+# Useful for finding lists of structures to analyse
+STATUS_URL = "http://www.ebi.ac.uk/pdbe/api/pdb/entry/status/"
+MOLECULE_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/"
+SUMMARY_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/"
+
+
+def get_pdb_details(uniprot_lookup, transcript_id, min_resolution=None, method=None, reject_mutants=True):
+    pdbs = uniprot_lookup.get_pdb_structures_for_transcript(transcript_id)
+    if min_resolution is not None:
+        if 'resolution' in pdbs.columns:
+            pdbs = pdbs[pdbs['resolution'] <= min_resolution]
+        else:
+            return pd.DataFrame()
+    if method is not None:
+        pdbs = pdbs[pdbs['method'] == method]
+
+    if len(pdbs) == 0:
+        return pd.DataFrame()
+    details = []
+    for i, p in pdbs.iterrows():
+        if is_current(p['pdb_id']):
+            title = get_pdb_title(p['pdb_id'])
+            chain_details = get_chain_details(p['pdb_id'])
+            chains = p['chains'].split('/')
+            chain_details = chain_details[chain_details['pdb_chain'].isin(chains)]  # Remove other proteins
+            if reject_mutants:
+                chain_details = chain_details[pd.isnull(chain_details['mutation_flag'])]
+
+            if len(chain_details) > 0:
+                chain_details['title'] = title
+                for k, v in p.items():
+                    chain_details[k] = v
+                details.append(chain_details)
+
+    if len(details) > 0:
+        df = pd.concat(details)
+        df['transcript_id'] = transcript_id
+        return df
+    else:
+        return pd.DataFrame()
+
+
+def is_current(pdb_id):
+    r = requests.get(STATUS_URL + pdb_id + '?pretty=false')
+    j = r.json()
+    if j:  #  Removed theoretical models may return {}
+        status = j[pdb_id.lower()][0]['status_code']
+        if status == 'REL':
+            return True
+    return False
+
+
+def get_chain_details(pdb_id):
+    r = requests.get(MOLECULE_URL + pdb_id + '?pretty=false')
+    molecules = r.json()[pdb_id.lower()]
+    mol_df = []
+    for molecule in molecules:
+        molecule_type = molecule['molecule_type']
+        if molecule_type == 'polypeptide(L)':
+            for chain in molecule['in_chains']:
+                mutation_flag = molecule['mutation_flag']
+                mol_df.append({'pdb_chain': chain, 'mutation_flag': mutation_flag})
+
+    return pd.DataFrame(mol_df)
+
+
+def get_pdb_title(pdb_id):
+    r = requests.get(SUMMARY_URL + pdb_id + '?pretty=false')
+    title = r.json()[pdb_id.lower()][0]['title']
+    return title

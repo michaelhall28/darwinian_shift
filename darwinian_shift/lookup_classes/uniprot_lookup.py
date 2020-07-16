@@ -18,6 +18,7 @@ class UniprotLookup:
     # Features generally have a single residue, or include a set of residues between the begin and end positions
     # However, disulfide bonds have a begin and end position but do not include the residues in between
     SPLIT_FEATURES = {'disulfide bond'}
+    MATCH_VARIANT_FEATURES = {'sequence variant'}
 
     REQUIRED_COLS = ('position', 'begin_position', 'end_position', 'description')
 
@@ -25,7 +26,7 @@ class UniprotLookup:
                  description_contains=None, uniprot_upload_lists='https://www.uniprot.org/uploadlists/',
                  uniprot_xml_url="https://www.uniprot.org/uniprot/{}.xml",
                  schema_location='https://www.uniprot.org/docs/uniprot.xsd', transcript_uniprot_mapping=None,
-                 force_download=False, name='Uniprot'):
+                 force_download=False, match_variant_change=True, name='Uniprot', ):
         """
 
         :param uniprot_directory:
@@ -71,16 +72,23 @@ class UniprotLookup:
         self.store_xml = store_xml
         self.force_download = force_download
         if feature_types is not None:
-            self.feature_types = feature_types
+            if isinstance(feature_types, str):
+                self.feature_types = [feature_types]
+            else:
+                self.feature_types = feature_types
         else:
             self.feature_types = 'all'
 
         if description_contains is not None:
+            if isinstance(description_contains, str):
+                description_contains = [description_contains]
             if len(description_contains) != len(self.feature_types):
                 raise ValueError("Must be same number of description matches as there are features")
             self.description_contains = description_contains
         else:
             self.description_contains = None
+
+        self.match_variant_change = match_variant_change  # Set to false to just match position of sequence variants
 
         self.name = name  # Will appear on some plot axes
 
@@ -109,6 +117,36 @@ class UniprotLookup:
             response = f.read()
         return response.decode('utf-8')
 
+    def get_pdb_structures_for_transcript(self, transcript_id):
+        xml_dict = self.get_uniprot_xml_dict(transcript_id)
+        return self._get_pdb_structures_from_xml_dict(xml_dict)
+
+    def _get_pdb_structures_from_xml_dict(self, xml_dict):
+        """
+        Returns a list of PDB IDs.
+        :param xml_dict:
+        :return:
+        """
+        try:
+            pdb_structures = []
+            for p in xml_dict['entry'][0]['dbReference']:
+                if p['@type'] == 'PDB':
+                    d = {'pdb_id': p['@id']}
+                    for property in p['property']:
+                        if property['@type'] == 'chains':
+                            d['chains'] = property['@value'].split("=")[0]  # Ignore the residues here, can use SIFTS
+                        else:
+                            d[property['@type']] = property['@value']
+                    pdb_structures.append(d)
+
+        except KeyError as e:
+            # No features for this uniprot gene
+            return UniprotLookupError('No pdb structures found in xml_dict')
+        pdb_structures = pd.DataFrame(pdb_structures)
+        if 'resolution' in pdb_structures.columns:
+            pdb_structures['resolution'] = pdb_structures['resolution'].astype(float)
+        return pdb_structures
+
     def get_features_from_xml(self, xml_dict):
         try:
             features = xml_dict['entry'][0]['feature']
@@ -129,9 +167,18 @@ class UniprotLookup:
                         if k2 == 'position':
                             d['position'] = v2['@position']
                             d['position_status'] = v2['@status']
+                        elif k2 == '@sequence':
+                            d['location_sequence'] = v2
                         else:
+                            # try:
                             for k3, v3 in v2.items():
                                 d[k2 + '_' + k3[1:]] = v3
+                            # except AttributeError as e:
+                            #     print(v2)
+                                # raise e
+                else:
+                    d[k] = v
+
             new_dicts.append(d)
 
         d = pd.DataFrame(new_dicts)
@@ -141,7 +188,7 @@ class UniprotLookup:
 
         return d
 
-    def get_uniprot_data(self, transcript_id):
+    def get_uniprot_xml_dict(self, transcript_id):
         xml_dict = None
         uniprot_id = None
         if self.transcript_uniprot_mapping is not None:
@@ -196,6 +243,11 @@ class UniprotLookup:
                 with open(xml_path, 'w') as fh:
                     fh.writelines(xml)
 
+        return xml_dict
+
+    def get_uniprot_data(self, transcript_id):
+        xml_dict = self.get_uniprot_xml_dict(transcript_id)
+
         return self.get_features_from_xml(xml_dict)
 
     def _add_annotation(self, value, new_text, sep):
@@ -209,6 +261,9 @@ class UniprotLookup:
     def annotate_dataframe(self, df, transcript_id, sep='|||'):
         feature_columns = []  # List the columns used for the annotating of the mutations
         transcript_features = self.get_uniprot_data(transcript_id)
+        if 'location_sequence' in transcript_features.columns:
+            # Entry defined on an alternative isoform. Remove here as it could match to the wrong residues.
+            transcript_features = transcript_features[pd.isnull(transcript_features['location_sequence'])]
         if transcript_features is not None:
             if self.feature_types == 'all':
                 transcript_feature_types = transcript_features['type'].unique()
@@ -232,7 +287,7 @@ class UniprotLookup:
                 df[col] = np.nan
                 feature_columns.append(col)
 
-                if f in self.SPLIT_FEATURES:
+                if f in self.SPLIT_FEATURES:  # Just matching the start and end position, not any residues in between
                     for i, row in feature_rows.iterrows():
                         df.loc[df['residue'].isin([row['begin_position'], row['end_position']]), 'score'] = 1
                         df.loc[df['residue'].isin([row['begin_position'], row['end_position']]), col] = \
@@ -240,6 +295,24 @@ class UniprotLookup:
                                 lambda x: self._add_annotation(x,
                                                                row['description'],
                                                                sep))
+                elif f in self.MATCH_VARIANT_FEATURES and self.match_variant_change:  # Also need to match the amino acid change of the variant
+                    for i, row in feature_rows.iterrows():
+                        pos = row['position']
+                        ref_aa = row['original']
+                        alt_aa = row['variation']
+                        if not pd.isnull(alt_aa):
+                            if len(alt_aa) > 1:
+                                print(alt_aa)
+                                print(len(alt_aa))
+                                print(type(alt_aa))
+                                print(row)
+                            for aa in alt_aa:
+                                df.loc[(df['residue'] == pos) & (df['aaref'] == ref_aa) &
+                                       (df['aamut'] == aa), 'score'] = 1
+                                df.loc[(df['residue'] == pos) & (df['aaref'] == ref_aa) &
+                                       (df['aamut'] == aa), col] = df.loc[(df['residue'] == pos) & (df['aaref'] == ref_aa) &
+                                       (df['aamut'] == aa), col].apply(lambda x: self._add_annotation(x, row['description'],
+                                                                                                             sep))
                 else:
                     for i, row in feature_rows.iterrows():
                         if pd.isnull(row['position']):  # Region of protein

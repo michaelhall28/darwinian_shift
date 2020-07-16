@@ -512,7 +512,7 @@ class DarwinianShift:
                 section = self.make_section(section)
 
             if verbose:
-                print('Running', section.section_id)
+                print('Running', section.section_id, section.gene)
             section.run(plot_permutations=plot, spectra=spectra, statistics=statistics)
             if plot:
                 section.plot(violinplot_bw=violinplot_bw,
@@ -720,7 +720,11 @@ class DarwinianShift:
             d2 = deepcopy(self)
             d2.lookup = new_lookup
             self.lookup = old_lookup
+            if hasattr(new_lookup, "setup_project"):
+                new_lookup.setup_project(d2)
             return d2
         else:
             self.lookup = new_lookup
+            if hasattr(self.lookup, "setup_project"):
+                self.lookup.setup_project(self)
 

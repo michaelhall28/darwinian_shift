@@ -23,7 +23,7 @@ class PermutationTest:
         self.testing_random_seed = s
 
     def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
-        res = permutation_test(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column],
+        res = permutation_test(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
                                seq_object.observed_values,
                                self.stat_function, self.num_permutations, plot=plot,
                                plot_title=" - ".join(['Monte Carlo Test', self.name, spectrum.name]),
@@ -43,7 +43,7 @@ class CDFPermutationTest:
         self.testing_random_seed = s
 
     def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
-        res = permutation_test_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column],
+        res = permutation_test_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
                                        seq_object.observed_values, self.num_permutations, plot=plot,
                                        plot_title='Monte Carlo Test - CDF sum - ' + spectrum.name,
                                        testing_random_seed=self.testing_random_seed, show_plot=show_plot)
@@ -66,7 +66,7 @@ class ChiSquareTest:
 
     def __call__(self, seq_object, spectrum, plot=False):
         res = binned_chisquare(
-            null_scores=seq_object.null_scores, null_mut_rates=seq_object.null_mutations[spectrum.rate_column],
+            null_scores=seq_object.null_scores, null_mut_rates=seq_object.null_mutations[spectrum.rate_column].values,
             observed_values=seq_object.observed_values, bins=self.bins,
             max_bins=self.max_bins, min_exp_freq=self.min_exp_freq,
             CI_sample_num=self.CI_num_samples, CI_alpha=self.CI_alpha

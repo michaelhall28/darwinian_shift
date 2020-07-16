@@ -84,8 +84,8 @@ def test_transcript_kmerB(project_spectrum):
 
     expected = pickle.load(open(os.path.join(FILE_DIR, "transcript_kmer_B.pickle"), 'rb'))
     assert_frame_equal(sort_dataframe(spectrum), sort_dataframe(expected))
-#
-#
+
+
 def test_transcript_kmerC(project_spectrum):
     s = TranscriptKmerSpectrum(deduplicate_spectrum=False,
                            k=5,  # Size of kmer nucleotide context. Use 3 for trinucleotides.

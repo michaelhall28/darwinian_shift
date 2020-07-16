@@ -141,7 +141,7 @@ class Section:
         self._add_mutation_id_column()
 
     def run(self, plot_permutations=False, spectra=None, statistics=None):
-        self.get_scores()
+        self.apply_scores()
 
         # Compare distributions
         self.statistical_tests(plot_permutations, spectra=spectra, statistics=statistics)
@@ -157,7 +157,7 @@ class Section:
         p = {k: v for (k, v) in self.statistic_results.items() if 'pvalue' in k}
         return p
 
-    def get_scores(self):
+    def apply_scores(self):
         if not self._scoring_complete:
             self.load_section_mutations()
 
@@ -167,7 +167,7 @@ class Section:
             # Exclude all cases without a score
             self.null_mutations = self.null_mutations[~pd.isnull(self.null_mutations['score'])]
             if len(self.null_mutations) == 0:
-                raise NoMutationsError('No scores for {} {}'.format(self.gene, self.transcript.transcript_id))
+                raise NoMutationsError('No scores for {} {}'.format(self.section_id, self.gene))
             self.null_scores = self.null_mutations['score'].values
 
             # Match the observed mutations with the null mutations.
@@ -181,7 +181,7 @@ class Section:
             # Recalculate the number of observed mutations after filtering out those which did not get a score
             self.num_mutations = len(self.observed_mutations)
             if self.num_mutations == 0:
-                raise NoMutationsError('No positions retained for {} {}'.format(self.gene, self.transcript.transcript_id))
+                raise NoMutationsError('No mutations retained for {} {}'.format(self.section_id, self.gene))
 
 
             self.observed_values = self.observed_mutations['score']
@@ -243,7 +243,7 @@ class Section:
              marker_size_from_count=True, base_marker_size=10, colours=None):
         spectra = self._get_spectra(spectra)
         if self.observed_values is None:
-            self.get_scores()  # Make sure all the values needed for plotting are generated
+            self.apply_scores()  # Make sure all the values needed for plotting are generated
 
         self.plot_sliding_window(spectra=spectra, colours=colours, show_plot=True)
         self.plot_sliding_3D_window(spectra=spectra, colours=colours, show_plot=True)
@@ -372,7 +372,7 @@ class Section:
             return fig
 
     def plot_scatter(self, plot_scale=None, marker_size_from_count=True,
-                     base_marker_size=10, show_plot=False, unobserved_mutation_colour='C0',
+                     base_marker_size=10, show_plot=False, unobserved_mutation_colour='#BBBBBB',
                      missense_mutation_colour='C1', synonymous_mutation_colour='C2', nonsense_mutation_colour='C3',
                      show_legend=True, figsize=(15, 5), legend_args=None, return_fig=False,
                      show_residues=False, xlim=None, unmutated_marker_size=1,
@@ -394,10 +394,7 @@ class Section:
             for effect, col in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
                                                                         missense_mutation_colour,
                                                                         nonsense_mutation_colour]):
-                if col == 'synonymous' and self.project.exclude_synonymous:
-                    continue
-                if col == 'nonsense' and self.project.exclude_nonsense:
-                    continue
+
                 muts = self.observed_mutations[self.observed_mutations['effect'] == effect]
                 if len(muts) > 0:
                     _plot_single_scatter_category(muts, mut_counts, 'residue', 'score', marker_size_from_count,
@@ -585,7 +582,7 @@ class Section:
                             observed_counts, yerr=yerr_obs, label='Observed counts', width=w, color=colours[0])
                     xticklabels = []
                     for k in range(len(expected_counts)):
-                        if k != len(expected_counts):
+                        if k != len(expected_counts)-1:
                             xticklabels.append("[ {:.2f},  {:.2f} )".format(bins[k], bins[k + 1]))
                         else:
                             xticklabels.append("[ {:.2f},  {:.2f} ]".format(bins[k], bins[k + 1]))
@@ -957,10 +954,6 @@ class Section:
                 for effect, col in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
                                                                     missense_mutation_colour,
                                                                     nonsense_mutation_colour]):
-                    if col == 'synonymous' and self.project.exclude_synonymous:
-                        continue
-                    if col == 'nonsense' and self.project.exclude_nonsense:
-                        continue
                     muts = self.observed_mutations[self.observed_mutations['effect'] == effect]
                     if len(muts) > 0:
                         _plot_single_scatter_category(muts, mut_counts, spectrum.rate_column, 'score',
@@ -1067,7 +1060,7 @@ class Section:
 
     def get_oncodrive_score_input(self):
         if self.null_scores is None:
-            self.get_scores()
+            self.apply_scores()
         self.null_mutations['chr'] = self.chrom
         self.null_mutations['element'] = self.section_id
         return self.null_mutations[['chr', 'pos', 'ref', 'mut', 'score', 'element']].sort_values('pos')

@@ -29,7 +29,7 @@ def proj():
 @pytest.fixture
 def seq(proj):
     s = proj.make_section({'transcript_id': 'ENST00000263388'})
-    s.get_scores()
+    s.apply_scores()
     return s
 
 @pytest.fixture
@@ -38,7 +38,7 @@ def seq_bool(proj):
         return np.random.binomial(1, 0.5, num)
     proj_bool = proj.change_lookup(DummyValuesRandom(random_function=bool_random, testing_random_seed=0))
     s = proj_bool.make_section({'transcript_id': 'ENST00000263388'})
-    s.get_scores()
+    s.apply_scores()
     return s
 
 @pytest.fixture
@@ -57,7 +57,7 @@ def seq_pdb():
                        download_sifts=False
                        )
     s = d.make_section(dict(transcript_id='ENST00000263388', pdb_id='4ZLP', pdb_chain='A', start=1378, end=1640))
-    s.get_scores()
+    s.apply_scores()
     return s
 
 

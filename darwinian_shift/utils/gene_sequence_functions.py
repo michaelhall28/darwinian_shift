@@ -163,6 +163,10 @@ def get_all_possible_single_nucleotide_mutations(gene_sequence, gene_kmers, sort
                 effect = 'synonymous'
             elif aa2 == '*':
                 effect = 'nonsense'
+            elif aa == '*':
+                effect = 'stop_lost'
+            elif residue == 1:
+                effect = 'start_lost'
             else:
                 effect = 'missense'
             d = {'residue': residue, 'base': base_position,

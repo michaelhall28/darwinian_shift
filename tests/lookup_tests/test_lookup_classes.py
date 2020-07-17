@@ -322,3 +322,17 @@ def test_uniprot_lookup4(seq_object):
     expected = np.load(os.path.join(FILE_DIR, 'reference_uniprot_results.npy'))
 
     np.testing.assert_almost_equal(expected, res)
+
+
+def test_clinvar_lookup(seq_object):
+    clinvar_lookup = ClinvarLookup(clinvar_variant_summary_file = os.path.join(TEST_DATA_DIR, "clinvar_sample.txt"),
+                                   assembly="GRCh37")
+
+    res = clinvar_lookup(seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_clinvar_results'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_clinvar_results.npy'))
+
+    np.testing.assert_almost_equal(expected, res)

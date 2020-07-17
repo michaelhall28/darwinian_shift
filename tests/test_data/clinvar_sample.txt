@@ -1,0 +1,963 @@
+Type	Name	GeneSymbol	ClinicalSignificance	ClinSigSimple	Assembly	Chromosome	Start	Stop	ReferenceAllele	AlternateAllele	ReviewStatus
+single nucleotide variant	NM_000435.3(NOTCH3):c.213G>T (p.Trp71Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15303315	15303315	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.213G>T (p.Trp71Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192504	15192504	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.505C>T (p.Arg169Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15302945	15302945	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.505C>T (p.Arg169Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192134	15192134	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.544C>T (p.Arg182Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15302906	15302906	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.544C>T (p.Arg182Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192095	15192095	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.187G>A (p.Ala63Thr)	NOTCH3	Pathogenic	1	GRCh37	19	15308321	15308321	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.187G>A (p.Ala63Thr)	NOTCH3	Pathogenic	1	GRCh38	19	15197510	15197510	C	T	no assertion criteria provided
+deletion	NM_000435.3(NOTCH3):c.714_758del (p.Asp239_Asp253del)	NOTCH3	Pathogenic	1	GRCh38	19	15191789	15191833	ATCCACGCATGTCCCCCCATTGAGACATCGGTGTCCTGGACAGTCG	A	no assertion criteria provided
+deletion	NM_000435.3(NOTCH3):c.714_758del (p.Asp239_Asp253del)	NOTCH3	Pathogenic	1	GRCh37	19	15302600	15302644	ATCCACGCATGTCCCCCCATTGAGACATCGGTGTCCTGGACAGTCG	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1363T>C (p.Cys455Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15299815	15299815	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1363T>C (p.Cys455Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15189004	15189004	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.994C>T (p.Arg332Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15302277	15302277	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.994C>T (p.Arg332Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15191466	15191466	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.397C>T (p.Arg133Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15303053	15303053	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.397C>T (p.Arg133Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15192242	15192242	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-1G>T	NOTCH3	Pathogenic	1	GRCh37	19	15295262	15295262	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-1G>T	NOTCH3	Pathogenic	1	GRCh38	19	15184451	15184451	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.3058G>C (p.Ala1020Pro)	NOTCH3	Benign	1	GRCh37	19	15291576	15291576	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3058G>C (p.Ala1020Pro)	NOTCH3	Benign	1	GRCh38	19	15180765	15180765	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1282T>A (p.Cys428Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15299896	15299896	A	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1282T>A (p.Cys428Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15189085	15189085	A	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.4556T>C (p.Leu1519Pro)	NOTCH3	Pathogenic	1	GRCh37	19	15285059	15285059	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.4556T>C (p.Leu1519Pro)	NOTCH3	Pathogenic	1	GRCh38	19	15174248	15174248	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.451C>G (p.Gln151Glu)	NOTCH3	Uncertain significance	1	GRCh37	19	15302999	15302999	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.451C>G (p.Gln151Glu)	NOTCH3	Uncertain significance	1	GRCh38	19	15192188	15192188	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.146G>T (p.Cys49Phe)	NOTCH3	Uncertain significance	0	GRCh38	19	15197551	15197551	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.146G>T (p.Cys49Phe)	NOTCH3	Uncertain significance	0	GRCh37	19	15308362	15308362	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.6247A>T (p.Lys2083Ter)	NOTCH3	Pathogenic	1	GRCh37	19	15272192	15272192	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6247A>T (p.Lys2083Ter)	NOTCH3	Pathogenic	1	GRCh38	19	15161381	15161381	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.457C>T (p.Arg153Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192182	15192182	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.457C>T (p.Arg153Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15302993	15302993	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3691C>T (p.Arg1231Cys)	NOTCH3	Conflicting interpretations of pathogenicity	1	GRCh38	19	15179052	15179052	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.3691C>T (p.Arg1231Cys)	NOTCH3	Conflicting interpretations of pathogenicity	1	GRCh37	19	15289863	15289863	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.1187C>G (p.Ser396Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15300089	15300089	G	C	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1187C>G (p.Ser396Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15189278	15189278	G	C	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.5161T>A (p.Trp1721Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15280935	15280935	A	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.5161T>A (p.Trp1721Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15170124	15170124	A	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.6732C>A (p.Tyr2244Ter)	NOTCH3	Pathogenic	1	GRCh37	19	15271707	15271707	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6732C>A (p.Tyr2244Ter)	NOTCH3	Pathogenic	1	GRCh38	19	15160896	15160896	G	T	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6692dup (p.Ala2233fs)	NOTCH3	Pathogenic	1	GRCh38	19	15160935	15160936	T	TG	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6692dup (p.Ala2233fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271746	15271747	T	TG	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6663C>G (p.Tyr2221Ter)	NOTCH3	Pathogenic	1	GRCh38	19	15160965	15160965	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6663C>G (p.Tyr2221Ter)	NOTCH3	Pathogenic	1	GRCh37	19	15271776	15271776	G	C	criteria provided, multiple submitters, no conflicts
+deletion	NM_000435.3(NOTCH3):c.6461_6486del (p.Gly2154fs)	NOTCH3	Pathogenic	1	GRCh38	19	15161142	15161167	GCAGGCCCAGGCTGAGTACACATCCTC	G	criteria provided, single submitter
+deletion	NM_000435.3(NOTCH3):c.6461_6486del (p.Gly2154fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271953	15271978	GCAGGCCCAGGCTGAGTACACATCCTC	G	criteria provided, single submitter
+deletion	NM_000435.3(NOTCH3):c.6498_6577del (p.Ala2167fs)	NOTCH3	Pathogenic	1	GRCh38	19	15161051	15161130	GGTCCCGGCGCCAGTGGCAGCAGGAACGAGGGGCCTGGAGGGGCAGGTGGGGGCAGCCGGGCCCAATCGAGGGGCACAGCC	G	no assertion criteria provided
+deletion	NM_000435.3(NOTCH3):c.6498_6577del (p.Ala2167fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271862	15271941	GGTCCCGGCGCCAGTGGCAGCAGGAACGAGGGGCCTGGAGGGGCAGGTGGGGGCAGCCGGGCCCAATCGAGGGGCACAGCC	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.6813T>C (p.Pro2271=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15271626	15271626	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6813T>C (p.Pro2271=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15160815	15160815	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6753C>T (p.Ser2251=)	NOTCH3	Benign	0	GRCh38	19	15160875	15160875	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6753C>T (p.Ser2251=)	NOTCH3	Benign	0	GRCh37	19	15271686	15271686	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6668C>T (p.Ala2223Val)	NOTCH3	Benign	0	GRCh38	19	15160960	15160960	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6668C>T (p.Ala2223Val)	NOTCH3	Benign	0	GRCh37	19	15271771	15271771	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6438G>A (p.Ala2146=)	NOTCH3	Benign	0	GRCh37	19	15272001	15272001	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6438G>A (p.Ala2146=)	NOTCH3	Benign	0	GRCh38	19	15161190	15161190	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6221C>T (p.Pro2074Leu)	NOTCH3	Benign	0	GRCh37	19	15272218	15272218	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6221C>T (p.Pro2074Leu)	NOTCH3	Benign	0	GRCh38	19	15161407	15161407	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6102C>T (p.Pro2034=)	NOTCH3	Benign	0	GRCh37	19	15272337	15272337	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6102C>T (p.Pro2034=)	NOTCH3	Benign	0	GRCh38	19	15161526	15161526	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6031G>A (p.Val2011Ile)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15272408	15272408	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6031G>A (p.Val2011Ile)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15161597	15161597	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5854G>A (p.Val1952Met)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15273335	15273335	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+19G>A	NOTCH3	Likely benign	0	GRCh38	19	15187086	15187086	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5854G>A (p.Val1952Met)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15162524	15162524	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5816-8T>C	NOTCH3	Benign	0	GRCh37	19	15273381	15273381	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5816-8T>C	NOTCH3	Benign	0	GRCh38	19	15162570	15162570	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5526T>C (p.Ala1842=)	NOTCH3	Benign	0	GRCh38	19	15165928	15165928	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5526T>C (p.Ala1842=)	NOTCH3	Benign	0	GRCh37	19	15276739	15276739	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5400G>T (p.Gly1800=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15166054	15166054	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5400G>T (p.Gly1800=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15276865	15276865	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5370C>T (p.Phe1790=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15276895	15276895	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5370C>T (p.Phe1790=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15166084	15166084	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5363-17C>T	NOTCH3	Benign	0	GRCh37	19	15276919	15276919	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5363-17C>T	NOTCH3	Benign	0	GRCh38	19	15166108	15166108	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5362+3T>C	NOTCH3	Benign	0	GRCh37	19	15278057	15278057	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5362+3T>C	NOTCH3	Benign	0	GRCh38	19	15167246	15167246	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4679G>C (p.Arg1560Pro)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15284936	15284936	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4679G>C (p.Arg1560Pro)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15174125	15174125	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4563A>G (p.Pro1521=)	NOTCH3	Benign	0	GRCh38	19	15174241	15174241	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4563A>G (p.Pro1521=)	NOTCH3	Benign	0	GRCh37	19	15285052	15285052	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4552C>A (p.Leu1518Met)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15285063	15285063	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4552C>A (p.Leu1518Met)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15174252	15174252	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4191G>T (p.Gly1397=)	NOTCH3	Likely benign	0	GRCh37	19	15288548	15288548	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4191G>T (p.Gly1397=)	NOTCH3	Likely benign	0	GRCh38	19	15177737	15177737	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4044C>T (p.Gly1348=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15288695	15288695	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.4044C>T (p.Gly1348=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15177884	15177884	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.3639C>T (p.Ala1213=)	NOTCH3	Likely benign	0	GRCh38	19	15179104	15179104	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3639C>T (p.Ala1213=)	NOTCH3	Likely benign	0	GRCh37	19	15289915	15289915	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3547G>A (p.Val1183Met)	NOTCH3	Benign	0	GRCh38	19	15179196	15179196	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3547G>A (p.Val1183Met)	NOTCH3	Benign	0	GRCh37	19	15290007	15290007	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3399C>A (p.His1133Gln)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15290236	15290236	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3399C>A (p.His1133Gln)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15179425	15179425	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2742A>G (p.Pro914=)	NOTCH3	Benign	0	GRCh37	19	15292437	15292437	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2742A>G (p.Pro914=)	NOTCH3	Benign	0	GRCh38	19	15181626	15181626	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2538C>T (p.Cys846=)	NOTCH3	Benign	0	GRCh38	19	15184323	15184323	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2538C>T (p.Cys846=)	NOTCH3	Benign	0	GRCh37	19	15295134	15295134	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-4C>G	NOTCH3	Benign/Likely benign	0	GRCh37	19	15295265	15295265	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-4C>G	NOTCH3	Benign/Likely benign	0	GRCh38	19	15184454	15184454	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2300G>A (p.Arg767His)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15185016	15185016	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2300G>A (p.Arg767His)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15295827	15295827	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2202C>T (p.Ala734=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15296162	15296162	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2202C>T (p.Ala734=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15185351	15185351	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2039G>A (p.Arg680His)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15296403	15296403	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2039G>A (p.Arg680His)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15185592	15185592	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+19G>A	NOTCH3	Likely benign	0	GRCh37	19	15297897	15297897	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1782C>T (p.Gly594=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15297974	15297974	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1782C>T (p.Gly594=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15187163	15187163	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1725G>A (p.Thr575=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15187220	15187220	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1725G>A (p.Thr575=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15298031	15298031	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1490C>T (p.Ser497Leu)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15299048	15299048	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1490C>T (p.Ser497Leu)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15188237	15188237	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1487C>T (p.Pro496Leu)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15299051	15299051	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1487C>T (p.Pro496Leu)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15188240	15188240	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1192+15A>G	NOTCH3	Benign	0	GRCh37	19	15300069	15300069	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1192+15A>G	NOTCH3	Benign	0	GRCh38	19	15189258	15189258	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1140T>C (p.Pro380=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15189325	15189325	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1140T>C (p.Pro380=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15300136	15300136	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.606A>G (p.Ala202=)	NOTCH3	Benign	0	GRCh38	19	15192033	15192033	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.606A>G (p.Ala202=)	NOTCH3	Benign	0	GRCh37	19	15302844	15302844	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.303C>T (p.Thr101=)	NOTCH3	Benign	0	GRCh37	19	15303225	15303225	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.303C>T (p.Thr101=)	NOTCH3	Benign	0	GRCh38	19	15192414	15192414	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.120C>G (p.Ala40=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15197577	15197577	G	C	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.120C>G (p.Ala40=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15308388	15308388	G	C	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.1364G>T (p.Cys455Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15299814	15299814	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1364G>T (p.Cys455Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15189003	15189003	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3328-1G>A	NOTCH3	Uncertain significance	0	GRCh37	19	15290308	15290308	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3328-1G>A	NOTCH3	Uncertain significance	0	GRCh38	19	15179497	15179497	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1747G>A (p.Val583Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15298009	15298009	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1747G>A (p.Val583Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15187198	15187198	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*937T>C	NOTCH3	Likely benign	0	GRCh37	19	15270536	15270536	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*937T>C	NOTCH3	Likely benign	0	GRCh38	19	15159725	15159725	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*890C>T	NOTCH3	Benign	0	GRCh37	19	15270583	15270583	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*890C>T	NOTCH3	Benign	0	GRCh38	19	15159772	15159772	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*837G>A	NOTCH3	Benign	0	GRCh37	19	15270636	15270636	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*837G>A	NOTCH3	Benign	0	GRCh38	19	15159825	15159825	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*563T>C	NOTCH3	Likely benign	0	GRCh38	19	15160099	15160099	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*563T>C	NOTCH3	Likely benign	0	GRCh37	19	15270910	15270910	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*382T>G	NOTCH3	Uncertain significance	0	GRCh38	19	15160280	15160280	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*382T>G	NOTCH3	Uncertain significance	0	GRCh37	19	15271091	15271091	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*370A>G	NOTCH3	Likely benign	0	GRCh38	19	15160292	15160292	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*370A>G	NOTCH3	Likely benign	0	GRCh37	19	15271103	15271103	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6166G>A (p.Ala2056Thr)	NOTCH3	Likely benign	0	GRCh38	19	15161462	15161462	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6166G>A (p.Ala2056Thr)	NOTCH3	Likely benign	0	GRCh37	19	15272273	15272273	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5466C>T (p.Ser1822=)	NOTCH3	Likely benign	0	GRCh38	19	15165988	15165988	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5466C>T (p.Ser1822=)	NOTCH3	Likely benign	0	GRCh37	19	15276799	15276799	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3704A>T (p.His1235Leu)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15289850	15289850	T	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3704A>T (p.His1235Leu)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15179039	15179039	T	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3461-15C>T	NOTCH3	Likely benign	0	GRCh37	19	15290108	15290108	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3461-15C>T	NOTCH3	Likely benign	0	GRCh38	19	15179297	15179297	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3120C>T (p.Cys1040=)	NOTCH3	Uncertain significance	0	GRCh37	19	15291514	15291514	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3120C>T (p.Cys1040=)	NOTCH3	Uncertain significance	0	GRCh38	19	15180703	15180703	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2589G>A (p.Ser863=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15292590	15292590	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.2589G>A (p.Ser863=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15181779	15181779	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.2082C>G (p.Pro694=)	NOTCH3	Uncertain significance	0	GRCh38	19	15185549	15185549	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2082C>G (p.Pro694=)	NOTCH3	Uncertain significance	0	GRCh37	19	15296360	15296360	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1426A>T (p.Ser476Cys)	NOTCH3	Conflicting interpretations of pathogenicity	1	GRCh38	19	15188301	15188301	T	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.1426A>T (p.Ser476Cys)	NOTCH3	Conflicting interpretations of pathogenicity	1	GRCh37	19	15299112	15299112	T	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.964G>A (p.Val322Met)	NOTCH3	Likely benign	0	GRCh38	19	15191496	15191496	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.964G>A (p.Val322Met)	NOTCH3	Likely benign	0	GRCh37	19	15302307	15302307	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.203C>T (p.Pro68Leu)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15192514	15192514	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.203C>T (p.Pro68Leu)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15303325	15303325	G	A	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.*668G>T	NOTCH3	Benign	0	GRCh37	19	15270805	15270805	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*668G>T	NOTCH3	Benign	0	GRCh38	19	15159994	15159994	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*608C>T	NOTCH3	Likely benign	0	GRCh38	19	15160054	15160054	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*608C>T	NOTCH3	Likely benign	0	GRCh37	19	15270865	15270865	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6611C>T (p.Pro2204Leu)	NOTCH3	Likely benign	0	GRCh38	19	15161017	15161017	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6611C>T (p.Pro2204Leu)	NOTCH3	Likely benign	0	GRCh37	19	15271828	15271828	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6111C>T (p.His2037=)	NOTCH3	Uncertain significance	0	GRCh38	19	15161517	15161517	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6111C>T (p.His2037=)	NOTCH3	Uncertain significance	0	GRCh37	19	15272328	15272328	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5570G>A (p.Arg1857Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15165884	15165884	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5570G>A (p.Arg1857Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15276695	15276695	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5501G>A (p.Arg1834Gln)	NOTCH3	Likely benign	0	GRCh38	19	15165953	15165953	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5501G>A (p.Arg1834Gln)	NOTCH3	Likely benign	0	GRCh37	19	15276764	15276764	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4725C>A (p.Pro1575=)	NOTCH3	Uncertain significance	0	GRCh38	19	15174079	15174079	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4725C>A (p.Pro1575=)	NOTCH3	Uncertain significance	0	GRCh37	19	15284890	15284890	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4426G>A (p.Ala1476Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15285189	15285189	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4426G>A (p.Ala1476Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15174378	15174378	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3921G>C (p.Thr1307=)	NOTCH3	Uncertain significance	0	GRCh37	19	15288818	15288818	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3921G>C (p.Thr1307=)	NOTCH3	Uncertain significance	0	GRCh38	19	15178007	15178007	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3659G>A (p.Arg1220Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15289895	15289895	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3659G>A (p.Arg1220Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15179084	15179084	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2580C>T (p.Asn860=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15292599	15292599	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2580C>T (p.Asn860=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15181788	15181788	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1620G>T (p.Thr540=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15187325	15187325	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1620G>T (p.Thr540=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15298136	15298136	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1192+14C>T	NOTCH3	Uncertain significance	0	GRCh38	19	15189259	15189259	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1192+14C>T	NOTCH3	Uncertain significance	0	GRCh37	19	15300070	15300070	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.945C>T (p.Ile315=)	NOTCH3	Likely benign	0	GRCh38	19	15191515	15191515	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.945C>T (p.Ile315=)	NOTCH3	Likely benign	0	GRCh37	19	15302326	15302326	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.874T>G (p.Phe292Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15191586	15191586	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.874T>G (p.Phe292Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15302397	15302397	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.660C>T (p.Tyr220=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15191979	15191979	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.660C>T (p.Tyr220=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15302790	15302790	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.*544C>T	NOTCH3	Likely benign	0	GRCh38	19	15160118	15160118	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*544C>T	NOTCH3	Likely benign	0	GRCh37	19	15270929	15270929	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*338A>C	NOTCH3	Benign	0	GRCh38	19	15160324	15160324	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*338A>C	NOTCH3	Benign	0	GRCh37	19	15271135	15271135	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5779G>A (p.Ala1927Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15165404	15165404	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5779G>A (p.Ala1927Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15276215	15276215	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5678G>A (p.Arg1893Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15165505	15165505	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5678G>A (p.Arg1893Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15276316	15276316	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5668-11C>T	NOTCH3	Likely benign	0	GRCh38	19	15165526	15165526	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5668-11C>T	NOTCH3	Likely benign	0	GRCh37	19	15276337	15276337	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5376G>A (p.Pro1792=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15166078	15166078	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5376G>A (p.Pro1792=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15276889	15276889	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4092G>A (p.Ala1364=)	NOTCH3	Uncertain significance	0	GRCh37	19	15288647	15288647	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4092G>A (p.Ala1364=)	NOTCH3	Uncertain significance	0	GRCh38	19	15177836	15177836	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3719-11C>T	NOTCH3	Benign/Likely benign	0	GRCh37	19	15289763	15289763	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3719-11C>T	NOTCH3	Benign/Likely benign	0	GRCh38	19	15178952	15178952	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3256G>A (p.Asp1086Asn)	NOTCH3	Uncertain significance	0	GRCh37	19	15290954	15290954	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3256G>A (p.Asp1086Asn)	NOTCH3	Uncertain significance	0	GRCh38	19	15180143	15180143	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2793-14T>C	NOTCH3	Uncertain significance	0	GRCh37	19	15291987	15291987	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2793-14T>C	NOTCH3	Uncertain significance	0	GRCh38	19	15181176	15181176	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2738C>T (p.Pro913Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15292441	15292441	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2738C>T (p.Pro913Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15181630	15181630	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1760G>A (p.Arg587His)	NOTCH3	Uncertain significance	0	GRCh38	19	15187185	15187185	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1760G>A (p.Arg587His)	NOTCH3	Uncertain significance	0	GRCh37	19	15297996	15297996	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1690G>A (p.Ala564Thr)	NOTCH3	Likely benign	0	GRCh38	19	15187255	15187255	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1690G>A (p.Ala564Thr)	NOTCH3	Likely benign	0	GRCh37	19	15298066	15298066	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.-47C>G	NOTCH3	Uncertain significance	0	GRCh38	19	15200952	15200952	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.-47C>G	NOTCH3	Uncertain significance	0	GRCh37	19	15311763	15311763	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*845G>T	NOTCH3	Uncertain significance	0	GRCh37	19	15270628	15270628	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*845G>T	NOTCH3	Uncertain significance	0	GRCh38	19	15159817	15159817	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*808G>A	NOTCH3	Benign	0	GRCh37	19	15270665	15270665	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*808G>A	NOTCH3	Benign	0	GRCh38	19	15159854	15159854	C	T	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.*354_*355dup	NOTCH3	Uncertain significance	0	GRCh38	19	15160306	15160307	T	TAA	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.*354_*355dup	NOTCH3	Uncertain significance	0	GRCh37	19	15271117	15271118	T	TAA	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*96C>T	NOTCH3	Likely benign	0	GRCh38	19	15160566	15160566	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*96C>T	NOTCH3	Likely benign	0	GRCh37	19	15271377	15271377	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*23T>A	NOTCH3	Likely benign	0	GRCh38	19	15160639	15160639	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*23T>A	NOTCH3	Likely benign	0	GRCh37	19	15271450	15271450	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6532C>T (p.Pro2178Ser)	NOTCH3	Likely benign	0	GRCh38	19	15161096	15161096	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6532C>T (p.Pro2178Ser)	NOTCH3	Likely benign	0	GRCh37	19	15271907	15271907	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6506C>G (p.Pro2169Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15161122	15161122	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6506C>G (p.Pro2169Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15271933	15271933	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5789C>T (p.Ala1930Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15165394	15165394	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5789C>T (p.Ala1930Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15276205	15276205	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4444G>C (p.Gly1482Arg)	NOTCH3	Likely benign	0	GRCh37	19	15285171	15285171	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4444G>C (p.Gly1482Arg)	NOTCH3	Likely benign	0	GRCh38	19	15174360	15174360	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4427C>T (p.Ala1476Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15285188	15285188	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4427C>T (p.Ala1476Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15174377	15174377	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4348G>A (p.Ala1450Thr)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15288391	15288391	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4348G>A (p.Ala1450Thr)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15177580	15177580	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4071C>T (p.Pro1357=)	NOTCH3	Likely benign	0	GRCh37	19	15288668	15288668	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4071C>T (p.Pro1357=)	NOTCH3	Likely benign	0	GRCh38	19	15177857	15177857	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3523C>T (p.Arg1175Trp)	NOTCH3	Likely benign	0	GRCh37	19	15290031	15290031	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3523C>T (p.Arg1175Trp)	NOTCH3	Likely benign	0	GRCh38	19	15179220	15179220	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2831A>G (p.Asn944Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15291935	15291935	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2831A>G (p.Asn944Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15181124	15181124	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2792+6C>T	NOTCH3	Uncertain significance	0	GRCh37	19	15292381	15292381	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2792+6C>T	NOTCH3	Uncertain significance	0	GRCh38	19	15181570	15181570	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2588C>T (p.Ser863Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15292591	15292591	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2588C>T (p.Ser863Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15181780	15181780	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2329C>T (p.Pro777Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15184987	15184987	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2329C>T (p.Pro777Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15295798	15295798	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.825G>A (p.Val275=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15191635	15191635	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.825G>A (p.Val275=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15302446	15302446	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.509A>G (p.His170Arg)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15192130	15192130	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.509A>G (p.His170Arg)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15302941	15302941	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.338G>A (p.Arg113Gln)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15192379	15192379	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.338G>A (p.Arg113Gln)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15303190	15303190	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6633C>G (p.Tyr2211Ter)	NOTCH3	Pathogenic	1	GRCh37	19	15271806	15271806	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6633C>G (p.Tyr2211Ter)	NOTCH3	Pathogenic	1	GRCh38	19	15160995	15160995	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3352A>T (p.Asn1118Tyr)	NOTCH3	Uncertain significance	0	GRCh37	19	15290283	15290283	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3352A>T (p.Asn1118Tyr)	NOTCH3	Uncertain significance	0	GRCh38	19	15179472	15179472	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2182C>T (p.Arg728Cys)	NOTCH3	Likely pathogenic	1	GRCh37	19	15296182	15296182	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2182C>T (p.Arg728Cys)	NOTCH3	Likely pathogenic	1	GRCh38	19	15185371	15185371	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2118C>T (p.His706=)	NOTCH3	Uncertain significance	0	GRCh37	19	15296324	15296324	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2118C>T (p.His706=)	NOTCH3	Uncertain significance	0	GRCh38	19	15185513	15185513	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1808A>G (p.Lys603Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15297948	15297948	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1808A>G (p.Lys603Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15187137	15187137	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.924C>T (p.Gly308=)	NOTCH3	Uncertain significance	0	GRCh37	19	15302347	15302347	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.924C>T (p.Gly308=)	NOTCH3	Uncertain significance	0	GRCh38	19	15191536	15191536	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1819C>T (p.Arg607Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15297937	15297937	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1819C>T (p.Arg607Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15187126	15187126	G	A	criteria provided, multiple submitters, no conflicts
+duplication	NM_000435.3(NOTCH3):c.5926dup (p.Leu1976fs)	NOTCH3	Likely pathogenic	1	GRCh37	19	15272512	15272513	A	AG	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.5926dup (p.Leu1976fs)	NOTCH3	Likely pathogenic	1	GRCh38	19	15161701	15161702	A	AG	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3182G>A (p.Cys1061Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15291028	15291028	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3182G>A (p.Cys1061Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15180217	15180217	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3664T>G (p.Cys1222Gly)	NOTCH3	Uncertain significance	0	GRCh37	19	15289890	15289890	A	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3664T>G (p.Cys1222Gly)	NOTCH3	Uncertain significance	0	GRCh38	19	15179079	15179079	A	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2359G>A (p.Glu787Lys)	NOTCH3	Uncertain significance	0	GRCh37	19	15295768	15295768	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2359G>A (p.Glu787Lys)	NOTCH3	Uncertain significance	0	GRCh38	19	15184957	15184957	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5366G>A (p.Gly1789Asp)	NOTCH3	Uncertain significance	0	GRCh37	19	15276899	15276899	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5366G>A (p.Gly1789Asp)	NOTCH3	Uncertain significance	0	GRCh38	19	15166088	15166088	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1235A>G (p.Gln412Arg)	NOTCH3	Likely pathogenic	1	GRCh37	19	15299943	15299943	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1235A>G (p.Gln412Arg)	NOTCH3	Likely pathogenic	1	GRCh38	19	15189132	15189132	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5739G>A (p.Ala1913=)	NOTCH3	Uncertain significance	0	GRCh37	19	15276255	15276255	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5739G>A (p.Ala1913=)	NOTCH3	Uncertain significance	0	GRCh38	19	15165444	15165444	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4038C>T (p.His1346=)	NOTCH3	Uncertain significance	0	GRCh37	19	15288701	15288701	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4038C>T (p.His1346=)	NOTCH3	Uncertain significance	0	GRCh38	19	15177890	15177890	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3758A>C (p.Gln1253Pro)	NOTCH3	Uncertain significance	0	GRCh37	19	15289713	15289713	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3758A>C (p.Gln1253Pro)	NOTCH3	Uncertain significance	0	GRCh38	19	15178902	15178902	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2507C>A (p.Thr836Asn)	NOTCH3	Uncertain significance	0	GRCh37	19	15295165	15295165	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2507C>A (p.Thr836Asn)	NOTCH3	Uncertain significance	0	GRCh38	19	15184354	15184354	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*4G>A	NOTCH3	Benign	0	GRCh37	19	15271469	15271469	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*4G>A	NOTCH3	Benign	0	GRCh38	19	15160658	15160658	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*3C>T	NOTCH3	Likely benign	0	GRCh37	19	15271470	15271470	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.*3C>T	NOTCH3	Likely benign	0	GRCh38	19	15160659	15160659	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6809C>T (p.Thr2270Met)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15160819	15160819	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6809C>T (p.Thr2270Met)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15271630	15271630	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6802G>A (p.Glu2268Lys)	NOTCH3	Uncertain significance	0	GRCh37	19	15271637	15271637	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6802G>A (p.Glu2268Lys)	NOTCH3	Uncertain significance	0	GRCh38	19	15160826	15160826	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6573G>A (p.Pro2191=)	NOTCH3	Benign	0	GRCh37	19	15271866	15271866	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6573G>A (p.Pro2191=)	NOTCH3	Benign	0	GRCh38	19	15161055	15161055	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6504G>C (p.Val2168=)	NOTCH3	Benign	0	GRCh38	19	15161124	15161124	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6504G>C (p.Val2168=)	NOTCH3	Benign	0	GRCh37	19	15271935	15271935	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6237G>A (p.Gly2079=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15161391	15161391	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6237G>A (p.Gly2079=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15272202	15272202	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5895G>A (p.Lys1965=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15162483	15162483	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5895G>A (p.Lys1965=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15273294	15273294	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5569C>T (p.Arg1857Trp)	NOTCH3	Uncertain significance	0	GRCh37	19	15276696	15276696	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5569C>T (p.Arg1857Trp)	NOTCH3	Uncertain significance	0	GRCh38	19	15165885	15165885	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5315A>C (p.Gln1772Pro)	NOTCH3	Uncertain significance	0	GRCh37	19	15278107	15278107	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5315A>C (p.Gln1772Pro)	NOTCH3	Uncertain significance	0	GRCh38	19	15167296	15167296	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5114+10C>G	NOTCH3	Benign/Likely benign	0	GRCh38	19	15170321	15170321	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5114+10C>G	NOTCH3	Benign/Likely benign	0	GRCh37	19	15281132	15281132	G	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4046C>T (p.Ser1349Phe)	NOTCH3	Likely benign	0	GRCh38	19	15177882	15177882	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4046C>T (p.Ser1349Phe)	NOTCH3	Likely benign	0	GRCh37	19	15288693	15288693	G	A	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.4004_4006dup (p.Ser1335dup)	NOTCH3	Uncertain significance	0	GRCh37	19	15288732	15288733	T	TTGC	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.4004_4006dup (p.Ser1335dup)	NOTCH3	Uncertain significance	0	GRCh38	19	15177921	15177922	T	TTGC	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3983C>T (p.Pro1328Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15288756	15288756	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3983C>T (p.Pro1328Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15177945	15177945	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3961G>A (p.Gly1321Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15177967	15177967	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3961G>A (p.Gly1321Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15288778	15288778	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3837+10G>T	NOTCH3	Uncertain significance	0	GRCh38	19	15178813	15178813	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3837+10G>T	NOTCH3	Uncertain significance	0	GRCh37	19	15289624	15289624	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3575C>T (p.Thr1192Ile)	NOTCH3	Benign	0	GRCh38	19	15179168	15179168	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3575C>T (p.Thr1192Ile)	NOTCH3	Benign	0	GRCh37	19	15289979	15289979	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3524G>C (p.Arg1175Pro)	NOTCH3	Uncertain significance	0	GRCh38	19	15179219	15179219	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3524G>C (p.Arg1175Pro)	NOTCH3	Uncertain significance	0	GRCh37	19	15290030	15290030	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3356G>A (p.Cys1119Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15290279	15290279	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3356G>A (p.Cys1119Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15179468	15179468	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3296G>A (p.Cys1099Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15180103	15180103	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3296G>A (p.Cys1099Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15290914	15290914	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3226C>T (p.Arg1076Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15180173	15180173	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3226C>T (p.Arg1076Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15290984	15290984	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3170C>T (p.Ala1057Val)	NOTCH3	Benign	0	GRCh37	19	15291040	15291040	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3170C>T (p.Ala1057Val)	NOTCH3	Benign	0	GRCh38	19	15180229	15180229	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3091C>T (p.Arg1031Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15291543	15291543	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3091C>T (p.Arg1031Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15180732	15180732	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3065G>T (p.Cys1022Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15291569	15291569	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3065G>T (p.Cys1022Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15180758	15180758	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3062A>G (p.Tyr1021Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15291572	15291572	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3062A>G (p.Tyr1021Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15180761	15180761	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3040C>T (p.Arg1014Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15291594	15291594	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3040C>T (p.Arg1014Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15180783	15180783	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3016C>T (p.Arg1006Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15291618	15291618	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3016C>T (p.Arg1006Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15180807	15180807	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3011G>A (p.Cys1004Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15180812	15180812	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3011G>A (p.Cys1004Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15291623	15291623	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2989T>G (p.Cys997Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15291777	15291777	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2989T>G (p.Cys997Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15180966	15180966	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2953C>T (p.Arg985Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15181002	15181002	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2953C>T (p.Arg985Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15291813	15291813	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2951T>G (p.Phe984Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15291815	15291815	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2951T>G (p.Phe984Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15181004	15181004	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2732C>A (p.Thr911Asn)	NOTCH3	Uncertain significance	0	GRCh37	19	15292447	15292447	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2732C>A (p.Thr911Asn)	NOTCH3	Uncertain significance	0	GRCh38	19	15181636	15181636	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2682C>T (p.Asn894=)	NOTCH3	Benign	0	GRCh37	19	15292497	15292497	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2682C>T (p.Asn894=)	NOTCH3	Benign	0	GRCh38	19	15181686	15181686	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2657G>A (p.Arg886His)	NOTCH3	Uncertain significance	0	GRCh37	19	15292522	15292522	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2657G>A (p.Arg886His)	NOTCH3	Uncertain significance	0	GRCh38	19	15181711	15181711	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2645C>G (p.Pro882Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15181723	15181723	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2645C>G (p.Pro882Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15292534	15292534	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2437G>A (p.Glu813Lys)	NOTCH3	Likely benign	0	GRCh37	19	15295235	15295235	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2437G>A (p.Glu813Lys)	NOTCH3	Likely benign	0	GRCh38	19	15184424	15184424	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2432T>C (p.Val811Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15295240	15295240	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2432T>C (p.Val811Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15184429	15184429	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2296+8C>T	NOTCH3	Likely benign	0	GRCh37	19	15296060	15296060	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2296+8C>T	NOTCH3	Likely benign	0	GRCh38	19	15185249	15185249	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2175T>C (p.Ser725=)	NOTCH3	Benign	0	GRCh37	19	15296189	15296189	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2175T>C (p.Ser725=)	NOTCH3	Benign	0	GRCh38	19	15185378	15185378	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1999G>T (p.Gly667Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15296443	15296443	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1999G>T (p.Gly667Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15185632	15185632	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1966G>A (p.Val656Met)	NOTCH3	Likely benign	0	GRCh37	19	15296476	15296476	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1966G>A (p.Val656Met)	NOTCH3	Likely benign	0	GRCh38	19	15185665	15185665	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1920C>T (p.Arg640=)	NOTCH3	Likely benign	0	GRCh37	19	15297720	15297720	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1920C>T (p.Arg640=)	NOTCH3	Likely benign	0	GRCh38	19	15186909	15186909	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+8C>T	NOTCH3	Benign/Likely benign	0	GRCh37	19	15297908	15297908	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+8C>T	NOTCH3	Benign/Likely benign	0	GRCh38	19	15187097	15187097	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1801G>T (p.Val601Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15297955	15297955	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1801G>T (p.Val601Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15187144	15187144	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1774C>A (p.Arg592Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15187171	15187171	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1774C>A (p.Arg592Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15297982	15297982	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1729A>G (p.Thr577Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15298027	15298027	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1729A>G (p.Thr577Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15187216	15187216	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1725G>C (p.Thr575=)	NOTCH3	Likely benign	0	GRCh37	19	15298031	15298031	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1725G>C (p.Thr575=)	NOTCH3	Likely benign	0	GRCh38	19	15187220	15187220	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1678G>A (p.Val560Met)	NOTCH3	Likely benign	0	GRCh37	19	15298078	15298078	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1678G>A (p.Val560Met)	NOTCH3	Likely benign	0	GRCh38	19	15187267	15187267	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1672C>T (p.Arg558Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15298084	15298084	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1672C>T (p.Arg558Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15187273	15187273	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1646G>A (p.Cys549Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15298110	15298110	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1646G>A (p.Cys549Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15187299	15187299	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1607-5C>A	NOTCH3	Benign/Likely benign	0	GRCh37	19	15298154	15298154	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1607-5C>A	NOTCH3	Benign/Likely benign	0	GRCh38	19	15187343	15187343	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1597T>C (p.Cys533Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15187890	15187890	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1597T>C (p.Cys533Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15298701	15298701	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1493-8C>T	NOTCH3	Benign	0	GRCh37	19	15298813	15298813	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1493-8C>T	NOTCH3	Benign	0	GRCh38	19	15188002	15188002	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1364G>A (p.Cys455Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15189003	15189003	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1364G>A (p.Cys455Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15299814	15299814	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1342G>C (p.Asp448His)	NOTCH3	Uncertain significance	0	GRCh38	19	15189025	15189025	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1342G>C (p.Asp448His)	NOTCH3	Uncertain significance	0	GRCh37	19	15299836	15299836	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1268A>G (p.Tyr423Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15299910	15299910	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1268A>G (p.Tyr423Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15189099	15189099	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1261C>T (p.Arg421Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15189106	15189106	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1261C>T (p.Arg421Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15299917	15299917	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1258G>T (p.Gly420Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15189109	15189109	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1258G>T (p.Gly420Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15299920	15299920	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1255T>G (p.Cys419Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15299923	15299923	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1255T>G (p.Cys419Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15189112	15189112	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1135T>G (p.Cys379Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15300141	15300141	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1135T>G (p.Cys379Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15189330	15189330	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1117G>T (p.Gly373Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15189348	15189348	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1117G>T (p.Gly373Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15300159	15300159	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1102A>G (p.Thr368Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15300174	15300174	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1102A>G (p.Thr368Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15189363	15189363	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1036+10C>T	NOTCH3	Benign/Likely benign	0	GRCh37	19	15302225	15302225	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1036+10C>T	NOTCH3	Benign/Likely benign	0	GRCh38	19	15191414	15191414	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.773A>G (p.Tyr258Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15302585	15302585	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.773A>G (p.Tyr258Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15191774	15191774	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.752G>A (p.Cys251Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302606	15302606	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.752G>A (p.Cys251Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15191795	15191795	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.741T>G (p.Asn247Lys)	NOTCH3	Uncertain significance	0	GRCh37	19	15302617	15302617	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.741T>G (p.Asn247Lys)	NOTCH3	Uncertain significance	0	GRCh38	19	15191806	15191806	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.671G>A (p.Cys224Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15191968	15191968	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.671G>A (p.Cys224Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302779	15302779	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.665G>A (p.Cys222Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15191974	15191974	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.665G>A (p.Cys222Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15302785	15302785	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.634T>A (p.Cys212Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15302816	15302816	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.634T>A (p.Cys212Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15192005	15192005	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.619C>T (p.Arg207Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15192020	15192020	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.619C>T (p.Arg207Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15302831	15302831	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.602G>A (p.Cys201Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302848	15302848	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.602G>A (p.Cys201Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192037	15192037	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.554G>A (p.Cys185Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302896	15302896	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.554G>A (p.Cys185Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192085	15192085	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.545G>A (p.Arg182His)	NOTCH3	Uncertain significance	0	GRCh38	19	15192094	15192094	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.545G>A (p.Arg182His)	NOTCH3	Uncertain significance	0	GRCh37	19	15302905	15302905	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.521G>T (p.Cys174Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192118	15192118	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.521G>T (p.Cys174Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15302929	15302929	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.521G>A (p.Cys174Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192118	15192118	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.521G>A (p.Cys174Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302929	15302929	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.487C>T (p.Arg163Trp)	NOTCH3	Likely benign	0	GRCh38	19	15192152	15192152	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.487C>T (p.Arg163Trp)	NOTCH3	Likely benign	0	GRCh37	19	15302963	15302963	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.472G>A (p.Asp158Asn)	NOTCH3	Likely benign	0	GRCh38	19	15192167	15192167	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.472G>A (p.Asp158Asn)	NOTCH3	Likely benign	0	GRCh37	19	15302978	15302978	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.437G>T (p.Cys146Phe)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192202	15192202	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.437G>T (p.Cys146Phe)	NOTCH3	Likely pathogenic	1	GRCh37	19	15303013	15303013	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.437G>A (p.Cys146Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192202	15192202	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.437G>A (p.Cys146Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15303013	15303013	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.436T>C (p.Cys146Arg)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15192203	15192203	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.436T>C (p.Cys146Arg)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15303014	15303014	A	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.432C>T (p.Cys144=)	NOTCH3	Benign	0	GRCh38	19	15192207	15192207	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.432C>T (p.Cys144=)	NOTCH3	Benign	0	GRCh37	19	15303018	15303018	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.421C>T (p.Arg141Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15303029	15303029	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.421C>T (p.Arg141Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192218	15192218	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.350G>T (p.Cys117Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192289	15192289	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.350G>T (p.Cys117Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15303100	15303100	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.350G>A (p.Cys117Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15303100	15303100	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.350G>A (p.Cys117Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192289	15192289	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.349T>G (p.Cys117Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15192290	15192290	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.349T>G (p.Cys117Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15303101	15303101	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.349T>C (p.Cys117Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192290	15192290	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.349T>C (p.Cys117Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15303101	15303101	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.329G>A (p.Arg110His)	NOTCH3	Uncertain significance	0	GRCh38	19	15192388	15192388	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.329G>A (p.Arg110His)	NOTCH3	Uncertain significance	0	GRCh37	19	15303199	15303199	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.328C>T (p.Arg110Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15303200	15303200	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.328C>T (p.Arg110Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192389	15192389	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.316T>C (p.Cys106Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192401	15192401	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.316T>C (p.Cys106Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15303212	15303212	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.300C>G (p.Gly100=)	NOTCH3	Likely benign	0	GRCh37	19	15303228	15303228	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.300C>G (p.Gly100=)	NOTCH3	Likely benign	0	GRCh38	19	15192417	15192417	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.268C>T (p.Arg90Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192449	15192449	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.268C>T (p.Arg90Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15303260	15303260	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.245G>T (p.Cys82Phe)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15303283	15303283	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.245G>T (p.Cys82Phe)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15192472	15192472	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.226T>C (p.Cys76Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192491	15192491	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.226T>C (p.Cys76Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15303302	15303302	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.200G>T (p.Cys67Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15303328	15303328	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.200G>T (p.Cys67Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192517	15192517	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.194G>C (p.Cys65Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15308314	15308314	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.194G>C (p.Cys65Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15197503	15197503	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.193T>G (p.Cys65Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15308315	15308315	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.193T>G (p.Cys65Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15197504	15197504	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.164G>A (p.Cys55Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15197533	15197533	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.164G>A (p.Cys55Tyr)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15308344	15308344	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.160C>T (p.Arg54Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15197537	15197537	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.160C>T (p.Arg54Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15308348	15308348	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.154G>A (p.Gly52Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15308354	15308354	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.154G>A (p.Gly52Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15197543	15197543	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.146G>A (p.Cys49Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15308362	15308362	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.146G>A (p.Cys49Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15197551	15197551	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.145T>C (p.Cys49Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15308363	15308363	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.145T>C (p.Cys49Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15197552	15197552	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.133G>C (p.Asp45His)	NOTCH3	Uncertain significance	0	GRCh38	19	15197564	15197564	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.133G>C (p.Asp45His)	NOTCH3	Uncertain significance	0	GRCh37	19	15308375	15308375	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.128G>A (p.Cys43Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15308380	15308380	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.128G>A (p.Cys43Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15197569	15197569	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3401G>A (p.Gly1134Glu)	NOTCH3	Uncertain significance	0	GRCh37	19	15290234	15290234	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3401G>A (p.Gly1134Glu)	NOTCH3	Uncertain significance	0	GRCh38	19	15179423	15179423	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2840G>C (p.Ser947Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15291926	15291926	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2840G>C (p.Ser947Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15181115	15181115	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.323G>T (p.Cys108Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15303205	15303205	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.323G>T (p.Cys108Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192394	15192394	C	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.822C>T (p.Asp274=)	NOTCH3	Uncertain significance	0	GRCh37	19	15302449	15302449	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.822C>T (p.Asp274=)	NOTCH3	Uncertain significance	0	GRCh38	19	15191638	15191638	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.376A>T (p.Ser126Cys)	NOTCH3	Likely pathogenic	1	GRCh37	19	15303074	15303074	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.376A>T (p.Ser126Cys)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192263	15192263	T	A	criteria provided, single submitter
+deletion	NM_000435.3(NOTCH3):c.6692del (p.Pro2231fs)	NOTCH3	Likely pathogenic	1	GRCh38	19	15160936	15160936	TG	T	criteria provided, single submitter
+deletion	NM_000435.3(NOTCH3):c.6692del (p.Pro2231fs)	NOTCH3	Likely pathogenic	1	GRCh37	19	15271747	15271747	TG	T	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6508dup (p.Leu2170fs)	NOTCH3	Pathogenic	1	GRCh38	19	15161119	15161120	A	AG	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6508dup (p.Leu2170fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271930	15271931	A	AG	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5618G>A (p.Arg1873His)	NOTCH3	Uncertain significance	0	GRCh37	19	15276647	15276647	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5618G>A (p.Arg1873His)	NOTCH3	Uncertain significance	0	GRCh38	19	15165836	15165836	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1232C>T (p.Thr411Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15299946	15299946	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1232C>T (p.Thr411Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15189135	15189135	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6239G>A (p.Arg2080Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15161389	15161389	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.6239G>A (p.Arg2080Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15272200	15272200	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.4639C>G (p.Leu1547Val)	NOTCH3	Likely benign	0	GRCh37	19	15284976	15284976	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4639C>G (p.Leu1547Val)	NOTCH3	Likely benign	0	GRCh38	19	15174165	15174165	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1450T>G (p.Cys484Gly)	NOTCH3	Likely pathogenic	1	GRCh37	19	15299088	15299088	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1450T>G (p.Cys484Gly)	NOTCH3	Likely pathogenic	1	GRCh38	19	15188277	15188277	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1630C>T (p.Arg544Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh37	19	15298126	15298126	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1630C>T (p.Arg544Cys)	NOTCH3	Pathogenic/Likely pathogenic	1	GRCh38	19	15187315	15187315	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3044G>A (p.Cys1015Tyr)	NOTCH3	Uncertain significance	0	GRCh37	19	15291590	15291590	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3044G>A (p.Cys1015Tyr)	NOTCH3	Uncertain significance	0	GRCh38	19	15180779	15180779	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2856C>A (p.Pro952=)	NOTCH3	Likely benign	0	GRCh37	19	15291910	15291910	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2856C>A (p.Pro952=)	NOTCH3	Likely benign	0	GRCh38	19	15181099	15181099	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.932G>T (p.Cys311Phe)	NOTCH3	Likely pathogenic	1	GRCh37	19	15302339	15302339	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.932G>T (p.Cys311Phe)	NOTCH3	Likely pathogenic	1	GRCh38	19	15191528	15191528	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3026G>A (p.Cys1009Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15180797	15180797	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3026G>A (p.Cys1009Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15291608	15291608	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2956T>G (p.Cys986Gly)	NOTCH3	Likely pathogenic	1	GRCh38	19	15180999	15180999	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2956T>G (p.Cys986Gly)	NOTCH3	Likely pathogenic	1	GRCh37	19	15291810	15291810	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1816T>C (p.Cys606Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15297940	15297940	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1816T>C (p.Cys606Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15187129	15187129	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1451G>T (p.Cys484Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15188276	15188276	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1451G>T (p.Cys484Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15299087	15299087	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1451G>A (p.Cys484Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15188276	15188276	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1451G>A (p.Cys484Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15299087	15299087	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1433G>A (p.Cys478Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15188294	15188294	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1433G>A (p.Cys478Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15299105	15299105	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1337G>T (p.Cys446Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15189030	15189030	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1337G>T (p.Cys446Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15299841	15299841	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1283G>A (p.Cys428Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15189084	15189084	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1283G>A (p.Cys428Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15299895	15299895	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1204T>A (p.Cys402Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15299974	15299974	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1204T>A (p.Cys402Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15189163	15189163	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.953G>A (p.Cys318Tyr)	NOTCH3	Likely pathogenic	1	GRCh37	19	15302318	15302318	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.953G>A (p.Cys318Tyr)	NOTCH3	Likely pathogenic	1	GRCh38	19	15191507	15191507	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.751T>C (p.Cys251Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15191796	15191796	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.751T>C (p.Cys251Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15302607	15302607	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.580T>C (p.Cys194Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192059	15192059	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.580T>C (p.Cys194Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15302870	15302870	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.580T>A (p.Cys194Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15192059	15192059	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.580T>A (p.Cys194Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15302870	15302870	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.554G>T (p.Cys185Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192085	15192085	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.554G>T (p.Cys185Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15302896	15302896	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.553T>C (p.Cys185Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192086	15192086	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.553T>C (p.Cys185Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15302897	15302897	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.548G>T (p.Cys183Phe)	NOTCH3	Pathogenic	1	GRCh37	19	15302902	15302902	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.548G>T (p.Cys183Phe)	NOTCH3	Pathogenic	1	GRCh38	19	15192091	15192091	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.548G>A (p.Cys183Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15302902	15302902	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.548G>A (p.Cys183Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192091	15192091	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.431G>A (p.Cys144Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192208	15192208	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.431G>A (p.Cys144Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15303019	15303019	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.383G>T (p.Cys128Phe)	NOTCH3	Likely pathogenic	1	GRCh37	19	15303067	15303067	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.383G>T (p.Cys128Phe)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192256	15192256	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.351C>G (p.Cys117Trp)	NOTCH3	Likely pathogenic	1	GRCh37	19	15303099	15303099	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.351C>G (p.Cys117Trp)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192288	15192288	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.259T>C (p.Cys87Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15303269	15303269	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.259T>C (p.Cys87Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192458	15192458	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.227G>A (p.Cys76Tyr)	NOTCH3	Pathogenic	1	GRCh38	19	15192490	15192490	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.227G>A (p.Cys76Tyr)	NOTCH3	Pathogenic	1	GRCh37	19	15303301	15303301	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.226T>A (p.Cys76Ser)	NOTCH3	Pathogenic	1	GRCh37	19	15303302	15303302	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.226T>A (p.Cys76Ser)	NOTCH3	Pathogenic	1	GRCh38	19	15192491	15192491	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.163T>C (p.Cys55Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15197534	15197534	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.163T>C (p.Cys55Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15308345	15308345	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.145T>G (p.Cys49Gly)	NOTCH3	Pathogenic	1	GRCh38	19	15197552	15197552	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.145T>G (p.Cys49Gly)	NOTCH3	Pathogenic	1	GRCh37	19	15308363	15308363	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2557T>C (p.Cys853Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15295115	15295115	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.2557T>C (p.Cys853Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15184304	15184304	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1871G>A (p.Cys624Tyr)	NOTCH3	Uncertain significance	0	GRCh37	19	15297769	15297769	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1871G>A (p.Cys624Tyr)	NOTCH3	Uncertain significance	0	GRCh38	19	15186958	15186958	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1153G>A (p.Gly385Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15300123	15300123	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1153G>A (p.Gly385Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15189312	15189312	C	T	no assertion criteria provided
+short repeat	NM_000435.3(NOTCH3):c.21_23CCG[4] (p.Arg13del)	NOTCH3	Uncertain significance	0	GRCh37	19	15311682	15311684	ACGG	A	no assertion criteria provided
+short repeat	NM_000435.3(NOTCH3):c.21_23CCG[4] (p.Arg13del)	NOTCH3	Uncertain significance	0	GRCh38	19	15200871	15200873	ACGG	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1076C>G (p.Pro359Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15300200	15300200	G	C	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1076C>G (p.Pro359Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15189389	15189389	G	C	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.3488A>T (p.Asp1163Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15290066	15290066	T	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.3488A>T (p.Asp1163Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15179255	15179255	T	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1469G>C (p.Gly490Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15299069	15299069	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1469G>C (p.Gly490Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15188258	15188258	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3569G>A (p.Arg1190His)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15289985	15289985	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.3569G>A (p.Arg1190His)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15179174	15179174	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.2833T>A (p.Ser945Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15291933	15291933	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2833T>A (p.Ser945Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15181122	15181122	A	T	criteria provided, single submitter
+copy number gain	GRCh37/hg19 19p13.12(chr19:15270636-15325310)x3	NOTCH3	Benign	0	GRCh37	19	15270636	15325310	na	na	no assertion criteria provided
+copy number gain	GRCh37/hg19 19p13.12(chr19:15276755-15290236)x3	NOTCH3	Benign	0	GRCh37	19	15276755	15290236	na	na	no assertion criteria provided
+copy number gain	GRCh37/hg19 19p13.12(chr19:15278099-15290236)x3	NOTCH3	Benign	0	GRCh37	19	15278099	15290236	na	na	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.5647G>T (p.Asp1883Tyr)	NOTCH3	Uncertain significance	0	GRCh37	19	15276618	15276618	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5647G>T (p.Asp1883Tyr)	NOTCH3	Uncertain significance	0	GRCh38	19	15165807	15165807	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.224G>C (p.Arg75Pro)	NOTCH3	Pathogenic	1	GRCh37	19	15303304	15303304	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.224G>C (p.Arg75Pro)	NOTCH3	Pathogenic	1	GRCh38	19	15192493	15192493	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1066G>A (p.Val356Ile)	NOTCH3	Uncertain significance	0	GRCh38	19	15189399	15189399	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1066G>A (p.Val356Ile)	NOTCH3	Uncertain significance	0	GRCh37	19	15300210	15300210	C	T	criteria provided, single submitter
+undetermined variant	NOTCH3, ARG141CYS	NOTCH3	Pathogenic	1		na	-1	-1	na	na	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1654G>T (p.Asp552Tyr)	NOTCH3	Uncertain significance	0	GRCh37	19	15298102	15298102	C	A	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1654G>T (p.Asp552Tyr)	NOTCH3	Uncertain significance	0	GRCh38	19	15187291	15187291	C	A	no assertion criteria provided
+duplication	NM_000435.3(NOTCH3):c.6626dup (p.Pro2210fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271812	15271813	C	CG	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6626dup (p.Pro2210fs)	NOTCH3	Pathogenic	1	GRCh38	19	15161001	15161002	C	CG	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6626C>T (p.Pro2209Leu)	NOTCH3	Likely benign	0	GRCh37	19	15271813	15271813	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6626C>T (p.Pro2209Leu)	NOTCH3	Likely benign	0	GRCh38	19	15161002	15161002	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2507C>T (p.Thr836Ile)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15295165	15295165	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2507C>T (p.Thr836Ile)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15184354	15184354	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1931T>A (p.Val644Asp)	NOTCH3	Likely benign	0	GRCh37	19	15297709	15297709	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1931T>A (p.Val644Asp)	NOTCH3	Likely benign	0	GRCh38	19	15186898	15186898	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1413C>T (p.Asp471=)	NOTCH3	Likely benign	0	GRCh37	19	15299125	15299125	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1413C>T (p.Asp471=)	NOTCH3	Likely benign	0	GRCh38	19	15188314	15188314	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4374C>T (p.Cys1458=)	NOTCH3	Benign	0	GRCh37	19	15288365	15288365	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6654C>T (p.Gly2218=)	NOTCH3	Benign	0	GRCh37	19	15271785	15271785	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6654C>T (p.Gly2218=)	NOTCH3	Benign	0	GRCh38	19	15160974	15160974	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6597G>A (p.Gly2199=)	NOTCH3	Likely benign	0	GRCh37	19	15271842	15271842	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6597G>A (p.Gly2199=)	NOTCH3	Likely benign	0	GRCh38	19	15161031	15161031	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5992C>T (p.Arg1998Cys)	NOTCH3	Likely benign	0	GRCh37	19	15272447	15272447	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5992C>T (p.Arg1998Cys)	NOTCH3	Likely benign	0	GRCh38	19	15161636	15161636	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4899G>A (p.Pro1633=)	NOTCH3	Likely benign	0	GRCh37	19	15281357	15281357	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4899G>A (p.Pro1633=)	NOTCH3	Likely benign	0	GRCh38	19	15170546	15170546	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4374C>T (p.Cys1458=)	NOTCH3	Benign	0	GRCh38	19	15177554	15177554	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4025C>A (p.Ala1342Asp)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15288714	15288714	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4025C>A (p.Ala1342Asp)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15177903	15177903	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3658C>T (p.Arg1220Trp)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15289896	15289896	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3658C>T (p.Arg1220Trp)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15179085	15179085	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3314G>C (p.Gly1105Ala)	NOTCH3	Benign	0	GRCh37	19	15290896	15290896	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3314G>C (p.Gly1105Ala)	NOTCH3	Benign	0	GRCh38	19	15180085	15180085	C	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2932A>C (p.Ser978Arg)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15291834	15291834	T	G	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.2932A>C (p.Ser978Arg)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15181023	15181023	T	G	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.1854A>G (p.Glu618=)	NOTCH3	Likely benign	0	GRCh37	19	15297786	15297786	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1854A>G (p.Glu618=)	NOTCH3	Likely benign	0	GRCh38	19	15186975	15186975	T	C	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.831G>A (p.Glu277=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh37	19	15302440	15302440	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.831G>A (p.Glu277=)	NOTCH3	Conflicting interpretations of pathogenicity	0	GRCh38	19	15191629	15191629	C	T	criteria provided, conflicting interpretations
+single nucleotide variant	NM_000435.3(NOTCH3):c.267C>T (p.Gly89=)	NOTCH3	Likely benign	0	GRCh37	19	15303261	15303261	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.267C>T (p.Gly89=)	NOTCH3	Likely benign	0	GRCh38	19	15192450	15192450	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5200-4C>A	NOTCH3	Benign/Likely benign	0	GRCh37	19	15278226	15278226	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5200-4C>A	NOTCH3	Benign/Likely benign	0	GRCh38	19	15167415	15167415	G	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6747C>T (p.Pro2249=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15271692	15271692	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6747C>T (p.Pro2249=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15160881	15160881	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6684C>T (p.Ser2228=)	NOTCH3	Likely benign	0	GRCh37	19	15271755	15271755	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6684C>T (p.Ser2228=)	NOTCH3	Likely benign	0	GRCh38	19	15160944	15160944	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6333C>T (p.Phe2111=)	NOTCH3	Likely benign	0	GRCh37	19	15272106	15272106	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6333C>T (p.Phe2111=)	NOTCH3	Likely benign	0	GRCh38	19	15161295	15161295	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6024G>A (p.Pro2008=)	NOTCH3	Likely benign	0	GRCh37	19	15272415	15272415	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6024G>A (p.Pro2008=)	NOTCH3	Likely benign	0	GRCh38	19	15161604	15161604	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5847G>C (p.Val1949=)	NOTCH3	Likely benign	0	GRCh37	19	15273342	15273342	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5847G>C (p.Val1949=)	NOTCH3	Likely benign	0	GRCh38	19	15162531	15162531	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4900C>T (p.Leu1634=)	NOTCH3	Likely benign	0	GRCh37	19	15281356	15281356	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4900C>T (p.Leu1634=)	NOTCH3	Likely benign	0	GRCh38	19	15170545	15170545	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4875A>C (p.Pro1625=)	NOTCH3	Likely benign	0	GRCh37	19	15281498	15281498	T	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4875A>C (p.Pro1625=)	NOTCH3	Likely benign	0	GRCh38	19	15170687	15170687	T	G	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.4869G>C (p.Pro1623=)	NOTCH3	Likely benign	0	GRCh37	19	15281504	15281504	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4869G>C (p.Pro1623=)	NOTCH3	Likely benign	0	GRCh38	19	15170693	15170693	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4858C>T (p.Leu1620=)	NOTCH3	Likely benign	0	GRCh37	19	15281515	15281515	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4858C>T (p.Leu1620=)	NOTCH3	Likely benign	0	GRCh38	19	15170704	15170704	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4806C>T (p.Pro1602=)	NOTCH3	Likely benign	0	GRCh37	19	15281567	15281567	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4806C>T (p.Pro1602=)	NOTCH3	Likely benign	0	GRCh38	19	15170756	15170756	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4413C>T (p.Tyr1471=)	NOTCH3	Likely benign	0	GRCh37	19	15285202	15285202	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4413C>T (p.Tyr1471=)	NOTCH3	Likely benign	0	GRCh38	19	15174391	15174391	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3840G>T (p.Pro1280=)	NOTCH3	Likely benign	0	GRCh37	19	15288899	15288899	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3840G>T (p.Pro1280=)	NOTCH3	Likely benign	0	GRCh38	19	15178088	15178088	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3692G>A (p.Arg1231His)	NOTCH3	Likely benign	0	GRCh37	19	15289862	15289862	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3692G>A (p.Arg1231His)	NOTCH3	Likely benign	0	GRCh38	19	15179051	15179051	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2835G>A (p.Ser945=)	NOTCH3	Benign	0	GRCh37	19	15291931	15291931	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2835G>A (p.Ser945=)	NOTCH3	Benign	0	GRCh38	19	15181120	15181120	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2804A>G (p.Asn935Ser)	NOTCH3	Likely benign	0	GRCh37	19	15291962	15291962	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2804A>G (p.Asn935Ser)	NOTCH3	Likely benign	0	GRCh38	19	15181151	15181151	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2724C>T (p.Phe908=)	NOTCH3	Benign	0	GRCh37	19	15292455	15292455	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.2724C>T (p.Phe908=)	NOTCH3	Benign	0	GRCh38	19	15181644	15181644	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.1578C>G (p.Pro526=)	NOTCH3	Likely benign	0	GRCh37	19	15298720	15298720	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1578C>G (p.Pro526=)	NOTCH3	Likely benign	0	GRCh38	19	15187909	15187909	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.591C>T (p.Pro197=)	NOTCH3	Benign/Likely benign	0	GRCh37	19	15302859	15302859	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.591C>T (p.Pro197=)	NOTCH3	Benign/Likely benign	0	GRCh38	19	15192048	15192048	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.499C>T (p.Pro167Ser)	NOTCH3	Benign	0	GRCh37	19	15302951	15302951	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.499C>T (p.Pro167Ser)	NOTCH3	Benign	0	GRCh38	19	15192140	15192140	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.224G>A (p.Arg75Gln)	NOTCH3	Likely benign	0	GRCh37	19	15303304	15303304	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.224G>A (p.Arg75Gln)	NOTCH3	Likely benign	0	GRCh38	19	15192493	15192493	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.135C>T (p.Asp45=)	NOTCH3	Benign	0	GRCh37	19	15308373	15308373	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.135C>T (p.Asp45=)	NOTCH3	Benign	0	GRCh38	19	15197562	15197562	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5460C>A (p.Ile1820=)	NOTCH3	Benign	0	GRCh37	19	15276805	15276805	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5460C>A (p.Ile1820=)	NOTCH3	Benign	0	GRCh38	19	15165994	15165994	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4560G>T (p.Pro1520=)	NOTCH3	Likely benign	0	GRCh37	19	15285055	15285055	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4560G>T (p.Pro1520=)	NOTCH3	Likely benign	0	GRCh38	19	15174244	15174244	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3429C>T (p.Arg1143=)	NOTCH3	Likely benign	0	GRCh37	19	15290206	15290206	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3429C>T (p.Arg1143=)	NOTCH3	Likely benign	0	GRCh38	19	15179395	15179395	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2733C>T (p.Thr911=)	NOTCH3	Likely benign	0	GRCh37	19	15292446	15292446	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2733C>T (p.Thr911=)	NOTCH3	Likely benign	0	GRCh38	19	15181635	15181635	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2319C>T (p.Ser773=)	NOTCH3	Likely benign	0	GRCh37	19	15295808	15295808	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2319C>T (p.Ser773=)	NOTCH3	Likely benign	0	GRCh38	19	15184997	15184997	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.351C>T (p.Cys117=)	NOTCH3	Likely benign	0	GRCh37	19	15303099	15303099	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.351C>T (p.Cys117=)	NOTCH3	Likely benign	0	GRCh38	19	15192288	15192288	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6603C>T (p.Pro2201=)	NOTCH3	Likely benign	0	GRCh37	19	15271836	15271836	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6603C>T (p.Pro2201=)	NOTCH3	Likely benign	0	GRCh38	19	15161025	15161025	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6522G>C (p.Arg2174=)	NOTCH3	Likely benign	0	GRCh37	19	15271917	15271917	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6522G>C (p.Arg2174=)	NOTCH3	Likely benign	0	GRCh38	19	15161106	15161106	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6300G>A (p.Ser2100=)	NOTCH3	Likely benign	0	GRCh37	19	15272139	15272139	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6300G>A (p.Ser2100=)	NOTCH3	Likely benign	0	GRCh38	19	15161328	15161328	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4782G>C (p.Ser1594=)	NOTCH3	Likely benign	0	GRCh37	19	15281591	15281591	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4782G>C (p.Ser1594=)	NOTCH3	Likely benign	0	GRCh38	19	15170780	15170780	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1602C>T (p.Ala534=)	NOTCH3	Likely benign	0	GRCh37	19	15298696	15298696	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1602C>T (p.Ala534=)	NOTCH3	Likely benign	0	GRCh38	19	15187885	15187885	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1460G>A (p.Arg487Gln)	NOTCH3	Likely benign	0	GRCh37	19	15299078	15299078	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1460G>A (p.Arg487Gln)	NOTCH3	Likely benign	0	GRCh38	19	15188267	15188267	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.850G>A (p.Ala284Thr)	NOTCH3	Benign	0	GRCh37	19	15302421	15302421	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.850G>A (p.Ala284Thr)	NOTCH3	Benign	0	GRCh38	19	15191610	15191610	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.771C>A (p.Thr257=)	NOTCH3	Likely benign	0	GRCh37	19	15302587	15302587	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.771C>A (p.Thr257=)	NOTCH3	Likely benign	0	GRCh38	19	15191776	15191776	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.679+10C>G	NOTCH3	Likely benign	0	GRCh37	19	15302761	15302761	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.679+10C>G	NOTCH3	Likely benign	0	GRCh38	19	15191950	15191950	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6669G>T (p.Ala2223=)	NOTCH3	Likely benign	0	GRCh37	19	15271770	15271770	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6669G>T (p.Ala2223=)	NOTCH3	Likely benign	0	GRCh38	19	15160959	15160959	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5202A>G (p.Val1734=)	NOTCH3	Likely benign	0	GRCh37	19	15278220	15278220	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5202A>G (p.Val1734=)	NOTCH3	Likely benign	0	GRCh38	19	15167409	15167409	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4935A>T (p.Pro1645=)	NOTCH3	Likely benign	0	GRCh37	19	15281321	15281321	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4935A>T (p.Pro1645=)	NOTCH3	Likely benign	0	GRCh38	19	15170510	15170510	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4347C>T (p.Pro1449=)	NOTCH3	Benign	0	GRCh37	19	15288392	15288392	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4347C>T (p.Pro1449=)	NOTCH3	Benign	0	GRCh38	19	15177581	15177581	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3645C>T (p.His1215=)	NOTCH3	Likely benign	0	GRCh37	19	15289909	15289909	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3645C>T (p.His1215=)	NOTCH3	Likely benign	0	GRCh38	19	15179098	15179098	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3231T>G (p.Thr1077=)	NOTCH3	Likely benign	0	GRCh37	19	15290979	15290979	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3231T>G (p.Thr1077=)	NOTCH3	Likely benign	0	GRCh38	19	15180168	15180168	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3171G>A (p.Ala1057=)	NOTCH3	Likely benign	0	GRCh37	19	15291039	15291039	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3171G>A (p.Ala1057=)	NOTCH3	Likely benign	0	GRCh38	19	15180228	15180228	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2226G>A (p.Pro742=)	NOTCH3	Likely benign	0	GRCh37	19	15296138	15296138	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2226G>A (p.Pro742=)	NOTCH3	Likely benign	0	GRCh38	19	15185327	15185327	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2142C>A (p.Gly714=)	NOTCH3	Likely benign	0	GRCh37	19	15296300	15296300	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2142C>A (p.Gly714=)	NOTCH3	Likely benign	0	GRCh38	19	15185489	15185489	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1524G>A (p.Val508=)	NOTCH3	Likely benign	0	GRCh37	19	15298774	15298774	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1524G>A (p.Val508=)	NOTCH3	Likely benign	0	GRCh38	19	15187963	15187963	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.963C>T (p.Ala321=)	NOTCH3	Likely benign	0	GRCh37	19	15302308	15302308	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.963C>T (p.Ala321=)	NOTCH3	Likely benign	0	GRCh38	19	15191497	15191497	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5114+9C>G	NOTCH3	Likely benign	0	GRCh37	19	15281133	15281133	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5114+9C>G	NOTCH3	Likely benign	0	GRCh38	19	15170322	15170322	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6324G>A (p.Pro2108=)	NOTCH3	Likely benign	0	GRCh37	19	15272115	15272115	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6324G>A (p.Pro2108=)	NOTCH3	Likely benign	0	GRCh38	19	15161304	15161304	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6030C>T (p.Asp2010=)	NOTCH3	Likely benign	0	GRCh37	19	15272409	15272409	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6030C>T (p.Asp2010=)	NOTCH3	Likely benign	0	GRCh38	19	15161598	15161598	G	A	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.5994T>G (p.Arg1998=)	NOTCH3	Likely benign	0	GRCh37	19	15272445	15272445	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5994T>G (p.Arg1998=)	NOTCH3	Likely benign	0	GRCh38	19	15161634	15161634	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5790T>C (p.Ala1930=)	NOTCH3	Likely benign	0	GRCh37	19	15276204	15276204	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5790T>C (p.Ala1930=)	NOTCH3	Likely benign	0	GRCh38	19	15165393	15165393	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5127G>A (p.Lys1709=)	NOTCH3	Likely benign	0	GRCh37	19	15280969	15280969	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5127G>A (p.Lys1709=)	NOTCH3	Likely benign	0	GRCh38	19	15170158	15170158	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4086T>C (p.Ala1362=)	NOTCH3	Likely benign	0	GRCh37	19	15288653	15288653	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4086T>C (p.Ala1362=)	NOTCH3	Likely benign	0	GRCh38	19	15177842	15177842	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3687T>C (p.Gly1229=)	NOTCH3	Likely benign	0	GRCh37	19	15289867	15289867	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3687T>C (p.Gly1229=)	NOTCH3	Likely benign	0	GRCh38	19	15179056	15179056	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2331G>A (p.Pro777=)	NOTCH3	Likely benign	0	GRCh37	19	15295796	15295796	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2331G>A (p.Pro777=)	NOTCH3	Likely benign	0	GRCh38	19	15184985	15184985	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1392C>G (p.Thr464=)	NOTCH3	Likely benign	0	GRCh37	19	15299146	15299146	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1392C>G (p.Thr464=)	NOTCH3	Likely benign	0	GRCh38	19	15188335	15188335	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1047T>C (p.Cys349=)	NOTCH3	Likely benign	0	GRCh37	19	15300229	15300229	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1047T>C (p.Cys349=)	NOTCH3	Likely benign	0	GRCh38	19	15189418	15189418	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6351C>T (p.Ser2117=)	NOTCH3	Likely benign	0	GRCh37	19	15272088	15272088	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6351C>T (p.Ser2117=)	NOTCH3	Likely benign	0	GRCh38	19	15161277	15161277	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5898C>T (p.Asp1966=)	NOTCH3	Likely benign	0	GRCh37	19	15273291	15273291	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5898C>T (p.Asp1966=)	NOTCH3	Likely benign	0	GRCh38	19	15162480	15162480	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5742C>G (p.Ala1914=)	NOTCH3	Likely benign	0	GRCh37	19	15276252	15276252	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5742C>G (p.Ala1914=)	NOTCH3	Likely benign	0	GRCh38	19	15165441	15165441	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5007C>A (p.Arg1669=)	NOTCH3	Likely benign	0	GRCh37	19	15281249	15281249	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5007C>A (p.Arg1669=)	NOTCH3	Likely benign	0	GRCh38	19	15170438	15170438	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2436C>T (p.Asp812=)	NOTCH3	Likely benign	0	GRCh37	19	15295236	15295236	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2436C>T (p.Asp812=)	NOTCH3	Likely benign	0	GRCh38	19	15184425	15184425	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1701A>C (p.Ser567=)	NOTCH3	Likely benign	0	GRCh37	19	15298055	15298055	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1701A>C (p.Ser567=)	NOTCH3	Likely benign	0	GRCh38	19	15187244	15187244	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.912T>C (p.Asn304=)	NOTCH3	Likely benign	0	GRCh37	19	15302359	15302359	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.912T>C (p.Asn304=)	NOTCH3	Likely benign	0	GRCh38	19	15191548	15191548	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2995-7C>T	NOTCH3	Likely benign	0	GRCh37	19	15291646	15291646	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2995-7C>T	NOTCH3	Likely benign	0	GRCh38	19	15180835	15180835	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+9G>C	NOTCH3	Likely benign	0	GRCh37	19	15297907	15297907	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1840+9G>C	NOTCH3	Likely benign	0	GRCh38	19	15187096	15187096	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2995-6C>T	NOTCH3	Likely benign	0	GRCh37	19	15291645	15291645	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2995-6C>T	NOTCH3	Likely benign	0	GRCh38	19	15180834	15180834	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3328-8C>A	NOTCH3	Likely benign	0	GRCh37	19	15290315	15290315	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3328-8C>A	NOTCH3	Likely benign	0	GRCh38	19	15179504	15179504	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5103G>A (p.Ala1701=)	NOTCH3	Likely benign	0	GRCh37	19	15281153	15281153	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5103G>A (p.Ala1701=)	NOTCH3	Likely benign	0	GRCh38	19	15170342	15170342	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4793A>T (p.Asp1598Val)	NOTCH3	Likely benign	0	GRCh37	19	15281580	15281580	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4793A>T (p.Asp1598Val)	NOTCH3	Likely benign	0	GRCh38	19	15170769	15170769	T	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3762A>G (p.Pro1254=)	NOTCH3	Likely benign	0	GRCh37	19	15289709	15289709	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3762A>G (p.Pro1254=)	NOTCH3	Likely benign	0	GRCh38	19	15178898	15178898	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.283A>C (p.Ser95Arg)	NOTCH3	Likely benign	0	GRCh37	19	15303245	15303245	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.283A>C (p.Ser95Arg)	NOTCH3	Likely benign	0	GRCh38	19	15192434	15192434	T	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6569C>T (p.Ala2190Val)	NOTCH3	Benign	0	GRCh37	19	15271870	15271870	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6569C>T (p.Ala2190Val)	NOTCH3	Benign	0	GRCh38	19	15161059	15161059	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4320C>G (p.Ser1440Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15288419	15288419	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4320C>G (p.Ser1440Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15177608	15177608	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3043T>C (p.Cys1015Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15291591	15291591	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3043T>C (p.Cys1015Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15180780	15180780	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1594C>T (p.Arg532Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15298704	15298704	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1594C>T (p.Arg532Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15187893	15187893	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6666G>A (p.Pro2222=)	NOTCH3	Benign	0	GRCh37	19	15271773	15271773	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6666G>A (p.Pro2222=)	NOTCH3	Benign	0	GRCh38	19	15160962	15160962	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6521G>A (p.Arg2174Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15271918	15271918	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6521G>A (p.Arg2174Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15161107	15161107	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6440G>A (p.Gly2147Asp)	NOTCH3	Uncertain significance	0	GRCh37	19	15271999	15271999	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6440G>A (p.Gly2147Asp)	NOTCH3	Uncertain significance	0	GRCh38	19	15161188	15161188	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6437C>T (p.Ala2146Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15272002	15272002	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6437C>T (p.Ala2146Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15161191	15161191	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6395C>T (p.Ala2132Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15272044	15272044	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6395C>T (p.Ala2132Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15161233	15161233	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6164C>T (p.Ala2055Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15272275	15272275	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6164C>T (p.Ala2055Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15161464	15161464	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6097C>A (p.Pro2033Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15272342	15272342	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6097C>A (p.Pro2033Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15161531	15161531	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5900T>C (p.Met1967Thr)	NOTCH3	Likely benign	0	GRCh37	19	15273289	15273289	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5900T>C (p.Met1967Thr)	NOTCH3	Likely benign	0	GRCh38	19	15162478	15162478	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5673C>T (p.Leu1891=)	NOTCH3	Likely benign	0	GRCh37	19	15276321	15276321	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5673C>T (p.Leu1891=)	NOTCH3	Likely benign	0	GRCh38	19	15165510	15165510	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5285T>C (p.Val1762Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15278137	15278137	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5285T>C (p.Val1762Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15167326	15167326	A	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5129G>A (p.Gly1710Asp)	NOTCH3	Likely benign	0	GRCh37	19	15280967	15280967	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5129G>A (p.Gly1710Asp)	NOTCH3	Likely benign	0	GRCh38	19	15170156	15170156	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5006G>A (p.Arg1669His)	NOTCH3	Uncertain significance	0	GRCh37	19	15281250	15281250	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5006G>A (p.Arg1669His)	NOTCH3	Uncertain significance	0	GRCh38	19	15170439	15170439	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4627C>A (p.Leu1543Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15284988	15284988	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4627C>A (p.Leu1543Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15174177	15174177	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4455C>T (p.Asp1485=)	NOTCH3	Benign	0	GRCh37	19	15285160	15285160	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4455C>T (p.Asp1485=)	NOTCH3	Benign	0	GRCh38	19	15174349	15174349	G	A	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.4417_4428dup (p.Lys1473_Ala1476dup)	NOTCH3	Uncertain significance	0	GRCh37	19	15285186	15285187	C	CGGCGCAGTACTT	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.4417_4428dup (p.Lys1473_Ala1476dup)	NOTCH3	Uncertain significance	0	GRCh38	19	15174375	15174376	C	CGGCGCAGTACTT	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4406C>G (p.Pro1469Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15285209	15285209	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4406C>G (p.Pro1469Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15174398	15174398	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3427C>T (p.Arg1143Cys)	NOTCH3	Uncertain significance	0	GRCh37	19	15290208	15290208	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3427C>T (p.Arg1143Cys)	NOTCH3	Uncertain significance	0	GRCh38	19	15179397	15179397	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2739G>A (p.Pro913=)	NOTCH3	Likely benign	0	GRCh37	19	15292440	15292440	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2739G>A (p.Pro913=)	NOTCH3	Likely benign	0	GRCh38	19	15181629	15181629	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2163G>A (p.Glu721=)	NOTCH3	Benign	0	GRCh37	19	15296201	15296201	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2163G>A (p.Glu721=)	NOTCH3	Benign	0	GRCh38	19	15185390	15185390	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2149C>T (p.Arg717Cys)	NOTCH3	Uncertain significance	0	GRCh37	19	15296215	15296215	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2149C>T (p.Arg717Cys)	NOTCH3	Uncertain significance	0	GRCh38	19	15185404	15185404	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2137C>T (p.Pro713Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15296305	15296305	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2137C>T (p.Pro713Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15185494	15185494	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2119G>A (p.Gly707Ser)	NOTCH3	Uncertain significance	0	GRCh37	19	15296323	15296323	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2119G>A (p.Gly707Ser)	NOTCH3	Uncertain significance	0	GRCh38	19	15185512	15185512	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1752C>T (p.Asp584=)	NOTCH3	Benign	0	GRCh37	19	15298004	15298004	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1752C>T (p.Asp584=)	NOTCH3	Benign	0	GRCh38	19	15187193	15187193	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1677C>T (p.Cys559=)	NOTCH3	Benign	0	GRCh37	19	15298079	15298079	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1677C>T (p.Cys559=)	NOTCH3	Benign	0	GRCh38	19	15187268	15187268	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1631G>A (p.Arg544His)	NOTCH3	Uncertain significance	0	GRCh37	19	15298125	15298125	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1631G>A (p.Arg544His)	NOTCH3	Uncertain significance	0	GRCh38	19	15187314	15187314	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1059C>T (p.Asp353=)	NOTCH3	Benign	0	GRCh37	19	15300217	15300217	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1059C>T (p.Asp353=)	NOTCH3	Benign	0	GRCh38	19	15189406	15189406	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1051C>A (p.Leu351Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15300225	15300225	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1051C>A (p.Leu351Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15189414	15189414	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1027G>C (p.Gly343Arg)	NOTCH3	Uncertain significance	0	GRCh37	19	15302244	15302244	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1027G>C (p.Gly343Arg)	NOTCH3	Uncertain significance	0	GRCh38	19	15191433	15191433	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.925G>A (p.Glu309Lys)	NOTCH3	Uncertain significance	0	GRCh37	19	15302346	15302346	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.925G>A (p.Glu309Lys)	NOTCH3	Uncertain significance	0	GRCh38	19	15191535	15191535	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.754G>A (p.Val252Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15302604	15302604	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.754G>A (p.Val252Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15191793	15191793	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.743G>C (p.Gly248Ala)	NOTCH3	Uncertain significance	0	GRCh37	19	15302615	15302615	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.743G>C (p.Gly248Ala)	NOTCH3	Uncertain significance	0	GRCh38	19	15191804	15191804	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.583G>A (p.Glu195Lys)	NOTCH3	Uncertain significance	0	GRCh37	19	15302867	15302867	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.583G>A (p.Glu195Lys)	NOTCH3	Uncertain significance	0	GRCh38	19	15192056	15192056	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.488G>A (p.Arg163Gln)	NOTCH3	Uncertain significance	0	GRCh37	19	15302962	15302962	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.488G>A (p.Arg163Gln)	NOTCH3	Uncertain significance	0	GRCh38	19	15192151	15192151	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.353C>G (p.Ser118Cys)	NOTCH3	Pathogenic	1	GRCh37	19	15303097	15303097	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.353C>G (p.Ser118Cys)	NOTCH3	Pathogenic	1	GRCh38	19	15192286	15192286	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.305C>T (p.Ala102Val)	NOTCH3	Uncertain significance	0	GRCh37	19	15303223	15303223	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.305C>T (p.Ala102Val)	NOTCH3	Uncertain significance	0	GRCh38	19	15192412	15192412	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.204G>A (p.Pro68=)	NOTCH3	Benign	0	GRCh37	19	15303324	15303324	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.204G>A (p.Pro68=)	NOTCH3	Benign	0	GRCh38	19	15192513	15192513	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6924G>A (p.Gly2308=)	NOTCH3	Uncertain significance	0	GRCh37	19	15271515	15271515	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6924G>A (p.Gly2308=)	NOTCH3	Uncertain significance	0	GRCh38	19	15160704	15160704	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6619C>T (p.Arg2207Trp)	NOTCH3	Uncertain significance	0	GRCh37	19	15271820	15271820	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6619C>T (p.Arg2207Trp)	NOTCH3	Uncertain significance	0	GRCh38	19	15161009	15161009	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6061G>A (p.Val2021Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15272378	15272378	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.6061G>A (p.Val2021Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15161567	15161567	C	T	criteria provided, multiple submitters, no conflicts
+single nucleotide variant	NM_000435.3(NOTCH3):c.3227G>A (p.Arg1076His)	NOTCH3	Uncertain significance	0	GRCh37	19	15290983	15290983	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3227G>A (p.Arg1076His)	NOTCH3	Uncertain significance	0	GRCh38	19	15180172	15180172	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2450C>T (p.Pro817Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15295222	15295222	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2450C>T (p.Pro817Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15184411	15184411	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1775G>T (p.Arg592Leu)	NOTCH3	Uncertain significance	0	GRCh37	19	15297981	15297981	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1775G>T (p.Arg592Leu)	NOTCH3	Uncertain significance	0	GRCh38	19	15187170	15187170	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1774C>T (p.Arg592Cys)	NOTCH3	Likely pathogenic	1	GRCh37	19	15297982	15297982	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1774C>T (p.Arg592Cys)	NOTCH3	Likely pathogenic	1	GRCh38	19	15187171	15187171	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1732C>T (p.Arg578Cys)	NOTCH3	Likely pathogenic	1	GRCh37	19	15298024	15298024	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1732C>T (p.Arg578Cys)	NOTCH3	Likely pathogenic	1	GRCh38	19	15187213	15187213	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.369C>T (p.Cys123=)	NOTCH3	Likely benign	0	GRCh37	19	15303081	15303081	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.369C>T (p.Cys123=)	NOTCH3	Likely benign	0	GRCh38	19	15192270	15192270	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1345C>T (p.Arg449Cys)	NOTCH3	not provided	0	GRCh37	19	15299833	15299833	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1345C>T (p.Arg449Cys)	NOTCH3	not provided	0	GRCh38	19	15189022	15189022	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1279C>T (p.Arg427Cys)	NOTCH3	not provided	0	GRCh37	19	15299899	15299899	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1279C>T (p.Arg427Cys)	NOTCH3	not provided	0	GRCh38	19	15189088	15189088	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.719G>A (p.Cys240Tyr)	NOTCH3	not provided	0	GRCh37	19	15302639	15302639	C	T	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.719G>A (p.Cys240Tyr)	NOTCH3	not provided	0	GRCh38	19	15191828	15191828	C	T	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.520T>C (p.Cys174Arg)	NOTCH3	not provided	0	GRCh37	19	15302930	15302930	A	G	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.520T>C (p.Cys174Arg)	NOTCH3	not provided	0	GRCh38	19	15192119	15192119	A	G	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.386C>T (p.Ala129Val)	NOTCH3	not provided	0	GRCh37	19	15303064	15303064	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.386C>T (p.Ala129Val)	NOTCH3	not provided	0	GRCh38	19	15192253	15192253	G	A	no assertion provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.6632A>G (p.Tyr2211Cys)	NOTCH3	Uncertain significance	0	GRCh37	19	15271807	15271807	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.6632A>G (p.Tyr2211Cys)	NOTCH3	Uncertain significance	0	GRCh38	19	15160996	15160996	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5913+28T>G	NOTCH3	Benign	0	GRCh37	19	15273248	15273248	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5913+28T>G	NOTCH3	Benign	0	GRCh38	19	15162437	15162437	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5815+36G>A	NOTCH3	Benign	0	GRCh37	19	15276143	15276143	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5815+36G>A	NOTCH3	Benign	0	GRCh38	19	15165332	15165332	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5363-21G>A	NOTCH3	Benign	0	GRCh37	19	15276923	15276923	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.5363-21G>A	NOTCH3	Benign	0	GRCh38	19	15166112	15166112	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4892-22G>T	NOTCH3	Benign	0	GRCh37	19	15281386	15281386	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4892-22G>T	NOTCH3	Benign	0	GRCh38	19	15170575	15170575	C	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4891+23G>C	NOTCH3	Benign	0	GRCh37	19	15281459	15281459	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4891+23G>C	NOTCH3	Benign	0	GRCh38	19	15170648	15170648	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4737-19C>T	NOTCH3	Benign	0	GRCh37	19	15281655	15281655	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4737-19C>T	NOTCH3	Benign	0	GRCh38	19	15170844	15170844	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4736+23G>C	NOTCH3	Likely benign	0	GRCh37	19	15284856	15284856	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.4736+23G>C	NOTCH3	Likely benign	0	GRCh38	19	15174045	15174045	C	G	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3837+21T>A	NOTCH3	Benign	0	GRCh37	19	15289613	15289613	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3837+21T>A	NOTCH3	Benign	0	GRCh38	19	15178802	15178802	A	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3725G>A (p.Arg1242His)	NOTCH3	Uncertain significance	0	GRCh37	19	15289746	15289746	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3725G>A (p.Arg1242His)	NOTCH3	Uncertain significance	0	GRCh38	19	15178935	15178935	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3143-29C>T	NOTCH3	Benign	0	GRCh37	19	15291096	15291096	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.3143-29C>T	NOTCH3	Benign	0	GRCh38	19	15180285	15180285	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2978C>T (p.Thr993Met)	NOTCH3	Uncertain significance	0	GRCh37	19	15291788	15291788	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2978C>T (p.Thr993Met)	NOTCH3	Uncertain significance	0	GRCh38	19	15180977	15180977	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2792+21G>A	NOTCH3	Benign	0	GRCh37	19	15292366	15292366	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2792+21G>A	NOTCH3	Benign	0	GRCh38	19	15181555	15181555	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-11C>A	NOTCH3	Likely benign	0	GRCh37	19	15295272	15295272	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2411-11C>A	NOTCH3	Likely benign	0	GRCh38	19	15184461	15184461	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2209G>A (p.Ala737Thr)	NOTCH3	Uncertain significance	0	GRCh37	19	15296155	15296155	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2209G>A (p.Ala737Thr)	NOTCH3	Uncertain significance	0	GRCh38	19	15185344	15185344	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2070A>G (p.Pro690=)	NOTCH3	Likely benign	0	GRCh37	19	15296372	15296372	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2070A>G (p.Pro690=)	NOTCH3	Likely benign	0	GRCh38	19	15185561	15185561	T	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1952-23G>A	NOTCH3	Benign	0	GRCh37	19	15296513	15296513	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1952-23G>A	NOTCH3	Benign	0	GRCh38	19	15185702	15185702	C	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1952-32T>G	NOTCH3	Benign	0	GRCh37	19	15296522	15296522	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1952-32T>G	NOTCH3	Benign	0	GRCh38	19	15185711	15185711	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1951+38C>G	NOTCH3	Benign	0	GRCh37	19	15297651	15297651	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1951+38C>G	NOTCH3	Benign	0	GRCh38	19	15186840	15186840	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1494C>T (p.Gly498=)	NOTCH3	Likely benign	0	GRCh37	19	15298804	15298804	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.1494C>T (p.Gly498=)	NOTCH3	Likely benign	0	GRCh38	19	15187993	15187993	G	A	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.601T>G (p.Cys201Gly)	NOTCH3	Likely pathogenic	1	GRCh37	19	15302849	15302849	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.601T>G (p.Cys201Gly)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192038	15192038	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.316T>G (p.Cys106Gly)	NOTCH3	Likely pathogenic	1	GRCh37	19	15303212	15303212	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.316T>G (p.Cys106Gly)	NOTCH3	Likely pathogenic	1	GRCh38	19	15192401	15192401	A	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.197+24C>G	NOTCH3	Benign	0	GRCh37	19	15308287	15308287	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.197+24C>G	NOTCH3	Benign	0	GRCh38	19	15197476	15197476	G	C	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.197+23C>A	NOTCH3	Benign	0	GRCh37	19	15308288	15308288	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.197+23C>A	NOTCH3	Benign	0	GRCh38	19	15197477	15197477	G	T	criteria provided, single submitter
+single nucleotide variant	NM_000435.3(NOTCH3):c.2126G>A (p.Cys709Tyr)	NOTCH3	Likely pathogenic	1	GRCh37	19	15296316	15296316	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.2126G>A (p.Cys709Tyr)	NOTCH3	Likely pathogenic	1	GRCh38	19	15185505	15185505	C	T	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1162T>C (p.Cys388Arg)	NOTCH3	Likely pathogenic	1	GRCh37	19	15300114	15300114	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1162T>C (p.Cys388Arg)	NOTCH3	Likely pathogenic	1	GRCh38	19	15189303	15189303	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1136G>C (p.Cys379Ser)	NOTCH3	Likely pathogenic	1	GRCh37	19	15300140	15300140	C	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.1136G>C (p.Cys379Ser)	NOTCH3	Likely pathogenic	1	GRCh38	19	15189329	15189329	C	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.634T>C (p.Cys212Arg)	NOTCH3	Pathogenic	1	GRCh37	19	15302816	15302816	A	G	no assertion criteria provided
+single nucleotide variant	NM_000435.3(NOTCH3):c.634T>C (p.Cys212Arg)	NOTCH3	Pathogenic	1	GRCh38	19	15192005	15192005	A	G	no assertion criteria provided
+duplication	NM_000435.3(NOTCH3):c.6560_6563dup (p.Leu2189fs)	NOTCH3	Pathogenic	1	GRCh37	19	15271875	15271876	T	TGGCA	criteria provided, single submitter
+duplication	NM_000435.3(NOTCH3):c.6560_6563dup (p.Leu2189fs)	NOTCH3	Pathogenic	1	GRCh38	19	15161064	15161065	T	TGGCA	criteria provided, single submitter

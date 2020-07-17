@@ -9,3 +9,4 @@ from .dummy_lookup import DummyValuesPosition, DummyValuesRandom, DummyValuesFix
 from .uniprot_lookup import UniprotLookup
 from .sequence_distance_lookup import SequenceDistanceLookup
 from .psic_lookup import PSICLookup
+from .clinvar_lookup import ClinvarLookup

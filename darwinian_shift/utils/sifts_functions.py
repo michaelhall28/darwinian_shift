@@ -4,6 +4,7 @@ from Bio.SeqUtils import seq1
 import pandas as pd
 import urllib.request
 import xmlschema
+from xmlschema import XMLSchemaException
 import gzip
 
 
@@ -24,7 +25,12 @@ def read_xml(pdbid, sifts_dir, schema_location="http://www.ebi.ac.uk/pdbe/docs/s
         download_sifts_xml(pdbid, sifts_dir)
     output = os.path.join(sifts_dir, "{}.txt".format(pdbid.lower()))
     results = []
-    sifts_result = schema.to_dict(gzip.open(f))
+    try:
+        sifts_result = schema.to_dict(gzip.open(f))
+    except XMLSchemaException as e:
+        # lax validation allows reading of xml if schema not updated with latest changes (e.g. SCOP2).
+        sifts_result, errors = schema.to_dict(gzip.open(f), validation='lax')
+
     for entity in sifts_result['entity']:
         for segment in entity['segment']:
             for residue in segment['listResidue']['residue']:

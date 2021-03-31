@@ -9,9 +9,11 @@ from pysam import FastaFile
 import matplotlib.pylab as plt
 from darwinian_shift.section import Section, NoMutationsError
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
-from darwinian_shift.mutation_spectrum import MutationalSpectrum, GlobalKmerSpectrum, read_spectrum
-from darwinian_shift.statistics import CDFPermutationTest, ChiSquareTest
+from darwinian_shift.mutation_spectrum import MutationalSpectrum, GlobalKmerSpectrum, read_spectrum, \
+    EvenMutationalSpectrum
+from darwinian_shift.statistics import CDFZTest
 from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths
+from darwinian_shift.lookup_classes.errors import MetricLookupException
 
 
 BED_COLS = ['Chromosome/scaffold name', 'Genomic coding start', 'Genomic coding end',
@@ -19,9 +21,13 @@ BED_COLS = ['Chromosome/scaffold name', 'Genomic coding start', 'Genomic coding 
 
 
 class DarwinianShift:
-    # Looks at values based on position only e.g conservation scores.
-    # By default, filter to only keep single base substitutions.
-    # Can inherit from this class for values using chrom, pos, ref and mut
+    """
+    Class to process and store data for statistical testing of selection
+    Calculates the mutation spectrum from the data
+
+    Tests of individual genes/transcripts can run using the run_gene and run_transcript methods.
+    """
+
     def __init__(self,
                  # Input data
                  data,
@@ -50,7 +56,6 @@ class DarwinianShift:
                  # MutationalSpectrum options
                  spectra=None,  # Predefined spectra
 
-
                  gene_list=None, transcript_list=None,
                  deduplicate=False,
 
@@ -73,6 +78,35 @@ class DarwinianShift:
 
                  verbose=False
                  ):
+        """
+
+        :param data:
+        :param source_genome:
+        :param ensembl_release:
+        :param exon_file:
+        :param reference_fasta:
+        :param lookup:
+        :param stats:
+        :param sections:
+        :param pdb_directory:
+        :param sifts_directory:
+        :param download_sifts:
+        :param spectra: Spectrum object or list of Spectrum objects. The mutational spectrum is calculated from the data.
+        To skip this process, use EvenMutationalSpectrum or "Even", although this will impact the statistical results.
+        Default is a global trinucleotide spectrum.
+        :param gene_list:
+        :param transcript_list:
+        :param deduplicate:
+        :param use_longest_transcript_only:
+        :param excluded_positions:
+        :param excluded_mutation_types:
+        :param included_mutation_types:
+        :param chunk_size:
+        :param low_mem:
+        :param random_seed:
+        :param testing_random_seed:
+        :param verbose:
+        """
 
         self.verbose=verbose
         self.low_mem=low_mem
@@ -135,6 +169,7 @@ class DarwinianShift:
 
         self.use_longest_transcript_only = use_longest_transcript_only
         self.gene_list = gene_list
+        self.transcript_list = transcript_list
 
         self.transcript_objs = {}
         # If transcripts not specified, will use longest transcript per gene to calculate signature.
@@ -159,7 +194,7 @@ class DarwinianShift:
         self.sections = None
         additional_results_columns = self._get_sections(sections)
 
-        self._set_up_exon_data(gene_list=gene_list, transcript_list=transcript_list)
+        self._set_up_exon_data()
 
         self.checked_included = False
         self.total_spectrum_ref_mismatch = 0
@@ -168,16 +203,14 @@ class DarwinianShift:
             if not self.use_longest_transcript_only:
                 print('WARNING: Using multiple transcripts per gene may double count mutants in the spectrum')
                 print('Can set use_longest_transcript_only=True and save the spectrum, then run using the pre-calculated spectrum.')
-            self._get_spectra(self.verbose)
+            self._calculate_spectra(self.verbose)
             if self.verbose:
                 self._check_non_included_mutations()
-
-
 
         if stats is None:
             # Use the default statistics only
             # cdf permutation test and chi squared test
-            self.statistics = [CDFPermutationTest(), ChiSquareTest()]
+            self.statistics = [CDFZTest()]
         elif not isinstance(stats, (list, tuple)):
             self.statistics = [stats]
         else:
@@ -200,7 +233,6 @@ class DarwinianShift:
 
         self.results = None
         self.scored_data = []
-        self.repeated_values_warning = False
 
     def _get_reference_data(self, source_genome, ensembl_release, exon_file, reference_fasta):
         if source_genome is not None and (exon_file is None or reference_fasta is None):
@@ -249,8 +281,12 @@ class DarwinianShift:
                         type(s)))
         elif isinstance(spectra, MutationalSpectrum):
             self.spectra = [spectra]
-        elif isinstance(spectra, str):  # File path
-            self.spectra = [read_spectrum(spectra)]
+        elif isinstance(spectra, str):
+            if spectra.lower() == 'even':
+                self.spectra = [EvenMutationalSpectrum()]
+            else:
+                # File path
+                self.spectra = [read_spectrum(spectra)]
         else:
             raise TypeError(
                 'spectra must be a MutationalSpectrum object or list of MutationalSpectrum objects, {} given'.format(
@@ -291,15 +327,47 @@ class DarwinianShift:
         """
         section_dict_copy = section_dict.copy()  # Make sure not to edit the original dictionary/series
         transcript_id = section_dict_copy.pop('transcript_id')
-        transcript_obj = self.get_transcript(transcript_id)
+        transcript_obj = self.get_transcript_obj(transcript_id)
         sec = Section(transcript_obj, **section_dict_copy)
         return sec
 
-    def get_transcript(self, transcript_id):
+    def get_transcript_obj(self, transcript_id):
         t = self.transcript_objs.get(transcript_id, None)
         if t is None:
             t = self.make_transcript(transcript_id=transcript_id)
         return t
+
+    def get_transcript_id(self, gene):
+        t = self.gene_transcripts_map.get(gene, None)
+        if t is not None and len(t) == 1:
+            return list(t)[0]
+        else:
+            return t
+
+    def get_gene_name(self, transcript_id):
+        return self.transcript_gene_map.get(transcript_id, None)
+
+    def get_gene_list(self):
+        """
+        If no gene_list or transcript_list has been given for __init__,
+        this will be a list of the genes that overlap with the data.
+        :return:
+        """
+        if self.gene_list is not None:
+            return self.gene_list
+        else:
+            return list(self.gene_transcripts_map.keys())
+
+    def get_transcript_list(self):
+        """
+        If no gene_list or transcript_list has been given for __init__,
+        this will be a list of the genes that overlap with the data.
+        :return:
+        """
+        if self.transcript_list is not None:
+            return self.transcript_list
+        else:
+            return list(self.transcript_gene_map.keys())
 
     def make_transcript(self, gene=None, transcript_id=None, genomic_sequence_chunk=None, offset=None,
                         region_exons=None, region_mutations=None):
@@ -336,8 +404,8 @@ class DarwinianShift:
         intersection = intersection[['Gene name', 'Transcript stable ID']]
         return intersection.drop_duplicates()
 
-    def _set_up_exon_data(self, gene_list, transcript_list):
-        if gene_list is not None:  # Given genes. Will use longest transcript for each.
+    def _set_up_exon_data(self):
+        if self.gene_list is not None:  # Given genes. Will use longest transcript for each.
             if self.section_transcripts:
                 self.exon_data = self.exon_data[(self.exon_data['Gene name'].isin(self.gene_list)) |
                                                 (self.exon_data['Transcript stable ID'].isin(self.section_transcripts))]
@@ -347,14 +415,14 @@ class DarwinianShift:
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
             if set(self.gene_list).difference(self.exon_data['Gene name'].unique()):
                 raise ValueError('Not all requested genes found in exon data.')
-        elif transcript_list is not None:
+        elif self.transcript_list is not None:
             if self.section_transcripts:
-                transcript_list_total = set(transcript_list).union(self.section_transcripts)
+                transcript_list_total = set(self.transcript_list).union(self.section_transcripts)
             else:
-                transcript_list_total = transcript_list
+                transcript_list_total = self.transcript_list
             self.exon_data = self.exon_data[self.exon_data['Transcript stable ID'].isin(transcript_list_total)]
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
-            if set(transcript_list).difference(self.exon_data['Transcript stable ID'].unique()):
+            if set(self.transcript_list).difference(self.exon_data['Transcript stable ID'].unique()):
                 raise ValueError('Not all requested transcripts found in exon data.')
         else:
             overlapped_transcripts = self.get_overlapped_transcripts(self.data, self.exon_data)
@@ -367,6 +435,12 @@ class DarwinianShift:
                 self._remove_unused_transcripts()
                 if self.verbose:
                     print(len(self.exon_data['Gene name'].unique()), 'genes')
+
+        # Record the transcripts that are associated with each gene so they can be looked up
+        ed = self.exon_data[['Gene name', 'Transcript stable ID']].drop_duplicates()
+        for g, t in zip(ed['Gene name'], ed['Transcript stable ID']):
+            self.transcript_gene_map[t] = g
+            self.gene_transcripts_map[g].add(t)
 
     def _remove_unused_transcripts(self):
         if self.verbose:
@@ -449,7 +523,7 @@ class DarwinianShift:
             for t in c['transcripts']:
                 yield t, chunk_seq, offset, c['exon_data'], c['mut_data']
 
-    def _get_spectra(self, verbose=False):
+    def _calculate_spectra(self, verbose=False):
 
         for transcript_id, chunk_seq, offset, region_exons, region_mutations in self._chunk_iterator():
             if self.signature_transcript_list is not None and transcript_id not in self.signature_transcript_list:
@@ -482,7 +556,8 @@ class DarwinianShift:
             print('Warning: {} mutations do not match reference base'.format(self.total_spectrum_ref_mismatch))
 
     def run_gene(self, gene, plot=False, violinplot_bw=None,
-                 plot_scale=None, spectra=None, statistics=None):
+                 plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
+                    included_mutation_types=None, included_residues=None, excluded_residues=None):
         gene_transcripts = self.gene_transcripts_map[gene]
         if len(gene_transcripts) == 0:
             transcript_obj = self.make_transcript(gene=gene)
@@ -493,17 +568,40 @@ class DarwinianShift:
                 print('Multiple transcripts for gene {}. Running {}'.format(gene, transcript_id))
 
         return self.run_transcript(transcript_id, plot=plot, violinplot_bw=violinplot_bw,
-                                   plot_scale=plot_scale, spectra=spectra, statistics=statistics)
+                                   plot_scale=plot_scale, spectra=spectra, statistics=statistics,
+                                   excluded_mutation_types=excluded_mutation_types,
+                                   included_mutation_types=included_mutation_types, included_residues=included_residues,
+                                   excluded_residues=excluded_residues)
 
     def run_transcript(self, transcript_id, plot=False, violinplot_bw=None,
-                       plot_scale=None, spectra=None, statistics=None):
-
-        section = Section(self.get_transcript(transcript_id))
+                       plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
+                    included_mutation_types=None, included_residues=None, excluded_residues=None):
+        try:
+            section = Section(self.get_transcript_obj(transcript_id), excluded_mutation_types=excluded_mutation_types,
+                          included_mutation_types=included_mutation_types, included_residues=included_residues,
+                          excluded_residues=excluded_residues)
+        except (CodingTranscriptError, NoTranscriptError) as e:
+            print(type(e).__name__, e, '- Unable to run for', transcript_id)
+            return None
         return self.run_section(section, plot=plot, violinplot_bw=violinplot_bw,
                      plot_scale=plot_scale, spectra=spectra, statistics=statistics)
 
     def run_section(self, section, plot=False, violinplot_bw=None, plot_scale=None,
                     verbose=False, spectra=None, statistics=None):
+        """
+        Run statistics and optionally plot plots for a section.
+        The section can be a Section object, or a dictionary that defines the Section object to be made
+        The spectra and statistics can be passed here, but other options for the Section (such as included/excluded
+        mutation types) must be defined when the Section object is created or in the dictionary passed to the section arg
+        :param section:
+        :param plot:
+        :param violinplot_bw:
+        :param plot_scale:
+        :param verbose:
+        :param spectra:
+        :param statistics:
+        :return:
+        """
         if self.lookup is None:
             raise ValueError('No lookup defined. Define when initialising or use self.change_lookup()')
         try:
@@ -518,7 +616,7 @@ class DarwinianShift:
                 section.plot(violinplot_bw=violinplot_bw,
                          plot_scale=plot_scale)
             return section
-        except (NoMutationsError, AssertionError) as e:
+        except (NoMutationsError, AssertionError, CodingTranscriptError, NoTranscriptError, MetricLookupException) as e:
             print(type(e).__name__, e, '- Unable to run for', section.section_id)
             return None
 
@@ -562,12 +660,6 @@ class DarwinianShift:
             for col in self.results.columns:
                 if col.endswith('_pvalue'):
                     self.results[col.replace("pvalue", "qvalue")] = multipletests(self.results[col], method='fdr_bh')[1]
-
-            if self.results['repeat_proportion'].max() > 0:
-                print('WARNING!')
-                print('Ties/repeated values present. KS test results are not valid.')
-                print('Check "repeat_proportion" column in results. If proportion is very small, KS tests may be approximately correct.')
-                self.repeated_values_warning = True
 
             self.scored_data = pd.concat(scored_data, ignore_index=True)
 

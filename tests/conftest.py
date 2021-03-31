@@ -96,7 +96,7 @@ def seq_object(project):
 
 @pytest.fixture(scope='session')
 def pdb_seq_object(project):
-    transcript = project.get_transcript(transcript_id='ENST00000263388')
+    transcript = project.get_transcript_obj(transcript_id='ENST00000263388')
     s = Section(transcript, pdb_id='4ZLP', pdb_chain='A', start=1378, end=1640)
     s.load_section_mutations()
     return s

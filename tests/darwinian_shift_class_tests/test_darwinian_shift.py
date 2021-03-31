@@ -167,6 +167,7 @@ def test_section_input_process(sections, lookup):
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lookup,
                        sections=sections,
+                       stats=[CDFPermutationTest(), ChiSquareTest()],
                        testing_random_seed=1,
                        verbose=True
                        )

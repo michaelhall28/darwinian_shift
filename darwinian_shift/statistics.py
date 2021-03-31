@@ -1,4 +1,4 @@
-from scipy.stats import kstest, chisquare, binom_test
+from scipy.stats import kstest, chisquare, binom_test, norm
 from bisect import bisect_left, bisect_right
 import numpy as np
 import pandas as pd
@@ -47,6 +47,19 @@ class CDFPermutationTest:
                                        seq_object.observed_values, self.num_permutations, plot=plot,
                                        plot_title='Monte Carlo Test - CDF sum - ' + spectrum.name,
                                        testing_random_seed=self.testing_random_seed, show_plot=show_plot)
+        return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
+
+
+class CDFZTest:
+    # Using the central limit theorem to get a the normal distribution limit of the permutation test.
+    def __init__(self, name='CDF_Z'):
+        self.name = name
+
+    def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
+        res = ztest_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
+                            seq_object.observed_values, plot=plot,
+                            plot_title='Monte Carlo Test - CDF sum - ' + spectrum.name,
+                            show_plot=show_plot)
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 
 
@@ -303,6 +316,76 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
         'num_smaller_or_equal': num_smaller_or_equal,
         'num_larger_or_equal': num_larger_or_equal,
         'pvalue': pvalue, 'cdf_mean': obs_metric/num_obs
+    }
+    return results
+
+
+def z_pvalue(observed_value, loc, scale):
+    p_low = norm.cdf(observed_value, loc=loc, scale=scale)
+    p_high = norm.sf(observed_value, loc=loc, scale=scale)
+    return min(p_low, p_high) * 2  # Multiply by two to get two-tailed p-value
+
+
+def get_cdf_var(cumsum, weights):
+    return (cumsum**2*weights).sum() - (cumsum*weights).sum()**2
+
+
+def ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False,
+                  plot_title='CDF sum', show_plot=True):
+    """
+    Use the sum of the cdf values
+    The central limit theorem to get the normal distribution limit of the permutation test
+    For tied values, using the average of the cdf values.
+    :param exp_values:
+    :param mut_rates:
+    :param observed_values:
+    :param num_permutations:
+    :param plot:
+    :param num_plot_bins:
+    :param testing_random_seed:
+    :return:
+    """
+    num_obs = len(observed_values)
+    sorted_exp_values, sorted_mut_rates = sort_multiple_arrays_using_one(exp_values, mut_rates)
+
+    # Reduce to unique values. May reduce length by a lot for discrete distributions
+    # Method from https://stackoverflow.com/a/43094244
+    sorted_mut_rates = np.array([np.sum(m) for m in np.split(sorted_mut_rates,
+                                                             np.cumsum(np.unique(sorted_exp_values,
+                                                                                 return_counts=True)[1]))[:-1]])
+    sorted_exp_values = np.unique(sorted_exp_values)
+
+    weights = sorted_mut_rates / sorted_mut_rates.sum()
+    # For repeated values, use the mid-point of the cdf jump.
+    # Will centre the null results on 0.5, even in skewed discrete cases.
+    cumsum = np.cumsum(weights) - weights / 2
+
+    cdf_var = get_cdf_var(cumsum, weights)
+
+    observed_cumsum = cumsum[np.searchsorted(sorted_exp_values, observed_values)]
+
+    obs_metric = observed_cumsum.sum()
+
+    # Parameters for the normal distribution
+    loc = num_obs * 0.5
+    scale = np.sqrt(num_obs) * np.sqrt(cdf_var)
+
+    if plot:
+        x = np.linspace(*norm.interval(0.999, loc=loc, scale=scale), 1000)
+        plt.plot(x, norm.pdf(x, loc=loc, scale=scale), 'r--')
+        ylim = plt.gca().get_ylim()
+        plt.vlines(obs_metric, 0, ylim[1])
+        plt.ylim(ylim)
+        plt.title(plot_title)
+        plt.xlabel("CDF sum")
+        plt.ylabel('Frequency')
+        if show_plot:
+            plt.show()
+
+    pvalue = z_pvalue(obs_metric, loc=loc, scale=scale)
+
+    results = {
+        'pvalue': pvalue, 'cdf_mean': obs_metric / num_obs
     }
     return results
 

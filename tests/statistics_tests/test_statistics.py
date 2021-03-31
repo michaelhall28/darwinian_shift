@@ -251,3 +251,14 @@ def test_binned_chisquare_binom(exp_values, mut_rates, observed_values):
             np.testing.assert_array_almost_equal(v, expected_res[k])
         else:
             assert v == expected_res[k]
+
+
+def test_z_cdf(exp_values, mut_rates, observed_values):
+    res = ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False)
+
+    # output new test file. Do not uncomment unless results have changed and confident new results are correct
+    # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_z_cdf_results.pickle'), 'wb'))
+
+    expected_res = pickle.load(open(os.path.join(FILE_DIR, 'reference_z_cdf_results.pickle'), 'rb'))
+
+    assert res == expected_res

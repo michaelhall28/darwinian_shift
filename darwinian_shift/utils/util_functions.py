@@ -31,7 +31,7 @@ def reverse_complement(seq, keep_order=False):
 def output_transcript_sequences_to_fasta(ds_object, file_name, aa_sequence=True):
     """
     Output all the transcript sequences from a project to file.
-    Can either output the neucleotides or the amino acid sequence.
+    Can either output the nucleotides or the amino acid sequence.
     The name of each sequence will be the ensembl transcript id.
     Useful for running external tools.
     :param ds_object: The DarwinianShift object that has been set up with the project data.

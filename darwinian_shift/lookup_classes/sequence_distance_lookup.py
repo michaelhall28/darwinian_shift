@@ -7,7 +7,7 @@ class SequenceDistanceLookup:
     # Can use residue numbers, cds positions, or chromosomal positions to calculate the distance.
     position_types = ('residue', 'cdspos', 'pos')
 
-    def __init__(self, position_type='residue', boolean=None, target_key='target_selection', name=None):
+    def __init__(self, position_type='residue', boolean=False, target_key='target_selection', name=None):
         self.boolean = boolean  # Return True/False for in the target rather than a distance from it
         if position_type not in self.position_types:
             raise TypeError('Must pick from {}'.format(self.position_types))

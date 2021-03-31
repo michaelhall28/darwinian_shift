@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
+from .errors import MetricLookupException
 
-class TableLookupError(ValueError): pass
+class TableLookupError(MetricLookupException): pass
 
 class AAindexEntry():
     def __init__(self, accession, data_description, pmid, authors, title, journal_ref, similar, aadata):

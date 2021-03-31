@@ -2,6 +2,9 @@ import pandas as pd
 import os
 import glob
 from darwinian_shift.utils import get_sifts_alignment
+from .errors import MetricLookupException
+
+class FoldXLookupError(MetricLookupException): pass
 
 
 class FoldXLookup:
@@ -111,7 +114,7 @@ class FoldXLookup:
                 all_results.loc[all_results['converted_ref'] == all_results['converted_alt'], 'ddG'] = 0
             all_results.drop_duplicates(subset=['resnum', 'converted_ref', 'converted_alt'], inplace=True)
         else:
-            print('FoldX: Found no results for', foldx_results_dir)
+            raise FoldXLookupError('FoldX: Found no results for {}'.format(foldx_results_dir))
 
         return all_results
 

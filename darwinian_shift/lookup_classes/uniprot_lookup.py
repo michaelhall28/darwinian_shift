@@ -4,9 +4,10 @@ import urllib.parse
 import urllib.request
 import os
 import xmlschema
+from .errors import MetricLookupException
 
 
-class UniprotLookupError(ValueError): pass
+class UniprotLookupError(MetricLookupException): pass
 
 
 class UniprotLookup:
@@ -29,8 +30,9 @@ class UniprotLookup:
                  force_download=False, match_variant_change=True, name='Uniprot', ):
         """
 
-        :param uniprot_directory:
-        :param store_xml:
+        :param uniprot_directory: A directory to store xml files downloaded from uniprot.
+        Will use files from this directory if they already exist and force_download=False.
+        :param store_xml: If true, will store the xml files downloaded from Uniprot in the uniprot_directory.
         :param feature_types: List of the types to test. They include 'signal peptide', 'chain', 'topological domain',
          'transmembrane region', 'domain', 'repeat', 'region of interest', 'metal ion-binding site', 'site',
          'modified residue', 'glycosylation site', 'disulfide bond', 'cross-link', 'splice variant', 'mutagenesis site',
@@ -45,7 +47,7 @@ class UniprotLookup:
         or a file with lines like "ENST00000123456 P12345".
         A file in that format can be downloaded from ensembl biomart by selection the "Transcript stable ID" and
         "UniProtKB/Swiss-Prot ID". This can be useful for GRCh37.
-        Anything transcripts not in the given file/dictionary will be matched using the uniprot mapping as usual.
+        Any transcripts not in the given file/dictionary will be matched using the uniprot mapping as usual.
         :param force_download:
         """
         self.uniprot_upload_lists = uniprot_upload_lists
@@ -152,7 +154,7 @@ class UniprotLookup:
             features = xml_dict['entry'][0]['feature']
         except KeyError as e:
             # No features for this uniprot gene
-            return UniprotLookupError('No features found in xml_dict')
+            return None  # UniprotLookupError('No features found in xml_dict')
 
         # Need to unpack the feature dictionaries and make a pandas dataframe
         new_dicts = []
@@ -261,10 +263,10 @@ class UniprotLookup:
     def annotate_dataframe(self, df, transcript_id, sep='|||'):
         feature_columns = []  # List the columns used for the annotating of the mutations
         transcript_features = self.get_uniprot_data(transcript_id)
-        if 'location_sequence' in transcript_features.columns:
-            # Entry defined on an alternative isoform. Remove here as it could match to the wrong residues.
-            transcript_features = transcript_features[pd.isnull(transcript_features['location_sequence'])]
         if transcript_features is not None:
+            if 'location_sequence' in transcript_features.columns:
+                # Entry defined on an alternative isoform. Remove here as it could match to the wrong residues.
+                transcript_features = transcript_features[pd.isnull(transcript_features['location_sequence'])]
             if self.feature_types == 'all':
                 transcript_feature_types = transcript_features['type'].unique()
             else:

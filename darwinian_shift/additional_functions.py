@@ -1,4 +1,5 @@
 from darwinian_shift.lookup_classes import UniprotLookup
+from darwinian_shift.lookup_classes.uniprot_lookup import UniprotLookupError
 from darwinian_shift.general_functions import DarwinianShift
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
 from darwinian_shift.section import Section
@@ -72,34 +73,39 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
         spectrum = ds_object.spectra[0]  # Use the first spectrum from the ds object
 
     results = []
-    feature_columns = []
+    all_feature_columns = set()
     for gene, t, sec in zip(genes, transcripts, sections):
-        if seq_type == 'section':
-            s = ds_object.make_section(sec)
-        else:
-            transcript = Transcript(gene=gene, transcript_id=t, project=ds_object)
-            s = Section(transcript)
-        expected, observed, feature_columns, total_muts = _get_uniprot_counts(s, spectrum, uniprot_lookup)
+        try:
+            if seq_type == 'section':
+                s = ds_object.make_section(sec)
+            else:
+                transcript = Transcript(gene=gene, transcript_id=t, project=ds_object)
+                s = Section(transcript)
+            expected, observed, feature_columns, total_muts = _get_uniprot_counts(s, spectrum, uniprot_lookup)
 
-        d = _get_poisson_pvalues_dict(expected, observed, feature_columns, total_muts)
-        if seq_type == 'gene':
-            seq_name = gene
-        elif seq_type == 'transcript':
-            seq_name = t
-        else:
-            seq_name = s.section_id
+            d = _get_binom_pvalues_dict(expected, observed, feature_columns, total_muts)
+            if seq_type == 'gene':
+                seq_name = gene
+            elif seq_type == 'transcript':
+                seq_name = t
+            else:
+                seq_name = s.section_id
 
-        d[seq_type] = seq_name
+            d[seq_type] = seq_name
 
-        for ex, ob, f in zip(expected, observed, feature_columns):
-            d[f + '_expected'] = ex
-            d[f + '_observed'] = ob
-        results.append(d)
-        if plot:
-            _plot_uniprot_counts(expected, observed, feature_columns, seq_name, output_file_name_template)
+            for ex, ob, f in zip(expected, observed, feature_columns):
+                d[f + '_expected'] = ex
+                d[f + '_observed'] = ob
+            results.append(d)
+            all_feature_columns.update(feature_columns)
+            if plot:
+                _plot_uniprot_counts(expected, observed, feature_columns, seq_name, output_file_name_template)
+        except (CodingTranscriptError, NoTranscriptError, UniprotLookupError) as e:
+            print(type(e).__name__, e, '- Unable to run for', gene)
+
 
     results_dataframe = pd.DataFrame(results)
-    return _multiple_test_correct(results_dataframe, feature_columns)
+    return _multiple_test_correct(results_dataframe, all_feature_columns)
 
 
 def _get_uniprot_counts(section, spectrum, uniprot_lookup):
@@ -147,17 +153,34 @@ def _plot_uniprot_counts(expected_counts, observed_counts, feature_columns, titl
     plt.show()
 
 
-def _get_poisson_pvalues_dict(expected, observed, feature_columns, total_muts):
+def _get_binom_pvalues_dict(expected, observed, feature_columns, total_muts):
     return {feature + '_pvalue': binom_test(ob, n=total_muts, p=ex/total_muts) for (ex, ob, feature) in zip(expected, observed,
                                                                                                feature_columns)}
 
 def _multiple_test_correct(results_dataframe, feature_columns):
     p_value_columns = [col+'_pvalue' for col in feature_columns]
-    q = multipletests(results_dataframe[p_value_columns].values.ravel(), method='fdr_bh')[1]
-    q_value_columns = [col+'_qvalue' for col in feature_columns]
-    for c in q_value_columns:
-        results_dataframe[c] = np.nan
-    results_dataframe.loc[:, q_value_columns] = q.reshape(len(results_dataframe), int(len(q) / len(results_dataframe)))
+    if not results_dataframe[p_value_columns].empty:
+        pvals = results_dataframe[p_value_columns].values.ravel()
+        non_nan_pos = np.where(~np.isnan(pvals))
+        non_nan_pvals = pvals[non_nan_pos]
+        q_ = multipletests(non_nan_pvals, method='fdr_bh')[1]
+        # Reinsert the nan values to keep the length of q-values the same as the number of p-value positions in the df
+        q = np.full(len(pvals), np.nan)
+        q[non_nan_pos] = q_
+        q_value_columns = [col+'_qvalue' for col in feature_columns]
+        for c in q_value_columns:
+            results_dataframe[c] = np.nan
+
+        results_dataframe.loc[:, q_value_columns] = q.reshape(len(results_dataframe), int(len(q) / len(results_dataframe)))
+
+        if "gene" in results_dataframe.columns:
+            results_dataframe = results_dataframe.set_index('gene')
+        elif "transcript" in results_dataframe.columns:
+            results_dataframe = results_dataframe.set_index('transcript')
+        elif "section" in results_dataframe.columns:
+            results_dataframe = results_dataframe.set_index('section')
+        results_dataframe = results_dataframe[sorted(results_dataframe.columns)]
+
     return results_dataframe
 
 
@@ -246,7 +269,23 @@ MOLECULE_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/molecules/"
 SUMMARY_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/"
 
 
-def get_pdb_details(uniprot_lookup, transcript_id, min_resolution=None, method=None, reject_mutants=True):
+def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, method=None, reject_mutants=True,
+                    uniprot_lookup_kwargs=None):
+    """
+
+    :param transcript_id:
+    :param uniprot_lookup: Can provide a UniprotLookup object if wanting to use non-default arguments.
+    Alternatively can pass uniprot_lookup_kwargs
+    :param min_resolution:
+    :param method:
+    :param reject_mutants:
+    :param uniprot_lookup_kwargs: Dictionary of keyword arguments passed to the UniprotLookup
+    :return:
+    """
+    if uniprot_lookup is None:
+        if uniprot_lookup_kwargs is None:
+            uniprot_lookup_kwargs = {}
+        uniprot_lookup = UniprotLookup(**uniprot_lookup_kwargs)
     pdbs = uniprot_lookup.get_pdb_structures_for_transcript(transcript_id)
     if min_resolution is not None:
         if 'resolution' in pdbs.columns:
@@ -277,7 +316,7 @@ def get_pdb_details(uniprot_lookup, transcript_id, min_resolution=None, method=N
     if len(details) > 0:
         df = pd.concat(details)
         df['transcript_id'] = transcript_id
-        return df
+        return df.reset_index()
     else:
         return pd.DataFrame()
 

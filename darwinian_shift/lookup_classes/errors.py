@@ -1,0 +1,2 @@
+
+class MetricLookupException(ValueError): pass

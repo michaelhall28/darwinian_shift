@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import binom_test
 from statsmodels.stats.multitest import multipletests
 import requests
+from .additional_plotting_functions import hide_top_and_right_axes
 
 
 example_feature_types = ('signal peptide', 'chain', 'topological domain', 'topological domain',
@@ -77,7 +78,10 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
     for gene, t, sec in zip(genes, transcripts, sections):
         try:
             if seq_type == 'section':
-                s = ds_object.make_section(sec)
+                if isinstance(sec, Section):
+                    s = sec
+                else:
+                    s = ds_object.make_section(sec)
             else:
                 transcript = Transcript(gene=gene, transcript_id=t, project=ds_object)
                 s = Section(transcript)
@@ -185,9 +189,13 @@ def _multiple_test_correct(results_dataframe, feature_columns):
 
 
 def get_bins_for_uniprot_features(uniprot_features_df,
-                                  feature_types=('domain', 'repeat', 'transmembrane region'),
+                                  feature_types=None,
                                   start_from_zero=True, min_gap=0, last_residue=None):
-    features = uniprot_features_df[uniprot_features_df['type'].isin(feature_types)].sort_values('begin_position')
+    if feature_types is not None:
+        features = uniprot_features_df[uniprot_features_df['type'].isin(feature_types)]
+    else:
+        features = uniprot_features_df
+    features = features.sort_values('begin_position')
     bins = []
     types = []
     descriptions = []
@@ -217,6 +225,40 @@ def get_bins_for_uniprot_features(uniprot_features_df,
             bins[-1] = last_residue
     return bins, types, descriptions
 
+
+def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, feature_types=None,
+                           colours=None, labels="descriptions", figsize=(10, 3), linewidth=1,
+                           normalise_by_region_size=True):
+    """
+    Function to help plot mutation counts in regions defined by uniprot.
+    Default arguments unlikely to look good, but can help determine the colours and labels to use.
+    Features must not overlap, so the input uniprot_data may have to be filtered (using feature_types or otherwise).
+
+    :param section:
+    :param uniprot_data: dataframe of uniprot features from UniprotLookup.get_uniprot_data
+    :param min_gap:
+    :param feature_types:
+    :param colours:
+    :param labels:
+    :return:
+    """
+    if section.null_mutations is None:
+        section.load_section_mutations()
+    last_residue = section.null_mutations['residue'].max()
+    bins, types, descriptions = get_bins_for_uniprot_features(uniprot_data, feature_types=feature_types,
+                                                          min_gap=min_gap, last_residue=last_residue)
+    if colours is None:
+        colours = ["C{}".format(i) for i in range(len(descriptions))]
+        section.plot_bar_observations(figsize=figsize, binning_regions=bins,
+             normalise_by_region_size=normalise_by_region_size, linewidth=linewidth, facecolour=colours)
+    plt.xlim([0, last_residue])
+    hide_top_and_right_axes(plt.gca())
+    if labels == 'descriptions':
+        labels = descriptions
+    elif labels == 'types':
+        labels = types
+    plt.xticks(bins[:-1] + np.diff(bins)/2, labels, rotation=90)
+    plt.xlabel('')
 
 
 def annotate_data(ds_object, output_file=None, verbose=False, annotation_separator="|||", remove_spectra_columns=False,

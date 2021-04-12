@@ -41,7 +41,8 @@ class FoldXLookup:
             self.download_sifts = project.download_sifts
 
     def __call__(self, seq_object):
-        return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations)
+        return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations,
+                                getattr(seq_object, 'foldx_results_dir', None))
 
     def _get_sifts_alignment(self, pdb_id, pdb_chain):
         sifts = get_sifts_alignment(pdb_id, self.sifts_directory, download=self.download_sifts)
@@ -77,11 +78,13 @@ class FoldXLookup:
         """
 
         :param foldx_results_dir:
-        :param file_name_start:
-        :param correction: Residue numbers in pdb files do not always match the protein. E.g 3ETO is off by one.
-        This is now replaced by aligning sequences.
         :return:
         """
+        # Check directory exists first
+        if not os.path.isdir(foldx_results_dir):
+            raise FoldXLookupError('FoldX: Directory {} does not exist'.format(foldx_results_dir))
+
+
         all_results = []
         for f in glob.glob(os.path.join(foldx_results_dir, self.foldx_file_name_start + '*')):
             with open(f) as fh:
@@ -118,12 +121,19 @@ class FoldXLookup:
 
         return all_results
 
-    def _get_scores(self, pdb_id, pdb_chain, df):
+    def _get_scores(self, pdb_id, pdb_chain, df, pdb_foldx_results_dir=None):
         sifts = self._get_sifts_alignment(pdb_id, pdb_chain)
         if sifts is None:
             scores = None
+        elif len(sifts['uniprot id'].unique()) > 1:
+            raise FoldXLookupError('SIFTS: Multiple uniprot ids {} for same chain {}:chain{}. May be fusion?'.format(
+                sifts['uniprot id'].unique(), pdb_id, pdb_chain))
         else:
-            foldx_results = self.load_foldx_data(os.path.join(self.foldx_results_directory, pdb_id.upper(), "chain{}".format(pdb_chain)))
+            if pdb_foldx_results_dir is None:
+                # If not given, try to use the file structure self.foldx_results_directory/PDB_ID/chainX
+                pdb_foldx_results_dir = os.path.join(self.foldx_results_directory, pdb_id.upper(), "chain{}".format(pdb_chain))
+
+            foldx_results = self.load_foldx_data(pdb_foldx_results_dir)
             foldx_results = pd.merge(foldx_results, sifts, left_on='resnum', right_on='pdb position', how='left')
             foldx_results.rename(index=str, columns={"resnum": "old_resnum", "uniprot position": "resnum"}, inplace=True)
             foldx_results['aachange'] = foldx_results.apply(self._get_mutid, axis=1)

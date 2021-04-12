@@ -27,7 +27,7 @@ class UniprotLookup:
                  description_contains=None, uniprot_upload_lists='https://www.uniprot.org/uploadlists/',
                  uniprot_xml_url="https://www.uniprot.org/uniprot/{}.xml",
                  schema_location='https://www.uniprot.org/docs/uniprot.xsd', transcript_uniprot_mapping=None,
-                 force_download=False, match_variant_change=True, name='Uniprot', ):
+                 force_download=False, match_variant_change=True, name='Uniprot', verbose=False):
         """
 
         :param uniprot_directory: A directory to store xml files downloaded from uniprot.
@@ -50,6 +50,7 @@ class UniprotLookup:
         Any transcripts not in the given file/dictionary will be matched using the uniprot mapping as usual.
         :param force_download:
         """
+        self.verbose=verbose
         self.uniprot_upload_lists = uniprot_upload_lists
         self.uniprot_xml_url = uniprot_xml_url
         self.schema = xmlschema.XMLSchema(schema_location)
@@ -96,6 +97,10 @@ class UniprotLookup:
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.null_mutations, seq_object.transcript_id)
+
+    def setup_project(self, project):
+        if project.verbose and not self.verbose:
+            self.verbose=True
 
     def get_uniprot_xml_from_acc(self, acc):
         url = self.uniprot_xml_url.format(acc)
@@ -245,6 +250,11 @@ class UniprotLookup:
                 with open(xml_path, 'w') as fh:
                     fh.writelines(xml)
 
+        if self.verbose:
+            if uniprot_id is None:
+                uniprot_id = xml_dict['entry'][0]['accession'][0]
+            print("Using uniprot accession {} for transcript id {}".format(uniprot_id, transcript_id))
+            print("https://www.uniprot.org/uniprot/{}".format(uniprot_id))
         return xml_dict
 
     def get_uniprot_data(self, transcript_id):

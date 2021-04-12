@@ -400,9 +400,12 @@ class DarwinianShift:
         except pd.errors.EmptyDataError as e:
             return None
 
-        intersection.rename({'score': 'Transcript stable ID', 'name': 'Gene name'}, inplace=True, axis=1)
-        intersection = intersection[['Gene name', 'Transcript stable ID']]
-        return intersection.drop_duplicates()
+        if not intersection.empty:
+            intersection.rename({'score': 'Transcript stable ID', 'name': 'Gene name'}, inplace=True, axis=1)
+            intersection = intersection[['Gene name', 'Transcript stable ID']]
+            return intersection.drop_duplicates()
+        else:
+            return None
 
     def _set_up_exon_data(self):
         if self.gene_list is not None:  # Given genes. Will use longest transcript for each.

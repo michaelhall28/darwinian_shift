@@ -1,5 +1,7 @@
 import numpy as np
 from Bio.Seq import Seq
+import wget
+from urllib3.exceptions import HTTPError
 
 COMPLEMENTS = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'N':'N'}
 
@@ -58,3 +60,14 @@ def sort_multiple_arrays_using_one(*arrays):
     assert all([len(arrays[i]) == len(arrays[0]) for i in range(1, len(arrays))]), 'Arrays must all be same length'
     a = np.array(arrays)
     return a[:, a[0].argsort()]
+
+
+PDB_DOWNLOAD_BASE_URL="https://files.rcsb.org/download"
+
+def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
+    url = PDB_DOWNLOAD_BASE_URL + "/{}.{}".format(pdb_id, file_type)
+    try:
+        wget.download(url, output_dir)
+    except HTTPError as e:
+        print(type(e).__name__, e, 'Failed to download file from', url)
+        raise e

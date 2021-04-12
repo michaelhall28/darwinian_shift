@@ -61,6 +61,12 @@ class Transcript:
                                                                          transcript=self.transcript_id)
         if self.transcript_id is None:
             raise NoTranscriptError('No transcript for {}'.format(self.gene, self.transcript_id))
+        elif transcript_exons is None:
+            if self.gene is not None:
+                raise NoTranscriptError('No data for gene/transcript {}/{} in exon_data'.format(self.gene,
+                                                                                            self.transcript_id))
+            else:
+                raise NoTranscriptError('No data for transcript {} in exon_data'.format(self.transcript_id))
 
         self.chromosomal_positions = get_positions_from_ranges(self.exon_ranges, self.strand)
 

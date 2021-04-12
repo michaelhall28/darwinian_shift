@@ -231,7 +231,10 @@ class Section:
             self.statistical_results['median_shift_' + spectrum.name] = self.statistical_results['observed_median'] - \
                                                                         self.statistical_results['expected_median_' + spectrum.name]
 
-            self.statistical_results['expected_mean_' + spectrum.name] = np.mean(self.null_scores * self.null_mutations[spectrum.rate_column])
+            self.statistical_results[
+                'expected_mean_' + spectrum.name] = np.sum(self.null_scores *
+                                                           self.null_mutations[spectrum.rate_column])\
+                                                    /self.null_mutations[spectrum.rate_column].sum()
             self.statistical_results['mean_shift_' + spectrum.name] = self.statistical_results['observed_mean'] - \
                                                                       self.statistical_results['expected_mean_' + spectrum.name]
             for statistic in statistics:
@@ -339,6 +342,14 @@ class Section:
     def plot_sliding_window(self, window_size=20, window_step=1,
                             spectra=None, show_legend=True, figsize=(15, 5), legend_args=None, show_plot=False,
                             colours=None, return_fig=False, show_residues=False, xlim=None, ylim=None, ax=None):
+        start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
+
+        starts = np.arange(start, end + 2 - window_size, window_step)
+        if len(starts) == 0:
+            print("Region too small compared to window size/step.")
+            return
+        ends = starts + window_size - 1
+
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
@@ -347,11 +358,6 @@ class Section:
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, spectra)
-
-        start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
-
-        starts = np.arange(start, end + 2 - window_size, window_step)
-        ends = starts + window_size - 1
 
         # Get some normalising factors, so the total mutations in the gene is the same in the observed and expected plots
         normalising_factors = {
@@ -562,19 +568,34 @@ class Section:
 
         colours = self._get_plot_colours(colours, spectra)
         if chi_tests is None:
-            chi_tests = [t.name for t in self.project.statistics if isinstance(t, ChiSquareTest)]
+            # Use any chi-square tests from the project
+            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest)]
+        elif isinstance(chi_tests, str):
+            # Names of single test given instead. Use only the chi-square test from the project that match this name
+            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest) and t.name == chi_tests]
+        if isinstance(chi_tests, ChiSquareTest):
+            chi_tests = [chi_tests]
+            self.statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
+        elif all([isinstance(c, str) for c in chi_tests]):
+            # Names given instead. Use only the chi-square tests from the project that match these names
+            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest) and t.name in chi_tests]
+        elif all([isinstance(c, ChiSquareTest) for c in chi_tests]):
+            self.statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
         else:
-            chi_tests = [t.name for t in self.project.statistics if isinstance(t, ChiSquareTest) and
-                         (t in chi_tests or t.name in chi_tests)]
+            raise ValueError('chi_tests not recognised')
+
         if len(chi_tests) == 0:
             print('No chi square tests to plot')
         else:
-            if self.statistical_results is None:
-                self.statistical_tests(plot=False)  # The chi-square tests need to be run first
+            # if self.statistical_results is None or not all(["_".join([t.name, spectrum.name, 'expected_counts']) in
+            #                                                 self.statistical_results for t in chi_tests for
+            #                                                 spectrum in spectra]):
+            #     self.statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
 
             fig, axes = plt.subplots(nrows=len(chi_tests), ncols=len(spectra), squeeze=False, figsize=figsize)
             legend_items = []
-            for i, chi_name in enumerate(chi_tests):
+            for i, chi_test in enumerate(chi_tests):
+                chi_name = chi_test.name
                 for j, spectrum in enumerate(spectra):
                     expected_counts = self.statistical_results["_".join([chi_name, spectrum.name, 'expected_counts'])]
                     observed_counts = self.statistical_results["_".join([chi_name, spectrum.name, 'observed_counts'])]
@@ -856,11 +877,11 @@ class Section:
 
                 observed_counts[i] = obs / norm_fac
 
-            for spectrum, colour in zip(spectra, colours):
+            for spectrum, colour in zip(spectra, colours[1:]):
                 ax.plot(seq_pdb_residues, expected_counts[spectrum.name],
                          label=spectrum.name, c=colour)
             observed_counts = np.array(observed_counts)
-            ax.plot(seq_pdb_residues, observed_counts, c=colours[len(spectra)], label='Observed')
+            ax.plot(seq_pdb_residues, observed_counts, c=colours[0], label='Observed', linewidth=3)
             if xlim is not None:
                 ax.set_xlim(xlim)
             else:
@@ -900,6 +921,16 @@ class Section:
                                           spectra=None, show_legend=True, figsize=(15, 5), legend_args=None,
                                           show_plot=False, colours=None, return_fig=False,
                                            show_residues=False, xlim=None, ylim=None, ax=None):
+
+        start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
+
+        starts = np.arange(start, end + 2 - window_size, window_step)
+        if len(starts) == 0:
+            print("Region too small compared to window size/step.")
+            return
+
+        ends = starts + window_size - 1
+
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
@@ -908,11 +939,6 @@ class Section:
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, spectra)
-
-        start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
-
-        starts = np.arange(start, end + 2 - window_size, window_step)
-        ends = starts + window_size - 1
 
         # Get some normalising factors, so the total mutations in the gene is the same in the observed and expected plots
         normalising_factors = {

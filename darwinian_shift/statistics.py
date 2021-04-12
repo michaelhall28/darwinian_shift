@@ -414,16 +414,13 @@ def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_e
     else:
         if len(values) < max_bins:
             # If fewer unique values than max bins, only combine if required to reach minimum frequency
-            # print('Only', len(values), 'unique values')
             min_weight_per_bin = min_exp_freq
         else:
             # Use a rough method to get even(ish) bins
             min_weight_per_bin = max(1 / max_bins * total_count, min_exp_freq)  # Get initial average size
-            # print('initial min bin weight', min_weight_per_bin)
             if min_weight_per_bin > min_exp_freq:
                 # Some frequent single values can be put in own bin, and reduce required size of other bins to reach average.
                 ordered_weights = sorted(weights, reverse=True)
-                # print('largest weights', ordered_weights[:3])
                 single_value_bins = 0
                 remaining_count = total_count
                 for ww in ordered_weights:
@@ -433,16 +430,14 @@ def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_e
                     else:
                         # Recalculate Weight per multi-value bin:
                         min_weight_per_bin = max(1 / (max_bins - single_value_bins) * remaining_count, min_exp_freq)
-                        # print('New min weight per bin', min_weight_per_bin)
                         # Check if any remaining single values are larger than this new min bin weight
-                        # print('Next weight', ww)
                         if ww > min_weight_per_bin:
                             remaining_count -= ww
                             single_value_bins += 1
                         else:
                             break
 
-        # print('min_weight_per_bin', min_weight_per_bin)
+
         min_diff = np.diff(values).min()
         bins = [values[0]]
         expected_frequencies = []
@@ -453,7 +448,6 @@ def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_e
                 expected_frequencies.append(bin_weight)
                 bin_weight = 0
             bin_weight += w
-            # print('v', v, 'w', w, 'bw', bin_weight)
 
         if len(expected_frequencies)  == 0:
             # One bin at most.

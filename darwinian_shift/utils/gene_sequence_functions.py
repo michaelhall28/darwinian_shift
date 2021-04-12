@@ -31,6 +31,9 @@ def get_genomic_ranges_for_gene(exon_data, gene=None, transcript=None, print_tra
 
     transcript_exons = exon_data[exon_data['Transcript stable ID'] == transcript].sort_values(
         'Exon rank in transcript')
+    if len(transcript_exons) == 0:
+        # no data for this transcript
+        return [], transcript, None, None
     exon_ranges = transcript_exons[['Genomic coding start', 'Genomic coding end']].values
     strand = transcript_exons.iloc[0]['Strand']
     if strand == -1:

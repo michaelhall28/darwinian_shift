@@ -3,15 +3,21 @@ from darwinian_shift.utils import get_pdb_positions
 import pandas as pd
 import MDAnalysis
 from MDAnalysis.lib.distances import distance_array
+from darwinian_shift.utils import download_pdb_file
 
 
 class StructureDistanceLookup:
-    # Use the distance from a given selection of atoms in the pdb file.
-    # Takes a selection string as used by MDAnalysis (same as VMD etc), e.g. 'protein and segid A and resid 3 4 5'
-    # The selection string must be correct for the pdb file (which may not match the protein residue numbers)
-    # Uses the alpha-carbons of the mutated residues for the distance calculations.
-    # The targets do not have to be alpha-carbons - depends entirely on the given string.
-    # Where alternative locations for an alpha-carbon exist in the pdb file, will use the average position.
+    """
+    Use the distance from a given selection of atoms in the pdb file.
+    Takes a selection string as used by MDAnalysis (same as VMD etc), e.g. 'protein and segid A and resid 3 4 5'
+    The selection string must be correct for the pdb file (which may not match the protein residue numbers)
+    Uses the alpha-carbons of the mutated residues for the distance calculations if distance_to_alpha_carbons=True.
+    Otherwise, finds the shortest distance of any atom in the residue
+    The targets do not have to be alpha-carbons - depends entirely on the given string.
+    Where alternative locations for an alpha-carbon exist in the pdb file, will use the average position.
+
+    If the pdb file does not already exist in the pdb_directory (current directory by default), will try to download it.
+    """
     def __init__(self, pdb_directory=None, sifts_directory=None, download_sifts=None, boolean=False,
                  target_key='target_selection', name=None, distance_to_alpha_carbons=False):
         self.pdb_directory = pdb_directory
@@ -43,12 +49,30 @@ class StructureDistanceLookup:
         return self._get_distance(seq_object.null_mutations, seq_object.pdb_id, seq_object.pdb_chain,
                                   target_selection)
 
+    def _get_pdb_file(self, pdb_id):
+        # First look for the gzipped pdb file
+        fp = os.path.join(self.pdb_directory, "{}.pdb.gz".format(pdb_id.lower()))
+        if os.path.isfile(fp):
+            return fp
+        else:
+            # If the compressed file doesn't exist, look for the uncompressed pdb file
+            fp2 = os.path.join(self.pdb_directory, "{}.pdb".format(pdb_id.lower()))
+            if os.path.isfile(fp):
+                return fp2
+            else:
+                # If that doesn't exist, try to download the file
+                download_pdb_file(pdb_id, self.pdb_directory, file_type='pdb.gz')
+                return fp
+
+
     def _get_distance(self, df, pdb_id, pdb_chain, target_selection):
-        try:
-            u = MDAnalysis.Universe(os.path.join(self.pdb_directory, "{}.pdb.gz".format(pdb_id.lower())))
-        except FileNotFoundError as e:
-            u = MDAnalysis.Universe(os.path.join(self.pdb_directory, "{}.pdb".format(pdb_id.lower())))
+        fp = self._get_pdb_file(pdb_id)
+        u = MDAnalysis.Universe(fp)
         target_residues = u.select_atoms(target_selection)
+        if len(target_residues) == 0:
+            # The requested target was not found in the pdb file
+            raise ValueError('Target selection "{}" did not include any atoms in structure {}'.format(target_selection,
+                                                                                                      pdb_id))
 
         # Use SIFTS to align with the null residues
         null_residues_original = sorted(df['residue'].unique())

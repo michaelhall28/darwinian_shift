@@ -313,20 +313,34 @@ class DarwinianShift:
 
         return additional_results_columns
 
-    def make_section_from_gene_name(self, gene):
-        transcript = self.make_transcript(gene=gene)
-        section = self.make_section({'transcript_id': transcript.transcript_id})
-        return section
-
-    def make_section(self, section_dict):
+    def make_section(self, section_dict=None, transcript_id=None, gene=None):
         """
 
-        :param section_dict: Can be dictionary or pandas Series. Must contain "transcript_id" and any other information
-        required to define a section (e.g. start/end or pdb_id and pdb_chain)
+        :param section_dict: Can be dictionary or pandas Series. Must contain "transcript_id" or "gene" and any
+        other information required to define a section (e.g. start/end or pdb_id and pdb_chain)
+        :param transcript_id:
+        :param gene:
         :return:
         """
-        section_dict_copy = section_dict.copy()  # Make sure not to edit the original dictionary/series
-        transcript_id = section_dict_copy.pop('transcript_id')
+        if section_dict is not None:
+            section_dict_copy = section_dict.copy()  # Make sure not to edit the original dictionary/series
+            if 'transcript_id' in section_dict_copy:
+                transcript_id = section_dict_copy.pop('transcript_id')
+            else:
+                transcript_id = self.get_transcript_id(section_dict_copy['gene'])
+                if isinstance(transcript_id, set):
+                    transcript_id = list(transcript_id)[0]
+                    print('Multiple transcripts for gene {}. Running {}'.format(section_dict_copy['gene'], transcript_id))
+        elif transcript_id is not None:
+            section_dict_copy = {}
+        elif gene is not None:
+            transcript_id = self.get_transcript_id(gene)
+            if isinstance(transcript_id, set):
+                transcript_id = list(transcript_id)[0]
+                print('Multiple transcripts for gene {}. Running {}'.format(gene, transcript_id))
+            section_dict_copy = {}
+        else:
+            raise ValueError('Must provide a section_dict, transcript_id or gene')
         transcript_obj = self.get_transcript_obj(transcript_id)
         sec = Section(transcript_obj, **section_dict_copy)
         return sec

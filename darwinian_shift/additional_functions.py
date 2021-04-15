@@ -3,6 +3,7 @@ from darwinian_shift.lookup_classes.uniprot_lookup import UniprotLookupError
 from darwinian_shift.general_functions import DarwinianShift
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
 from darwinian_shift.section import Section
+from darwinian_shift.statistics import binned_chisquare, ztest_cdf_sum
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -391,3 +392,59 @@ def get_pdb_title(pdb_id):
     r = requests.get(SUMMARY_URL + pdb_id + '?pretty=false')
     title = r.json()[pdb_id.lower()][0]['title']
     return title
+
+
+# Rough function for quick testing with PDBe-KB data
+def pdbe_kb_exploration(ds_object, gene=None, transcript_id=None, score_methods=None, data_label='accession',
+                        verbose=False, spectrum=None):
+    """
+    For a DarwninianShift object with default Globk3 spectrum.
+    Score methods dictionary of the scoring of non-boolean cases e.g. {
+          'cath-funsites': 'mean',
+          'efoldmine': 'mean',
+          'backbone': 'mean',
+          'complex_residue_depth': 'mean',
+          'monomeric_residue_depth': 'mean'
+        }
+    Not extensively tested.
+
+    Running outside of the usual system to reduce redundancy of scoring mutations.
+    """
+    if score_methods is None:
+        score_methods = dict(ds_object.lookup.annotation_default_score_methods)
+    if spectrum is None:
+        spectrum = ds_object.spectra[0]
+
+    section = ds_object.make_section(gene=gene, transcript_id=transcript_id)
+    section.load_section_mutations()
+    old_cols = section.null_mutations.columns
+    annotated_null = ds_object.lookup.annotate_df(transcript_id=section.transcript_id, df=section.null_mutations,
+                                                  score_methods=score_methods, data_label=data_label)
+    new_cols = [c for c in annotated_null.columns if c not in old_cols]
+    annotated_observed = pd.merge(section.observed_mutations,
+                                  annotated_null[['pos', 'ref', 'mut'] + new_cols], on=['pos', 'ref', 'mut'],
+                                  how='left', suffixes=["_x", ""])
+
+    res = []
+    for col in new_cols:
+        if verbose:
+            print(col)
+
+        null = annotated_null[~pd.isnull(annotated_null[col])]
+        obs = annotated_observed[~pd.isnull(annotated_observed[col])]
+        if not obs.empty:
+            if score_methods.get(col, None) is None:
+                stats = binned_chisquare(null_scores=null[col].values.astype(float),
+                                         null_mut_rates=null[spectrum.rate_column].values,
+                                         observed_values=obs[col].astype(float), bins=[-0.5, 0.5, 1.5])
+            else:
+                stats = ztest_cdf_sum(null[col], null[spectrum.rate_column].values, obs[col])
+
+            if stats is not None:
+                stats[data_label] = col
+                res.append(stats)
+
+    res = pd.DataFrame(res)
+    if not res.empty:
+        res['qvalue'] = multipletests(res['pvalue'], method='fdr_bh')[1]
+    return res

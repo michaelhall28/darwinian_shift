@@ -1,5 +1,6 @@
 from darwinian_shift.additional_functions import uniprot_exploration, annotate_data, get_bins_for_uniprot_features
-from darwinian_shift import UniprotLookup
+from darwinian_shift.additional_functions import pdbe_kb_exploration
+from darwinian_shift import UniprotLookup, PDBeKBLookup
 from pandas.testing import assert_frame_equal
 from tests.conftest import sort_dataframe, TEST_DATA_DIR, MUTATION_DATA_FILE, EXON_FILE, REFERENCE_FASTA_FILE
 import os
@@ -77,3 +78,16 @@ def test_get_uniprot_domains():
 
     expected = pickle.load(open(os.path.join(FILE_DIR, "uniprot_bins.pickle"), 'rb'))
     assert res == expected
+
+def test_pdbekb_exploration(project):
+    p = PDBeKBLookup(pdbekb_dir=TEST_DATA_DIR,
+                     transcript_uniprot_mapping={'ENST00000263388': 'ABC123'}  # Map to the fake test data
+    )
+    d = project.change_lookup(p)
+    res = pdbe_kb_exploration(d, transcript_id='ENST00000263388')
+
+    # output new test file. Do not uncomment unless results have changed and confident new results are correct
+    # pickle.dump(res, open(os.path.join(FILE_DIR, "pdbekb_exploration.pickle"), 'wb'))
+
+    expected = pickle.load(open(os.path.join(FILE_DIR, "pdbekb_exploration.pickle"), 'rb'))
+    assert_frame_equal(sort_dataframe(res), sort_dataframe(expected))

@@ -2,6 +2,8 @@ import numpy as np
 from Bio.Seq import Seq
 import wget
 from urllib3.exceptions import HTTPError
+import urllib.parse
+import urllib.request
 
 COMPLEMENTS = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'N':'N'}
 
@@ -71,3 +73,20 @@ def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
     except HTTPError as e:
         print(type(e).__name__, e, 'Failed to download file from', url)
         raise e
+
+
+UNIPROT_UPLOADLISTS_URL = 'https://www.uniprot.org/uploadlists/'
+def get_uniprot_acc_from_transcript_id(transcript_id):
+    params = {
+    'from': 'ENSEMBL_TRS_ID',
+    'to': 'ACC',
+    'format': 'list',
+    'query': transcript_id
+    }
+
+    data = urllib.parse.urlencode(params)
+    data = data.encode('utf-8')
+    req = urllib.request.Request(UNIPROT_UPLOADLISTS_URL, data)
+    with urllib.request.urlopen(req) as f:
+        response = f.read()
+    return response.decode('utf-8').strip()

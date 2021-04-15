@@ -336,3 +336,46 @@ def test_clinvar_lookup(seq_object):
     expected = np.load(os.path.join(FILE_DIR, 'reference_clinvar_results.npy'))
 
     np.testing.assert_almost_equal(expected, res)
+
+
+def test_pdbekb_lookup(seq_object):
+    # Uses pre-downloaded files
+    pdbe_lookup = PDBeKBLookup(
+        pdbekb_dir=TEST_DATA_DIR,
+        transcript_uniprot_mapping={'ENST00000263388': 'ABC123'}  # Map to the fake test data
+    )
+    reset_section(seq_object)
+    seq_object.pdbekb_kwargs = {'uniprot_subsection': 'interface_residues', 'data_accessions': 'DEF456'}
+    res = pdbe_lookup(seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_pdbekb_results'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_pdbekb_results.npy'))
+
+    np.testing.assert_almost_equal(expected, res)
+
+def test_pdbekb_lookup2(seq_object):
+    # Uses pre-downloaded files
+    pdbe_lookup = PDBeKBLookup(
+        pdbekb_dir=TEST_DATA_DIR,
+        transcript_uniprot_mapping={'ENST00000263388': 'ABC123'}  # Map to the fake test data
+    )
+
+    reset_section(seq_object)
+    seq_object.pdbekb_kwargs = {'uniprot_subsection': 'annotations', 'data_accessions': 'monomeric_residue_depth',
+                                'score_method': 'mean'}
+    res2 = pdbe_lookup(seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_pdbekb_results2'), res2)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_pdbekb_results2.npy'))
+
+    np.testing.assert_almost_equal(expected, res2)
+
+
+def reset_section(section):
+    section.null_mutations = None
+    section.observed_mutations = None
+    section.load_section_mutations()

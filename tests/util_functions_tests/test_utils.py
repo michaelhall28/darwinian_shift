@@ -64,3 +64,7 @@ def test_reference_file_paths():
         exon_file) == "darwinian_shift/reference_data/mus_musculus/ensembl-99/biomart_exons_mus_musculus.txt"
     assert _get_partial_file_path(
         reference_file) == "darwinian_shift/reference_data/mus_musculus/ensembl-99/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz"
+
+
+def _test_get_uniprot_acc_from_transcript_id():
+    assert get_uniprot_acc_from_transcript_id("ENST00000263388") == "Q9UM47"

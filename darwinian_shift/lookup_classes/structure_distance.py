@@ -35,11 +35,21 @@ class StructureDistanceLookup:
 
     def setup_project(self, project):
         if self.pdb_directory is None:
-            self.pdb_directory = project.pdb_directory
+            if project.pdb_directory is not None:
+                self.pdb_directory = project.pdb_directory
+            else:
+                self.pdb_directory = '.'
+                project.pdb_directory = self.pdb_directory
+        else:
+            project.pdb_directory = self.pdb_directory
         if self.sifts_directory is None:
             self.sifts_directory = project.sifts_directory
+        else:
+            project.sifts_directory = self.sifts_directory
         if self.download_sifts is None:
             self.download_sifts = project.download_sifts
+        else:
+            project.download_sifts = self.download_sifts
 
     def __call__(self, seq_object):
         target_selection = getattr(seq_object, self.target_key, None)
@@ -57,7 +67,7 @@ class StructureDistanceLookup:
         else:
             # If the compressed file doesn't exist, look for the uncompressed pdb file
             fp2 = os.path.join(self.pdb_directory, "{}.pdb".format(pdb_id.lower()))
-            if os.path.isfile(fp):
+            if os.path.isfile(fp2):
                 return fp2
             else:
                 # If that doesn't exist, try to download the file

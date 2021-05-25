@@ -105,7 +105,10 @@ class AAindex():
                 elif line.startswith('I'):
                     aa_line = 1
                     similar = False
-                    similar_data = pd.DataFrame(similar_data, columns=['accession', 'corr_coef'])
+                    if similar_data:
+                        similar_data = pd.DataFrame(similar_data, columns=['accession', 'corr_coef'])
+                    else:
+                        similar_data = None
                 elif similar:
                     similar_data.extend(self._read_similar(line))
                 elif D:

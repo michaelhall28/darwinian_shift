@@ -37,8 +37,12 @@ class FoldXLookup:
     def setup_project(self, project):
         if self.sifts_directory is None:
             self.sifts_directory = project.sifts_directory
+        else:
+            project.sifts_directory = self.sifts_directory
         if self.download_sifts is None:
             self.download_sifts = project.download_sifts
+        else:
+            project.download_sifts = self.download_sifts
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations,

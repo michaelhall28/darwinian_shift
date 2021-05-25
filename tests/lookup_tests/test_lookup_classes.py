@@ -153,7 +153,8 @@ def test_AND_lookup2(pdb_seq_object):
 
 
 def test_iupred2a_lookup(seq_object):
-    pred = IUPRED2ALookup(os.path.join(FILE_DIR, 'iupred_sample.txt'))
+    pred = IUPRED2ALookup(iuored_results_dir=FILE_DIR)
+    seq_object.iupred_file = 'iupred_sample.txt'
     res = pred(seq_object)
 
     # Save reference results if they have been deliberately changed
@@ -374,6 +375,34 @@ def test_pdbekb_lookup2(seq_object):
 
     np.testing.assert_almost_equal(expected, res2)
 
+
+def test_variant_match_lookup_aachange(seq_object):
+    vm_lookup = VariantMatchLookup(match_column='aachange')
+    seq_object.match_list = ['C1392W', 'S154N', 'W724*', 'S154W']
+
+    res = vm_lookup(seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_variant_match_results_aachange'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_variant_match_results_aachange.npy'))
+
+    np.testing.assert_almost_equal(expected, res)
+
+
+def test_variant_match_lookup_ds_id(seq_object):
+    vm_lookup = VariantMatchLookup(match_column='ds_mut_id')
+    seq_object.match_list = ['15303191:G>A', '15302430:G>A', '15281362:C>A']
+
+    res = vm_lookup(seq_object)
+    print(res.sum())
+
+    # Save reference results if they have been deliberately changed
+    np.save(os.path.join(FILE_DIR, 'reference_variant_match_results_ds_id'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_variant_match_results_ds_id.npy'))
+
+    np.testing.assert_almost_equal(expected, res)
 
 def reset_section(section):
     section.null_mutations = None

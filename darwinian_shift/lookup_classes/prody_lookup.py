@@ -7,7 +7,7 @@ from darwinian_shift.utils import get_sifts_alignment_for_chain
 
 
 class ProDyLookup:
-    # Also DSSP since this can be parsed with Prody.
+    # Also DSSP and Beta-factors since these can be parsed with Prody.
 
     _options = (
         'sq_flucts_GNM',  # Squared fluctuations from GNM model
@@ -15,7 +15,8 @@ class ProDyLookup:
         'mean_stiffness',  # Mean mechanical stiffness
         'PRS_effectiveness',  # Effectiveness from Perturbation Response Scanning
         'PRS_sensitivity',  # Sensitivity from Perturbation Response Scanning
-        'solvent_accessibility'  # From DSSP
+        'solvent_accessibility',  # From DSSP
+        'beta_factors',  # Just read from the pdb file
     )
 
     def __init__(self, metric="sq_flucts_GNM", exclude_ends=0, pdb_directory=None, dssp_directory='.',
@@ -35,7 +36,10 @@ class ProDyLookup:
         self.sifts_directory = sifts_directory
         self.download_sifts = download_sifts
         if name is None:
-            self.name = 'ProDy ' + self.metric
+            if metric == 'beta_factors':
+                self.name = 'beta_factors'
+            else:
+                self.name = 'ProDy ' + self.metric
         else:
             self.name = name  # Will appear on some plot axes
 
@@ -46,11 +50,18 @@ class ProDyLookup:
                 self.pdb_directory = project.pdb_directory
             else:
                 self.pdb_directory = '.'
+        else:
+            project.pdb_directory = self.pdb_directory
+
         pathPDBFolder(self.pdb_directory)
         if self.sifts_directory is None:
             self.sifts_directory = project.sifts_directory
+        else:
+            project.sifts_directory = self.sifts_directory
         if self.download_sifts is None:
             self.download_sifts = project.download_sifts
+        else:
+            project.download_sifts = self.download_sifts
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations)
@@ -125,9 +136,12 @@ class ProDyLookup:
 
         return dssp[pdb_chain].ca.getData('dssp_acc')  # The solvent accessibility for each residue
 
+    def _beta_factors(self, pdb_id, pdb_chain, ca):
+        return ca.getBetas()
+
     def _get_scores(self, pdb_id, pdb_chain, df):
         if pdb_id is None:
-            raise ValueError('Can only run with a pdb file')
+            raise ValueError('Can only run if a pdb_id is given')
         if pdb_chain is None:
             raise ValueError('Must specify which chain in a pdb file')
         sifts = get_sifts_alignment_for_chain(pdb_id, pdb_chain, self.sifts_directory, self.download_sifts)

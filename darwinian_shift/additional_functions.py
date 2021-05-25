@@ -1,4 +1,4 @@
-from darwinian_shift.lookup_classes import UniprotLookup
+from darwinian_shift.lookup_classes import UniprotLookup, PDBeKBLookup
 from darwinian_shift.lookup_classes.uniprot_lookup import UniprotLookupError
 from darwinian_shift.general_functions import DarwinianShift
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
@@ -410,6 +410,8 @@ def pdbe_kb_exploration(ds_object, gene=None, transcript_id=None, score_methods=
 
     Running outside of the usual system to reduce redundancy of scoring mutations.
     """
+    if not isinstance(ds_object.lookup, PDBeKBLookup):
+        raise TypeError("ds_object must have a PDBeKBLookup as its lookup attribute")
     if score_methods is None:
         score_methods = dict(ds_object.lookup.annotation_default_score_methods)
     if spectrum is None:

@@ -12,3 +12,4 @@ from .psic_lookup import PSICLookup
 from .clinvar_lookup import ClinvarLookup
 from .phosphorylation_lookup import PhosphorylationLookup
 from .pdbekb_lookup import PDBeKBLookup
+from .variant_match_lookup import VariantMatchLookup

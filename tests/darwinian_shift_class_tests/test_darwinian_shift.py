@@ -141,6 +141,9 @@ def test_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, 
     assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected), check_dtype=False)
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'rb'))
+    # non_binom_cols = [c for c in d.results.columns if (('binom' not in c) and ('perm' not in c))]
+    # assert_frame_equal(sort_dataframe(d.results[non_binom_cols]), sort_dataframe(expected[non_binom_cols]))
+    # pickle.dump(d.results, open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'wb'))
     assert_frame_equal(sort_dataframe(d.results), sort_dataframe(expected))
 
 

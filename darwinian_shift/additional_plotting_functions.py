@@ -52,7 +52,7 @@ def colour_mutations_by_scores(mutation_df, mut_counts, xcol, ycol, sections_for
         if len(muts) > 0:
             _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
                                           marker_size_from_count, base_marker_size, colour,
-                                          sec.project.lookup.name, alpha, hotspots_in_foreground, ax=ax, marker=marker)
+                                          sec.lookup.name, alpha, hotspots_in_foreground, ax=ax, marker=marker)
 
 def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score_regions_for_colours=None,
                             score_region_colours=None, colour_unmutated_by_scores=False,
@@ -70,24 +70,27 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
                             hotspots_in_foreground=False, observed_marker=None, unobserved_marker=None,
                             show_observed_only=False, show_null_only=False):
 
-    # Check the inputs are run on exactly the same set of mutations.
-    # May be able to relax this requirement and counts would be based on the first section given.
-    assert len(section1.null_mutations) == len(section2.null_mutations)
-    assert len(section1.observed_mutations) == len(section2.observed_mutations)
-    if sections_for_colours is not None:
-        for s in sections_for_colours:
-            assert len(s.null_mutations) == len(section1.null_mutations)
-            assert len(s.observed_mutations) == len(section1.observed_mutations)
+    # Can only plot mutations that have a score in both sections.
+    common_mut_ids = set(section1.null_mutations['ds_mut_id']).intersection(section2.null_mutations['ds_mut_id'])
+    s1_null = section1.null_mutations[section1.null_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
+    s2_null = section2.null_mutations[section2.null_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
+    s1_obs = section1.observed_mutations[section1.observed_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
+    s2_obs = section2.observed_mutations[section2.observed_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
 
-    merged_null = pd.merge(section1.null_mutations, section2.null_mutations, on=['pos', 'ref', 'mut', 'effect',
+    # if sections_for_colours is not None:
+    #     for s in sections_for_colours:
+    #         assert len(s.null_mutations) == len(s1_null)
+    #         assert len(s.observed_mutations) == len(s1_obs)
+
+    merged_null = pd.merge(s1_null, s2_null, on=['pos', 'ref', 'mut', 'effect',
                                                                                  'aachange', 'ds_mut_id'],
                            suffixes=['_1', '_2'])
 
 
 
     # Need to deduplicate mutations before merging to prevent additional copies of recurrent mutations being created
-    obs2 = section2.observed_mutations.drop_duplicates(subset='ds_mut_id')
-    merged_obs = pd.merge(section1.observed_mutations, obs2,
+    obs2 = s2_obs.drop_duplicates(subset='ds_mut_id')
+    merged_obs = pd.merge(s1_obs, obs2,
                           on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'], suffixes=['_1', '_2'])
 
     mut_counts = merged_obs['ds_mut_id'].value_counts()
@@ -183,14 +186,14 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
         plt.xlabel(xlabel)
     else:
         try:
-            plt.xlabel(section1.project.lookup.name)
+            plt.xlabel(section1.lookup.name)
         except AttributeError as e:
             pass
     if ylabel is not None:
         plt.ylabel(ylabel)
     else:
         try:
-            plt.ylabel(section2.project.lookup.name)
+            plt.ylabel(section2.lookup.name)
         except AttributeError as e:
             pass
 
@@ -222,13 +225,14 @@ def annotate_mutations_on_plot(ax, mutations_to_annotate, annotation_column, xco
                                              row[ycol] + annotation_offset[1]))
 
 
-def plot_domain_structure(bins, colours, height, figsize=(15, 1), end_pos=None, linewidth=4, linecolour='C7', round_edges=True,
-                          vertical_offset=0, rounding_size=None, pad=0):
-    fig, ax = plt.subplots(figsize=figsize)
+def plot_domain_structure(bins, colours, height, figsize=(15, 1), end_pos=None, linewidth=4, linecolour='C7',
+                          round_edges=True, vertical_offset=0, rounding_size=None, pad=0, ax=None):
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
 
     if end_pos is None:
         end_pos = bins[-1]
-    plt.plot([0, end_pos], [0, 0], linewidth=linewidth, c=linecolour, zorder=0)
+    ax.plot([0, end_pos], [0, 0], linewidth=linewidth, c=linecolour, zorder=0)
 
     if isinstance(height, (float, int)):
         heights = [height]*len(colours)
@@ -257,8 +261,8 @@ def plot_domain_structure(bins, colours, height, figsize=(15, 1), end_pos=None, 
 
         ax.add_patch(bbox)
 
-    plt.axis('off')
-    plt.ylim([-max_height, max_height])
+    ax.axis('off')
+    ax.set_ylim([-max_height, max_height])
 
 
 def hide_top_and_right_axes(ax=None):

@@ -143,8 +143,9 @@ def test_get_samples_from_mutational_spectrum(exp_values, mut_rates):
 
 def test_permutation(exp_values, mut_rates, observed_values):
     for metric_function in [np.mean, np.median]:
+        print(metric_function)
         res = permutation_test(exp_values, mut_rates, observed_values, metric_function, 1000, plot=False,
-                               testing_random_seed=1)
+                               testing_random_seed=1, rerr=0)
 
         # output new test file. Do not uncomment unless results have changed and confident new results are correct
         # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_perm_{}_results.pickle'.format(metric_function.__name__)),

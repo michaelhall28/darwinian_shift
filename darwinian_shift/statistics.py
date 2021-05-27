@@ -58,7 +58,7 @@ class CDFZTest:
     def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
         res = ztest_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
                             seq_object.observed_values, plot=plot,
-                            plot_title='Monte Carlo Test - CDF sum - ' + spectrum.name,
+                            plot_title='Z-Test - CDF sum - ' + spectrum.name,
                             show_plot=show_plot)
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 
@@ -85,11 +85,37 @@ class ChiSquareTest:
             CI_sample_num=self.CI_num_samples, CI_alpha=self.CI_alpha
         )
 
-        if len(res['observed_counts']) == 2:
-            # Run a binomial test too.
-            # By default will be labelled as chi_square_binom..., but prevents confusion if multiple chi-square are run.
-            binomial_res = binomial_test(res['expected_counts'], res['observed_counts'])
-            res.update(binomial_res)
+        # if len(res['observed_counts']) == 2:
+        #     # Run a binomial test too.
+        #     # By default will be labelled as chi_square_binom..., but prevents confusion if multiple chi-square are run.
+        #     binomial_res = binomial_test(res['expected_counts'], res['observed_counts'])
+        #     res.update(binomial_res)
+
+        return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
+
+
+class BinomTest:
+    """
+    A wrapper for the Scipy binomial test.
+    For cases with two values (e.g. on/not on an interface) or where the metric values can be split using a threshold
+    By default, assumes the values are 1 and zero, and the threshold is set at 0.5
+    """
+    def __init__(self, threshold=0.5, name='binom', CI_num_samples=10000,
+                 CI_alpha=0.05):
+        self.threshold = threshold
+        self.name = name
+
+        # Num samples and alpha for the bootstrapped confidence intervals.
+        self.CI_num_samples = CI_num_samples
+        self.CI_alpha = CI_alpha
+
+    def __call__(self, seq_object, spectrum, plot=False):
+        res = binomial_test(
+            null_scores=seq_object.null_scores,
+            null_mut_rates=seq_object.null_mutations[spectrum.rate_column].values,
+            observed_values=seq_object.observed_values, threshold=self.threshold,
+            CI_sample_num=self.CI_num_samples, CI_alpha=self.CI_alpha
+        )
 
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 
@@ -200,17 +226,26 @@ def get_samples_from_mutational_spectrum(values, mut_rates, num_per_sample=10000
     return samples.reshape(num_samples, num_per_sample)
 
 
-def permutation_p_value(num_permutations, perm_metrics, obs_metric):
-    num_smaller_or_equal = bisect_right(perm_metrics, obs_metric) + 1  # +1 to include the observation itself
+def permutation_p_value(num_permutations, perm_metrics, obs_metric, rerr=1e-7):
+    """
+
+    :param num_permutations:
+    :param perm_metrics:
+    :param obs_metric:
+    :param rerr: Relative compensation for errors in summing of floating points. The values from the permutations will
+    be compared to the observed value * (1±rerr) (the more conservative case for each tail).
+    :return:
+    """
+    num_smaller_or_equal = bisect_right(perm_metrics, obs_metric*(1+rerr)) + 1  # +1 to include the observation itself
     num_larger_or_equal = num_permutations - bisect_left(perm_metrics,
-                                                         obs_metric) + 1  # +1 to include the observation itself
+                                                         obs_metric*(1-rerr)) + 1 # +1 to include the observation itself
     pvalue = min(num_smaller_or_equal, num_larger_or_equal) / (num_permutations + 1) * 2  # Two-tailed p-value
     pvalue = min(pvalue, 1)
     return pvalue, num_smaller_or_equal, num_larger_or_equal
 
 
 def permutation_test(exp_values, mut_rates, observed_values, metric_function, num_permutations, plot=False,
-                     num_plot_bins=100, plot_title=None, testing_random_seed=None, show_plot=True):
+                     num_plot_bins=100, plot_title=None, testing_random_seed=None, show_plot=True, rerr=1e-7):
     """
     Use a chosen metric e.g. np.median, np.mean, np.sum etc for the permutation test.
     :param exp_values:
@@ -221,6 +256,8 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
     :param plot:
     :param num_plot_bins:
     :param testing_random_seed:
+    :param rerr:  Relative compensation for errors in summing of floating points. The values from the permutations will
+    be compared to the observed value * (1±rerr) (the more conservative case for each tail).
     :return:
     """
     if testing_random_seed is not None:
@@ -245,7 +282,8 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
         if show_plot:
             plt.show()
 
-    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics, obs_metric)
+    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics,
+                                                                            obs_metric, rerr)
 
     results = {
         'observed': obs_metric,
@@ -259,7 +297,8 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
 
 
 def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permutations, plot=False,
-                               num_plot_bins=100, plot_title='CDF sum', testing_random_seed=None, show_plot=True):
+                               num_plot_bins=100, plot_title='CDF sum', testing_random_seed=None, show_plot=True,
+                             rerr=1e-7):
     """
     Use the sum of the cdf values for the permutation test.
     For tied values, using the average of the cdf values.
@@ -270,6 +309,8 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
     :param plot:
     :param num_plot_bins:
     :param testing_random_seed:
+    :param rerr:  Relative compensation for errors in summing of floating points. The values from the permutations will
+    be compared to the observed value * (1±rerr) (the more conservative case for each tail).
     :return:
     """
     if testing_random_seed is not None:
@@ -299,7 +340,7 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
     perm_metrics.sort()
     if plot:
         bins = np.linspace(min(min(perm_metrics), obs_metric), max(max(perm_metrics), obs_metric), num_plot_bins)
-        plt.hist(perm_metrics, bins=bins)
+        plt.hist(perm_metrics, bins=bins, density=True)
         ylim = plt.gca().get_ylim()
         plt.vlines(obs_metric, 0, ylim[1])
         # plt.vlines(len(observed_values)*0.5, 0, ylim[1], linestyles='dashed')
@@ -310,7 +351,8 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
         if show_plot:
             plt.show()
 
-    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics, obs_metric)
+    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics,
+                                                                            obs_metric, rerr)
 
     results = {
         'num_smaller_or_equal': num_smaller_or_equal,
@@ -371,14 +413,15 @@ def ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False,
     scale = np.sqrt(num_obs) * np.sqrt(cdf_var)
 
     if plot:
-        x = np.linspace(*norm.interval(0.999, loc=loc, scale=scale), 1000)
-        plt.plot(x, norm.pdf(x, loc=loc, scale=scale), 'r--')
+        x = np.linspace(*norm.interval(0.9999, loc=loc, scale=scale), 1000)
+        plt.plot(x, norm.pdf(x, loc=loc, scale=scale), 'r--', label='Expected')
         ylim = plt.gca().get_ylim()
-        plt.vlines(obs_metric, 0, ylim[1])
-        plt.ylim(ylim)
+        plt.vlines(obs_metric, 0, ylim[1], label='Observed')
+        plt.ylim([0, ylim[1]])
         plt.title(plot_title)
         plt.xlabel("CDF sum")
         plt.ylabel('Frequency')
+        plt.legend()
         if show_plot:
             plt.show()
 
@@ -554,12 +597,33 @@ def binned_chisquare(null_scores, null_mut_rates, observed_values, bins=None, ma
     return results
 
 
-def binomial_test(expected_counts, observed_counts):
-    total = sum(observed_counts)
+def binomial_test(null_scores, null_mut_rates, observed_values, threshold, CI_sample_num=10000, CI_alpha=0.05):
+    total_rate = null_mut_rates.sum()
+    rate_high = null_mut_rates[null_scores>threshold].sum()/total_rate   # Expected proportion of mutations in high bin
+    count_high = (observed_values > threshold).sum()
+    total_count = len(observed_values)
+
+    # Confidence interval calculations
+    # For the null hypothesis, take 1000 samples from the null and get a 95% confidence interval for each bin
+    bins = [-np.inf, threshold, np.inf]
+    expected_CI_low, expected_CI_high = get_null_binned_confint(null_scores, null_mut_rates, len(observed_values), bins,
+                                                                num_samples=CI_sample_num, alpha=CI_alpha)
+
+    # For the observed data, use bootstrapping
+    observed_CI_low, observed_CI_high = bootstrap_binned_confint_method(observed_values, bins,
+                                                                        num_samples=CI_sample_num, alpha=CI_alpha)
+
     results = {
-        'binom_pvalue': binom_test(x=observed_counts[1], n=total, p=expected_counts[1]/total),
-        'binom_expected': expected_counts[1] / total,
-        'binom_observed': observed_counts[1] / total,
+        'pvalue': binom_test(x=count_high, n=total_count, p=rate_high),
+        'expected_proportion': rate_high,
+        'observed_proportion': count_high / total_count,
+        'expected_count': rate_high*total_count,
+        'observed_count': count_high,
+        'threshold': threshold,
+        'expected_CI_high': expected_CI_high[1],
+        'expected_CI_low': expected_CI_low[1],
+        'observed_CI_low': observed_CI_low[1],
+        'observed_CI_high': observed_CI_high[1]
     }
     return results
 

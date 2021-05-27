@@ -11,9 +11,10 @@ from darwinian_shift.section import Section, NoMutationsError
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
 from darwinian_shift.mutation_spectrum import MutationalSpectrum, GlobalKmerSpectrum, read_spectrum, \
     EvenMutationalSpectrum
-from darwinian_shift.statistics import CDFZTest
+from darwinian_shift.statistics import CDFPermutationTest
 from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths
 from darwinian_shift.lookup_classes.errors import MetricLookupException
+from darwinian_shift.utils import read_sbs_from_vcf
 
 
 BED_COLS = ['Chromosome/scaffold name', 'Genomic coding start', 'Genomic coding end',
@@ -115,8 +116,11 @@ class DarwinianShift:
 
         if isinstance(data, pd.DataFrame):
             self.data = data
-        elif isinstance(data, str):
-            self.data = pd.read_csv(data, sep="\t")
+        elif isinstance(data, str):  # File path given
+            if data.endswith('.vcf') or data.endswith('.vcf.gz'):
+                self.data = read_sbs_from_vcf(data)
+            else:  # Assume the data is in a tab-delimited file including "chr", "pos", "ref" and "mut" columns.
+                self.data = pd.read_csv(data, sep="\t")
 
         # Filter non-snv mutations.
         bases = ['A', 'C', 'G', 'T']
@@ -209,8 +213,8 @@ class DarwinianShift:
 
         if stats is None:
             # Use the default statistics only
-            # cdf permutation test and chi squared test
-            self.statistics = [CDFZTest()]
+            # Use the cdf permutation test as the default as it is appropriate for a wide range of null distributions.
+            self.statistics = [CDFPermutationTest()]
         elif not isinstance(stats, (list, tuple)):
             self.statistics = [stats]
         else:
@@ -235,6 +239,8 @@ class DarwinianShift:
         self.scored_data = []
 
     def _get_reference_data(self, source_genome, ensembl_release, exon_file, reference_fasta):
+        if source_genome is None and (exon_file is None or reference_fasta is None):
+            raise TypeError('Must provide a source_genome or an exon_file and a reference_fasta')
         if source_genome is not None and (exon_file is None or reference_fasta is None):
             try:
                 exon_file1, reference_file1 = get_source_genome_reference_file_paths(source_genome, ensembl_release)
@@ -313,13 +319,15 @@ class DarwinianShift:
 
         return additional_results_columns
 
-    def make_section(self, section_dict=None, transcript_id=None, gene=None):
+    def make_section(self, section_dict=None, transcript_id=None, gene=None, lookup=None, **kwargs):
         """
 
         :param section_dict: Can be dictionary or pandas Series. Must contain "transcript_id" or "gene" and any
         other information required to define a section (e.g. start/end or pdb_id and pdb_chain)
         :param transcript_id:
         :param gene:
+        :param lookup: A Lookup object, if given will override the lookup for the DarwinianShift object. Alternatively,
+        this can be provided in the section_dict under the key "lookup"
         :return:
         """
         if section_dict is not None:
@@ -338,10 +346,16 @@ class DarwinianShift:
             if isinstance(transcript_id, set):
                 transcript_id = list(transcript_id)[0]
                 print('Multiple transcripts for gene {}. Running {}'.format(gene, transcript_id))
+            elif transcript_id is None:
+                raise ValueError('No transcript associated with gene {}'.format(gene))
             section_dict_copy = {}
         else:
             raise ValueError('Must provide a section_dict, transcript_id or gene')
         transcript_obj = self.get_transcript_obj(transcript_id)
+        if lookup is not None:
+            section_dict_copy['lookup'] = lookup
+        for k, v in kwargs.items():
+            section_dict_copy[k] = v
         sec = Section(transcript_obj, **section_dict_copy)
         return sec
 
@@ -574,7 +588,7 @@ class DarwinianShift:
 
     def run_gene(self, gene, plot=False, violinplot_bw=None,
                  plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
-                    included_mutation_types=None, included_residues=None, excluded_residues=None):
+                    included_mutation_types=None, included_residues=None, excluded_residues=None, lookup=None):
         gene_transcripts = self.gene_transcripts_map[gene]
         if len(gene_transcripts) == 0:
             transcript_obj = self.make_transcript(gene=gene)
@@ -588,15 +602,15 @@ class DarwinianShift:
                                    plot_scale=plot_scale, spectra=spectra, statistics=statistics,
                                    excluded_mutation_types=excluded_mutation_types,
                                    included_mutation_types=included_mutation_types, included_residues=included_residues,
-                                   excluded_residues=excluded_residues)
+                                   excluded_residues=excluded_residues, lookup=lookup)
 
     def run_transcript(self, transcript_id, plot=False, violinplot_bw=None,
                        plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
-                    included_mutation_types=None, included_residues=None, excluded_residues=None):
+                    included_mutation_types=None, included_residues=None, excluded_residues=None, lookup=None):
         try:
             section = Section(self.get_transcript_obj(transcript_id), excluded_mutation_types=excluded_mutation_types,
                           included_mutation_types=included_mutation_types, included_residues=included_residues,
-                          excluded_residues=excluded_residues)
+                          excluded_residues=excluded_residues, lookup=lookup)
         except (CodingTranscriptError, NoTranscriptError) as e:
             print(type(e).__name__, e, '- Unable to run for', transcript_id)
             return None
@@ -604,7 +618,7 @@ class DarwinianShift:
                      plot_scale=plot_scale, spectra=spectra, statistics=statistics)
 
     def run_section(self, section, plot=False, violinplot_bw=None, plot_scale=None,
-                    verbose=False, spectra=None, statistics=None):
+                    verbose=False, spectra=None, statistics=None, lookup=None):
         """
         Run statistics and optionally plot plots for a section.
         The section can be a Section object, or a dictionary that defines the Section object to be made
@@ -617,14 +631,27 @@ class DarwinianShift:
         :param verbose:
         :param spectra:
         :param statistics:
+        :param lookup: A Lookup object, if given will override the lookup for the DarwinianShift object. Alternatively,
+        this can be provided in the section_dict under the key "lookup"
         :return:
         """
-        if self.lookup is None:
-            raise ValueError('No lookup defined. Define when initialising or use self.change_lookup()')
+        if self.lookup is None and lookup is None:
+            # No lookup defined for the project or given as an argument to this function.
+            # See if one has been defined for the section
+
+            if isinstance(section, (dict, pd.Series)):
+                section_lookup = section.get('lookup', None)
+            else:
+                section_lookup = getattr(section, 'lookup', None)
+            if section_lookup is None:
+                raise ValueError('No lookup defined. Define one for the whole project using ' \
+                                 'self.change_lookup() or provide one to this function.')
         try:
             if isinstance(section, (dict, pd.Series)):
                 # Dictionary/series with attributes to define a new section
-                section = self.make_section(section)
+                section = self.make_section(section, lookup=lookup)
+            elif lookup is not None:
+                section.change_lookup_inplace(lookup)
 
             if verbose:
                 print('Running', section.section_id, section.gene)

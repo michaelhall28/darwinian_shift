@@ -1,6 +1,7 @@
 from darwinian_shift.utils.util_functions import *
-from tests.conftest import sort_dataframe, compare_sorted_files
+from tests.conftest import sort_dataframe, compare_sorted_files, MUTATION_DATA_FILE, TEST_DATA_DIR
 from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths
+from pandas.testing import assert_frame_equal
 import filecmp
 import os
 
@@ -68,3 +69,12 @@ def test_reference_file_paths():
 
 def _test_get_uniprot_acc_from_transcript_id():
     assert get_uniprot_acc_from_transcript_id("ENST00000263388") == "Q9UM47"
+
+def test_read_vcf():
+    tsv_df = pd.read_csv(MUTATION_DATA_FILE, sep="\t")
+    bases = ['A', 'C', 'G', 'T']
+    tsv_df = tsv_df[(tsv_df['ref'].isin(bases)) & (tsv_df['mut'].isin(bases))]
+    vcf_df = read_sbs_from_vcf(os.path.join(MUTATION_DATA_FILE[:-4] + '.vcf'))
+    tsv_df['chr'] = tsv_df['chr'].astype(str)
+
+    assert_frame_equal(sort_dataframe(tsv_df[['chr', 'pos', 'ref', 'mut']]), sort_dataframe(vcf_df))

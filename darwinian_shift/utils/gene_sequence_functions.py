@@ -72,6 +72,9 @@ def get_gene_kmers_from_exon_ranges(chromosome_sequence, chrom_offset, exon_rang
     gene_start = int(exon_ranges.min() - context)  # Give one extra base for context
     gene_end = int(exon_ranges.max() + context)  # Give one extra base for context
 
+    if gene_start < 1:
+        raise ValueError('gene_start too close to start of chomosome. Cannot include required context bases for spectrum')
+
     if chromosome_sequence is not None:
         assert chrom_offset is not None
         gene_sequence = chromosome_sequence[
@@ -149,7 +152,7 @@ def get_all_possible_single_nucleotide_mutations(gene_sequence, gene_kmers, sort
 
     extended_seq_translated = Seq(extended_seq).translate()
 
-    for i in range(aa_length, aa_length * 13):
+    for i in range(aa_length, aa_length * 13):  # 13 is not a typo, see comments above
         residue = i % aa_length + 1
         n = i // aa_length
         base_position = (n - 1) // 4

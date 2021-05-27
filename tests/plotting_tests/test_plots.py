@@ -2,7 +2,7 @@ import pytest
 import matplotlib.pyplot as plt
 import numpy as np
 from darwinian_shift import DarwinianShift, EvenMutationalSpectrum, GlobalKmerSpectrum, TranscriptKmerSpectrum
-from darwinian_shift import PermutationTest, CDFPermutationTest, ChiSquareTest
+from darwinian_shift import PermutationTest, CDFPermutationTest, ChiSquareTest, BinomTest
 from darwinian_shift.additional_functions import get_bins_for_uniprot_features
 from darwinian_shift.lookup_classes import DummyValuesRandom, UniprotLookup
 from darwinian_shift import plot_scatter_two_scores
@@ -133,6 +133,10 @@ def test_chi_sq2(seq):
 def test_chi_sq3(seq_bool):
     return seq_bool.plot_binned_counts_common_bins(show_plot=False, return_fig=True, show_CI=True)
 
+@pytest.mark.mpl_image_compare(filename='binom.png')
+def test_binom(seq_bool):
+    return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest())
+
 @pytest.mark.mpl_image_compare(filename='aa.png')
 def test_aa(seq):
     return seq.plot_aa_abundance(show_plot=False, return_fig=True)
@@ -157,7 +161,7 @@ def test_sliding_score_window(seq_pdb):
 @pytest.mark.mpl_image_compare(filename='mutation_rate_vs_score_scatter.png')
 def test_mutation_rate_vs_score_scatter(seq_pdb):
     return seq_pdb.plot_mutation_rate_scatter(show_plot=False, return_fig=True, unmutated_marker_size=30,
-                                              base_marker_size=50,
+                                              base_marker_size=50, figsize=(15, 5),
                                               mutations_to_annotate=seq_pdb.observed_mutations.iloc[:2],
                                               annotation_offset=(0.01, 0.05))
 
@@ -192,7 +196,7 @@ def test_scatter_two_scores(proj, seq):
 
 @pytest.mark.mpl_image_compare(filename='lollipop_plot.png')
 def test_lollipop_plot(seq):
-    return seq.plot_bar_observations(show_lollipop_tops=True, lollipop_top_size=10, xlim=(100, 800), return_fig=True)
+    return seq.plot_lollipop(xlim=(100, 800), return_fig=True)
 
 @pytest.mark.mpl_image_compare(filename='bar_plot.png')
 def test_bar_plot(seq):

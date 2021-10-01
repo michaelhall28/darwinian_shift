@@ -6,9 +6,9 @@ class IUPRED2ALookup:
     For reading the text results file of IUPred2A when running either long or short disorder.
     """
 
-    def __init__(self, iuored_results_dir=".", results_column="IUPRED SCORE", name='IUPRED2A score'):
+    def __init__(self, iupred_results_dir=".", results_column="IUPRED SCORE", name='IUPRED2A score'):
         self.results_column = results_column
-        self.iuored_results_dir = iuored_results_dir
+        self.iupred_results_dir = iupred_results_dir
         self.name = name  # Will appear on some plot axes
 
     def __call__(self, seq_object):
@@ -17,7 +17,7 @@ class IUPRED2ALookup:
     def read_iupreda2_results(self, file_name):
         res_lines = []
         columns = None
-        with open(os.path.join(self.iuored_results_dir, file_name)) as fh:
+        with open(os.path.join(self.iupred_results_dir, file_name)) as fh:
 
             for line in fh:
                 if line.startswith("#"):

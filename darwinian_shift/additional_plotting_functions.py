@@ -6,7 +6,7 @@ from matplotlib.patches import FancyBboxPatch, Rectangle
 
 def _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
                                   marker_size_from_count, base_marker_size, colour, label, alpha,
-                                  hotspots_in_foreground, marker=None, ax=None):
+                                  hotspots_in_foreground, marker=None, ax=None, zorder=None):
     if ax is None:
         ax = plt.gca()
 
@@ -28,15 +28,18 @@ def _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
     else:
         s = base_marker_size
         linewidth = 0
-    ax.scatter(x, y, s=s, c=colour, edgecolor='k', linewidth=linewidth, label=label, alpha=alpha, marker=marker)
+    ax.scatter(x, y, s=s, c=colour, edgecolor='k', linewidth=linewidth, label=label, alpha=alpha, marker=marker,
+               zorder=zorder)
 
 
 def colour_mutations_by_scores(mutation_df, mut_counts, xcol, ycol, sections_for_colours, score_regions_for_colours,
                                score_region_colours, marker_size_from_count, base_marker_size, alpha,
-                               hotspots_in_foreground, ax=None, use_null=False, marker=None):
+                               hotspots_in_foreground, ax=None, use_null=False, marker=None, zorder=None):
     mut_df_copy = mutation_df.copy()  # Make sure not to edit the original dataframe
     if score_region_colours is None:
         score_region_colours = plt.rcParams['axes.prop_cycle'].by_key()['color'][4:]  # Default colour cycle
+
+    all_included_mutations = set()
 
     for i, (sec, region, colour) in enumerate(zip(sections_for_colours, score_regions_for_colours,
                                                   score_region_colours)):
@@ -45,14 +48,18 @@ def colour_mutations_by_scores(mutation_df, mut_counts, xcol, ycol, sections_for
         else:
             sec_muts = sec.observed_mutations.drop_duplicates(subset=["ds_mut_id"])
         mut_df_copy = pd.merge(mut_df_copy, sec_muts,
-                              on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'],
-                              suffixes=['', '_{}'.format(i + 3)], how='left')
+                               on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'],
+                               suffixes=['', '_{}'.format(i + 3)], how='left')
         muts = mut_df_copy[(mut_df_copy['score_{}'.format(i + 3)] >= region[0]) &
-                          (mut_df_copy['score_{}'.format(i + 3)] <= region[1])]
+                           (mut_df_copy['score_{}'.format(i + 3)] <= region[1])]
         if len(muts) > 0:
             _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
                                           marker_size_from_count, base_marker_size, colour,
-                                          sec.lookup.name, alpha, hotspots_in_foreground, ax=ax, marker=marker)
+                                          sec.lookup.name, alpha, hotspots_in_foreground, ax=ax, marker=marker,
+                                          zorder=zorder)
+            all_included_mutations.update(muts['ds_mut_id'])
+
+    return mutation_df[~mutation_df['ds_mut_id'].isin(all_included_mutations)]
 
 def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score_regions_for_colours=None,
                             score_region_colours=None, colour_unmutated_by_scores=False,
@@ -101,7 +108,7 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
     fig, ax = plt.subplots(figsize=figsize)
     if not show_observed_only:
         plt.scatter(null_to_plot['score_1'], null_to_plot['score_2'], s=unmutated_marker_size,
-                c=unobserved_mutation_colour, alpha=unobserved_alpha, marker=unobserved_marker)
+                c=unobserved_mutation_colour, alpha=unobserved_alpha, marker=unobserved_marker, zorder=0)
 
     # Colour by effect.
     for effect, colour in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
@@ -113,7 +120,8 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
             if len(muts) > 0:
                 _plot_single_scatter_category(muts, mut_counts, 'score_1', 'score_2', marker_size_from_count,
                                           base_marker_size, colour, effect,
-                                          observed_alpha, hotspots_in_foreground, marker=observed_marker)
+                                          observed_alpha, hotspots_in_foreground, marker=observed_marker,
+                                              zorder=2)
 
     if sections_for_colours is not None:
         if colour_unmutated_by_scores and not show_observed_only:
@@ -121,13 +129,15 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
             colour_mutations_by_scores(null_to_plot, None, 'score_1', 'score_2', sections_for_colours,
                                        score_regions_for_colours, score_region_colours, marker_size_from_count=False,
                                        base_marker_size=unmutated_marker_size, alpha=unobserved_alpha,
-                                       hotspots_in_foreground=False, use_null=True, marker=unobserved_marker)
+                                       hotspots_in_foreground=False, use_null=True, marker=unobserved_marker,
+                                       zorder=1)
 
         if not show_null_only:
             merged_obs['score'] = np.nan  #  Add a dummy score column to make sure new score columns get the merging suffix
             colour_mutations_by_scores(merged_obs, mut_counts,  'score_1', 'score_2', sections_for_colours,
                                    score_regions_for_colours, score_region_colours, marker_size_from_count,
-                                   base_marker_size, observed_alpha, hotspots_in_foreground, marker=observed_marker)
+                                   base_marker_size, observed_alpha, hotspots_in_foreground, marker=observed_marker,
+                                       zorder=3)
 
     if mut_lists_to_colour is not None:
         if mut_list_colours is None or mut_list_columns is None:

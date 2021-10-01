@@ -249,7 +249,7 @@ class Section:
             for statistic in statistics:
                 self.statistical_results.update(statistic(self, spectrum, plot))
 
-        self.repeat_proportion = calculate_repeat_proportion(self.null_scores)
+        # self.repeat_proportion = calculate_repeat_proportion(self.null_scores)
 
     def plot(self, spectra=None, violinplot_bw=None, plot_scale=None,
              marker_size_from_count=True, base_marker_size=10, colours=None):
@@ -317,21 +317,28 @@ class Section:
     def _plot_sliding_window_results(self, starts, window_size, spectra, colours,
                                      expected_counts, observed_counts, fig, ax, xlim, start, end, ylim,
                                      show_legend, legend_args, show_residues, show_plot, ylabel,
-                                     observed_label='Observed', divide_by_window_size=True):
+                                     observed_label='Observed', divide_by_window_size=True, plot_kwargs_obs=None,
+                                     plot_kwargs_exp=None):
+        if plot_kwargs_obs is None:
+            plot_kwargs_obs = {}
+        if plot_kwargs_exp is None:
+            plot_kwargs_exp = {}
+
         plot_x = (starts + window_size / 2 - 0.5)
         for spectrum, colour in zip(spectra, colours[1:]):
             if divide_by_window_size:
                 exp_ = expected_counts[spectrum.name] / window_size
             else:
                 exp_ = expected_counts[spectrum.name]
-            ax.plot(plot_x, exp_, label=spectrum.name, c=colour)
+            ax.plot(plot_x, exp_, label=spectrum.name, c=colour, **plot_kwargs_exp)
 
         if divide_by_window_size:
             obs_ = observed_counts / window_size
         else:
             obs_ = observed_counts
+
         ax.plot(plot_x, obs_, label=observed_label, c=colours[0],
-                 linewidth=3)
+                 linewidth=3, **plot_kwargs_obs)
         if xlim is not None:
             ax.set_xlim(xlim)
         else:
@@ -360,7 +367,7 @@ class Section:
                             spectra=None, show_legend=True, figsize=(15, 5), legend_args=None, show_plot=False,
                             colours=None, return_fig=False, show_residues=False, xlim=None, ylim=None, ax=None,
                             divide_by_expected_rate=False, observed_label='Observed', return_values=False,
-                            yaxis_right=False):
+                            yaxis_right=False, plot_kwargs_obs=None, plot_kwargs_exp=None):
         start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
 
         starts = np.arange(start, end + 2 - window_size, window_step)
@@ -414,14 +421,18 @@ class Section:
                                                   [], obs_w, fig, ax, xlim, start, end, ylim,
                                                   show_legend, legend_args, show_residues, show_plot,
                                                   ylabel='Mutations relative to "expected"',
-                                                  observed_label=observed_label, divide_by_window_size=False)
+                                                  observed_label=observed_label, divide_by_window_size=False,
+                                                  plot_kwargs_obs=plot_kwargs_obs,
+                                                  plot_kwargs_exp=plot_kwargs_exp)
             if return_values:
                 return res
         else:
             self._plot_sliding_window_results(starts, window_size, spectra, colours,
                                           expected_counts, observed_counts, fig, ax, xlim, start, end, ylim,
                                           show_legend, legend_args, show_residues, show_plot,
-                                          ylabel='Mutations per codon', observed_label=observed_label)
+                                          ylabel='Mutations per codon', observed_label=observed_label,
+                                              plot_kwargs_obs=plot_kwargs_obs,
+                                              plot_kwargs_exp=plot_kwargs_exp)
             if return_values:
                 return observed_counts, expected_counts
 
@@ -437,7 +448,8 @@ class Section:
                      sections_for_colours=None, score_regions_for_colours=None,
                      score_region_colours=None, colour_unmutated=False, hotspots_in_foreground=False,
                      observed_marker=None, unobserved_marker=None,
-                     show_observed_only=False, show_null_only=False, ax=None, yaxis_right=False
+                     show_observed_only=False, show_null_only=False, ax=None, yaxis_right=False,
+                     unobserved_zorder=0, missense_zorder=2, synonymous_zorder=1, nonsense_zorder=3
                      ):
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
@@ -452,19 +464,21 @@ class Section:
             null_to_plot = self.null_mutations[~self.null_mutations['ds_mut_id'].isin(self.observed_mutations['ds_mut_id'])]
             ax.scatter(null_to_plot['residue'], null_to_plot['score'], s=unmutated_marker_size,
                     alpha=unobserved_alpha, c=unobserved_mutation_colour, label=None, linewidth=0,
-                    marker=unobserved_marker)
+                    marker=unobserved_marker, zorder=unobserved_zorder)
 
         if not show_null_only:
             mut_counts = self.observed_mutations['ds_mut_id'].value_counts()
-            for effect, col in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
+            for effect, col, z in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
                                                                         missense_mutation_colour,
-                                                                        nonsense_mutation_colour]):
+                                                                        nonsense_mutation_colour],
+                                      [synonymous_zorder, missense_zorder, nonsense_zorder]):
 
                 muts = self.observed_mutations[self.observed_mutations['effect'] == effect]
                 if len(muts) > 0:
                     _plot_single_scatter_category(muts, mut_counts, 'residue', 'score', marker_size_from_count,
                                               base_marker_size, col, effect,
-                                              observed_alpha, hotspots_in_foreground, marker=observed_marker, ax=ax)
+                                              observed_alpha, hotspots_in_foreground, marker=observed_marker, ax=ax,
+                                                  zorder=z)
 
         if sections_for_colours is not None:
             if colour_unmutated and not show_observed_only:
@@ -473,13 +487,15 @@ class Section:
                                            score_regions_for_colours, score_region_colours,
                                            marker_size_from_count=False,
                                            base_marker_size=unmutated_marker_size, alpha=unobserved_alpha,
-                                           hotspots_in_foreground=False, use_null=True, marker=unobserved_marker, ax=ax)
+                                           hotspots_in_foreground=False, use_null=True, marker=unobserved_marker, ax=ax,
+                                           zorder=unobserved_zorder)
 
             if not show_null_only:
                 colour_mutations_by_scores(self.observed_mutations, mut_counts, 'residue', 'score', sections_for_colours,
                                            score_regions_for_colours, score_region_colours, marker_size_from_count,
                                            base_marker_size, observed_alpha, hotspots_in_foreground,
-                                           marker=observed_marker, ax=ax)
+                                           marker=observed_marker, ax=ax,
+                                           zorder=missense_zorder)
 
         ax.set_xlabel('Residue')
         try:
@@ -701,100 +717,91 @@ class Section:
     def plot_binned_counts_common_bins(self, spectra=None, show_plot=False, figsize=(15, 5),
                                        colours=None, return_fig=False, linewidth=0,
                                        hatches=None,
-                                       show_legend=True, legend_args=None, chi_tests=None,
-                                       show_CI=True):
+                                       show_legend=True, legend_args=None, bins=(-1, 0.5, 2),
+                                       show_CI=True, CI_num_samples=10000, CI_alpha=0.05):
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, len(spectra)+1)
         if hatches is None:
             hatches = [None]*len(colours)
-        if chi_tests is None:
-            chi_tests = [t.name for t in self.project.statistics if isinstance(t, ChiSquareTest)]
+
+
+        chi_name = 'chi_for_plot'
+        chi_test = ChiSquareTest(bins=bins, CI_num_samples=CI_num_samples, CI_alpha=CI_alpha, name=chi_name)
+        # Run the test using each of the spectra
+        statistical_results = {}
+        for spectrum in spectra:
+            statistical_results.update(chi_test(self, spectrum, plot=False))
+
+        fig, ax = plt.subplots(figsize=figsize)
+        legend_items = []
+
+        w = 0.8 / (len(spectra) + 1)
+
+        observed_counts = np.array(statistical_results["_".join([chi_name, spectra[0].name, 'observed_counts'])])
+
+        if show_CI:
+            observed_CI_low = np.array(
+                statistical_results["_".join([chi_name, spectra[0].name, 'observed_CI_low'])])
+            observed_CI_high = np.array(
+                statistical_results["_".join([chi_name, spectra[0].name, 'observed_CI_high'])])
+            yerr = [observed_counts - observed_CI_low, observed_CI_high - observed_counts]
         else:
-            chi_tests = [t.name for t in self.project.statistics if isinstance(t, ChiSquareTest) and
-                         (t in chi_tests or t.name in chi_tests)]
-        if len(chi_tests) == 0:
-            print('No chi square tests to plot')
-        else:
-            if self.statistical_results is None:
-                self.run_statistical_tests(plot=False)  # The chi-square tests need to be run first
+            yerr=None
 
-            fig, axes = plt.subplots(nrows=len(chi_tests), ncols=1, squeeze=False, figsize=figsize)
-            legend_items = []
-            for i, chi_name in enumerate(chi_tests):
-                all_bins = [self.statistical_results["_".join([chi_name, spectrum.name, 'bins'])] for spectrum in spectra]
-                bins = all_bins[0]
-                if not all([b == bins for b in all_bins[1:]]):
-                    print('Cannot plot for {} because the bins vary with spectrum'.format(chi_name))
-                else:
-                    ax = axes[i, 0]
-                    w = 0.8 / (len(spectra) + 1)
+        x = np.arange(0, len(observed_counts)) + w / 2
 
-                    observed_counts = np.array(
-                        self.statistical_results["_".join([chi_name, spectra[0].name, 'observed_counts'])])
-                    if show_CI:
-                        observed_CI_low = np.array(
-                            self.statistical_results["_".join([chi_name, spectra[0].name, 'observed_CI_low'])])
-                        observed_CI_high = np.array(
-                            self.statistical_results["_".join([chi_name, spectra[0].name, 'observed_CI_high'])])
-                        yerr = [observed_counts - observed_CI_low, observed_CI_high - observed_counts]
-                    else:
-                        yerr=None
+        obs = ax.bar(x + w * len(spectra),
+                     observed_counts,
+                     yerr=yerr,
+                     label='Observed counts', width=w, linewidth=linewidth, edgecolor='k',
+                     color=colours[0], hatch=hatches[0])
 
-                    x = np.arange(0, len(observed_counts)) + w / 2
-
-                    obs = ax.bar(x + w * len(spectra),
-                                 observed_counts,
-                                 yerr=yerr,
-                                 label='Observed counts', width=w, linewidth=linewidth, edgecolor='k',
-                                 color=colours[0], hatch=hatches[0])
-
-                    for j, spectrum in enumerate(spectra):
-                        expected_counts = np.array(
-                            self.statistical_results["_".join([chi_name, spectrum.name, 'expected_counts'])])
+        for j, spectrum in enumerate(spectra):
+            expected_counts = np.array(
+                statistical_results["_".join([chi_name, spectrum.name, 'expected_counts'])])
 
 
-                        if show_CI:
-                            expected_CI_low = np.array(
-                                self.statistical_results["_".join([chi_name, spectrum.name, 'expected_CI_low'])])
-                            expected_CI_high = np.array(
-                                self.statistical_results["_".join([chi_name, spectrum.name, 'expected_CI_high'])])
-                            yerr = [expected_counts - expected_CI_low, expected_CI_high - expected_counts]
-                        else:
-                            yerr=None
+            if show_CI:
+                expected_CI_low = np.array(
+                    statistical_results["_".join([chi_name, spectrum.name, 'expected_CI_low'])])
+                expected_CI_high = np.array(
+                    statistical_results["_".join([chi_name, spectrum.name, 'expected_CI_high'])])
+                yerr = [expected_counts - expected_CI_low, expected_CI_high - expected_counts]
+            else:
+                yerr=None
 
-                        l1 = ax.bar(x + w * j, expected_counts,
-                                    yerr=yerr,
-                                    label='Expected counts {}'.format(spectrum.name),
-                                    width=w, color=colours[j + 1], linewidth=linewidth, edgecolor='k',
-                                    hatch=hatches[j + 1])
-                        legend_items.append(l1)
+            l1 = ax.bar(x + w * j, expected_counts,
+                        yerr=yerr,
+                        label='Expected counts {}'.format(spectrum.name),
+                        width=w, color=colours[j + 1], linewidth=linewidth, edgecolor='k',
+                        hatch=hatches[j + 1])
+            legend_items.append(l1)
 
-                    xticklabels = []
-                    for k in range(len(expected_counts)):
-                        if k != len(expected_counts):
-                            xticklabels.append("[ {:.2f},  {:.2f} )".format(bins[k], bins[k + 1]))
-                        else:
-                            xticklabels.append("[ {:.2f},  {:.2f} ]".format(bins[k], bins[k + 1]))
-                    ax.set_xticks(np.arange(0, len(observed_counts)) + 0.4)
-                    ax.set_xticklabels(xticklabels)
-                    ax.tick_params(axis='x', rotation=90)
-                    ax.set_ylabel('Number of mutations')
-                    ax.set_title('Chi square counts -\n' + spectrum.name)
+        xticklabels = []
+        for k in range(len(expected_counts)):
+            if k != len(expected_counts):
+                xticklabels.append("[ {:.2f},  {:.2f} )".format(bins[k], bins[k + 1]))
+            else:
+                xticklabels.append("[ {:.2f},  {:.2f} ]".format(bins[k], bins[k + 1]))
+        ax.set_xticks(np.arange(0, len(observed_counts)) + 0.4)
+        ax.set_xticklabels(xticklabels)
+        ax.tick_params(axis='x', rotation=90)
+        ax.set_ylabel('Number of mutations')
 
-            if show_legend:
-                if legend_args is None:
-                    legend_args = dict(bbox_to_anchor=(0.5, -0.13), loc="lower center",
-                                       bbox_transform=fig.transFigure, ncol=len(spectra) + 1)
-                fig.legend(legend_items + [obs],
-                           ['Expected\ncounts\n{}'.format(s.name) for s in spectra] + ['Observed\ncounts'],
-                           **legend_args
-                           )
+        if show_legend:
+            if legend_args is None:
+                legend_args = dict(bbox_to_anchor=(0.5, -0.13), loc="lower center",
+                                   bbox_transform=fig.transFigure, ncol=len(spectra) + 1)
+            fig.legend(legend_items + [obs],
+                       ['Expected\ncounts\n{}'.format(s.name) for s in spectra] + ['Observed\ncounts'],
+                       **legend_args
+                       )
 
-            if show_plot:
-                plt.show()
-            if return_fig:
-                return fig
+        if show_plot:
+            plt.show()
+        if return_fig:
+            return fig
 
     def plot_binomial(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
                            show_legend=True, legend_args=None, binom_test=None, show_CI=True):
@@ -1041,7 +1048,8 @@ class Section:
     def plot_sliding_window_totalled_score(self, window_size=20, window_step=1,
                                           spectra=None, show_legend=True, figsize=(15, 5), legend_args=None,
                                           show_plot=False, colours=None, return_fig=False,
-                                           show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False):
+                                           show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
+                                           plot_kwargs_obs=None, plot_kwargs_exp=None):
 
         start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
 
@@ -1089,7 +1097,8 @@ class Section:
         self._plot_sliding_window_results(starts, window_size, spectra, colours,
                                      expected_counts, observed_counts, fig, ax, xlim, start, end, ylim,
                                      show_legend, legend_args, show_residues, show_plot,
-                                          ylabel='Total score per residue')
+                                          ylabel='Total score per residue', plot_kwargs_obs=plot_kwargs_obs,
+                                              plot_kwargs_exp=plot_kwargs_exp)
 
         if return_fig:
             return fig
@@ -1129,34 +1138,40 @@ class Section:
         for i, spectrum in enumerate(spectra):
             ax = axes[0, i]
             if not show_observed_only:
-                ax.scatter(null_to_plot[spectrum.rate_column], null_to_plot['score'],
-                       s=unmutated_marker_size, alpha=unobserved_alpha,
-                       c=unobserved_mutation_colour, label=None, marker=unobserved_marker)
-            if not show_null_only:
-                for effect, col in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
-                                                                    missense_mutation_colour,
-                                                                    nonsense_mutation_colour]):
-                    muts = self.observed_mutations[self.observed_mutations['effect'] == effect]
-                    if len(muts) > 0:
-                        _plot_single_scatter_category(muts, mut_counts, spectrum.rate_column, 'score',
-                                                      marker_size_from_count,
-                                                      base_marker_size, col, effect,
-                                                      observed_alpha, hotspots_in_foreground, ax=ax, marker=observed_marker)
-
-            if sections_for_colours is not None:
                 if colour_unmutated_by_scores and not show_observed_only:
-                    colour_mutations_by_scores(null_to_plot, None, spectrum.rate_column, 'score',
+                    unplotted_null_muts = colour_mutations_by_scores(null_to_plot, None, spectrum.rate_column, 'score',
                                                sections_for_colours,
                                                score_regions_for_colours, score_region_colours,
                                                marker_size_from_count=False,
                                                base_marker_size=unmutated_marker_size, alpha=unobserved_alpha,
-                                               hotspots_in_foreground=False, use_null=True, marker=unobserved_marker)
-                if not show_null_only:
-                    colour_mutations_by_scores(self.observed_mutations, mut_counts, spectrum.rate_column, 'score',
-                                           sections_for_colours,
-                                           score_regions_for_colours, score_region_colours, marker_size_from_count,
-                                           base_marker_size, observed_alpha, hotspots_in_foreground, ax=ax,
-                                           marker=observed_marker)
+                                               hotspots_in_foreground=False, use_null=True, marker=unobserved_marker,
+                                                                     zorder=1)
+                else:
+                    unplotted_null_muts = null_to_plot
+                ax.scatter(unplotted_null_muts[spectrum.rate_column], unplotted_null_muts['score'],
+                       s=unmutated_marker_size, alpha=unobserved_alpha,
+                       c=unobserved_mutation_colour, label=None, marker=unobserved_marker, zorder=0)
+            if not show_null_only:
+                if sections_for_colours is not None:
+                    unplotted_obs_muts = colour_mutations_by_scores(self.observed_mutations, mut_counts,
+                                                                    spectrum.rate_column, 'score',
+                                               sections_for_colours,
+                                               score_regions_for_colours, score_region_colours, marker_size_from_count,
+                                               base_marker_size, observed_alpha, hotspots_in_foreground, ax=ax,
+                                               marker=observed_marker, zorder=1)
+                else:
+                    unplotted_obs_muts = self.observed_mutations
+
+                for effect, col in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
+                                                                    missense_mutation_colour,
+                                                                    nonsense_mutation_colour]):
+                    muts = unplotted_obs_muts[unplotted_obs_muts['effect'] == effect]
+                    if len(muts) > 0:
+                        _plot_single_scatter_category(muts, mut_counts, spectrum.rate_column, 'score',
+                                                      marker_size_from_count,
+                                                      base_marker_size, col, effect,
+                                                      observed_alpha, hotspots_in_foreground, ax=ax,
+                                                      marker=observed_marker, zorder=0)
 
             ax.set_xlabel('Mutation rate')
             try:

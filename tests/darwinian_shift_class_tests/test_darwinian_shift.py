@@ -69,20 +69,20 @@ def test_get_overlapped_transcripts(project):
 
     )}, marks=pytest.mark.slow)
 ])
-@pytest.mark.parametrize("lookup", [pytest.param(DummyValuesFixed(0), marks=pytest.mark.slow),
+@pytest.mark.parametrize("lookup", [pytest.param(DummyValuesFixed(0), marks=pytest.mark.veryslow),
                                     DummyValuesRandom(np.random.random, testing_random_seed=0)])
-@pytest.mark.parametrize("gene_list", [None,pytest.param(('NOTCH3', 'KEAP1'), marks=pytest.mark.slow)])
+@pytest.mark.parametrize("gene_list", [None,pytest.param(('NOTCH3', 'KEAP1'), marks=pytest.mark.veryslow)])
 @pytest.mark.parametrize("transcript_list", [None,
                                              pytest.param(('ENST00000263388','ENST00000171111'),
-                                                          marks=pytest.mark.slow)])
-@pytest.mark.parametrize("deduplicate", [pytest.param(True, marks=pytest.mark.slow), False])
+                                                          marks=pytest.mark.veryslow)])
+@pytest.mark.parametrize("deduplicate", [pytest.param(True, marks=pytest.mark.veryslow), False])
 @pytest.mark.parametrize("excluded_positions", [None,
                                                 pytest.param({'19':[40761076, 40761152, 15302303, 15288493]},
-                                                             marks=pytest.mark.slow)
+                                                             marks=pytest.mark.veryslow)
                                                 ])
-@pytest.mark.parametrize("use_longest_transcript_only", [True, pytest.param(False, marks=pytest.mark.slow)])
-@pytest.mark.parametrize("exclude_synonymous", [pytest.param(True, marks=pytest.mark.slow), False])
-@pytest.mark.parametrize("exclude_nonsense", [pytest.param(True, marks=pytest.mark.slow), False])
+@pytest.mark.parametrize("use_longest_transcript_only", [True, pytest.param(False, marks=pytest.mark.veryslow)])
+@pytest.mark.parametrize("exclude_synonymous", [pytest.param(True, marks=pytest.mark.veryslow), False])
+@pytest.mark.parametrize("exclude_nonsense", [pytest.param(True, marks=pytest.mark.veryslow), False])
 # @pytest.mark.parametrize("sections", [True, False])
 
 def test_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, excluded_positions,
@@ -141,11 +141,83 @@ def test_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, 
     assert_frame_equal(sort_dataframe(d.scored_data), sort_dataframe(expected), check_dtype=False)
 
     expected = pickle.load(open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'rb'))
-    # non_binom_cols = [c for c in d.results.columns if (('binom' not in c) and ('perm' not in c))]
-    # assert_frame_equal(sort_dataframe(d.results[non_binom_cols]), sort_dataframe(expected[non_binom_cols]))
-    # pickle.dump(d.results, open(os.path.join(RESULTS_DIR, "results_{}.pickle".format(test_name)), 'wb'))
     assert_frame_equal(sort_dataframe(d.results), sort_dataframe(expected))
 
+@pytest.mark.slow
+@pytest.mark.parametrize('option', list(range(8)))
+def test_full_process_options_short(option):
+    """
+    Run through each option for the full_process and the combination of all.
+    Makes sure they all work without having to every single combination.
+    Specify option to track which option combination a failure is caused by
+    :return:
+    """
+    spectra = {'name': '1', 'spectra': (
+        EvenMutationalSpectrum(),
+        GlobalKmerSpectrum(k=1),
+        GlobalKmerSpectrum(k=3),
+        GlobalKmerSpectrum(k=5),
+        GlobalKmerSpectrum(k=1, deduplicate_spectrum=True, name='GK1dd'),
+        GlobalKmerSpectrum(k=3, ignore_strand=True, name='GK3is'),
+        GlobalKmerSpectrum(k=5, missing_value=0.01, name='GK5mv'),
+        TranscriptKmerSpectrum(k=1),
+        TranscriptKmerSpectrum(k=3),
+        TranscriptKmerSpectrum(k=5),
+        TranscriptKmerSpectrum(k=1, deduplicate_spectrum=True, name='TK1dd'),
+        TranscriptKmerSpectrum(k=3, ignore_strand=True, name='TK3is'),
+        TranscriptKmerSpectrum(k=5, missing_value=0.01, name='TK3mv'),
+    )}
+
+    if option == 0:
+        # With gene list
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                      gene_list=('NOTCH3', 'KEAP1'), transcript_list=None, deduplicate=False, excluded_positions=None,
+                      use_longest_transcript_only=True, exclude_synonymous=False, exclude_nonsense=False)
+
+    if option == 1:
+        # With transcript list
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=('ENST00000263388','ENST00000171111'),
+                          deduplicate=False, excluded_positions=None,
+                          use_longest_transcript_only=True, exclude_synonymous=False, exclude_nonsense=False)
+
+    if option == 2:
+        # Deduplicate
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=None, deduplicate=True, excluded_positions=None,
+                          use_longest_transcript_only=True, exclude_synonymous=False, exclude_nonsense=False)
+
+    if option == 3:
+        # Exclude positions
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=None, deduplicate=False,
+                          excluded_positions={'19':[40761076, 40761152, 15302303, 15288493]},
+                          use_longest_transcript_only=True, exclude_synonymous=False, exclude_nonsense=False)
+
+    if option == 4:
+        # All transcripts
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=None, deduplicate=False, excluded_positions=None,
+                          use_longest_transcript_only=False, exclude_synonymous=False, exclude_nonsense=False)
+
+    if option == 5:
+        # exclude synonymous
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=None, deduplicate=False, excluded_positions=None,
+                          use_longest_transcript_only=True, exclude_synonymous=True, exclude_nonsense=False)
+
+    if option == 6:
+        # exclude nonsense
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=None, transcript_list=None, deduplicate=False, excluded_positions=None,
+                          use_longest_transcript_only=True, exclude_synonymous=False, exclude_nonsense=True)
+
+    if option == 7:
+        # All
+        test_full_process(spectra=spectra, lookup=DummyValuesRandom(np.random.random, testing_random_seed=0),
+                          gene_list=('NOTCH3', 'KEAP1'), transcript_list=('ENST00000263388','ENST00000171111'),
+                          deduplicate=True, excluded_positions={'19':[40761076, 40761152, 15302303, 15288493]},
+                          use_longest_transcript_only=False, exclude_synonymous=True, exclude_nonsense=True)
 
 @pytest.mark.parametrize("sections,lookup", [pytest.param(pd.DataFrame({
     'transcript_id': ['ENST00000263388', 'ENST00000601011', 'ENST00000171111'],

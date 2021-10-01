@@ -232,7 +232,7 @@ class DarwinianShift:
             raise ValueError('More than one statistic with the same name. Provide unique names to each.')
 
         # Results
-        self.result_columns = ['gene', 'transcript_id', 'chrom', 'section_id', 'num_mutations', 'repeat_proportion']
+        self.result_columns = ['gene', 'transcript_id', 'chrom', 'section_id', 'num_mutations']
         self.result_columns.extend(additional_results_columns)
 
         self.results = None
@@ -661,7 +661,10 @@ class DarwinianShift:
                          plot_scale=plot_scale)
             return section
         except (NoMutationsError, AssertionError, CodingTranscriptError, NoTranscriptError, MetricLookupException) as e:
-            print(type(e).__name__, e, '- Unable to run for', section.section_id)
+            if isinstance(section, Section):
+                print(type(e).__name__, e, '- Unable to run for', section.section_id)
+            else:
+                print(type(e).__name__, e, '- Unable to run for', section)
             return None
 
     def run_all(self, verbose=None, spectra=None, statistics=None):

@@ -191,7 +191,17 @@ def _multiple_test_correct(results_dataframe, feature_columns):
 
 def get_bins_for_uniprot_features(uniprot_features_df,
                                   feature_types=None,
-                                  start_from_zero=True, min_gap=0, last_residue=None):
+                                  start_from_zero=True, min_gap=0, last_residue=None,
+                                  ):
+    """
+    Returns bins to be used with pd.cut on the 'residue' column
+    The intervals are (a,b], so for a uniprot feature from residue X to residue Y (including both ends), the
+    interval will be (X-1, Y].
+    The bins may therefore mark the end of each uniprot feature, not the start.
+
+    :param min_gap: Setting this to >0 will count residues in small gaps between features as belonging to the next
+    feature.
+    """
     if feature_types is not None:
         features = uniprot_features_df[uniprot_features_df['type'].isin(feature_types)]
     else:
@@ -202,13 +212,15 @@ def get_bins_for_uniprot_features(uniprot_features_df,
     descriptions = []
     if start_from_zero:
         bins.append(0)
-    last_end = None
+        last_end = 0
+    else:
+        last_end = None
     for i, row in features.iterrows():
-        start = row['begin_position']
+        start = row['begin_position'] - 1   # The intervals in pd.cut do not include the left edge, so -1.
         end = row['end_position']
         type_ = row['type']
         desc = row['description']
-        if last_end is None or start > last_end + min_gap + 1:  # Does not continue directly from the previous bin.
+        if last_end is None or start > last_end + min_gap:  # Does not continue directly from the previous bin.
             bins.append(start)
             types.append(None)
             descriptions.append(None)

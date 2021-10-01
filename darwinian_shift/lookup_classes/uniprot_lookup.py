@@ -128,6 +128,16 @@ class UniprotLookup:
         xml_dict = self.get_uniprot_xml_dict(transcript_id)
         return self._get_pdb_structures_from_xml_dict(xml_dict)
 
+    def _float_resolution_entry(self, value):
+        if isinstance(value, str):
+            if value.endswith(" A"):
+                return float(value[:-2])
+        return float(value)
+
+    def _float_resolution_column(self, df):
+        df['resolution'] = df['resolution'].apply(self._float_resolution_entry)
+        return df
+
     def _get_pdb_structures_from_xml_dict(self, xml_dict):
         """
         Returns a list of PDB IDs.
@@ -151,7 +161,7 @@ class UniprotLookup:
             return UniprotLookupError('No pdb structures found in xml_dict')
         pdb_structures = pd.DataFrame(pdb_structures)
         if 'resolution' in pdb_structures.columns:
-            pdb_structures['resolution'] = pdb_structures['resolution'].astype(float)
+            pdb_structures = self._float_resolution_column(pdb_structures)
         return pdb_structures
 
     def get_features_from_xml(self, xml_dict):

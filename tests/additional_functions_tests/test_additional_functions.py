@@ -70,7 +70,7 @@ def test_uniprot_exploration4():
 def test_get_uniprot_domains():
     uniprot_lookup = UniprotLookup(uniprot_directory=TEST_DATA_DIR)
     transcript_uniprot = uniprot_lookup.get_uniprot_data('ENST00000263388')
-    res = get_bins_for_uniprot_features(transcript_uniprot, feature_types=('domain', 'transmembrane_helix'),
+    res = get_bins_for_uniprot_features(transcript_uniprot, feature_types=('domain', 'transmembrane region'),
                                                                            min_gap=0, last_residue=3000)
 
     # output new test file. Do not uncomment unless results have changed and confident new results are correct

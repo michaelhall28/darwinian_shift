@@ -153,7 +153,7 @@ def test_AND_lookup2(pdb_seq_object):
 
 
 def test_iupred2a_lookup(seq_object):
-    pred = IUPRED2ALookup(iuored_results_dir=FILE_DIR)
+    pred = IUPRED2ALookup(iupred_results_dir=FILE_DIR)
     seq_object.iupred_file = 'iupred_sample.txt'
     res = pred(seq_object)
 

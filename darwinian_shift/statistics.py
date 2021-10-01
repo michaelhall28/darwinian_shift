@@ -68,7 +68,10 @@ class ChiSquareTest:
     # Differences between the null and the observed distributions may indicate selection or inappropriate null assumptions
     # Selection detected here may not correlate with the chosen metric
     def __init__(self, bins=None, max_bins=10, min_exp_freq=5, name='chi_square', CI_num_samples=10000, CI_alpha=0.05):
-        self.bins = bins
+        if isinstance(bins, tuple):
+            self.bins = list(bins)   #Needs to be mutable
+        else:
+            self.bins = bins
         self.max_bins = max_bins
         self.min_exp_freq = min_exp_freq
         self.name = name
@@ -516,6 +519,7 @@ def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_e
 
 
 def get_expected_frequency_for_bins(null_scores, mut_rates, total_count, bins):
+    bins = bins.copy()   # Make sure original is not edited
     mut_rates = np.array(mut_rates)
     weights = mut_rates / mut_rates.sum() * total_count
     values, weights = sort_multiple_arrays_using_one(null_scores, weights)

@@ -1,0 +1,2 @@
+Gene name	Transcript stable ID	Chromosome/scaffold name	Genomic coding start	CDS Length	Genomic coding end	Strand	Exon rank in transcript
+gene1	gene1	gene1	101	450	550	1	1

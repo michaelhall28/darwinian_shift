@@ -3,15 +3,19 @@ Statistical testing of selection of quantifiable features of somatic mutations.
 
 Some basic instructions are provided in this readme.  
 
+The Root code for weighted Anderson-Darling tests is from Trusina et. al. https://doi.org/10.1088/1742-6596/1525/1/012109
+
 ## Installation
 To install, clone the git repository  
 `git clone https://github.com/michaelhall28/darwinian_shift`  
 
-Then pip install the dependencies  
+Then use conda to install the dependencies, activate the environment and run Root to compile the code for comparing datasets  
 `cd darwinian_shift`  
-`pip install -r requirements.txt`  
+`conda env create -f environment.yml`  
+`conda activate dsenv`  
+`root -b -l -q darwinian_shift/dataset_comparison/root/homtests.C+`
 
-and install the code  
+Then either install the code:  
 `pip install .`  
 Or add the repository to your PYTHONPATH.  
 

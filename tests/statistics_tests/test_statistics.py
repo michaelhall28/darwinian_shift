@@ -128,7 +128,7 @@ def test_ks_test(exp_values, mut_rates, observed_values):
     np.random.seed(0)
     k = ks_test(exp_values, mut_rates, observed_values)
     assert k['statistic'] == 0.12733016521331045
-    assert k['pvalue'] ==  0.07141968809198758
+    assert k['pvalue'] ==  0.07141685546873411
 
 
 def test_get_samples_from_mutational_spectrum(exp_values, mut_rates):
@@ -228,10 +228,10 @@ def test_binned_chisquare(exp_values, mut_rates, observed_values):
 
     assert res.keys() == expected_res.keys()
     for k, v in res.items():
-        if isinstance(v, np.ndarray):
+        if isinstance(v, (list, np.ndarray)):
             np.testing.assert_array_almost_equal(v, expected_res[k])
         else:
-            assert v == expected_res[k]
+            assert math.isclose(v, expected_res[k])
 
 
 def test_binned_chisquare_binom(exp_values, mut_rates, observed_values):

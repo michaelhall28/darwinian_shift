@@ -15,7 +15,8 @@ class BigwigLookup:
             reverse = True
             start, end = end, start
 
-        values = self.bw.values(chrom, start - 1, end)
+        # Convert to Python int. pyBigWig doesn't like numpy.int64.
+        values = self.bw.values(chrom, int(start) - 1, int(end))
 
         if reverse:
             values = values[::-1]

@@ -2,12 +2,34 @@ import numpy as np
 
 
 class SequenceDistanceLookup:
-    # Use the distance from a given selection of residue numbers in the protein sequence.
-    # Does not consider distance in 3D space, just the sequence
-    # Can use residue numbers, cds positions, or chromosomal positions to calculate the distance.
+    """
+    Score is the distance from a given selection of positions in the protein or gene sequence.
+    Does not consider distance in 3D space, just the sequence
+    Can use residue numbers ('residue'), cds positions ('cdspos'), or chromosomal positions ('pos') to calculate the distance.
+
+    Requires the target key attribute to be defined for the section being analysed. The name of the attribute can be
+    defined here, by default it is 'target_selection'.
+
+    For example:
+    d.run_section({
+        'gene': GENESYMBOL,
+        'target_selection': [1, 2, 30, 100]
+    }
+
+    """
+
     position_types = ('residue', 'cdspos', 'pos')
 
     def __init__(self, position_type='residue', boolean=False, target_key='target_selection', name=None):
+        """
+
+        :param position_type: Whether to measure distance and define target locations in terms of residues,
+        cds positions, or chromosomal positions. The options are 'residue', 'cdspos' or 'pos'.
+        :param boolean: If true, will test for mutation exactly on the target sites. If False (default), will
+        test for the distance from the mutations to the nearest target site.
+        :param target_key: The name of the section attribute which lists the target site.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         self.boolean = boolean  # Return True/False for in the target rather than a distance from it
         if position_type not in self.position_types:
             raise TypeError('Must pick from {}'.format(self.position_types))

@@ -56,7 +56,7 @@ def download_genome_fasta(source_genome, output_dir=None, grch37=False):
     print('Downloading {} to {}'.format(url, output_dir))
     wget.download(url, output_dir)
 
-    print('bgzipping and indexing the fasta file')
+    print('\nbgzipping and indexing the fasta file')
     convert_to_bgzip_and_index(os.path.join(output_dir, file_name))
 
     return output_dir
@@ -74,7 +74,7 @@ BIOMART_URL = 'http://www.ensembl.org/biomart/martservice?query='
 GRCH37_BIOMART_URL = 'http://grch37.ensembl.org/biomart/martservice?query='
 
 def get_biomart_xml(source_genome):
-    source_genome = source_genome.split('_')
+    source_genome = source_genome.lower().split('_')
     sp = source_genome[0][0] + source_genome[1]
 
     x = '<?xml version="1.0" encoding="UTF-8"?>'
@@ -96,7 +96,7 @@ def get_biomart_xml(source_genome):
 
 
 def download_biomart_data(source_genome, output_dir, grch37=False):
-    x = get_biomart_xml(source_genome)
+    x = get_biomart_xml(source_genome.lower())
     if grch37:
         url = GRCH37_BIOMART_URL
     else:

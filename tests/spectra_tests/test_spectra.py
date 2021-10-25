@@ -135,7 +135,7 @@ def test_transcript_kmerE(project_spectrum):
 
 def test_global_write(project_spectrum):
     s = project_spectrum.get_spectrum('glob_k3')
-    s.output_spectrum(os.path.join(FILE_DIR, "glob_kmer_A.spectrum_new"))
+    s.write_to_file(os.path.join(FILE_DIR, "glob_kmer_A.spectrum_new"))
     compare_sorted_files(os.path.join(FILE_DIR, "glob_kmer_A.spectrum_new"), os.path.join(FILE_DIR, "glob_kmer_A.spectrum"))
 
 def test_global_read():
@@ -152,7 +152,7 @@ def test_transcript_write(project_spectrum):
                                name=None)
     s.set_project(project_spectrum)
     s.get_complete_spectrum()
-    s.output_spectrum(os.path.join(FILE_DIR, "transcript_kmer_A.spectrum_new"))
+    s.write_to_file(os.path.join(FILE_DIR, "transcript_kmer_A.spectrum_new"))
 
     compare_sorted_files(os.path.join(FILE_DIR, "transcript_kmer_A.spectrum_new"),
                          os.path.join(FILE_DIR, "transcript_kmer_A.spectrum"))

@@ -7,7 +7,23 @@ from darwinian_shift.utils import get_sifts_alignment_for_chain
 
 
 class ProDyLookup:
-    # Also DSSP and Beta-factors since these can be parsed with Prody.
+    """
+    Lookup for various scores that can be calculated using ProDy http://prody.csb.pitt.edu
+
+    It also includes DSSP and Beta-factors since these can be parsed with ProDy.
+
+    Requires pdb_id and pdb_chain attributes to be defined for the section being analysed.
+
+    The options for running are:
+        - 'sq_flucts_GNM':         Squared fluctuations from GNM model
+        - 'sq_flucts_ANM':         Squared fluctuations from ANM model
+        - 'mean_stiffness':        Mean mechanical stiffness
+        - 'PRS_effectiveness':     Effectiveness from Perturbation Response Scanning
+        - 'PRS_sensitivity':       Sensitivity from Perturbation Response Scanning
+        - 'solvent_accessibility': From DSSP
+        - 'beta_factors':          Read from the pdb file
+
+    """
 
     _options = (
         'sq_flucts_GNM',  # Squared fluctuations from GNM model
@@ -21,6 +37,19 @@ class ProDyLookup:
 
     def __init__(self, metric="sq_flucts_GNM", exclude_ends=0, pdb_directory=None, dssp_directory='.',
                  sifts_directory=None, download_sifts=None, quiet=True, name=None):
+        """
+
+        :param metric: The score to use. 'sq_flucts_GNM', 'sq_flucts_ANM', 'mean_stiffness', 'PRS_effectiveness',
+        'PRS_sensitivity', 'solvent_accessibility' or 'beta_factors'.
+        :param exclude_ends:  Can be used if the calculations are less reliable for the ends of the protein.
+        This option will exclude the given number of residues from both ends of the structure.
+        :param pdb_directory: File path to the directory where pdb files are stored.
+        :param dssp_directory: File path to the directory where dssp files are stored.
+        :param sifts_directory: File path to directory of SIFTS files for aligning PDB files with protein sequence positions
+        :param download_sifts: If True, will attempt to download the SIFTS file if it is not found in the sifts_directory.
+        :param quiet: If True (default), will set prody.LOGGER.verbosity = 'warning'
+        :param name: Name of the lookup to appear on plot axes.
+        """
         if metric in self._options:
             self.metric = metric
             self.metric_function = getattr(self, "_" + metric)  # Returns a function
@@ -42,7 +71,6 @@ class ProDyLookup:
                 self.name = 'ProDy ' + self.metric
         else:
             self.name = name  # Will appear on some plot axes
-
 
     def setup_project(self, project):
         if self.pdb_directory is None:

@@ -4,12 +4,23 @@ import os
 class IUPRED2ALookup:
     """
     For reading the text results file of IUPred2A when running either long or short disorder.
+    These files have to be downloaded prior to running the analysis.
+
+    Requires the iupred_file attribute to be defined for the section being analysed. This should be the file
+    path of the iupred text results file relative to the iupred_results_dir .
+
     """
 
     def __init__(self, iupred_results_dir=".", results_column="IUPRED SCORE", name='IUPRED2A score'):
+        """
+
+        :param iupred_results_dir: Directory where the iupred results are stored
+        :param results_column: Name of column to use for the mutation scores.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         self.results_column = results_column
         self.iupred_results_dir = iupred_results_dir
-        self.name = name  # Will appear on some plot axes
+        self.name = name
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.null_mutations, seq_object.iupred_file)
@@ -23,8 +34,12 @@ class IUPRED2ALookup:
                 if line.startswith("#"):
                     columns = line[2:].strip().split("\t")
                     continue
+                if line.startswith('<'):
+                    continue
 
-                res_lines.append(line.strip().split("\t"))
+                line = line.strip().split("\t")
+                if len(line) > 1:
+                    res_lines.append(line)
 
         results = pd.DataFrame(res_lines, columns=columns)
         results['POS'] = results["POS"].astype(int)

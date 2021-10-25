@@ -15,6 +15,19 @@ class PDBeKBLookup:
     Uses the PDBe-KB data to score mutations.
     Some data comes with a score, others are just a list of residues that meet the criteria e.g. on an interface
     For cases using scores, the residues without a score will be marked as null and excluded from statistical tests
+
+    To use this lookup, a dictionary of pdbekb_kwargs is required when running the analysis.
+    For example:
+    d.run_section({
+        'gene': GENESYMBOL,
+        'pdbekb_kwargs': {
+            'uniprot_subsection': 'annotations',
+            'data_accessions': 'monomeric_residue_depth',
+            'score_method': 'mean'
+        }
+    }
+
+    The options available will depend on the structure.
     To use a score (instead of true/false for residue listed or not), define the score_method in pdbekb_kwargs.
     The options are 'mean', 'median', 'min', 'max' or a function that could be applied to a list of values.
 
@@ -39,6 +52,17 @@ class PDBeKBLookup:
     def __init__(self, pdbekb_dir='.', verbose=False, force_download=False, store_json=False,
                  base_url="https://www.ebi.ac.uk/pdbe/graph-api/uniprot/", name="PDBe-KB",
                  transcript_uniprot_mapping=None):
+        """
+
+        :param pdbekb_dir: Directory where pdbekb json.gz files can be stored.
+        :param verbose:
+        :param force_download: Will download new PDBeKB files, even if a previous one exists in the pdbekb_dir.
+        :param store_json: Will store the PDBeKB json.gz files in the pdbekb_dir after downloading.
+        :param base_url: The base url used to obtain the data.
+        :param name: Name of the lookup to appear on plot axes.
+        :param transcript_uniprot_mapping: Dictionary of mapping from transcript id to Uniprot accession number if not
+        using the mapping from Uniprot. Be careful that the residue numbers still matches the Uniprot annotations.
+        """
         self.pdbekb_dir = pdbekb_dir
         self.verbose = verbose
         self.store_json = store_json

@@ -135,11 +135,12 @@ def test_chi_sq3(seq_bool):
 
 @pytest.mark.mpl_image_compare(filename='binom.png')
 def test_binom(seq_bool):
-    return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest())
+    return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest(),
+                                  figsize=(15, 5))
 
 @pytest.mark.mpl_image_compare(filename='aa.png')
 def test_aa(seq):
-    return seq.plot_aa_abundance(show_plot=False, return_fig=True)
+    return seq.plot_aa_abundance(show_plot=False, return_fig=True, figsize=(15, 5))
 
 @pytest.mark.mpl_image_compare(filename='sliding_window.png')
 def test_sliding_window(seq):

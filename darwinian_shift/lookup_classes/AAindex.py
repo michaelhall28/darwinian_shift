@@ -195,7 +195,34 @@ class AAindex():
 
 
 class AAindexLookup:
+    """
+    Assigns a score to each mutation based on one of the tables in the AAindex,
+    Kawashima and Kanehisa, AAindex: Amino Acid index database, Nucleic Acids Research, 2000
+
+    The data first needs dowloading from https://www.genome.jp/aaindex/
+    The required file is aaindex1
+
+    The score returned will be the change from the wild type amino acid value to the mutant amino acid value.
+
+    The tables can be searched by entering a term as the table description. This will raise an error, but will print
+    a list of the table titles that contain the term:
+    E.g.
+    > AAindexLookup("/path/to/aaindex1", table_description='polar', abs_value=False)
+      Try one of these titles:
+	      Polarizability parameter (Charton-Charton, 1982)
+	      Polarity (Grantham, 1974)
+	      Mean polarity (Radzicka-Wolfenden, 1988)
+	      Polar requirement (Woese, 1973)
+	      Polarity (Zimmerman et al., 1968)
+    """
     def __init__(self, aaindex_file, table_description, abs_value, name=None):
+        """
+
+        :param aaindex_file: File path to aaindex1
+        :param table_description: The exact name of the table to use.
+        :param abs_value: If true, will return the absolute value of the change from wild type to mutant amino acid.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         aaindex = AAindex(aaindex_file)
         self.aatable = aaindex.get_aadata(table_description)  # Will raise an error if not a matching description
         self.abs_value = abs_value

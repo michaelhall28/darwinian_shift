@@ -1,8 +1,11 @@
 import numpy as np
 
 class ORLookup:
-    # Class to combine other lookups using simple thresholds.
-    # Will return 1 if any thresholds are broken, 0 otherwise.
+    """
+    Class to combine other lookups using simple thresholds.
+    Will return 1 for a mutation if any thresholds are broken, 0 otherwise.
+    """
+
     def __init__(self, lookups, thresholds, directions, include_missing_values=False, name='OR'):
         """
 
@@ -15,6 +18,7 @@ class ORLookup:
         :param include_missing_values: Some mutations may not have a metric from one of the lookups
         (e.g. nonsense mutations will not have a ∆∆G value). If included, these will be deemed to have not broken the
         threshold.
+        :param name: Name of the lookup to appear on plot axes.
         """
         assert len(lookups) == len(thresholds), "Length of lookups must be the same as the length of the thresholds"
         self.lookups = lookups
@@ -58,8 +62,10 @@ class ORLookup:
 
 
 class ANDLookup:
-    # Class to combine other lookups using simple thresholds.
-    # Will return 1 if all thresholds are broken, 0 otherwise.
+    """
+    Class to combine other lookups using simple thresholds.
+    Will return 1 for a mutation if all thresholds are broken, 0 otherwise.
+    """
     def __init__(self, lookups, thresholds, directions, include_missing_values=False, name='AND'):
         """
 
@@ -72,6 +78,7 @@ class ANDLookup:
         :param include_missing_values: Some mutations may not have a metric from one of the lookups
         (e.g. nonsense mutations will not have a ∆∆G value). If included, these will be deemed to have not broken the
         threshold.
+        :param name: Name of the lookup to appear on plot axes.
         """
         assert len(lookups) == len(thresholds), "Length of lookups must be the same as the length of the thresholds"
         self.lookups = lookups
@@ -114,14 +121,19 @@ class ANDLookup:
 
 
 class MutationExclusionLookup:
-    # Use one lookup to exclude mutations from the test using a second lookup
-    # For example, test whether mutations not on an interface are destabilising.
+    """
+    Use one lookup to exclude mutations from the test using a second lookup
+    For example, test whether mutations not on an interface are destabilising.
+    """
     def __init__(self, lookup, exclusion_lookup, exclusion_threshold, exclusion_direction=1, name='Mutation Exclusion'):
         """
 
-        :param lookup: Lookup class to run
-        :param exclusion_lookup: Exclude any mutations that cross a threshold from this lookup
+        :param lookup: Lookup class to run the statistical tests with.
+        :param exclusion_lookup: Exclude any mutations from the statistical test that cross a threshold from this lookup
         :param exclusion_direction: Direction which breaks the threshold. 1 if above, -1 if below.
+        E.g. if wanting to exclude mutations with a high ∆∆G, use exclusion_direction=1. If wanting to exclude mutations
+        with a low ∆∆G, use exclusion_direction=-1
+        :param name: Name of the lookup to appear on plot axes.
         """
         self.lookup = lookup
         self.exclusion_lookup = exclusion_lookup

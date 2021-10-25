@@ -11,10 +11,23 @@ class UniprotLookupError(MetricLookupException): pass
 
 
 class UniprotLookup:
-    #  The score of a mutation is based on which uniprot features it is part of
-    # Each feature type can be given a different score
-    # Any residues in multiple features will be placed in the one with the highest score.
-    # This code can also be used to annotate mutations with the uniprot features.
+    """
+    The score of a mutation is based on which uniprot features it is part of.
+    This code can also be used to annotate mutations with the uniprot features (see uniprot_exploration).
+
+    The features to use can be selected by listing the feature_types.
+    To further filter the features, the description_contains argument can be used (this should be a list the same length
+    as the feature_types).
+
+    Example:
+        u = UniprotLookup(
+                feature_types=['topological domain', 'repeat'],
+                description_contains=['Cytoplasmic', None],
+            )
+    This lookup will score a mutation 1 if it is in a topological domain with 'Cytoplasmic' in the description, or any
+    'repeat'. All other mutations will be scored zero.
+
+    """
 
     # Features generally have a single residue, or include a set of residues between the begin and end positions
     # However, disulfide bonds have a begin and end position but do not include the residues in between
@@ -39,16 +52,19 @@ class UniprotLookup:
          'sequence conflict', 'helix', 'strand'.
         :param description_contains: Text that the description must contain. E.g. you might want only topological domains
         with "Cytoplasmic" in the description
-        :param uniprot_upload_lists:
-        :param uniprot_xml_url:
-        :param schema_location:
+        :param uniprot_upload_lists: URL for downloading the Uniprot xml files using a transcript_id.
+        :param uniprot_xml_url: URL for downloading the Uniprot xml files from a Uniprot accession number.
+        :param schema_location: Location of the Uniprot xml schema.
         :param transcript_uniprot_mapping: Sometimes uniprot may not know which entry matches the transcript, or will
         not return the desired match. For these cases, you can provide a dictionary like {ENST00000123456: P12345},
         or a file with lines like "ENST00000123456 P12345".
         A file in that format can be downloaded from ensembl biomart by selection the "Transcript stable ID" and
         "UniProtKB/Swiss-Prot ID". This can be useful for GRCh37.
         Any transcripts not in the given file/dictionary will be matched using the uniprot mapping as usual.
-        :param force_download:
+        :param force_download: Will download new data from Uniprot, even if a previous file exists.
+        :param match_variant_change: Set to false to just match position of sequence variants.
+        :param name: Name of the lookup to appear on plot axes.
+        :param verbose: When running, will print some information about the Uniprot accession used.
         """
         self.verbose=verbose
         self.uniprot_upload_lists = uniprot_upload_lists

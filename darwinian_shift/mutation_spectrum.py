@@ -215,7 +215,7 @@ class KmerMutationalSpectrum(MutationalSpectrum):
 
         return spectrum
 
-    def output_spectrum(self, output_file):
+    def write_to_file(self, output_file):
         output_dict = {'spectrum_type': self.__class__.__name__}
         for a in self.write_attrs:
             output_dict[a] = getattr(self, a)

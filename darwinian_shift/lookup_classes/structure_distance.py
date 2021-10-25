@@ -8,8 +8,8 @@ from darwinian_shift.utils import download_pdb_file
 
 class StructureDistanceLookup:
     """
-    Use the distance from a given selection of atoms in the pdb file.
-    Takes a selection string as used by MDAnalysis (same as VMD etc), e.g. 'protein and segid A and resid 3 4 5'
+    The score is the distance from the residue to a given selection of atoms in the pdb file.
+    Takes a selection string as used by MDAnalysis, e.g. 'protein and segid A and resid 3 4 5'
     The selection string must be correct for the pdb file (which may not match the protein residue numbers)
     Uses the alpha-carbons of the mutated residues for the distance calculations if distance_to_alpha_carbons=True.
     Otherwise, finds the shortest distance of any atom in the residue
@@ -17,9 +17,32 @@ class StructureDistanceLookup:
     Where alternative locations for an alpha-carbon exist in the pdb file, will use the average position.
 
     If the pdb file does not already exist in the pdb_directory (current directory by default), will try to download it.
+
+    Requires pdb_id, pdb_chain, and the target key attributes to be defined for the section being analysed.
+    The name of the target key can be defined here, the default is 'target_selection'.
+
+    Example:
+    d.run_section({
+        'gene': GENESYMBOL,
+        'pdb_id': 'ABC1',
+        'pdb_chain': 'B',
+        'target_selection': 'protein and segid A and resid 3 4 5'
+    }
     """
     def __init__(self, pdb_directory=None, sifts_directory=None, download_sifts=None, boolean=False,
                  target_key='target_selection', name=None, distance_to_alpha_carbons=False):
+        """
+
+        :param pdb_directory: File path to the directory where pdb files are stored.
+        :param sifts_directory: File path to directory of SIFTS files for aligning PDB files with protein sequence positions
+        :param download_sifts: If True, will attempt to download the SIFTS file if it is not found in the sifts_directory.
+        :param boolean: If true, will test for mutation exactly on the target sites. If False (default), will
+        test for the distance from the mutations to the nearest target site.
+        :param target_key: The name of the section attribute which lists the target site.
+        :param name: Name of the lookup to appear on plot axes.
+        :param distance_to_alpha_carbons: If True, will measure the distance from the alpha-carbon of the residue
+        to the target atoms. Otherwise will measure the distance from the closest atom in the residue.
+        """
         self.pdb_directory = pdb_directory
         self.sifts_directory = sifts_directory
         self.download_sifts = download_sifts
@@ -31,7 +54,7 @@ class StructureDistanceLookup:
         elif name is None:
             self.name = '3D distance'
         else:
-            self.name = name  # Will appear on some plot axes
+            self.name = name
 
     def setup_project(self, project):
         if self.pdb_directory is None:

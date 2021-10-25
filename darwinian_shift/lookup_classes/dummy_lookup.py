@@ -2,12 +2,21 @@ import numpy as np
 
 
 class DummyValuesPosition:
-    # Can be useful for testing. May detect selection in cases of hotspots.
-    # Random value per position
-    def __init__(self, data,
-                 random_function=np.random.random,  # Must be based on a numpy random function and just take the number of values required as the argument.
-                 testing_random_seed=None,
-                 name='Dummy Values'):
+    """
+    Can be useful for testing. May detect selection in cases of hotspots.
+    Assigns a random value per position
+    """
+
+    def __init__(self, data, random_function=np.random.random, testing_random_seed=None, name='Dummy Values'):
+        """
+
+        :param data: pandas dataframe of mutations. Used to generate random values for all locations in the vicinity
+        of the data.
+        :param random_function: Must be based on a numpy random function and just take the number of values required
+        as the argument.
+        :param testing_random_seed: A seed for numpy so ensure results are reproducible.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         if testing_random_seed is not None:
             np.random.seed(testing_random_seed)
         self.chrom_starts = {}
@@ -35,11 +44,20 @@ class DummyValuesPosition:
 
 
 class DummyValuesRandom:
-    # Can be useful for testing. May detect selection in cases of hotspots.
-    # Random value mutation in each section/sequence. Same mutation may have different value in different sections.
+    """
+    Can be useful for testing. May detect selection in cases of hotspots.
+    Random value for each mutation in a section/sequence.
+    """
+
     def __init__(self, random_function=np.random.random, testing_random_seed=None, name='Dummy Values'):
-        self.f = random_function  # Must be based on a numpy random function and just take the number of values required as the argument.
-        # Only works for numpy random numbers.
+        """
+
+        :param random_function: Must be based on a numpy random function and just take the number of values required
+        as the argument. Only works for numpy random numbers.
+        :param testing_random_seed: A seed for numpy so ensure results are reproducible.
+        :param name: Name of the lookup to appear on plot axes.
+        """
+        self.f = random_function
         self.testing_random_seed=testing_random_seed
         self.name = name  # Will appear on some plot axes
 
@@ -53,8 +71,10 @@ class DummyValuesRandom:
 
 
 class DummyValuesFixed:
-    # Can be useful for testing.
-    # All mutations given the same value
+    """
+    Can be useful for testing.
+    All mutations given the same value
+    """
     def __init__(self, fixed_value=0, name='Dummy Value'):
         self.value = fixed_value
         self.name = name  # Will appear on some plot axes

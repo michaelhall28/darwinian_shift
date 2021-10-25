@@ -9,8 +9,24 @@ Scores = namedtuple('Scores', ['Benign', 'Likely_benign', 'Uncertain_significanc
 
 
 class ClinvarLookup:
-    # Where there are multiple entries, will take the highest score
+    """
+    Matches mutations against a file of Clinvar annotated mutations.
+    The Clinvar variant summary file must first be downloaded and unzipped.
+    https://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
 
+    Mutations are matched based on chromosome, position, reference nucleotide and mutant nucleotide.
+    The scores are based on either the ClinicalSignificance or the ClinSigSimple column of the Clinar file.
+
+    ClinSigSimple scores are used directly.
+
+    If using ClinicalSignificance, the scores can be customised.
+    By default, Likely_pathogenic and Pathogenic annotations are scored 1, and all
+    other annotations (Benign, Likely_benign, Uncertain_significance, not_provided,
+    Conflicting_interpretations_of_pathogenicity) are scored 0.
+    Where there are multiple annotations for the same mutation, the highest score will be used.
+    Mutations not present in the clinvar file are also given a score of 0 by default.
+
+    """
     default_scores = Scores(Benign=0, Likely_benign=0,
                             Uncertain_significance=0, not_provided=0,
                             Conflicting_interpretations_of_pathogenicity=0,
@@ -18,6 +34,15 @@ class ClinvarLookup:
 
     def __init__(self, clinvar_variant_summary_file, assembly, scores=None, clinsigsimple=False,
                  clinsigsimple_missing_score=0):
+        """
+
+        :param clinvar_variant_summary_file: path to the Clinvar variant summary file.
+        :param assembly: The genome assembly to use. "GRCh37" or "GRCh38".
+        :param scores: The scoring system to use to convert ClinicalSignificance to numbers.
+        If None, will use the default scores.
+        :param clinsigsimple: Use the ClinSigSimple column to score the mutations instead of ClinicalSignificance.
+        :param clinsigsimple_missing_score: Score for missing mutations if using ClinSigSimple. Default=0.
+        """
         self.clinvar_data = pd.read_csv(clinvar_variant_summary_file, sep="\t")
         self.clinvar_data = self.clinvar_data[self.clinvar_data['Assembly'] == assembly]
         self.clinsigsimple = clinsigsimple
@@ -51,10 +76,11 @@ class ClinvarLookup:
         if self.clinsigsimple:
             score = merge_df['ClinSigSimple']
             if not pd.isnull(self.clinsigsimple_missing_score):
-                return score.fillna(self.clinsigsimple_missing_score)
-            return score
+                score = score.fillna(self.clinsigsimple_missing_score)
         else:
-            return merge_df['ClinicalSignificance'].apply(self._get_score).values
+            score = merge_df['ClinicalSignificance'].apply(self._get_score).values
+
+        return score.astype(float)
 
     def annotate_df(self, chrom, df):
         return self._merge_with_clinvar(chrom, df)

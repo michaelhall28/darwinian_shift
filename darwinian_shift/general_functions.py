@@ -436,17 +436,7 @@ class DarwinianShift:
             return None
 
     def _set_up_exon_data(self):
-        if self.gene_list is not None:  # Given genes. Will use longest transcript for each.
-            if self.section_transcripts:
-                self.exon_data = self.exon_data[(self.exon_data['Gene name'].isin(self.gene_list)) |
-                                                (self.exon_data['Transcript stable ID'].isin(self.section_transcripts))]
-            else:
-                self.exon_data = self.exon_data[self.exon_data['Gene name'].isin(self.gene_list)]
-            self._remove_unused_transcripts()
-            self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
-            if set(self.gene_list).difference(self.exon_data['Gene name'].unique()):
-                raise ValueError('Not all requested genes found in exon data.')
-        elif self.transcript_list is not None:
+        if self.transcript_list is not None:
             if self.section_transcripts:
                 transcript_list_total = set(self.transcript_list).union(self.section_transcripts)
             else:
@@ -455,6 +445,17 @@ class DarwinianShift:
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
             if set(self.transcript_list).difference(self.exon_data['Transcript stable ID'].unique()):
                 raise ValueError('Not all requested transcripts found in exon data.')
+        elif self.gene_list is not None:  # Given genes. Will use longest transcript for each.
+            if self.section_transcripts:
+                self.exon_data = self.exon_data[(self.exon_data['Gene name'].isin(self.gene_list)) |
+                                                (self.exon_data['Transcript stable ID'].isin(self.section_transcripts))]
+            else:
+                self.exon_data = self.exon_data[self.exon_data['Gene name'].isin(self.gene_list)]
+            if self.use_longest_transcript_only:
+                self._remove_unused_transcripts()
+            self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
+            if set(self.gene_list).difference(self.exon_data['Gene name'].unique()):
+                raise ValueError('Not all requested genes found in exon data.')
         else:
             overlapped_transcripts = self.get_overlapped_transcripts(self.data, self.exon_data)
             if overlapped_transcripts is None:

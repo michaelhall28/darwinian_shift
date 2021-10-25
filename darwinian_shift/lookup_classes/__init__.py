@@ -8,7 +8,6 @@ from .combination_lookup import ORLookup, ANDLookup, MutationExclusionLookup
 from .dummy_lookup import DummyValuesPosition, DummyValuesRandom, DummyValuesFixed
 from .uniprot_lookup import UniprotLookup
 from .sequence_distance_lookup import SequenceDistanceLookup
-from .psic_lookup import PSICLookup
 from .clinvar_lookup import ClinvarLookup
 from .phosphorylation_lookup import PhosphorylationLookup
 from .pdbekb_lookup import PDBeKBLookup

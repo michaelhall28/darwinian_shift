@@ -1,10 +1,31 @@
 class VariantMatchLookup:
     """
     Match variants against a list provided.
-    Or can match any column in the variant dataframe.
+    The match can be made using any column in the variant dataframe.
+
+    Example:
+        # Set up the lookup to match against the aachange column.
+        v = VariantMatchLookup(
+                match_column='aachange',
+                target_key='match_list'
+            )
+        # Run with a match_list listing the aachanges to match against.
+        d.run_section({
+            'gene': GENESYMBOL,
+            'match_list': ['S100R', 'G140Y', 'V155K']
+            }
+        )
+        Mutations in the match list will be scored 1, all other mutations will be scored zero.
+
     """
 
     def __init__(self, match_column='aachange', target_key='match_list', name=None):
+        """
+
+        :param match_column: The column in the dataframe to use to match the mutations.
+        :param target_key: The name of the section attribute which lists the target mutations.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         self.match_column = match_column
         self.target_key = target_key
         if name is None:

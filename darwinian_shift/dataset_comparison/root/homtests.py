@@ -38,10 +38,10 @@ def root_homtest(arr1, weights1, arr2, weights2):
 
     # Cannot use arrays that are slices/views of a larger array (which is what sort_multiple_arrays_using_one returns).
     # Take copies so the arrays passed to the ROOT function are not pointing to some other array
-    arr1 = arr1.copy()
-    arr2 = arr2.copy()
-    weights1 = weights1.copy()
-    weights2 = weights2.copy()
+    arr1 = arr1.copy().astype(float)
+    arr2 = arr2.copy().astype(float)
+    weights1 = weights1.copy().astype(float)
+    weights2 = weights2.copy().astype(float)
 
     pvalues = ROOT.WHomogeneityTest(len(arr1), arr1, weights1, len(arr2), arr2, weights2, "")  # returns p-values
     pvalues = np.frombuffer(pvalues, count=3)

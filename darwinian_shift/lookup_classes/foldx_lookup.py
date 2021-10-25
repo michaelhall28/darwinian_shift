@@ -8,6 +8,32 @@ class FoldXLookupError(MetricLookupException): pass
 
 
 class FoldXLookup:
+    """
+    Scores mutations using pre-calculated ∆∆G values generated using FoldX position scan.
+
+    Requires pdb_id and pdb_chain attributes to be defined for the section being analysed.
+
+    The FoldX results must be in the following directory structure:
+
+    ─── foldx_results_directory
+        │
+        ├── ABC1    # PDB file ID used as the folder name
+        │   │
+        │   ├── chainA    # Subfolder for each chain of interest containing the FoldX results.
+        │   │   ├── PS_f0_scanning_output.txt
+        │   │   ├── PS_f1_scanning_output.txt
+        │   │   ...
+        │   │
+        │   └── chainB
+        │       ├── PS_f0_scanning_output.txt
+        │       ...
+        │
+        └── XY2Z
+            └── chainD
+                ├── PS_f0_scanning_output.txt
+                ...
+
+    """
     # Map of 3-letter codes to 1-letter code from http://foldxsuite.crg.eu/allowed-residues
     AA_map = {'GLY': 'G', 'ALA': 'A', 'LEU': 'L', 'VAL': 'V', 'ILE': 'I', 'PRO': 'P', 'ARG': 'R',
               'THR': 'T', 'SER': 'S', 'CYS': 'C', 'MET': 'M', 'LYS': 'K', 'GLU': 'E', 'GLN': 'Q',
@@ -27,6 +53,15 @@ class FoldXLookup:
 
     def __init__(self, foldx_results_directory, sifts_directory=None, download_sifts=None, foldx_file_name_start="PS_f*",
                  force_synonymous_zero=True, name='FoldX ∆∆G (kcal/mol)'):
+        """
+
+        :param foldx_results_directory: Base directory of the FoldX results output
+        :param sifts_directory: File path to directory of SIFTS files for aligning PDB files with protein sequence positions
+        :param download_sifts: If True, will attempt to download the SIFTS file if it is not found in the sifts_directory.
+        :param foldx_file_name_start: The start of the file names of the FoldX results to use.
+        :param force_synonymous_zero: Will force synonymous mutations to have a ∆∆G value of zero.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         self.foldx_results_directory = foldx_results_directory
         self.foldx_file_name_start = foldx_file_name_start
         self.sifts_directory = sifts_directory

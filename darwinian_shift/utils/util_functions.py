@@ -60,10 +60,24 @@ def sort_multiple_arrays_using_one(*arrays):
     """
     Sorts by the first array/list
     Returns as an array
+
+    Needs to convert to dtype object to prevent confusion about array dimensions if one input is
+    something multidimensional like a list of tuples.
+    Returns as the original dtype.
     """
     assert all([len(arrays[i]) == len(arrays[0]) for i in range(1, len(arrays))]), 'Arrays must all be same length'
-    a = np.array(arrays)
-    return a[:, a[0].argsort()]
+
+    dtypes = []
+    for aa in arrays:
+        aa = np.array(aa)
+        if aa.ndim == 1:   # Single dimensional array. Keep the data type inferred by numpy.
+            dtypes.append(aa.dtype)
+        else:  # A multidimensional array. Do not want this converted to numbers.
+            dtypes.append(object)
+
+    a = np.array(arrays, dtype=object)
+    a = a[:, a[0].argsort()]
+    return [aa.astype(dd) for aa, dd in zip(a, dtypes)]
 
 
 PDB_DOWNLOAD_BASE_URL="https://files.rcsb.org/download"

@@ -42,6 +42,8 @@ class Section:
         self.transcript_id = transcript.transcript_id
         self.chrom = transcript.chrom
 
+        self.statistics = self.project.statistics
+
         # included_mutation_types will be used if defined and excluded_mutation_types ignored.
         # If not defined here, will use the definitions from the project
         self.excluded_mutation_types = None
@@ -227,10 +229,14 @@ class Section:
         if self.statistical_results is None:
             self.statistical_results = {}
         spectra = self._get_spectra(spectra)
-        if statistics is None:
-            statistics = self.project.statistics
-        elif not isinstance(statistics, (list, tuple, set)):
-            statistics = [statistics]
+        if statistics is not None:
+            if not isinstance(self.statistics, (list, tuple, set)):
+                statistics = [statistics]
+            for s in  statistics:
+                if s not in self.statistics:
+                    self.statistics.append(s)
+        else:
+            statistics = self.statistics
 
         self.statistical_results['observed_median'] = self.observed_values.median()
         self.statistical_results['observed_mean'] = self.observed_values.mean()
@@ -631,16 +637,16 @@ class Section:
         colours = self._get_plot_colours(colours, len(spectra)+1)
         if chi_tests is None:
             # Use any chi-square tests from the project
-            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest)]
+            chi_tests = [t for t in self.statistics if isinstance(t, ChiSquareTest)]
         elif isinstance(chi_tests, str):
             # Names of single test given instead. Use only the chi-square test from the project that match this name
-            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest) and t.name == chi_tests]
+            chi_tests = [t for t in self.statistics if isinstance(t, ChiSquareTest) and t.name == chi_tests]
         if isinstance(chi_tests, ChiSquareTest):
             chi_tests = [chi_tests]
             self.run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
         elif all([isinstance(c, str) for c in chi_tests]):
             # Names given instead. Use only the chi-square tests from the project that match these names
-            chi_tests = [t for t in self.project.statistics if isinstance(t, ChiSquareTest) and t.name in chi_tests]
+            chi_tests = [t for t in self.statistics if isinstance(t, ChiSquareTest) and t.name in chi_tests]
         elif all([isinstance(c, ChiSquareTest) for c in chi_tests]):
             self.run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
         else:
@@ -803,17 +809,17 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_binomial(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
+    def plot_binomial(self, spectra=None, show_plot=False, figsize=(2, 3), colours=None, return_fig=False,
                            show_legend=True, legend_args=None, binom_test=None, show_CI=True):
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, len(spectra)+1)
         if binom_test is None:
             # Use the first binomial test from the project
-            binom_test = [t for t in self.project.statistics if isinstance(t, BinomTest)][0]
+            binom_test = [t for t in self.statistics if isinstance(t, BinomTest)][0]
         elif isinstance(binom_test, str):
             # Names of single test given instead. Use only the chi-square test from the project that match this name
-            binom_test = [t for t in self.project.statistics if isinstance(t, BinomTest) and t.name == binom_test][0]
+            binom_test = [t for t in self.statistics if isinstance(t, BinomTest) and t.name == binom_test][0]
         if isinstance(binom_test, BinomTest):
             self.run_statistical_tests(plot=False, statistics=[binom_test])  # The test needs to be run first
         else:
@@ -875,7 +881,7 @@ class Section:
                 return fig
 
     def plot_aa_abundance(self, spectra=None, sig_threshold=0.05, use_qval=True, show_plot=False, max_texts=10,
-                          figsize=(15, 5), return_fig=False):
+                          figsize=(5, 5), return_fig=False):
         spectra = self._get_spectra(spectra)
 
         fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
@@ -1105,7 +1111,7 @@ class Section:
 
     def plot_mutation_rate_scatter(self, spectra=None, metric_plot_scale=None, marker_size_from_count=True,
                                    base_marker_size=10, show_plot=False,
-                                   unobserved_mutation_colour='C0', missense_mutation_colour='C1',
+                                   unobserved_mutation_colour='#BBBBBB', missense_mutation_colour='C1',
                                    synonymous_mutation_colour='C2', nonsense_mutation_colour='C3',
                                    show_legend=True, figsize=(5, 5), legend_args=None, return_fig=False,
                                    xlim=None, unmutated_marker_size=1, mut_rate_plot_scale=None,

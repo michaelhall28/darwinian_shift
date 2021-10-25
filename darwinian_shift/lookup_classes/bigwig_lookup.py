@@ -1,10 +1,20 @@
 import pyBigWig
 
 class BigwigLookup:
+    """
+    Uses a BigWig file to score each mutation.
+
+    """
     def __init__(self, bw_file, chr_prefix=True, name='Bigwig values'):
+        """
+
+        :param bw_file: path to the bigwig file
+        :param chr_prefix: True if the chromosomes are labelled as 'chr1', 'chr2' etc. False if they are named 1, 2 etc.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         self.bw = pyBigWig.open(bw_file)
         self.chr_prefix= chr_prefix
-        self.name = name  # Will appear on some plot axes
+        self.name = name
 
     def __call__(self, seq_object):
         return self._get_scores(seq_object.chrom, seq_object.null_mutations)

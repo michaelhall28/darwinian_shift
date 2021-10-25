@@ -18,6 +18,7 @@ dependencies:
   - prody=2.0
   - sqlalchemy=1.4.25
   - xlrd=2.0.1
+  - openpyxl=3.0.9
   - root=6.24.6
   - pytest=6.2.5
   - pytest-mpl=0.13

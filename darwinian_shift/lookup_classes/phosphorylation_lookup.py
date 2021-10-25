@@ -13,6 +13,14 @@ class PhosphorylationLookup(SequenceDistanceLookup):
     """
 
     def __init__(self, phos_file, species, boolean=False, name=None):
+        """
+
+        :param phos_file: File path to the downloaded file from www.phosphosite.org
+        :param species: String. For selecting the correct organism from the data.
+        :param boolean: If true, will test for mutation exactly on the phosphorylation sites. If False (default), will
+        test for the distance from the mutations to the nearest phosphorylation site.
+        :param name: Name of the lookup to appear on plot axes.
+        """
         phos_data = pd.read_csv(phos_file, sep="\t", skiprows=2)
         self.phos_data = phos_data[phos_data['ORGANISM'] == species].copy()
         if len(self.phos_data) == 0:
@@ -27,7 +35,7 @@ class PhosphorylationLookup(SequenceDistanceLookup):
         elif name is None:
             self.name = 'On phosphorylation site'
         else:
-            self.name = name  # Will appear on some plot axes
+            self.name = name
 
     def __call__(self, seq_object):
         gene_pho = self.phos_data[self.phos_data['GENE'] == seq_object.gene]
@@ -37,8 +45,10 @@ class PhosphorylationLookup(SequenceDistanceLookup):
             gene_pho = gene_pho[gene_pho['PROTEIN'] == seq_object.protein]
 
         if len(gene_pho['PROTEIN'].unique()) > 1:
-            raise ValueError("More than one protein ({}) associated with gene {}. \
-            Specify which protein to use by adding .protein attribute to the Section object.")
+            msg = "More than one protein ({}) associated with gene {}.".format(gene_pho['PROTEIN'].unique(),
+                                                                               seq_object.gene)
+            msg += " Specify which protein to use by adding .protein attribute to the Section object."
+            raise ValueError(msg)
 
         target_selection = gene_pho['residue']
         return self._get_distance(seq_object.null_mutations, target_selection)

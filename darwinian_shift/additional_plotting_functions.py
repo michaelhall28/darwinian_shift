@@ -67,7 +67,7 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
                             mut_list_labels=None,
                             plot_xscale=None, plot_yscale=None, marker_size_from_count=True,
                             base_marker_size=10, show_plot=False,
-                            unobserved_mutation_colour='C0', missense_mutation_colour='C1',
+                            unobserved_mutation_colour='#BBBBBB', missense_mutation_colour='C1',
                             synonymous_mutation_colour='C2', nonsense_mutation_colour='C3',
                             show_legend=True, figsize=(10, 10), legend_args=None, return_fig=False,
                             xlim=None, ylim=None, unmutated_marker_size=1, xlabel=None, ylabel=None,
@@ -103,7 +103,7 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
     mut_counts = merged_obs['ds_mut_id'].value_counts()
 
     if not show_observed_only:
-        null_to_plot = merged_null[~merged_null['ds_mut_id'].isin(merged_obs['ds_mut_id'])]
+        null_to_plot = merged_null[~merged_null['ds_mut_id'].isin(merged_obs['ds_mut_id'])].copy()
 
     fig, ax = plt.subplots(figsize=figsize)
     if not show_observed_only:

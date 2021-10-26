@@ -25,8 +25,31 @@ example_description_contains=(None, None, None, "Extracellular", 'Cytoplasmic', 
                                          None, None, None)
 
 def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=None, data=None, exon_file=None, fasta_file=None,
-                        spectrum=None, output_file_name_template=None, plot=True,
+                        spectrum=None, output_plot_file_name_template=None, plot=True,
                         **uniprot_kargs):
+    """
+    Tests for enrichment or depletion of mutations in uniprot features.
+    Uses the UniprotLookup class for the annotating of mutations - the options for defining uniprot feature categories
+    are therefore the same as for the UniprotLookup class.
+
+    :param genes: Gene (string) or list of genes to run the analysis on.
+    :param transcripts:  Alternative to using 'genes', a transcript or list of transcript ids to run the analysis on.
+    :param sections: Alternative to using 'genes' or 'transcripts', provide a list of dictionaries defining the sections
+    to run analysis on.
+    :param ds_object: A DarwinianShift object with the data to analyse. Alternatively, can provide paths to the data,
+    exon_file and fasta_file and a new DarwinianShift object will be made.
+    :param data: A path to file of mutations or a dataframe containing the mutational data.
+    Not required if the ds_object is given.
+    :param exon_file: A path to the exon locations file. Not required if the ds_object is given.
+    :param fasta_file: A path to the reference genome. Not required if the ds_object is given.
+    :param spectrum: A path to the spectrum to use for analysis. If not given, will use the first spectrum in the
+    DarwinianShift object used.
+    :param output_plot_file_name_template: Name for the output plots. The name of the region analysed will be added with
+    .format.
+    :param plot: If True, will plot the expected and observed mutation counts for each category.
+    :param uniprot_kargs: Any arguments to pass to the UniprotLookup
+    :return: A dataframe of the statistical results. Includes q-values from multiple test correction.
+    """
     # Only runs for one spectrum at a time
     if genes is None and transcripts is None and sections is None:
         raise TypeError("Must provide either genes, transcripts or sections to run")
@@ -104,7 +127,7 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
             results.append(d)
             all_feature_columns.update(feature_columns)
             if plot:
-                _plot_uniprot_counts(expected, observed, feature_columns, seq_name, output_file_name_template)
+                _plot_uniprot_counts(expected, observed, feature_columns, seq_name, output_plot_file_name_template)
         except (CodingTranscriptError, NoTranscriptError, UniprotLookupError) as e:
             print(type(e).__name__, e, '- Unable to run for', gene)
 
@@ -241,19 +264,26 @@ def get_bins_for_uniprot_features(uniprot_features_df,
 
 def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, feature_types=None,
                            colours=None, labels="descriptions", figsize=(10, 3), linewidth=1,
-                           normalise_by_region_size=True):
+                           normalise_by_region_size=True, return_bins=False):
     """
     Function to help plot mutation counts in regions defined by uniprot.
     Default arguments unlikely to look good, but can help determine the colours and labels to use.
     Features must not overlap, so the input uniprot_data may have to be filtered (using feature_types or otherwise).
 
-    :param section:
+    :param section: The Section object for the gene/region
     :param uniprot_data: dataframe of uniprot features from UniprotLookup.get_uniprot_data
-    :param min_gap:
-    :param feature_types:
-    :param colours:
-    :param labels:
-    :return:
+    :param min_gap: If gaps between features are smaller than this, the gap residues will be included in the next feature
+    :param feature_types: List of the Uniprot feature types to include. For example, ['domain', 'repeat']
+    :param colours: List of colours for each feature
+    :param labels: Either list of labels for each feature, or "types" or "descriptions" to use the Uniprot feature type
+    or description for the plot labels.
+    :param figsize: Figure size for matplotlib
+    :param linewidth: Linewidth for matplotlib bar plot
+    :param normalise_by_region_size: Will divide the number of mutations in a feature by the number of residues, to plot
+    the mutation density. Set to false to plot the raw counts in each feature.
+    :param return_bins: see return.
+    :return: if return_bins=True, returns the bins for plotting and the type and descriptions of the uniprot features.
+    Otherwise, does not return anything.
     """
     if section.null_mutations is None:
         section.load_section_mutations()
@@ -262,7 +292,8 @@ def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, f
                                                           min_gap=min_gap, last_residue=last_residue)
     if colours is None:
         colours = ["C{}".format(i) for i in range(len(descriptions))]
-        section.plot_bar_observations(figsize=figsize, binning_regions=bins,
+
+    section.plot_bar_observations(figsize=figsize, binning_regions=bins,
              normalise_by_region_size=normalise_by_region_size, linewidth=linewidth, facecolour=colours)
     plt.xlim([0, last_residue])
     hide_top_and_right_axes(plt.gca())
@@ -272,6 +303,11 @@ def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, f
         labels = types
     plt.xticks(bins[:-1] + np.diff(bins)/2, labels, rotation=90)
     plt.xlabel('')
+    if normalise_by_region_size is False:
+        plt.ylabel('Mutation count')
+
+    if return_bins:
+        return bins, types, descriptions
 
 
 def annotate_data(ds_object, output_file=None, verbose=False, annotation_separator="|||", remove_spectra_columns=False,
@@ -327,15 +363,16 @@ SUMMARY_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/"
 def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, method=None, reject_mutants=True,
                     uniprot_lookup_kwargs=None):
     """
+    Uses Uniprot to get a list of available protein structures for a protein.
 
-    :param transcript_id:
+    :param transcript_id: Used to find the uniprot accession
     :param uniprot_lookup: Can provide a UniprotLookup object if wanting to use non-default arguments.
-    Alternatively can pass uniprot_lookup_kwargs
-    :param min_resolution:
-    :param method:
-    :param reject_mutants:
+    Alternatively can pass these arguments to uniprot_lookup_kwargs.
+    :param min_resolution: Will exclude structures with a resolution value above this threshold
+    :param method:  Will only keep structures found using this method, e.g. 'X-ray'
+    :param reject_mutants: Will filter out structures with the mutation flag.
     :param uniprot_lookup_kwargs: Dictionary of keyword arguments passed to the UniprotLookup
-    :return:
+    :return: Dataframe
     """
     if uniprot_lookup is None:
         if uniprot_lookup_kwargs is None:

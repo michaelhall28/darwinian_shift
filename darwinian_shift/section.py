@@ -43,6 +43,10 @@ class Section:
         self.chrom = transcript.chrom
 
         self.statistics = self.project.statistics
+        if not isinstance(self.statistics, (list, tuple, set)):
+            self.statistics = [self.statistics]
+        elif isinstance(self.statistics, (list, tuple, set)):
+            self.statistics = list(self.statistics)
 
         # included_mutation_types will be used if defined and excluded_mutation_types ignored.
         # If not defined here, will use the definitions from the project
@@ -99,6 +103,8 @@ class Section:
 
         self.repeat_proportion = None
 
+        self.load_section_mutations()
+
     def change_lookup_inplace(self, lookup):
         self.lookup = lookup
         self._scoring_complete = False  # Reset the mutations. These need scoring again with the new lookup
@@ -141,7 +147,7 @@ class Section:
         self._check_mismatches()
 
         self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left',
-                                           on=['pos', 'ref', 'mut'], suffixes=['_input', ''])
+                                           on=['pos', 'ref', 'mut'], suffixes=('_input', ''))
         self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['null_exists'])]
         self.observed_mutations = self.observed_mutations.drop('null_exists', axis=1)
         self.null_mutations = self.null_mutations.drop('null_exists', axis=1)
@@ -169,8 +175,6 @@ class Section:
 
     def apply_scores(self):
         if not self._scoring_complete:
-            self.load_section_mutations()
-
             # Get scores, and make sure all results are numpy arrays of floats for consistency
             self.null_mutations['score'] = np.array(self.lookup(self)).astype(float)
 
@@ -229,14 +233,14 @@ class Section:
         if self.statistical_results is None:
             self.statistical_results = {}
         spectra = self._get_spectra(spectra)
-        if statistics is not None:
-            if not isinstance(self.statistics, (list, tuple, set)):
+        if statistics is None:
+            statistics = self.statistics
+        else:
+            if not isinstance(statistics, (list, tuple, set)):
                 statistics = [statistics]
-            for s in  statistics:
+            for s in statistics:
                 if s not in self.statistics:
                     self.statistics.append(s)
-        else:
-            statistics = self.statistics
 
         self.statistical_results['observed_median'] = self.observed_values.median()
         self.statistical_results['observed_mean'] = self.observed_values.mean()
@@ -820,7 +824,7 @@ class Section:
         elif isinstance(binom_test, str):
             # Names of single test given instead. Use only the chi-square test from the project that match this name
             binom_test = [t for t in self.statistics if isinstance(t, BinomTest) and t.name == binom_test][0]
-        if isinstance(binom_test, BinomTest):
+        elif isinstance(binom_test, BinomTest):
             self.run_statistical_tests(plot=False, statistics=[binom_test])  # The test needs to be run first
         else:
             raise ValueError('binom_test not recognised')

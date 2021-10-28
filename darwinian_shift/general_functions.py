@@ -45,7 +45,7 @@ class DarwinianShift:
                  exon_file=None, reference_fasta=None,
                  # Measurements and statistics
                  lookup=None,  # A class which will return metric value. See lookup_classes directory
-                 stats=None,
+                 statistics=None,
                  # Options
                  sections=None,  # Tab separated file or dataframe.
 
@@ -87,7 +87,7 @@ class DarwinianShift:
         :param exon_file:
         :param reference_fasta:
         :param lookup:
-        :param stats:
+        :param statistics:
         :param sections:
         :param pdb_directory:
         :param sifts_directory:
@@ -211,14 +211,14 @@ class DarwinianShift:
             if self.verbose:
                 self._check_non_included_mutations()
 
-        if stats is None:
+        if statistics is None:
             # Use the default statistics only
             # Use the cdf permutation test as the default as it is appropriate for a wide range of null distributions.
             self.statistics = [CDFPermutationTest()]
-        elif not isinstance(stats, (list, tuple)):
-            self.statistics = [stats]
+        elif not isinstance(statistics, (list, tuple)):
+            self.statistics = [statistics]
         else:
-            self.statistics = stats
+            self.statistics = statistics
 
         if testing_random_seed is not None:
             for s in self.statistics:
@@ -587,9 +587,37 @@ class DarwinianShift:
         if self.total_spectrum_ref_mismatch > 0:
             print('Warning: {} mutations do not match reference base'.format(self.total_spectrum_ref_mismatch))
 
-    def run_gene(self, gene, plot=False, violinplot_bw=None,
-                 plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
-                    included_mutation_types=None, included_residues=None, excluded_residues=None, lookup=None):
+    def run_gene(self, gene, plot=False, spectra=None, statistics=None, start=None, end=None,
+                 excluded_mutation_types=None, included_mutation_types=None,
+                 included_residues=None, excluded_residues=None, pdb_id=None, pdb_chain=None, lookup=None,
+                 **additional_kwargs):
+        """
+        Run analysis for a single gene
+        :param gene:  Gene name.
+        :param plot: Will plot the standard results of the analysis. If False, can still be plotted afterwards from
+        the returned class object. Plotting afterwards also enables more plotting options.
+        :param spectra: The mutational spectrum or spectra to use for the analysis. If None, will use the spectra
+        of the project.
+        :param statistics: The statistical tests to run. If None, will use the statistics of the project.
+        :param start: Will exclude residues before this one from the analysis. If None, will start from the first
+        residue of the protein.
+        :param end: Will exclude residues after this one from the analysis. If None, will end at the last
+        residue of the protein.
+        :param excluded_mutation_types: Can be string or list of strings. Mutation types to exclude from the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the excluded_mutation_types of the project.
+        :param included_mutation_types: Can be string or list of strings. Mutation types to include in the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the included_mutation_types of the project.
+        :param included_residues: List or array of integers. The residues to analyse. If None, will analyse all
+        residues (except those excluded by other arguments).
+        :param excluded_residues: List or array of integers. The residues to exclude from the analysis.
+        :param pdb_id: For analyses that use a protein structure. Four letter ID of the pdb file to use.
+        :param pdb_chain: For analyses that use a protein structure. The chain to use for the analysis.
+        :param lookup: The class object or function used to score the mutations. If None, will use the lookup of
+        the project.
+        :param additional_kwargs: Any additional attributes that will be assigned to the Section object created.
+        These can be used by the lookup class.
+        :return: Section object
+        """
         gene_transcripts = self.gene_transcripts_map[gene]
         if len(gene_transcripts) == 0:
             transcript_obj = self.make_transcript(gene=gene)
@@ -599,42 +627,71 @@ class DarwinianShift:
             if len(gene_transcripts) > 1:
                 print('Multiple transcripts for gene {}. Running {}'.format(gene, transcript_id))
 
-        return self.run_transcript(transcript_id, plot=plot, violinplot_bw=violinplot_bw,
-                                   plot_scale=plot_scale, spectra=spectra, statistics=statistics,
+        return self.run_transcript(transcript_id, plot=plot, spectra=spectra, statistics=statistics,
+                                   start=start, end=end,
                                    excluded_mutation_types=excluded_mutation_types,
                                    included_mutation_types=included_mutation_types, included_residues=included_residues,
-                                   excluded_residues=excluded_residues, lookup=lookup)
+                                   excluded_residues=excluded_residues, pdb_id=pdb_id, pdb_chain=pdb_chain,
+                                   lookup=lookup, **additional_kwargs)
 
-    def run_transcript(self, transcript_id, plot=False, violinplot_bw=None,
-                       plot_scale=None, spectra=None, statistics=None, excluded_mutation_types=None,
-                    included_mutation_types=None, included_residues=None, excluded_residues=None, lookup=None):
+    def run_transcript(self, transcript_id, plot=False, spectra=None, statistics=None, start=None, end=None,
+                       excluded_mutation_types=None, included_mutation_types=None,
+                       included_residues=None, excluded_residues=None, pdb_id=None, pdb_chain=None, lookup=None,
+                       **additional_kwargs):
+        """
+        Run analysis for a single transcript.
+        :param transcript_id: Transcript id.
+        :param plot: Will plot the standard results of the analysis. If False, can still be plotted afterwards from
+        the returned class object. Plotting afterwards also enables more plotting options.
+        :param spectra: The mutational spectrum or spectra to use for the analysis. If None, will use the spectra
+        of the project.
+        :param statistics: The statistical tests to run. If None, will use the statistics of the project.
+        :param start: Will exclude residues before this one from the analysis. If None, will start from the first
+        residue of the protein.
+        :param end: Will exclude residues after this one from the analysis. If None, will end at the last
+        residue of the protein.
+        :param excluded_mutation_types: Can be string or list of strings. Mutation types to exclude from the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the excluded_mutation_types of the project.
+        :param included_mutation_types: Can be string or list of strings. Mutation types to include in the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the included_mutation_types of the project.
+        :param included_residues: List or array of integers. The residues to analyse. If None, will analyse all
+        residues (except those excluded by other arguments).
+        :param excluded_residues: List or array of integers. The residues to exclude from the analysis.
+        :param pdb_id: For analyses that use a protein structure. Four letter ID of the pdb file to use.
+        :param pdb_chain: For analyses that use a protein structure. The chain to use for the analysis.
+        :param lookup: The class object or function used to score the mutations. If None, will use the lookup of
+        the project.
+        :param additional_kwargs: Any additional attributes that will be assigned to the Section object created.
+        These can be used by the lookup class.
+        :return: Section object
+        """
         try:
-            section = Section(self.get_transcript_obj(transcript_id), excluded_mutation_types=excluded_mutation_types,
-                          included_mutation_types=included_mutation_types, included_residues=included_residues,
-                          excluded_residues=excluded_residues, lookup=lookup)
+            section = Section(self.get_transcript_obj(transcript_id), start=start, end=end,
+                              pdb_id=pdb_id, pdb_chain=pdb_chain,
+                              excluded_mutation_types=excluded_mutation_types,
+                              included_mutation_types=included_mutation_types, included_residues=included_residues,
+                            excluded_residues=excluded_residues, lookup=lookup, **additional_kwargs)
         except (CodingTranscriptError, NoTranscriptError) as e:
             print(type(e).__name__, e, '- Unable to run for', transcript_id)
             return None
-        return self.run_section(section, plot=plot, violinplot_bw=violinplot_bw,
-                     plot_scale=plot_scale, spectra=spectra, statistics=statistics)
+        return self.run_section(section, plot=plot, spectra=spectra, statistics=statistics)
 
-    def run_section(self, section, plot=False, violinplot_bw=None, plot_scale=None,
-                    verbose=False, spectra=None, statistics=None, lookup=None):
+    def run_section(self, section, plot=False, verbose=False, spectra=None, statistics=None, lookup=None):
         """
         Run statistics and optionally plot plots for a section.
         The section can be a Section object, or a dictionary that defines the Section object to be made
         The spectra and statistics can be passed here, but other options for the Section (such as included/excluded
         mutation types) must be defined when the Section object is created or in the dictionary passed to the section arg
-        :param section:
-        :param plot:
-        :param violinplot_bw:
-        :param plot_scale:
-        :param verbose:
-        :param spectra:
-        :param statistics:
+        :param section: Section object or dictionary with Section.__init__ kwargs.
+        :param plot: Will plot the standard results of the analysis. If False, can still be plotted afterwards from
+        the returned class object. Plotting afterwards also enables more plotting options.
+        :param verbose: Will print section id and gene name when running.
+        :param spectra: The mutational spectrum or spectra to use for the analysis. If None, will use the spectra of
+        the project.
+        :param statistics: The statistical tests to run. If None, will use the statistics of the project.
         :param lookup: A Lookup object, if given will override the lookup for the DarwinianShift object. Alternatively,
         this can be provided in the section_dict under the key "lookup"
-        :return:
+        :return: Section object
         """
         if self.lookup is None and lookup is None:
             # No lookup defined for the project or given as an argument to this function.
@@ -658,8 +715,7 @@ class DarwinianShift:
                 print('Running', section.section_id, section.gene)
             section.run(plot_permutations=plot, spectra=spectra, statistics=statistics)
             if plot:
-                section.plot(violinplot_bw=violinplot_bw,
-                         plot_scale=plot_scale)
+                section.plot()
             return section
         except (NoMutationsError, AssertionError, CodingTranscriptError, NoTranscriptError, MetricLookupException) as e:
             if isinstance(section, Section):
@@ -669,6 +725,16 @@ class DarwinianShift:
             return None
 
     def run_all(self, verbose=None, spectra=None, statistics=None):
+        """
+        Run analysis over all genes, transcripts or sections defined in the project.
+        After running, the results can be seen in the 'results' attribute of the DarwinianShift object.
+        The scores of each mutation can also be seen in the 'scored_data' attribute of the DarwinianShift object.
+        :param verbose: Will print additional information.
+        :param spectra: The mutational spectrum or spectra to use for the analysis. If None, will use the spectra of
+        the project.
+        :param statistics: The statistical tests to run. If None, will use the statistics of the project.
+        :return:
+        """
         if verbose is None:
             verbose = self.verbose
         results = []
@@ -718,8 +784,6 @@ class DarwinianShift:
         # Go through the process of getting the scores and sequences.
         # Just don't do the tests.
         # Useful for outputting to oncodrive or other external tools
-        # Todo: this is a repeat of the annotation chunk code. Refactor to reuse same code instead of copying
-        # Todo: Make this compatible with the input file of sections
         chunks = self._get_processing_chunks()
         f = FastaFile(self.reference_fasta)
         max_k = max(self.ks)

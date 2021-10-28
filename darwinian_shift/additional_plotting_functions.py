@@ -49,7 +49,7 @@ def colour_mutations_by_scores(mutation_df, mut_counts, xcol, ycol, sections_for
             sec_muts = sec.observed_mutations.drop_duplicates(subset=["ds_mut_id"])
         mut_df_copy = pd.merge(mut_df_copy, sec_muts,
                                on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'],
-                               suffixes=['', '_{}'.format(i + 3)], how='left')
+                               suffixes=('', '_{}'.format(i + 3)), how='left')
         muts = mut_df_copy[(mut_df_copy['score_{}'.format(i + 3)] >= region[0]) &
                            (mut_df_copy['score_{}'.format(i + 3)] <= region[1])]
         if len(muts) > 0:
@@ -75,7 +75,72 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
                             annotate_yregion=None, annotate_min_count=1, annotate_column='aachange',
                             annotation_offset=(0, 0), unobserved_alpha=1, observed_alpha=1,
                             hotspots_in_foreground=False, observed_marker=None, unobserved_marker=None,
-                            show_observed_only=False, show_null_only=False):
+                            show_observed_only=False, show_null_only=False, ax=None):
+    """
+    Plot two scores applied to the same mutations in a scatter plot.
+    Only mutations that are scored using both methods can be shown. The mutations are matched based on
+    position, reference nucleotide and mutant nucleotide.
+
+    :param section1: Section object run with first scoring method.
+    :param section2: Section object run with second scoring method.
+    :param sections_for_colours: List of additional Section objects that can be used to colour mutations based on
+    further scores.  To be used with score_regions_for_colours, and optionally score_region_colours.
+    :param score_regions_for_colours: List of the regions to colour using the sections_for_colours. Each region is a
+    tuple of lower and upper score bound. i-th region applies to the i-th section in sections_for_colours.
+    :param score_region_colours: List of colours to use for sections_for_colours. i-th colour applies to the
+    i-th section in sections_for_colours.
+    :param colour_unmutated_by_scores: If True, the null mutations will also be coloured according to the
+    section_for_colours and score_regions_for_colours arguments. If False, null mutations will be plotted with the
+    unobserved_mutation_colour.
+    :param mut_lists_to_colour: List of lists mutations to be coloured according to the mut_list_colours.
+    To be used with mut_list_colours, and optionally mut_list_columns and mut_list_labels. The lists much match
+    against one of the columns in the Section.observed_mutations. By default this is 'aachange'. For example,
+    `mut_lists_to_colour=[['A100C', 'V101P'], ['G102R']], mut_list_colours=['r', 'b']`
+    will plot the mutations 'A100C', 'V101P' in red and the mutation 'G102R' in blue.
+    :param mut_list_colours: To be used with mut_lists_to_colour. See above.
+    :param mut_list_columns: String or list of strings. The columns to use to define the mut_lists_to_colour. Can
+    be a different column for each mutation list, or a single column to use for all given mutation lists.
+    :param mut_list_labels: The labels to appear in the legend for the mut_lists_to_colour.
+    :param plot_xscale: Scale for x-axis of the plot. Passed to matplotlib. 'log', 'symlog' etc.
+    :param plot_yscale: Scale for y-axis of the plot. Passed to matplotlib. 'log', 'symlog' etc.
+    :param marker_size_from_count: If True (default), the size of the marker will be scaled by the observed
+    frequency of the mutation. If False, all markers of observed mutation will be the base_marker_size.
+    :param base_marker_size: If marker_size_from_count=True, this is the marker size for a mutation observed once.
+    If marker_size_from_count=False, this is the marker size of all observed mutations.
+    :param show_plot: Will call plt.show() at the end of the function.
+    :param unobserved_mutation_colour: Colour for plotting mutations that do not appear in the data.
+    :param missense_mutation_colour: Colour for plotting observed missense mutations.
+    :param synonymous_mutation_colour: Colour for plotting observed synonymous mutations.
+    :param nonsense_mutation_colour: Colour for plotting observed nonsense mutations.
+    :param show_legend: Show the plot legend.
+    :param figsize: Tuple, figure size.
+    :param legend_args: Dictionary of keyword arguments to pass to matplotlib for the legend.
+    :param return_fig: If True, the function will return the figure.
+    :param xlim: Tuple, limits of the x-axis.
+    :param ylim: Tuple, limits of the y-axis.
+    :param unmutated_marker_size: Marker size for mutations not in the observed data.
+    :param xlabel: Label for the x-axis.
+    :param ylabel: Label for the y-axis.
+    :param return_dataframes: Will return the dataframes of mutations (unobserved and observed).
+    :param annotate_mutations: If True, will label mutations in the region specified by annotate_xregion and
+    annotate_yregion
+    :param annotate_xregion: Tuple, will label mutations between these x-values.
+    :param annotate_yregion: Tuple, will label mutations between these y-values.
+    :param annotate_min_count: Minimum observed frequency of a mutation for it to be annotated.
+    :param annotate_column: The dataframe column with which to annotate the mutations.
+    :param annotation_offset: Offset for the annotation text.
+    :param unobserved_alpha: Alpha for the unobserved mutations.
+    :param observed_alpha: Alpha for the observed mutations.
+    :param hotspots_in_foreground: If True, will plot the most frequent mutations (the largest markers)
+    in the foreground. If False, will plot the largest markers in the background so other mutations they overlap with
+    are visible.
+    :param observed_marker: Shape of the marker to use for observed mutations.
+    :param unobserved_marker: Shape of the marker to use for unobserved mutations.
+    :param show_observed_only: Will only show mutations that appear in the data.
+    :param show_null_only: Will only show mutations that do not appear in the data.
+    :param ax: Matplotlib axis to plot on.
+    :return:
+    """
 
     # Can only plot mutations that have a score in both sections.
     common_mut_ids = set(section1.null_mutations['ds_mut_id']).intersection(section2.null_mutations['ds_mut_id'])
@@ -84,38 +149,113 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
     s1_obs = section1.observed_mutations[section1.observed_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
     s2_obs = section2.observed_mutations[section2.observed_mutations['ds_mut_id'].isin(common_mut_ids)].copy()
 
-    # if sections_for_colours is not None:
-    #     for s in sections_for_colours:
-    #         assert len(s.null_mutations) == len(s1_null)
-    #         assert len(s.observed_mutations) == len(s1_obs)
-
     merged_null = pd.merge(s1_null, s2_null, on=['pos', 'ref', 'mut', 'effect',
                                                                                  'aachange', 'ds_mut_id'],
-                           suffixes=['_1', '_2'])
-
-
+                           suffixes=('_1', '_2'))
 
     # Need to deduplicate mutations before merging to prevent additional copies of recurrent mutations being created
     obs2 = s2_obs.drop_duplicates(subset='ds_mut_id')
     merged_obs = pd.merge(s1_obs, obs2,
-                          on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'], suffixes=['_1', '_2'])
+                          on=['pos', 'ref', 'mut', 'effect', 'aachange', 'ds_mut_id'], suffixes=('_1', '_2'))
+
+    if return_dataframes:
+        full_null = merged_null.copy()
+        full_obs = merged_obs.copy()
 
     mut_counts = merged_obs['ds_mut_id'].value_counts()
 
-    if not show_observed_only:
-        null_to_plot = merged_null[~merged_null['ds_mut_id'].isin(merged_obs['ds_mut_id'])].copy()
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
 
-    fig, ax = plt.subplots(figsize=figsize)
     if not show_observed_only:
+        if len(merged_obs) > 0:
+            null_to_plot = merged_null[~merged_null['ds_mut_id'].isin(merged_obs['ds_mut_id'])].copy()
+        else:
+            null_to_plot = merged_null
+
+        if sections_for_colours is not None:
+            if colour_unmutated_by_scores and not show_observed_only:
+                null_to_plot['score'] = np.nan
+                null_to_plot = colour_mutations_by_scores(null_to_plot, None, 'score_1', 'score_2', sections_for_colours,
+                                           score_regions_for_colours, score_region_colours,
+                                           marker_size_from_count=False,
+                                           base_marker_size=unmutated_marker_size, alpha=unobserved_alpha,
+                                           hotspots_in_foreground=False, use_null=True, marker=unobserved_marker,
+                                           zorder=1)
+
         plt.scatter(null_to_plot['score_1'], null_to_plot['score_2'], s=unmutated_marker_size,
                 c=unobserved_mutation_colour, alpha=unobserved_alpha, marker=unobserved_marker, zorder=0)
 
-    # Colour by effect.
-    for effect, colour in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
-                                                                    missense_mutation_colour,
-                                                                    nonsense_mutation_colour]):
+    if not show_null_only:
 
-        if not show_null_only:
+        if annotate_mutations:
+            if annotate_min_count > 1:
+                annot_muts = merged_obs[
+                    merged_obs['ds_mut_id'].isin(mut_counts[mut_counts >= annotate_min_count].index)]
+            else:
+                annot_muts = merged_obs
+            if annotate_xregion is not None:
+                annot_muts = annot_muts[(annot_muts['score_1'] >= annotate_xregion[0]) &
+                                        (annot_muts['score_1'] <= annotate_xregion[1])]
+            if annotate_yregion is not None:
+                annot_muts = annot_muts[(annot_muts['score_2'] >= annotate_yregion[0]) &
+                                        (annot_muts['score_2'] <= annotate_yregion[1])]
+
+            if len(annot_muts) > 0:
+                if annotate_column not in annot_muts.columns:
+                    if annotate_column + '_1' in annot_muts.columns:  # May have added suffix in the merging
+                        annotate_column += '_1'
+                    else:
+                        print('Cannot find requested annotation column in dataframes')
+                        annotate_column = None
+
+                if annotate_column is not None:
+                    annot_muts = annot_muts.drop_duplicates(subset=[annotate_column, 'score_1', 'score_2'])
+                    annotate_mutations_on_plot(ax, annot_muts, annotate_column, 'score_1', 'score_2',
+                                               annotation_offset=annotation_offset)
+
+        if mut_lists_to_colour is not None:
+            if mut_list_colours is None or mut_list_columns is None:
+                raise ValueError('If colouring mutations using mut_lists_to_colour, must provide mut_list_colours')
+            if not isinstance(mut_lists_to_colour[0], (list, tuple)):
+                mut_lists_to_colour = [mut_lists_to_colour]
+            if not isinstance(mut_list_colours, (list, tuple)):
+                mut_list_colours = [mut_list_colours] * len(mut_lists_to_colour)
+            elif len(mut_list_colours) < len(mut_lists_to_colour):
+                msg = 'If colouring mutations using mut_lists_to_colour'
+                msg += 'must provide mut_list_colours with colour for each list'
+                raise ValueError(msg)
+
+            if not isinstance(mut_list_columns, (list, tuple)):
+                mut_list_columns = [mut_list_columns] * len(mut_lists_to_colour)
+            if not isinstance(mut_list_labels, (list, tuple)):
+                mut_list_labels = [mut_list_labels] * len(mut_lists_to_colour)
+
+            for mlist, mcolour, mcolumn, mlabel in zip(mut_lists_to_colour, mut_list_colours,
+                                                       mut_list_columns, mut_list_labels):
+                muts = merged_obs[merged_obs[mcolumn].isin(mlist)]
+                merged_obs = merged_obs[~merged_obs[mcolumn].isin(mlist)]
+                if len(muts) > 0:
+                    _plot_single_scatter_category(muts, mut_counts, 'score_1', 'score_2',
+                                                  marker_size_from_count, base_marker_size, mcolour,
+                                                  mlabel, observed_alpha, hotspots_in_foreground,
+                                                  marker=observed_marker, zorder=4)
+
+        if score_region_colours is not None:
+            #  Add a dummy score column to make sure new score columns get the merging suffix
+            merged_obs['score'] = np.nan
+            merged_obs = colour_mutations_by_scores(merged_obs, mut_counts, 'score_1', 'score_2', sections_for_colours,
+                                       score_regions_for_colours, score_region_colours, marker_size_from_count,
+                                       base_marker_size, observed_alpha, hotspots_in_foreground, marker=observed_marker,
+                                       zorder=3)
+
+        # Colour by effect.
+        for effect, colour in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
+                                                                        missense_mutation_colour,
+                                                                        nonsense_mutation_colour]):
+
+
+
             muts = merged_obs[merged_obs['effect'] == effect]
             if len(muts) > 0:
                 _plot_single_scatter_category(muts, mut_counts, 'score_1', 'score_2', marker_size_from_count,
@@ -123,69 +263,6 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
                                           observed_alpha, hotspots_in_foreground, marker=observed_marker,
                                               zorder=2)
 
-    if sections_for_colours is not None:
-        if colour_unmutated_by_scores and not show_observed_only:
-            null_to_plot['score'] = np.nan
-            colour_mutations_by_scores(null_to_plot, None, 'score_1', 'score_2', sections_for_colours,
-                                       score_regions_for_colours, score_region_colours, marker_size_from_count=False,
-                                       base_marker_size=unmutated_marker_size, alpha=unobserved_alpha,
-                                       hotspots_in_foreground=False, use_null=True, marker=unobserved_marker,
-                                       zorder=1)
-
-        if not show_null_only:
-            merged_obs['score'] = np.nan  #  Add a dummy score column to make sure new score columns get the merging suffix
-            colour_mutations_by_scores(merged_obs, mut_counts,  'score_1', 'score_2', sections_for_colours,
-                                   score_regions_for_colours, score_region_colours, marker_size_from_count,
-                                   base_marker_size, observed_alpha, hotspots_in_foreground, marker=observed_marker,
-                                       zorder=3)
-
-    if mut_lists_to_colour is not None:
-        if mut_list_colours is None or mut_list_columns is None:
-            raise ValueError('If colouring mutations using mut_lists_to_colour, must provide mut_list_colours')
-        if not isinstance(mut_lists_to_colour[0], (list, tuple)):
-            mut_lists_to_colour = [mut_lists_to_colour]
-        if not isinstance(mut_list_colours, (list, tuple)):
-            mut_list_colours = [mut_list_colours]*len(mut_lists_to_colour)
-        elif len(mut_list_colours) < len(mut_lists_to_colour):
-            raise ValueError('If colouring mutations using mut_lists_to_colour, must provide mut_list_colours with colour for each list')
-
-        if not isinstance(mut_list_columns, (list, tuple)):
-            mut_list_columns = [mut_list_columns]*len(mut_lists_to_colour)
-        if not isinstance(mut_list_labels, (list, tuple)):
-            mut_list_labels = [mut_list_labels]*len(mut_lists_to_colour)
-
-        for mlist, mcolour, mcolumn, mlabel in zip(mut_lists_to_colour, mut_list_colours,
-                                                   mut_list_columns, mut_list_labels):
-            muts = merged_obs[merged_obs[mcolumn].isin(mlist)]
-            if len(muts) > 0:
-                _plot_single_scatter_category(muts, mut_counts, 'score_1', 'score_2',
-                                              marker_size_from_count, base_marker_size, mcolour,
-                                              mlabel, observed_alpha, hotspots_in_foreground, marker=observed_marker)
-
-    if annotate_mutations:
-        if annotate_min_count > 1:
-            annot_muts = merged_obs[merged_obs['ds_mut_id'].isin(mut_counts[mut_counts >= annotate_min_count].index)]
-        else:
-            annot_muts = merged_obs
-        if annotate_xregion is not None:
-            annot_muts = annot_muts[(annot_muts['score_1'] >= annotate_xregion[0]) &
-                                    (annot_muts['score_1'] <= annotate_xregion[1])]
-        if annotate_yregion is not None:
-            annot_muts = annot_muts[(annot_muts['score_2'] >= annotate_yregion[0]) &
-                                    (annot_muts['score_2'] <= annotate_yregion[1])]
-
-        if len(annot_muts) > 0:
-            if annotate_column not in annot_muts.columns:
-                if annotate_column + '_1' in annot_muts.columns:  # May have added suffix in the merging
-                    annotate_column += '_1'
-                else:
-                    print('Cannot find requested annotation column in dataframes')
-                    annotate_column = None
-
-            if annotate_column is not None:
-                annot_muts = annot_muts.drop_duplicates(subset=[annotate_column, 'score_1', 'score_2'])
-                annotate_mutations_on_plot(ax, annot_muts, annotate_column, 'score_1', 'score_2',
-                                           annotation_offset=annotation_offset)
 
     if plot_xscale is not None:
         plt.xscale(plot_xscale)
@@ -221,11 +298,11 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
         plt.show()
 
     if return_fig and return_dataframes:
-        return fig, merged_null, merged_obs
+        return fig, full_null, full_obs
     elif return_fig:
         return fig
     elif return_dataframes:
-        return merged_null, merged_obs
+        return full_null, full_obs
 
 
 def annotate_mutations_on_plot(ax, mutations_to_annotate, annotation_column, xcol, ycol,

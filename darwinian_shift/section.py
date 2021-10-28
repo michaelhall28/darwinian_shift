@@ -430,7 +430,7 @@ class Section:
                 self._plot_sliding_window_results(starts, window_size, [], [colour],
                                                   [], obs_w, fig, ax, xlim, start, end, ylim,
                                                   show_legend, legend_args, show_residues, show_plot,
-                                                  ylabel='Mutations relative to "expected"',
+                                                  ylabel='Mutations relative to expected',
                                                   observed_label=observed_label, divide_by_window_size=False,
                                                   plot_kwargs_obs=plot_kwargs_obs,
                                                   plot_kwargs_exp=plot_kwargs_exp)

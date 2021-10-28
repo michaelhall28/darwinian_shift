@@ -18,7 +18,7 @@ def proj():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=DummyValuesRandom(random_function=np.random.random, testing_random_seed=0),
-                       stats=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       statistics=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
                        spectra=(EvenMutationalSpectrum(),
                                 TranscriptKmerSpectrum(k=1),
                                 GlobalKmerSpectrum(k=3))
@@ -48,7 +48,7 @@ def seq_pdb():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=DummyValuesRandom(random_function=np.random.random, testing_random_seed=0),
-                       stats=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       statistics=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
                        spectra=(EvenMutationalSpectrum(),
                                 TranscriptKmerSpectrum(k=1),
                                 GlobalKmerSpectrum(k=3)),
@@ -193,6 +193,30 @@ def test_scatter_two_scores(proj, seq):
                                    score_regions_for_colours=[[0, 0.5], [0.8, 199]],
                                     score_region_colours=['C7', 'C8'],
                                    show_plot=False, return_fig=True)
+
+
+@pytest.mark.mpl_image_compare(filename='scatter_two_scores2.png')
+def test_scatter_two_scores2(proj, seq):
+    s2 = proj.run_transcript('ENST00000263388', lookup=DummyValuesRandom(testing_random_seed=1, name='S2'))
+    s3 = proj.run_transcript('ENST00000263388', lookup=DummyValuesRandom(testing_random_seed=2, name='S3'))
+    s4 = proj.run_transcript('ENST00000263388', lookup=DummyValuesRandom(testing_random_seed=3, name='S4'))
+
+    mut_lists = [
+        ['S154N', 'A1613T'], ['Y529*', 'A1430A', 'R113*']
+    ]
+    mut_list_colours = ['C4', 'C5']
+    mut_list_labels = ['List1', 'List3']
+
+    return plot_scatter_two_scores(seq, s2, sections_for_colours=[s3, s4],
+                                   score_regions_for_colours=[[0, 0.5], [0.8, 199]],
+                                    score_region_colours=['C7', 'C8'],
+                                   unobserved_alpha=0.1,
+                                   show_observed_only=False,
+                                   show_plot=False, return_fig=True, annotate_mutations=True,
+                                   annotate_xregion=[0.1, 0.25], annotate_yregion=[0.2, 0.5],
+                                   mut_lists_to_colour=mut_lists, mut_list_colours=mut_list_colours,
+                                   mut_list_labels=mut_list_labels
+                                   )
 
 
 @pytest.mark.mpl_image_compare(filename='lollipop_plot.png')

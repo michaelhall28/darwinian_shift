@@ -66,7 +66,7 @@ def run_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, e
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lookup,
-                       stats=statistics,
+                       statistics=statistics,
                        spectra=spectra['spectra'],
                        gene_list=gene_list,
                        transcript_list=transcript_list,
@@ -190,7 +190,7 @@ def test_section_input_process(sections, lookup):
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lookup,
                        sections=sections,
-                       stats=[CDFPermutationTest(), ChiSquareTest()],
+                       statistics=[CDFPermutationTest(), ChiSquareTest()],
                        testing_random_seed=1,
                        verbose=True
                        )

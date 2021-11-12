@@ -1,7 +1,7 @@
 # darwinian_shift
 Statistical testing of selection of quantifiable features of somatic mutations.  
 
-Some basic instructions are provided in this readme.  
+Some basic instructions are provided in this readme. More detailed examples are in the Tutorial.ipynb notebook.
 
 The Root code for weighted Anderson-Darling tests is from Trusina et. al. https://doi.org/10.1088/1742-6596/1525/1/012109
 

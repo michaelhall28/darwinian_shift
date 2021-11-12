@@ -395,7 +395,6 @@ def test_variant_match_lookup_ds_id(seq_object):
     seq_object.match_list = ['15303191:G>A', '15302430:G>A', '15281362:C>A']
 
     res = vm_lookup(seq_object)
-    print(res.sum())
 
     # Save reference results if they have been deliberately changed
     np.save(os.path.join(FILE_DIR, 'reference_variant_match_results_ds_id'), res)

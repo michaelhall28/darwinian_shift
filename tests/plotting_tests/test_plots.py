@@ -123,15 +123,15 @@ def test_cdfs2(seq):
 
 @pytest.mark.mpl_image_compare(filename='chi_sq.png')
 def test_chi_sq(seq):
-    return seq.plot_binned_counts(show_plot=False, return_fig=True, show_CI=False)
+    return seq.plot_chi_sq_counts(show_plot=False, return_fig=True, show_CI=False)
 
 @pytest.mark.mpl_image_compare(filename='chi_sq2.png')
 def test_chi_sq2(seq):
-    return seq.plot_binned_counts(show_plot=False, return_fig=True, show_CI=True)
+    return seq.plot_chi_sq_counts(show_plot=False, return_fig=True, show_CI=True)
 
 @pytest.mark.mpl_image_compare(filename='chi_sq3.png')
 def test_chi_sq3(seq_bool):
-    return seq_bool.plot_binned_counts_common_bins(show_plot=False, return_fig=True, show_CI=True)
+    return seq_bool.plot_binned_counts(show_plot=False, return_fig=True, show_CI=True)
 
 @pytest.mark.mpl_image_compare(filename='binom.png')
 def test_binom(seq_bool):
@@ -242,3 +242,20 @@ def test_bar_plot(seq):
         elif t is None and d is None:
             colours.append('C7')
     return seq.plot_bar_observations(binning_regions=bins, facecolour=colours, linewidth=1, return_fig=True)
+
+
+@pytest.mark.mpl_image_compare(filename='bar_expected_rates.png')
+def test_bar_expected_rates(seq):
+    return seq.plot_expected_mutation_rates_for_residues_bar(residues=[154, 1613, 1430, 113], return_fig=True)
+
+
+@pytest.mark.mpl_image_compare(filename='bar_expected_rates_vertical.png')
+def test_bar_expected_rates_vertical(seq):
+    return seq.plot_expected_mutation_rates_for_residues_bar(residues=[113, 154, 1613, 1430], return_fig=True,
+                                                             orientation='vertical')
+
+
+@pytest.mark.mpl_image_compare(filename='scatter_expected_rates_vs_observed.png')
+def test_scatter_expected_rates_vs_observed(seq):
+    return seq.plot_expected_mutation_rates_vs_observed_for_residues(residues=[113, 154, 1613, 1430], return_fig=True,
+                                                                     mutations_to_annotate=['S154N', 'A1613T'])

@@ -179,7 +179,6 @@ class Transcript:
                 last_kmer = None
                 ks = {s.k for s in non_depdup_spectra}
                 for p, r, m in observed_mutations[['pos', 'strand_ref', 'strand_mut']].sort_values('pos').values:
-                    #         print(p, m)
                     if p == last_p:
                         if r == last_ref:
                             for k in ks:
@@ -205,7 +204,6 @@ class Transcript:
                 last_ref = None
                 last_kmer = None
                 for p, r, m in dedup_mutations[['pos', 'strand_ref', 'strand_mut']].sort_values('pos').values:
-                    #         print(p, m)
                     if p == last_p:
                         if r == last_ref:
                             for k in ks:

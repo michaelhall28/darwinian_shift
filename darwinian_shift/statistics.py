@@ -51,7 +51,7 @@ class CDFPermutationTest:
 
 
 class CDFZTest:
-    # Using the central limit theorem to get a the normal distribution limit of the permutation test.
+    # Using the central limit theorem to get a the normal distribution limit of the CDF permutation test.
     def __init__(self, name='CDF_Z'):
         self.name = name
 
@@ -87,12 +87,6 @@ class ChiSquareTest:
             max_bins=self.max_bins, min_exp_freq=self.min_exp_freq,
             CI_sample_num=self.CI_num_samples, CI_alpha=self.CI_alpha
         )
-
-        # if len(res['observed_counts']) == 2:
-        #     # Run a binomial test too.
-        #     # By default will be labelled as chi_square_binom..., but prevents confusion if multiple chi-square are run.
-        #     binomial_res = binomial_test(res['expected_counts'], res['observed_counts'])
-        #     res.update(binomial_res)
 
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 

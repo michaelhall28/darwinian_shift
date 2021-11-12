@@ -80,6 +80,8 @@ class FoldXLookup:
             project.download_sifts = self.download_sifts
 
     def __call__(self, seq_object):
+        if seq_object.pdb_id is None or seq_object.pdb_chain is None:
+            raise TypeError("Must define the 'pdb_id' and 'pdb_chain' to use this lookup")
         return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations,
                                 getattr(seq_object, 'foldx_results_dir', None))
 

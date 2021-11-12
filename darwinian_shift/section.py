@@ -30,12 +30,40 @@ def get_distribution_from_mutational_spectrum(values, mut_rates, num=1000000):
 
 
 class Section:
-    # Class for the analysis of a single transcript/part of transcript
+    """
+    Class for the analysis of a single transcript/part of transcript
+
+    Stores the null and observed mutations in the regions, applies the metric scores, run the statistical tests
+    and functions to plot the results.
+    """
 
     def __init__(self, transcript, start=None, end=None, section_id=None, pdb_id=None, pdb_chain=None,
                  excluded_mutation_types=None, included_mutation_types=None, included_residues=None,
                  excluded_residues=None, lookup=None,
                  **kwargs):
+        """
+
+        :param transcript: Transcript object. Used to generate the null mutations.
+        :param start: Will exclude residues before this one from the analysis. If None, will start from the first
+        residue of the protein.
+        :param end: Will exclude residues after this one from the analysis. If None, will end at the last
+        residue of the protein.
+        :param section_id: A label for the section to be analysed. Can be useful when running multiple analyses and
+        collecting results. If None, will be named automatically based on the transcript_id or pdb file and chain.
+        :param pdb_id: For analyses that use a protein structure. Four letter ID of the pdb file to use.
+        :param pdb_chain: For analyses that use a protein structure. The chain to use for the analysis.
+        :param excluded_mutation_types: Can be string or list of strings. Mutation types to exclude from the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the excluded_mutation_types of the project.
+        :param included_mutation_types: Can be string or list of strings. Mutation types to include in the
+        analysis. E.g. ['synonymous', 'nonsense']. If None, will use the included_mutation_types of the project.
+        :param included_residues: List or array of integers. The residues to analyse. If None, will analyse all
+        residues (except those excluded by other arguments).
+        :param excluded_residues: List or array of integers. The residues to exclude from the analysis.
+        :param lookup: The class object or function used to score the mutations. If None, will use the lookup of
+        the project.
+        :param kwargs: Any additional attributes that will be assigned to the Section object created.
+        These can be used by the lookup class.
+        """
         self.project = transcript.project  # The darwinian shift class that can run over multiple sections
         self.transcript = transcript
         self.gene = transcript.gene
@@ -157,23 +185,44 @@ class Section:
         self._add_mutation_id_column()
 
     def run(self, plot_permutations=False, spectra=None, statistics=None):
+        """
+        Run the statistical analysis of the section.
+        :param plot_permutations: If True, will plot a histogram of the output of any permutation tests used.
+        :param spectra: The mutational spectrum or list of mutational spectra to use for the statistical tests. If None,
+        will run for all of the spectra in the project.
+        :param statistics: The statistical tests to run. If None, will run all of the statistical tests in the project.
+        :return:
+        """
         self.apply_scores()
 
         # Compare distributions
-        self.run_statistical_tests(plot_permutations, spectra=spectra, statistics=statistics)
+        self._run_statistical_tests(plot_permutations, spectra=spectra, statistics=statistics)
 
     def get_results_dictionary(self):
+        """
+        Get a dictionary of results for the section.
+        :return: dict
+        """
         res = {k: getattr(self, k) for k in self.project.result_columns}
         res.update(self.statistical_results)
         return res
 
     def get_pvalues(self):
+        """
+        Get the p-values of any statistical tests run for the section.
+        :return:
+        """
         if self.statistical_results is None:
-            self.run_statistical_tests()
+            self._run_statistical_tests()
         p = {k: v for (k, v) in self.statistical_results.items() if 'pvalue' in k}
         return p
 
     def apply_scores(self):
+        """
+        Uses the lookup to apply scores to the null and observed mutations. These will be placed in the 'score' column
+        of the self.null_mutations and self.observed_mutations dataframes.
+        :return: None
+        """
         if not self._scoring_complete:
             # Get scores, and make sure all results are numpy arrays of floats for consistency
             self.null_mutations['score'] = np.array(self.lookup(self)).astype(float)
@@ -229,7 +278,7 @@ class Section:
             spectra = [spectra]
         return spectra
 
-    def run_statistical_tests(self, plot=False, spectra=None, statistics=None):
+    def _run_statistical_tests(self, plot=False, spectra=None, statistics=None):
         if self.statistical_results is None:
             self.statistical_results = {}
         spectra = self._get_spectra(spectra)
@@ -261,20 +310,28 @@ class Section:
 
         # self.repeat_proportion = calculate_repeat_proportion(self.null_scores)
 
-    def plot(self, spectra=None, violinplot_bw=None, plot_scale=None,
+    def plot(self, spectra=None, plot_scale=None,
              marker_size_from_count=True, base_marker_size=10, colours=None):
+        """
+        Plots a small selection of plots showing the location and scores of mutations in the section.
+        More plots and plotting options are available using the other .plot_ functions
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param plot_scale: The scaling for the plot axis showing the metric scores.
+        :param marker_size_from_count: If True (default), the size of the scatter plot marker showing a mutation will
+        be based on the frequency of that mutation in the data. If False, all markers will have the same size.
+        :param base_marker_size: The size of a marker for a mutation occurring once in the data (or size for all
+        mutation markers if marker_size_from_count=False).
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :return: None
+        """
         spectra = self._get_spectra(spectra)
         if self.observed_values is None:
             self.apply_scores()  # Make sure all the values needed for plotting are generated
 
         self.plot_sliding_window(spectra=spectra, colours=colours, show_plot=True)
-        self.plot_sliding_3D_window(spectra=spectra, colours=colours, show_plot=True)
         self.plot_scatter(plot_scale, marker_size_from_count, base_marker_size, show_plot=True)
-        self.plot_violinplot(spectra, plot_scale, violinplot_bw, colours=colours, show_plot=True)
-        self.plot_boxplot(spectra, plot_scale, colours=colours, show_plot=True)
         self.plot_cdfs(spectra, plot_scale, colours=colours, show_plot=True)
-        self.plot_binned_counts(spectra, colours=colours, show_plot=True)
-        self.plot_aa_abundance(spectra, show_plot=True)
 
     def _get_plot_colours(self, colours, num_lines):
         if colours is None:
@@ -378,6 +435,36 @@ class Section:
                             colours=None, return_fig=False, show_residues=False, xlim=None, ylim=None, ax=None,
                             divide_by_expected_rate=False, observed_label='Observed', return_values=False,
                             yaxis_right=False, plot_kwargs_obs=None, plot_kwargs_exp=None):
+        """
+        Plots a sliding window of mutation counts across the residues analysed. By default will show the observed data
+        and the expected results under each mutational spectrum given. Alternatively, if divide_by_expected_rate=True,
+        will instead show the observed data relative to the expected results.
+        :param window_size: Size of the sliding window in residues.
+        :param window_step: Size of the step between starts of adjacent windows in residues.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param figsize: Size of the figure.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param show_plot: If True, will call plt.show()
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        :param xlim: Limits for the x-axis.
+        :param ylim: Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param divide_by_expected_rate: If True, will show the observed data relative to the expected results. If False,
+        will show the observed data and expected results as separate lines.
+        :param observed_label: Label for the observed data in the legend. By default this is 'Observed'.
+        :param return_values: If True, will return the values for the lines plotted.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param plot_kwargs_obs: Additional kwargs for the appearance of the observed line.
+        :param plot_kwargs_exp: Additional kwargs for the appearance of the expected lines.
+        :return: By default, None.
+        If return_values=True, will return a tuple (observed_counts, expected_counts), where observed_counts is a
+        numpy array and expected_counts is a dictionary of numpy arrays.
+        Else if return_fig=True, will return the figure.
+        """
         start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
 
         starts = np.arange(start, end + 2 - window_size, window_step)
@@ -458,9 +545,54 @@ class Section:
                      sections_for_colours=None, score_regions_for_colours=None,
                      score_region_colours=None, colour_unmutated=False, hotspots_in_foreground=False,
                      observed_marker=None, unobserved_marker=None,
-                     show_observed_only=False, show_null_only=False, ax=None, yaxis_right=False,
-                     unobserved_zorder=0, missense_zorder=2, synonymous_zorder=1, nonsense_zorder=3
-                     ):
+                     show_observed_only=False, show_unobserved_only=False, ax=None, yaxis_right=False,
+                     unobserved_zorder=0, missense_zorder=2, synonymous_zorder=1, nonsense_zorder=3):
+        """
+        Scatter plot of mutation residue vs mutation score.
+        :param plot_scale: Scale for the y-axis (mutation scores). Passed to matplotlib. 'log', 'symlog' etc.
+        :param marker_size_from_count: If True (default), the size of the marker will be based on the frequency of
+        that mutation in the data. If False, all markers will have the same size.
+        :param base_marker_size: The size of a marker for a mutation occurring once in the data (or size for all
+        mutation markers if marker_size_from_count=False).
+        :param show_plot: If True, will call plt.show().
+        :param unobserved_mutation_colour: Colour for mutations that are not seen in the data. Hide these mutations
+        entirely by setting show_observed_only=True.
+        :param missense_mutation_colour: Colour for missense mutations.
+        :param synonymous_mutation_colour: Colour for synonymous mutations.
+        :param nonsense_mutation_colour: Colour for nonsense mutations.
+        :param show_legend: If True (default), show the legend.
+        :param figsize: Size of the figure.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        :param xlim: Limits for the x-axis.
+        :param unmutated_marker_size: Size of the markers for mutations not seen in the data.
+        :param unobserved_alpha: Alpha for the markers for mutations not seen in the data.
+        :param observed_alpha: Alpha for the markers of observed mutations.
+        :param sections_for_colours: List of additional Section objects that can be used to colour mutations based on
+        further scores.  To be used with score_regions_for_colours, and optionally score_region_colours.
+        :param score_regions_for_colours: List of the regions to colour using the sections_for_colours. Each region is a
+        tuple of lower and upper score bound. i-th region applies to the i-th section in sections_for_colours.
+        :param score_region_colours: List of colours to use for sections_for_colours. i-th colour applies to the
+        i-th section in sections_for_colours.
+        :param colour_unmutated: If True, the null mutations will also be coloured according to the
+        section_for_colours and score_regions_for_colours arguments. If False, null mutations will be plotted with the
+        unobserved_mutation_colour.
+        :param hotspots_in_foreground: If True, will plot the most frequent mutations (the largest markers)
+        in the foreground. If False, will plot the largest markers in the background so other mutations they overlap
+        with are visible.
+        :param observed_marker: Shape of the marker to use for observed mutations.
+        :param unobserved_marker: Shape of the marker to use for unobserved mutations.
+        :param show_observed_only: If True, will not show the unobserved mutations.
+        :param show_unobserved_only: If True, will only show the unobserved mutations.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param unobserved_zorder: The zorder for the unobserved mutations.
+        :param missense_zorder: The zorder for the observed missense mutations.
+        :param synonymous_zorder: The zorder for the observed synonymous mutations.
+        :param nonsense_zorder: The zorder for the observed nonsense mutations.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
             if yaxis_right:
@@ -476,7 +608,7 @@ class Section:
                     alpha=unobserved_alpha, c=unobserved_mutation_colour, label=None, linewidth=0,
                     marker=unobserved_marker, zorder=unobserved_zorder)
 
-        if not show_null_only:
+        if not show_unobserved_only:
             mut_counts = self.observed_mutations['ds_mut_id'].value_counts()
             for effect, col, z in zip(['synonymous', 'missense', 'nonsense'], [synonymous_mutation_colour,
                                                                         missense_mutation_colour,
@@ -500,7 +632,7 @@ class Section:
                                            hotspots_in_foreground=False, use_null=True, marker=unobserved_marker, ax=ax,
                                            zorder=unobserved_zorder)
 
-            if not show_null_only:
+            if not show_unobserved_only:
                 colour_mutations_by_scores(self.observed_mutations, mut_counts, 'residue', 'score', sections_for_colours,
                                            score_regions_for_colours, score_region_colours, marker_size_from_count,
                                            base_marker_size, observed_alpha, hotspots_in_foreground,
@@ -534,6 +666,19 @@ class Section:
 
     def plot_violinplot(self, spectra=None, plot_scale=None, violinplot_bw=None, show_plot=False, colours=None,
                         figsize=(5, 5), return_fig=False, ax=None):
+        """
+        Violinplot of the expected and observed distributions of mutation scores.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param plot_scale: Scale for the y-axis (mutation scores). Passed to matplotlib. 'log', 'symlog' etc.
+        :param violinplot_bw: Bandwidth for the violins.
+        :param show_plot: If True, will call plt.show().
+        :param colours: List of colours. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param figsize: Size of the figure.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
@@ -563,6 +708,18 @@ class Section:
 
     def plot_boxplot(self, spectra=None, plot_scale=None, show_plot=False, colours=None,
                      figsize=(5, 5), return_fig=False, ax=None):
+        """
+        Boxplot of the expected and observed distributions of mutation scores.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param plot_scale:  Scale for the y-axis (mutation scores). Passed to matplotlib. 'log', 'symlog' etc.
+        :param show_plot: If True, will call plt.show().
+        :param colours: List of colours. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param figsize: Size of the figure.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
@@ -592,6 +749,25 @@ class Section:
     def plot_cdfs(self, spectra=None, plot_scale=None, show_plot=False, legend_args=None, colours=None,
                   figsize=(5, 5), return_fig=False, show_legend=True,
                   show_CI=False, CI_alpha=0.05, CI_num_samples=10000, ax=None):
+        """
+        CDF curves for the expected and observed distribution of mutation scores.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param plot_scale: Scale for the x-axis (mutation scores). Passed to matplotlib. 'log', 'symlog' etc.
+        :param show_plot: If True, will call plt.show().
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param colours: List of colours. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param figsize: Size of the figure.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_legend: If True (default), show the legend.
+        :param show_CI: Show confidence intervals around the CDFs. The CIs for the expected distributions are calculated
+        by randomly drawing from the null score distributions, the CIs for the observed data are calculated by drawing
+        with replacement from the observed data.
+        :param CI_alpha: The alpha for the interval. The default is 0.05 (95% confidence interval).
+        :param CI_num_samples: Number of random samples used to calculate the CIs. Default 10000.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
@@ -634,8 +810,23 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_binned_counts(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
+    def plot_chi_sq_counts(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
                            show_legend=True, legend_args=None, chi_tests=None, show_CI=True):
+        """
+
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param show_plot: If True, will call plt.show()
+        :param figsize: Size of the figure.
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param chi_tests: ChiSquareTest of list of ChiSquareTest objects to use. Will create one subplot per test.
+        If None, will use any ChiSquareTests already run for this Section.
+        :param show_CI: Show 95% confidence intervals
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, len(spectra)+1)
@@ -647,22 +838,18 @@ class Section:
             chi_tests = [t for t in self.statistics if isinstance(t, ChiSquareTest) and t.name == chi_tests]
         if isinstance(chi_tests, ChiSquareTest):
             chi_tests = [chi_tests]
-            self.run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
+            self._run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
         elif all([isinstance(c, str) for c in chi_tests]):
             # Names given instead. Use only the chi-square tests from the project that match these names
             chi_tests = [t for t in self.statistics if isinstance(t, ChiSquareTest) and t.name in chi_tests]
         elif all([isinstance(c, ChiSquareTest) for c in chi_tests]):
-            self.run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
+            self._run_statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
         else:
             raise ValueError('chi_tests not recognised')
 
         if len(chi_tests) == 0:
             print('No chi square tests to plot')
         else:
-            # if self.statistical_results is None or not all(["_".join([t.name, spectrum.name, 'expected_counts']) in
-            #                                                 self.statistical_results for t in chi_tests for
-            #                                                 spectrum in spectra]):
-            #     self.statistical_tests(plot=False, statistics=chi_tests)  # The chi-square tests need to be run first
 
             fig, axes = plt.subplots(nrows=len(chi_tests), ncols=len(spectra), squeeze=False, figsize=figsize)
             legend_items = []
@@ -724,11 +911,27 @@ class Section:
             if return_fig:
                 return fig
 
-    def plot_binned_counts_common_bins(self, spectra=None, show_plot=False, figsize=(15, 5),
-                                       colours=None, return_fig=False, linewidth=0,
-                                       hatches=None,
-                                       show_legend=True, legend_args=None, bins=(-1, 0.5, 2),
-                                       show_CI=True, CI_num_samples=10000, CI_alpha=0.05):
+    def plot_binned_counts(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
+                           linewidth=0, hatches=None, show_legend=True, legend_args=None, bins=(-1, 0.5, 2),
+                           show_CI=True, CI_num_samples=10000, CI_alpha=0.05):
+        """
+        Bar plot of observed and expected counts of mutations with scores in the given bins.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param show_plot: If True, will call plt.show()
+        :param figsize: Size of the figure.
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param linewidth: Linewidth for the bar plot.
+        :param hatches: Hatches for the bar plot
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param bins: Bins for the scores.
+        :param show_CI: Show 95% confidence intervals
+        :param CI_num_samples: Number of random samples used to calculate the CIs. Default 10000.
+        :param CI_alpha:  The alpha for the CIs. The default is 0.05 (95% confidence intervals).
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, len(spectra)+1)
@@ -815,17 +1018,32 @@ class Section:
 
     def plot_binomial(self, spectra=None, show_plot=False, figsize=(2, 3), colours=None, return_fig=False,
                            show_legend=True, legend_args=None, binom_test=None, show_CI=True):
+        """
+        Bar plot of the expected and observed counts of mutations with scores above the threshold for a BinomTest
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param show_plot: If True, will call plt.show()
+        :param figsize: Size of the figure.
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param binom_test: BinomTest or list of BinomTests to use. If None, will use the first BinomTest run on this
+        Section (if any).
+        :param show_CI: Show 95% confidence intervals
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         spectra = self._get_spectra(spectra)
 
         colours = self._get_plot_colours(colours, len(spectra)+1)
         if binom_test is None:
-            # Use the first binomial test from the project
+            # Use the first binomial test run on the Section
             binom_test = [t for t in self.statistics if isinstance(t, BinomTest)][0]
         elif isinstance(binom_test, str):
-            # Names of single test given instead. Use only the chi-square test from the project that match this name
+            # Names of single test given instead. Use only the BinomTest test that matches this name
             binom_test = [t for t in self.statistics if isinstance(t, BinomTest) and t.name == binom_test][0]
         elif isinstance(binom_test, BinomTest):
-            self.run_statistical_tests(plot=False, statistics=[binom_test])  # The test needs to be run first
+            self._run_statistical_tests(plot=False, statistics=[binom_test])  # The test needs to be run first
         else:
             raise ValueError('binom_test not recognised')
 
@@ -886,6 +1104,17 @@ class Section:
 
     def plot_aa_abundance(self, spectra=None, sig_threshold=0.05, use_qval=True, show_plot=False, max_texts=10,
                           figsize=(5, 5), return_fig=False):
+        """
+        Scatter plot of expected and observed amino acid changes.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param sig_threshold: Significance threshold for labelling mutations.
+        :param use_qval: Multiple test correct the p-values (True by default).
+        :param show_plot: If True, will call plt.show()
+        :param max_texts: Max number of labels on the plot. Will start from most significant cases.
+        :param figsize: Size of the figure.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         spectra = self._get_spectra(spectra)
 
         fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
@@ -946,6 +1175,37 @@ class Section:
                                show_arcs=False, arc_scale=0.001, arc_alpha=0.01, min_arc_residue_gap=5,
                                show_plot=False, colourmap=autumn, colourmap_different_chain=winter, return_fig=False,
                                show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False):
+        """
+        Plot of mutation counts with a given distance from the residue in the protein structure. Requires a pdb_id and
+        pdb_chain to be defined for the section.
+        :param distance: Distance in Angstroms to use.
+        :param normalise: If True, plot mutations per residue. If False, plot raw number of mutations within the
+        distance threshold.
+        :param include_chains: For structures including multiple chains from the same protein, can specify which chains
+        to include here. The pdb_chain will be used to define the 'windows', but mutation counts will be based on all
+        of the chains listed in include_chains.
+        :param figsize: Size of the figure.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param show_arcs: Show arcs linking residues within the distance threshold of each other.
+        :param arc_scale: Scale for the arcs. Likely to need adjusting.
+        :param arc_alpha: Alpha for the arcs.
+        :param min_arc_residue_gap: Will not show arcs between residues closer than this in the sequence if from the
+        same chain.
+        :param show_plot: If True, will call plt.show().
+        :param colourmap: Colormap for plotting the arcs between residues in the same chain.
+        :param colourmap_different_chain: Colormap for plotting the arcs between residues in different chains.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        :param xlim: Limits for the x-axis.
+        :param ylim: Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if self.pdb_id is not None:
             try:
                 u = MDAnalysis.Universe(os.path.join(self.project.pdb_directory, self.pdb_id.lower() + '.pdb.gz'))
@@ -983,37 +1243,44 @@ class Section:
             if include_chains is None:
                 include_chains = {self.pdb_chain}
 
-            expected_counts = {spectrum.name: np.empty(len(seq_pdb_residues)) for spectrum in spectra}
-            observed_counts = np.empty(len(seq_pdb_residues))
+            drawn_arcs_same_chain = set()
+            drawn_arcs_different_chain = set()
 
+            expected_counts = {spectrum.name: np.zeros(len(seq_pdb_residues)) for spectrum in spectra}
+            observed_counts = np.zeros(len(seq_pdb_residues))
             for i, res in enumerate(seq_pdb_residues):
                 surrounding_res = get_3D_window(u, self.pdb_chain, res, distance)
                 surrounding_res = [r for r in surrounding_res if r[0] in include_chains]
                 residue_window = [r[1] for r in surrounding_res]
-                if normalise:
-                    norm_fac = len(residue_window)
-                else:
-                    norm_fac = 1
+                if residue_window:
+                    if normalise:
+                        norm_fac = len(residue_window)
+                    else:
+                        norm_fac = 1
 
-                if show_arcs:
-                    for r in surrounding_res:
-                        if r[0] == self.pdb_chain and abs(r[1] - res) >= min_arc_residue_gap:
-                            plot_arc(ax, res, r[1], colourmap, colourmap_norm, arc_scale=arc_scale, alpha=arc_alpha)
-                        elif r[0] != self.pdb_chain:
-                            plot_arc(ax, res, r[1], colourmap_different_chain, colourmap_norm,
-                                     arc_scale=arc_scale, alpha=arc_alpha)
+                    if show_arcs:
+                        for r in surrounding_res:
+                            tup = (min(res, r[1]), max((res, r[1])))
+                            if r[0] == self.pdb_chain and abs(r[1] - res) >= min_arc_residue_gap and \
+                                    tup not in drawn_arcs_same_chain:
+                                plot_arc(ax, res, r[1], colourmap, colourmap_norm, arc_scale=arc_scale, alpha=arc_alpha)
+                                drawn_arcs_same_chain.add(tup)
+                            elif r[0] != self.pdb_chain and tup not in drawn_arcs_different_chain:
+                                plot_arc(ax, res, r[1], colourmap_different_chain, colourmap_norm,
+                                         arc_scale=arc_scale, alpha=arc_alpha)
+                                drawn_arcs_different_chain.add(tup)
 
-                window_mutations = self.observed_mutations[self.observed_mutations['residue'].isin(residue_window)]
-                obs = len(window_mutations)
+                    window_mutations = self.observed_mutations[self.observed_mutations['residue'].isin(residue_window)]
+                    obs = len(window_mutations)
 
-                null_window_mutations = self.null_mutations[self.null_mutations['residue'].isin(residue_window)]
+                    null_window_mutations = self.null_mutations[self.null_mutations['residue'].isin(residue_window)]
 
-                for spectrum in spectra:
-                    total_window_rate = null_window_mutations[spectrum.rate_column].sum()
-                    normalised_window_rate = total_window_rate * normalising_factors[spectrum.name]
-                    expected_counts[spectrum.name][i] = normalised_window_rate / norm_fac
+                    for spectrum in spectra:
+                        total_window_rate = null_window_mutations[spectrum.rate_column].sum()
+                        normalised_window_rate = total_window_rate * normalising_factors[spectrum.name]
+                        expected_counts[spectrum.name][i] = normalised_window_rate / norm_fac
 
-                observed_counts[i] = obs / norm_fac
+                    observed_counts[i] = obs / norm_fac
 
             for spectrum, colour in zip(spectra, colours[1:]):
                 ax.plot(seq_pdb_residues, expected_counts[spectrum.name],
@@ -1060,6 +1327,27 @@ class Section:
                                           show_plot=False, colours=None, return_fig=False,
                                            show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
                                            plot_kwargs_obs=None, plot_kwargs_exp=None):
+        """
+        A sliding window with the total score of mutations within the window.
+        :param window_size: Size of the sliding window in residues.
+        :param window_step: Size of the step between starts of adjacent windows in residues.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param show_legend: Will show the legend listing the names of the mutational spectra.
+        :param figsize: Size of the figure.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param show_plot: If True, will call plt.show()
+        :param colours: List of colours for plots. First colour is for the observed data, the subsequent colours are
+        for plotting the null distributions from each of the mutational spectra given.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        :param xlim: Limits for the x-axis.
+        :param ylim: Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param plot_kwargs_obs: Additional kwargs for the appearance of the observed line.
+        :param plot_kwargs_exp: Additional kwargs for the appearance of the expected lines.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
 
         start, end = self.null_mutations['residue'].min(), self.null_mutations['residue'].max()
 
@@ -1122,10 +1410,54 @@ class Section:
                                    mutations_to_annotate=None, annotation_column='aachange',
                                    annotation_offset=(0, 0), unobserved_alpha=1, observed_alpha=1,
                                    sections_for_colours=None, score_regions_for_colours=None,
-                                   score_region_colours=None, colour_unmutated_by_scores=False, hotspots_in_foreground=False,
-                                   observed_marker=None, unobserved_marker=None,
-                                   show_observed_only=False, show_null_only=False
-                                   ):
+                                   score_region_colours=None, colour_unmutated_by_scores=False,
+                                   hotspots_in_foreground=False, observed_marker=None, unobserved_marker=None,
+                                   show_observed_only=False, show_unobserved_only=False):
+        """
+        Plots the expected mutation rate of mutations against their metric score.
+        :param spectra: The mutational spectrum or list of mutational spectra to use.
+        :param metric_plot_scale: Scale for the y-axis (mutation scores). Passed to matplotlib. 'log', 'symlog'
+        :param marker_size_from_count: If True (default), the size of the marker will be based on the frequency of
+        that mutation in the data. If False, all markers will have the same size.
+        :param base_marker_size: The size of a marker for a mutation occurring once in the data (or size for all
+        mutation markers if marker_size_from_count=False).
+        :param show_plot: If True, will call plt.show().
+        :param unobserved_mutation_colour: Colour for mutations that are not seen in the data. Hide these mutations
+        entirely by setting show_observed_only=True.
+        :param missense_mutation_colour: Colour for missense mutations.
+        :param synonymous_mutation_colour: Colour for synonymous mutations.
+        :param nonsense_mutation_colour: Colour for nonsense mutations.
+        :param show_legend: If True (default), show the legend.
+        :param figsize: Size of the figure.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param xlim: Limits for the x-axis.
+        :param unmutated_marker_size: Size of the markers for mutations not seen in the data.
+        :param mut_rate_plot_scale: Scale for the x-axis (mutation scores). Passed to matplotlib. 'log', 'symlog'
+        :param mutations_to_annotate: Dataframe of mutations to label on the plot. Should be a sub-dataframe of
+        self.null_mutations.
+        :param annotation_column: Column to use for the annotation.
+        :param annotation_offset: Tuple. Offset for annotation.
+        :param unobserved_alpha: Alpha for the markers for mutations not seen in the data.
+        :param observed_alpha: Alpha for the markers of observed mutations.
+        :param sections_for_colours: List of additional Section objects that can be used to colour mutations based on
+        further scores.  To be used with score_regions_for_colours, and optionally score_region_colours.
+        :param score_regions_for_colours: List of the regions to colour using the sections_for_colours. Each region is a
+        tuple of lower and upper score bound. i-th region applies to the i-th section in sections_for_colours.
+        :param score_region_colours: List of colours to use for sections_for_colours. i-th colour applies to the
+        i-th section in sections_for_colours.
+        :param colour_unmutated_by_scores: If True, the null mutations will also be coloured according to the
+        section_for_colours and score_regions_for_colours arguments. If False, null mutations will be plotted with the
+        unobserved_mutation_colour.
+        :param hotspots_in_foreground: If True, will plot the most frequent mutations (the largest markers)
+        in the foreground. If False, will plot the largest markers in the background so other mutations they overlap
+        with are visible.
+        :param observed_marker: Shape of the marker to use for observed mutations.
+        :param unobserved_marker: Shape of the marker to use for unobserved mutations.
+        :param show_observed_only: If True, will not show the unobserved mutations.
+        :param show_unobserved_only: If True, will only show the unobserved mutations.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         spectra = self._get_spectra(spectra)
 
         if mutations_to_annotate is not None:
@@ -1134,9 +1466,9 @@ class Section:
         fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
 
         if len(self.observed_mutations) == 0:
-            show_null_only = True
+            show_unobserved_only = True
 
-        if not show_null_only:
+        if not show_unobserved_only:
             mut_counts = self.observed_mutations['ds_mut_id'].value_counts()
 
         if not show_observed_only:
@@ -1161,7 +1493,7 @@ class Section:
                 ax.scatter(unplotted_null_muts[spectrum.rate_column], unplotted_null_muts['score'],
                        s=unmutated_marker_size, alpha=unobserved_alpha,
                        c=unobserved_mutation_colour, label=None, marker=unobserved_marker, zorder=0)
-            if not show_null_only:
+            if not show_unobserved_only:
                 if sections_for_colours is not None:
                     unplotted_obs_muts = colour_mutations_by_scores(self.observed_mutations, mut_counts,
                                                                     spectrum.rate_column, 'score',
@@ -1216,18 +1548,38 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_bar_observations(self, binning_regions, groupby='residue', figsize=(15, 5),
+    def plot_bar_observations(self, binning_regions, groupby_col='residue', figsize=(15, 5),
                               facecolour='k', linewidth=0, edgecolour='k',
-                              show_legend=False,legend_args=None, show_plot=False, return_fig=False,
+                              show_legend=False, legend_args=None, show_plot=False, return_fig=False,
                               show_residues=False, xlim=None, ylim=None,
                               normalise_by_region_size=True, ax=None):
-
+        """
+        Bar plot of the mutation count (or mutation count per residue) in bins of residues across the Section.
+        :param binning_regions: List of bins. Passed to pandas.cut.
+        :param groupby_col: Column for binning the mutations. Default is 'residue'.
+        :param figsize: Size of the figure.
+        :param facecolour: Colour or list of colours for the bars.
+        :param linewidth: Linewidth for bar plot
+        :param edgecolour: Edgecolour or list of edgecolours for the bars.
+        :param show_legend: If True (default), show the legend.
+        :param legend_args: kwargs to pass to matplotlib for the legend appearance.
+        :param show_plot: If True, will call plt.show().
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        Only used if groupby_col='residue'.
+        :param xlim: Limits for the x-axis.
+        :param ylim: Limits for the y-axis.
+        :param normalise_by_region_size: If True, each bar will show the mutation count per residue in that bin.
+        If False, will show the raw counts in that bin.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         else:
             fig = ax.figure
 
-        x, bins = pd.cut(self.observed_mutations[groupby], binning_regions, retbins=True)
+        x, bins = pd.cut(self.observed_mutations[groupby_col], binning_regions, retbins=True)
         counts = self.observed_mutations.groupby(x).count()['chr']
         widths = np.diff(bins)
         if normalise_by_region_size:
@@ -1242,8 +1594,8 @@ class Section:
         else:
             ax.set_ylim(bottom=0)
 
-        ax.set_ylabel('Mutations per {}'.format(groupby))
-        ax.set_xlabel(groupby)
+        ax.set_ylabel('Mutations per {}'.format(groupby_col))
+        ax.set_xlabel(groupby_col)
 
         self._format_xticks(ax)
 
@@ -1252,7 +1604,7 @@ class Section:
                 legend_args = {}
             ax.legend(**legend_args)
 
-        if show_residues:
+        if groupby_col == 'residue' and show_residues:
             self._show_residues(fig, ax)
 
         if show_plot:
@@ -1261,10 +1613,30 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_lollipop(self, groupby='residue', figsize=(15, 5), linefmt='k-', basefmt='k-', markerfmt='ko',
-                      show_legend=False, legend_args=None, show_plot=False, return_fig=False,
-                      show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
-                      label_peaks_min_size=None, label_peaks_column='aachange', label_peaks_fmt_kwargs=None):
+    def plot_lollipop(self, groupby_col='residue', figsize=(15, 5), linefmt='k-', basefmt='k-', markerfmt='ko',
+                      show_plot=False, return_fig=False, show_residues=False, xlim=None, ylim=None, ax=None,
+                      yaxis_right=False, label_peaks_min_size=None, label_peaks_column='aachange',
+                      label_peaks_fmt_kwargs=None):
+        """
+        Lollipop plot (Matplotlib stem plot) of mutation counts.
+        :param groupby_col: Column for binning the mutations. Default is 'residue'.
+        :param figsize: Size of the figure.
+        :param linefmt: linefmt for matplotlib stem plot.
+        :param basefmt: basefmt for matplotlib stem plot.
+        :param markerfmt: markerfmt for matplotlib stem plot.
+        :param show_plot: If True, will call plt.show().
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param show_residues: If True, will show the reference amino acids on the x-axis.
+        :param xlim: Limits for the x-axis.
+        :param ylim: Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param label_peaks_min_size: Will add labels to peaks over this size.
+        :param label_peaks_column: The column to use for the peak labels. If the peak contains mutations with different
+        values in this column, they will all be displayed with a mutation count for each label.
+        :param label_peaks_fmt_kwargs: kwargs for the matplotlib annotate for the peak labels.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
 
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
@@ -1275,7 +1647,7 @@ class Section:
             if yaxis_right:
                 ax = ax.twinx()
 
-        counts = self.observed_mutations.groupby(groupby).count()['chr']  # Pick arbitrary column we know is there.
+        counts = self.observed_mutations.groupby(groupby_col).count()['chr']  # Pick arbitrary column we know is there.
         markerline, stemlines, baseline = ax.stem(counts.index, counts,
                                                    linefmt=linefmt, basefmt=basefmt, markerfmt=markerfmt,
                                                    use_line_collection=True)
@@ -1292,8 +1664,8 @@ class Section:
             if label_peaks_fmt_kwargs is None:  #  Use some default options
                 label_peaks_fmt_kwargs = dict(ha='center')
             peaks = counts[counts >= label_peaks_min_size].keys()
-            all_peak_obs = self.observed_mutations[self.observed_mutations[groupby].isin(peaks)]
-            for peak, peak_muts in all_peak_obs.groupby(groupby):
+            all_peak_obs = self.observed_mutations[self.observed_mutations[groupby_col].isin(peaks)]
+            for peak, peak_muts in all_peak_obs.groupby(groupby_col):
                 labels = peak_muts[label_peaks_column].value_counts()
                 txt = "\n".join(["{} ({})".format(k, v) for k, v in labels.iteritems()])
                 ax.annotate(txt, (peak, counts[peak] + 0.5), **label_peaks_fmt_kwargs)
@@ -1303,17 +1675,12 @@ class Section:
             if ylim is None:
                 ax.set_ylim(top=ax.get_ylim()[1] * 1.2)
 
-        ax.set_ylabel('Mutations per {}'.format(groupby))
-        ax.set_xlabel(groupby)
+        ax.set_ylabel('Mutations per {}'.format(groupby_col))
+        ax.set_xlabel(groupby_col)
 
         self._format_xticks(ax)
 
-        if show_legend:
-            if legend_args is None:
-                legend_args = {}
-            ax.legend(**legend_args)
-
-        if show_residues:
+        if groupby_col=='residue' and show_residues:
             self._show_residues(fig, ax)
 
         if show_plot:
@@ -1322,9 +1689,23 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_expected_mutation_rates_for_region_bar(self, residues, figsize=(5, 5), spectrum=None, show_plot=False,
-                                                return_fig=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
-                                                orientation='horizontal'):
+    def plot_expected_mutation_rates_for_residues_bar(self, residues, figsize=(5, 5), spectrum=None, show_plot=False,
+                                                      return_fig=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
+                                                      orientation='horizontal'):
+        """
+        Bar plot of expected mutation rates for amino acid changes on a given set of residues.
+        :param residues: List of residue numbers.
+        :param figsize: Size of the figure.
+        :param spectrum: Mutational spectrum to use.
+        :param show_plot: If True, will call plt.show().
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param xlim:  Limits for the x-axis.
+        :param ylim:  Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param orientation: 'horizontal' or 'vertical'
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if isinstance(residues, int):
             residues = [residues]
         if spectrum is None:
@@ -1346,6 +1727,7 @@ class Section:
             b_f = ax.barh
             ticks_f = ax.set_yticks
             ticklabel_f = ax.set_yticklabels
+            rotation=0
             axis_label_f = ax.set_xlabel
             rang = range(len(muts), 0, -1)
         elif orientation.lower() in ['vertical', 'v']:
@@ -1353,13 +1735,14 @@ class Section:
             ticks_f = ax.set_xticks
             ticklabel_f = ax.set_xticklabels
             axis_label_f = ax.set_ylabel
+            rotation = 90
             rang = range(len(muts))
         else:
             raise TypeError("orientation must be horizontal/h or vertical/v")
 
         b_f(rang, muts[spectrum.rate_column])
         ticks_f(rang)
-        ticklabel_f(muts.index)
+        ticklabel_f(muts.index, rotation=rotation)
         axis_label_f('Expected mutation rate')
 
         if xlim is not None:
@@ -1373,13 +1756,33 @@ class Section:
         if return_fig:
             return fig
 
-    def plot_expected_mutation_rates_for_region_scatter(self, residues, figsize=(5, 5), spectrum=None, show_plot=False,
-                                                        return_fig=False, xlim=None, ylim=None, ax=None,
-                                                        yaxis_right=False, scatter_plot_kwargs=None,
-                                                        mutations_to_annotate=None,
-                                                        annotation_mut_rate_threshold=None,
-                                                        annotation_obs_count_threshold=None,
-                                                        annotation_offset=(0, 0)):
+    def plot_expected_mutation_rates_vs_observed_for_residues(self, residues, figsize=(5, 5), spectrum=None,
+                                                              show_plot=False, return_fig=False, xlim=None, ylim=None,
+                                                              ax=None, yaxis_right=False, scatter_plot_kwargs=None,
+                                                              mutations_to_annotate=None,
+                                                              annotation_mut_rate_threshold=None,
+                                                              annotation_obs_count_threshold=None,
+                                                              annotation_offset=(0, 0)):
+        """
+        Scatter plot of expected mutation rates vs observed mutation counts for amino acid changes on a
+        given set of residues.
+        :param residues: List of residue numbers.
+        :param figsize: Size of the figure.
+        :param spectrum: Mutational spectrum to use.
+        :param show_plot: If True, will call plt.show().
+        :param return_fig: If True, will return the figure. Used for testing.
+        :param xlim:  Limits for the x-axis.
+        :param ylim:  Limits for the y-axis.
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
+        :param yaxis_right:  If True, will show the y-axis on the right of the plot.
+        :param scatter_plot_kwargs: kwargs for matplotlib scatter plot.
+        :param mutations_to_annotate: Dataframe of mutations (a subset of self.null_mutations) or a list of amino acid
+        changes (e.g. ["M1L", "S241F", "G245S"]) to annotate.
+        :param annotation_mut_rate_threshold: Will label mutations with a mutation rate higher than this.
+        :param annotation_obs_count_threshold: Will label mutations with an observed count higher than this.
+        :param annotation_offset: Tuple. Offset for the annotations.
+        :return: By default, None. If return_fig=True, will return the figure.
+        """
         if isinstance(residues, int):
             residues = [residues]
         if spectrum is None:
@@ -1447,7 +1850,7 @@ class Section:
 
     def get_oncodrive_regions(self):
         # A general function that should work with missing bases (e.g. for pdb files with missing residues)
-        # Not the most efficient for cases like uses a full transcript.
+        # Not the most efficient for cases that use a full transcript.
         if self.null_mutations is None:
             self.load_section_mutations()
         positions = sorted(self.null_mutations['pos'].unique())

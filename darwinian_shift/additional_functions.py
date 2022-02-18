@@ -311,7 +311,7 @@ def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, f
 
 
 def annotate_data(ds_object, output_file=None, verbose=False, annotation_separator="|||", remove_spectra_columns=False,
-                  transcripts=None):
+                  transcripts=None, lookup=None):
     # Set up a ds_object with a lookup.
     # Annotated the mutations with the lookup information
     # If only want lookup annotation, run ds with spectra=EvenMutationalSpectrum() to save time
@@ -322,6 +322,9 @@ def annotate_data(ds_object, output_file=None, verbose=False, annotation_separat
     if transcripts is None:
         transcripts = ds_object.exon_data['Transcript stable ID'].unique()
 
+    if lookup is None:
+        lookup = ds_object.lookup
+
     for transcript_id in transcripts:
         if verbose:
             print(transcript_id)
@@ -331,7 +334,7 @@ def annotate_data(ds_object, output_file=None, verbose=False, annotation_separat
             transcript_mutations = pd.merge(transcript_mutations, transcript_obj.get_possible_mutations(),
                                             on=['pos', 'ref', 'mut'],
                                             how='left')
-            annotated_df, new_columns = ds_object.lookup.annotate_dataframe(transcript_mutations, transcript_id,
+            annotated_df, new_columns = lookup.annotate_dataframe(transcript_mutations, transcript_id,
                                                                                sep=annotation_separator)
             all_annotated_mutations.append(annotated_df)
             for n in new_columns:

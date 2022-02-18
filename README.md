@@ -9,7 +9,7 @@ The Root code for weighted Anderson-Darling tests is from Trusina et. al. https:
 To install, clone the git repository  
 `git clone https://github.com/michaelhall28/darwinian_shift`  
 
-Then use conda to install the dependencies, activate the environment and run Root to compile the code for comparing datasets  
+Use conda to install the dependencies, activate the environment and run Root to compile the code for comparing datasets  
 `cd darwinian_shift`  
 `conda env create -f environment.yml`  
 `conda activate dsenv`  
@@ -19,6 +19,33 @@ Then either install the code:
 `pip install .`  
 Or add the repository to your PYTHONPATH.  
 
+
+### Installing with fewer dependencies
+
+To install only a minimal set of dependencies, run:  
+`git clone https://github.com/michaelhall28/darwinian_shift`  
+`cd darwinian_shift`  
+`conda env create -f environment_minimal.yml`  
+`conda activate dsenv_minimal`  
+`pip install .`  
+
+However, not all functions will work with this environment.  
+
+Functionality which requires the additional packages included in environment.yml:
+- BigWigLookup:
+  - Can score mutations using a BigWig file, e.g. Phylop conservation scores.
+  - requires installation of pyBigWig
+- StructuralDistanceLookup
+  - Scores mutations based on distances between atoms in PDB files
+  - requires installation of MDAnalysis
+- ProDyLookup
+  - Various options to score mutations based on protein structural dynamics
+  - requires installation of ProDy
+- FreeSASALookup
+  - Scores mutations based on solvent accessible surface area
+  - requires installation of FreeSASA
+- Comparison of mutation distributions between data sets
+  - Requires the installation of ROOT and compiling of ROOT code (see above)
 
 ### Reference data
 Need a bgzip compressed genome fasta file (.fa.gz) with a faidx index and a table of exon locations.  

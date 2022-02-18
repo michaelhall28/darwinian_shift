@@ -403,6 +403,40 @@ def test_variant_match_lookup_ds_id(seq_object):
 
     np.testing.assert_almost_equal(expected, res)
 
+
+def test_freesasa_lookup(pdb_seq_object):
+    # Just test a few of the options
+    for metric in ["total", "polar", "relativeTotal", "relativeMainChain"]:
+
+        fs = FreeSASALookup(metric=metric, pdb_directory=TEST_DATA_DIR,
+                         sifts_directory=TEST_DATA_DIR, download_sifts=False)
+
+        res = fs(pdb_seq_object)
+
+        # Save reference results if they have been deliberately changed
+        # np.save(os.path.join(FILE_DIR, 'reference_FreeSASA_{}_results'.format(metric)), res)
+
+        expected = np.load(os.path.join(FILE_DIR, 'reference_FreeSASA_{}_results.npy'.format(metric)))
+
+        np.testing.assert_almost_equal(expected, res)
+
+    # Test with some changed Parameters
+    import freesasa
+    fs = FreeSASALookup(metric='total', pdb_directory=TEST_DATA_DIR,
+                        sifts_directory=TEST_DATA_DIR, download_sifts=False,
+                        freesasa_parameters=freesasa.Parameters({'algorithm': freesasa.LeeRichards, 'n-slices': 100}))
+
+    res = fs(pdb_seq_object)
+
+    # Save reference results if they have been deliberately changed
+    # np.save(os.path.join(FILE_DIR, 'reference_FreeSASA_custom_params_results'), res)
+
+    expected = np.load(os.path.join(FILE_DIR, 'reference_FreeSASA_custom_params_results.npy'))
+
+    np.testing.assert_almost_equal(expected, res)
+
+
+
 def reset_section(section):
     section.null_mutations = None
     section.observed_mutations = None

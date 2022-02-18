@@ -44,5 +44,5 @@ class BigwigLookup:
             chrom = chrom[3:]
 
         res = self._get_score_for_range(chrom, min_pos, max_pos)
-        scores = df.apply(lambda x: res[x['pos'] - min_pos], axis=1).values
+        scores = df.apply(lambda x: res[x['pos'] - min_pos], axis=1).values.astype(float)
         return scores

@@ -85,7 +85,7 @@ PDB_DOWNLOAD_BASE_URL="https://files.rcsb.org/download"
 def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
     url = PDB_DOWNLOAD_BASE_URL + "/{}.{}".format(pdb_id, file_type)
     try:
-        wget.download(url, output_dir)
+        wget.download(url, output_dir, bar=None)
     except HTTPError as e:
         print(type(e).__name__, e, 'Failed to download file from', url)
         raise e

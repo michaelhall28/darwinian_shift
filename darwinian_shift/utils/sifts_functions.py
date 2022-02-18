@@ -77,16 +77,16 @@ def get_sifts_alignment(pdbid, sifts_dir, download=True, convert_numeric=True):
 def get_sifts_alignment_for_chain(pdb_id, pdb_chain, sifts_directory, download=True):
     sifts = get_sifts_alignment(pdb_id, sifts_directory, download=download)
     if sifts is None and not download:
-        print('PDB structure not in SIFTS directory.')
+        print('SIFTS alignment for PDB structure {} not found'.format(pdb_id))
     elif sifts is None:
-        print('PDB structure not found in SIFTS.')
+        print('PDB structure {} not found in SIFTS.'.format(pdb_id))
     elif len(sifts) == 0:
-        print('No sifts alignment information, but file exists.')
+        print('No alignment information in the SIFTS file.')
         sifts = None
     else:
         sifts = sifts[sifts['pdb chain'] == pdb_chain]
         if len(sifts) == 0:
-            print('No sifts alignment information for the chain.')
+            print('No SIFTS alignment information for the chain.')
             sifts = None
     return sifts
 

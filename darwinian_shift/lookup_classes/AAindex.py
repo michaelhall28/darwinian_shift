@@ -240,7 +240,7 @@ class AAindexLookup:
         merge_df.drop(['AA','Value'], axis=1, inplace=True)
         merge_df = pd.merge(merge_df, self.aatable, left_on=['aamut'], right_on=['AA'], how='left')
         merge_df['mut_score'] = merge_df['Value']
-        scores = (merge_df['mut_score'] - merge_df['ref_score']).values
+        scores = (merge_df['mut_score'] - merge_df['ref_score']).values.astype(float)
         if self.abs_value:
             return np.abs(scores)
         return scores

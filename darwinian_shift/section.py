@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import pandas as pd
 from adjustText import adjust_text
@@ -9,9 +10,12 @@ from matplotlib.cm import autumn, winter
 from matplotlib.colors import Normalize, Colormap
 from matplotlib.ticker import MaxNLocator, StrMethodFormatter
 import seaborn as sns
-import MDAnalysis
+try:
+    import MDAnalysis
+except ImportError as e:
+    pass
 import os
-from darwinian_shift.statistics import get_median, calculate_repeat_proportion, get_cdf, ChiSquareTest, BinomTest
+from darwinian_shift.statistics import get_median, get_cdf, ChiSquareTest, BinomTest
 from darwinian_shift.statistics import bootstrap_cdf_confint_method, get_null_cdf_confint
 from darwinian_shift.utils import sort_multiple_arrays_using_one, get_pdb_positions
 from darwinian_shift.mutation_spectrum import MutationalSpectrum
@@ -1206,6 +1210,8 @@ class Section:
         :param yaxis_right: If True, will show the y-axis on the right of the plot.
         :return: By default, None. If return_fig=True, will return the figure.
         """
+        if "MDAnalysis" not in sys.modules:
+            raise ImportError("Must install MDAnalysis package to use this function")
         if self.pdb_id is not None:
             try:
                 u = MDAnalysis.Universe(os.path.join(self.project.pdb_directory, self.pdb_id.lower() + '.pdb.gz'))

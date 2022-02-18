@@ -173,11 +173,11 @@ class ProDyLookup:
         if pdb_chain is None:
             raise ValueError('Must specify which chain in a pdb file')
         sifts = get_sifts_alignment_for_chain(pdb_id, pdb_chain, self.sifts_directory, self.download_sifts)
-        ca = self._parsePDB(pdb_id, pdb_chain, subset='calpha')
 
         if sifts is None:
             scores = None
         else:
+            ca = self._parsePDB(pdb_id, pdb_chain, subset='calpha')
             values = self.metric_function(pdb_id, pdb_chain, ca)
             resnums = ca.getResnums()  # These are residue numbers according to the PDB file.
             vr = pd.DataFrame({'score': values, 'pdb position': resnums})

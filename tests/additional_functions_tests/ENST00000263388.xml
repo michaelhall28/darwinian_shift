@@ -1,0 +1,3750 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<uniprot xmlns="http://uniprot.org/uniprot" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://uniprot.org/uniprot http://www.uniprot.org/support/docs/uniprot.xsd">
+<entry dataset="Swiss-Prot" created="2002-03-27" modified="2020-04-22" version="207">
+<accession>Q9UM47</accession>
+<accession>Q9UEB3</accession>
+<accession>Q9UPL3</accession>
+<accession>Q9Y6L8</accession>
+<name>NOTC3_HUMAN</name>
+<protein>
+<recommendedName>
+<fullName>Neurogenic locus notch homolog protein 3</fullName>
+<shortName>Notch 3</shortName>
+</recommendedName>
+<component>
+<recommendedName>
+<fullName>Notch 3 extracellular truncation</fullName>
+</recommendedName>
+</component>
+<component>
+<recommendedName>
+<fullName>Notch 3 intracellular domain</fullName>
+</recommendedName>
+</component>
+</protein>
+<gene>
+<name type="primary">NOTCH3</name>
+</gene>
+<organism>
+<name type="scientific">Homo sapiens</name>
+<name type="common">Human</name>
+<dbReference type="NCBI Taxonomy" id="9606"/>
+<lineage>
+<taxon>Eukaryota</taxon>
+<taxon>Metazoa</taxon>
+<taxon>Chordata</taxon>
+<taxon>Craniata</taxon>
+<taxon>Vertebrata</taxon>
+<taxon>Euteleostomi</taxon>
+<taxon>Mammalia</taxon>
+<taxon>Eutheria</taxon>
+<taxon>Euarchontoglires</taxon>
+<taxon>Primates</taxon>
+<taxon>Haplorrhini</taxon>
+<taxon>Catarrhini</taxon>
+<taxon>Hominidae</taxon>
+<taxon>Homo</taxon>
+</lineage>
+</organism>
+<reference key="1">
+<citation type="journal article" date="1996" name="Nature" volume="383" first="707" last="710">
+<title>Notch3 mutations in CADASIL, a hereditary adult-onset condition causing stroke and dementia.</title>
+<authorList>
+<person name="Joutel A."/>
+<person name="Corpechot C."/>
+<person name="Ducros A."/>
+<person name="Vahedi K."/>
+<person name="Chabriat H."/>
+<person name="Mouton P."/>
+<person name="Alamowitch S."/>
+<person name="Domenga V."/>
+<person name="Cecillion M."/>
+<person name="Marechal E."/>
+<person name="Maciazek J."/>
+<person name="Vayssiere C."/>
+<person name="Cruaud C."/>
+<person name="Cabanis E.-A."/>
+<person name="Ruchoux M.M."/>
+<person name="Weissenbach J."/>
+<person name="Bach J.-F."/>
+<person name="Bousser M.-G."/>
+<person name="Tournier-Lasserve E."/>
+</authorList>
+<dbReference type="PubMed" id="8878478"/>
+<dbReference type="DOI" id="10.1038/383707a0"/>
+</citation>
+<scope>NUCLEOTIDE SEQUENCE [MRNA]</scope>
+<scope>VARIANT VAL-2223</scope>
+</reference>
+<reference key="2">
+<citation type="submission" date="1998-04" db="EMBL/GenBank/DDBJ databases">
+<authorList>
+<person name="Gunel M."/>
+<person name="Artavanis-Tsakonas S."/>
+</authorList>
+</citation>
+<scope>NUCLEOTIDE SEQUENCE [GENOMIC DNA]</scope>
+</reference>
+<reference key="3">
+<citation type="journal article" date="2004" name="Nature" volume="428" first="529" last="535">
+<title>The DNA sequence and biology of human chromosome 19.</title>
+<authorList>
+<person name="Grimwood J."/>
+<person name="Gordon L.A."/>
+<person name="Olsen A.S."/>
+<person name="Terry A."/>
+<person name="Schmutz J."/>
+<person name="Lamerdin J.E."/>
+<person name="Hellsten U."/>
+<person name="Goodstein D."/>
+<person name="Couronne O."/>
+<person name="Tran-Gyamfi M."/>
+<person name="Aerts A."/>
+<person name="Altherr M."/>
+<person name="Ashworth L."/>
+<person name="Bajorek E."/>
+<person name="Black S."/>
+<person name="Branscomb E."/>
+<person name="Caenepeel S."/>
+<person name="Carrano A.V."/>
+<person name="Caoile C."/>
+<person name="Chan Y.M."/>
+<person name="Christensen M."/>
+<person name="Cleland C.A."/>
+<person name="Copeland A."/>
+<person name="Dalin E."/>
+<person name="Dehal P."/>
+<person name="Denys M."/>
+<person name="Detter J.C."/>
+<person name="Escobar J."/>
+<person name="Flowers D."/>
+<person name="Fotopulos D."/>
+<person name="Garcia C."/>
+<person name="Georgescu A.M."/>
+<person name="Glavina T."/>
+<person name="Gomez M."/>
+<person name="Gonzales E."/>
+<person name="Groza M."/>
+<person name="Hammon N."/>
+<person name="Hawkins T."/>
+<person name="Haydu L."/>
+<person name="Ho I."/>
+<person name="Huang W."/>
+<person name="Israni S."/>
+<person name="Jett J."/>
+<person name="Kadner K."/>
+<person name="Kimball H."/>
+<person name="Kobayashi A."/>
+<person name="Larionov V."/>
+<person name="Leem S.-H."/>
+<person name="Lopez F."/>
+<person name="Lou Y."/>
+<person name="Lowry S."/>
+<person name="Malfatti S."/>
+<person name="Martinez D."/>
+<person name="McCready P.M."/>
+<person name="Medina C."/>
+<person name="Morgan J."/>
+<person name="Nelson K."/>
+<person name="Nolan M."/>
+<person name="Ovcharenko I."/>
+<person name="Pitluck S."/>
+<person name="Pollard M."/>
+<person name="Popkie A.P."/>
+<person name="Predki P."/>
+<person name="Quan G."/>
+<person name="Ramirez L."/>
+<person name="Rash S."/>
+<person name="Retterer J."/>
+<person name="Rodriguez A."/>
+<person name="Rogers S."/>
+<person name="Salamov A."/>
+<person name="Salazar A."/>
+<person name="She X."/>
+<person name="Smith D."/>
+<person name="Slezak T."/>
+<person name="Solovyev V."/>
+<person name="Thayer N."/>
+<person name="Tice H."/>
+<person name="Tsai M."/>
+<person name="Ustaszewska A."/>
+<person name="Vo N."/>
+<person name="Wagner M."/>
+<person name="Wheeler J."/>
+<person name="Wu K."/>
+<person name="Xie G."/>
+<person name="Yang J."/>
+<person name="Dubchak I."/>
+<person name="Furey T.S."/>
+<person name="DeJong P."/>
+<person name="Dickson M."/>
+<person name="Gordon D."/>
+<person name="Eichler E.E."/>
+<person name="Pennacchio L.A."/>
+<person name="Richardson P."/>
+<person name="Stubbs L."/>
+<person name="Rokhsar D.S."/>
+<person name="Myers R.M."/>
+<person name="Rubin E.M."/>
+<person name="Lucas S.M."/>
+</authorList>
+<dbReference type="PubMed" id="15057824"/>
+<dbReference type="DOI" id="10.1038/nature02399"/>
+</citation>
+<scope>NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA]</scope>
+</reference>
+<reference key="4">
+<citation type="journal article" date="1999" name="Am. J. Pathol." volume="154" first="785" last="794">
+<title>Human ligands of the Notch receptor.</title>
+<authorList>
+<person name="Gray G.E."/>
+<person name="Mann R.S."/>
+<person name="Mitsiadis E."/>
+<person name="Henrique D."/>
+<person name="Carcangiu M.-L."/>
+<person name="Banks A."/>
+<person name="Leiman J."/>
+<person name="Ward D."/>
+<person name="Ish-Horowitz D."/>
+<person name="Artavanis-Tsakonas S."/>
+</authorList>
+<dbReference type="PubMed" id="10079256"/>
+<dbReference type="DOI" id="10.1016/s0002-9440(10)65325-4"/>
+</citation>
+<scope>IDENTIFICATION OF LIGANDS</scope>
+</reference>
+<reference key="5">
+<citation type="journal article" date="2000" name="Nat. Genet." volume="26" first="484" last="489">
+<title>MAML1, a human homologue of Drosophila mastermind, is a transcriptional co-activator for NOTCH receptors.</title>
+<authorList>
+<person name="Wu L."/>
+<person name="Aster J.C."/>
+<person name="Blacklow S.C."/>
+<person name="Lake R."/>
+<person name="Artavanis-Tsakonas S."/>
+<person name="Griffin J.D."/>
+</authorList>
+<dbReference type="PubMed" id="11101851"/>
+<dbReference type="DOI" id="10.1038/82644"/>
+</citation>
+<scope>INTERACTION WITH MAML1</scope>
+</reference>
+<reference key="6">
+<citation type="journal article" date="2002" name="Mol. Cell. Biol." volume="22" first="7688" last="7700">
+<title>Identification of a family of mastermind-like transcriptional coactivators for mammalian notch receptors.</title>
+<authorList>
+<person name="Wu L."/>
+<person name="Sun T."/>
+<person name="Kobayashi K."/>
+<person name="Gao P."/>
+<person name="Griffin J.D."/>
+</authorList>
+<dbReference type="PubMed" id="12370315"/>
+<dbReference type="DOI" id="10.1128/mcb.22.21.7688-7700.2002"/>
+</citation>
+<scope>INTERACTION WITH MAML2 AND MAML3</scope>
+</reference>
+<reference key="7">
+<citation type="journal article" date="2007" name="Biochem. Biophys. Res. Commun." volume="355" first="245" last="251">
+<title>Conserved signal peptide of Notch3 inhibits interaction with proteasome.</title>
+<authorList>
+<person name="Zhang Y."/>
+<person name="Jia L."/>
+<person name="Lee S.J."/>
+<person name="Wang M.M."/>
+</authorList>
+<dbReference type="PubMed" id="17292860"/>
+<dbReference type="DOI" id="10.1016/j.bbrc.2007.01.151"/>
+</citation>
+<scope>INTERACTION WITH PSMA1</scope>
+</reference>
+<reference key="8">
+<citation type="journal article" date="2007" name="J. Biol. Chem." volume="282" first="24027" last="24038">
+<title>Asparaginyl hydroxylation of the Notch ankyrin repeat domain by factor inhibiting hypoxia-inducible factor.</title>
+<authorList>
+<person name="Coleman M.L."/>
+<person name="McDonough M.A."/>
+<person name="Hewitson K.S."/>
+<person name="Coles C."/>
+<person name="Mecinovic J."/>
+<person name="Edelmann M."/>
+<person name="Cook K.M."/>
+<person name="Cockman M.E."/>
+<person name="Lancaster D.E."/>
+<person name="Kessler B.M."/>
+<person name="Oldham N.J."/>
+<person name="Ratcliffe P.J."/>
+<person name="Schofield C.J."/>
+</authorList>
+<dbReference type="PubMed" id="17573339"/>
+<dbReference type="DOI" id="10.1074/jbc.m704102200"/>
+</citation>
+<scope>INTERACTION WITH HIF1AN</scope>
+</reference>
+<reference key="9">
+<citation type="journal article" date="2008" name="Proc. Natl. Acad. Sci. U.S.A." volume="105" first="3368" last="3373">
+<title>Interaction with factor inhibiting HIF-1 defines an additional mode of cross-coupling between the Notch and hypoxia signaling pathways.</title>
+<authorList>
+<person name="Zheng X."/>
+<person name="Linke S."/>
+<person name="Dias J.M."/>
+<person name="Zheng X."/>
+<person name="Gradin K."/>
+<person name="Wallis T.P."/>
+<person name="Hamilton B.R."/>
+<person name="Gustafsson M."/>
+<person name="Ruas J.L."/>
+<person name="Wilkins S."/>
+<person name="Bilton R.L."/>
+<person name="Brismar K."/>
+<person name="Whitelaw M.L."/>
+<person name="Pereira T."/>
+<person name="Gorman J.J."/>
+<person name="Ericson J."/>
+<person name="Peet D.J."/>
+<person name="Lendahl U."/>
+<person name="Poellinger L."/>
+</authorList>
+<dbReference type="PubMed" id="18299578"/>
+<dbReference type="DOI" id="10.1073/pnas.0711591105"/>
+</citation>
+<scope>HYDROXYLATION BY HIF1AN</scope>
+</reference>
+<reference key="10">
+<citation type="journal article" date="2014" name="Mol. Cell. Proteomics" volume="13" first="372" last="387">
+<title>Immunoaffinity enrichment and mass spectrometry analysis of protein methylation.</title>
+<authorList>
+<person name="Guo A."/>
+<person name="Gu H."/>
+<person name="Zhou J."/>
+<person name="Mulhern D."/>
+<person name="Wang Y."/>
+<person name="Lee K.A."/>
+<person name="Yang V."/>
+<person name="Aguiar M."/>
+<person name="Kornhauser J."/>
+<person name="Jia X."/>
+<person name="Ren J."/>
+<person name="Beausoleil S.A."/>
+<person name="Silva J.C."/>
+<person name="Vemulapalli V."/>
+<person name="Bedford M.T."/>
+<person name="Comb M.J."/>
+</authorList>
+<dbReference type="PubMed" id="24129315"/>
+<dbReference type="DOI" id="10.1074/mcp.o113.027870"/>
+</citation>
+<scope>METHYLATION [LARGE SCALE ANALYSIS] AT ARG-2174</scope>
+<scope>IDENTIFICATION BY MASS SPECTROMETRY [LARGE SCALE ANALYSIS]</scope>
+<source>
+<tissue>Colon carcinoma</tissue>
+</source>
+</reference>
+<reference key="11">
+<citation type="journal article" date="2015" name="Am. J. Med. Genet. A" volume="167A" first="271" last="281">
+<title>Truncating mutations in the last exon of NOTCH3 cause lateral meningocele syndrome.</title>
+<authorList>
+<person name="Gripp K.W."/>
+<person name="Robbins K.M."/>
+<person name="Sobreira N.L."/>
+<person name="Witmer P.D."/>
+<person name="Bird L.M."/>
+<person name="Avela K."/>
+<person name="Makitie O."/>
+<person name="Alves D."/>
+<person name="Hogue J.S."/>
+<person name="Zackai E.H."/>
+<person name="Doheny K.F."/>
+<person name="Stabley D.L."/>
+<person name="Sol-Church K."/>
+</authorList>
+<dbReference type="PubMed" id="25394726"/>
+<dbReference type="DOI" id="10.1002/ajmg.a.36863"/>
+</citation>
+<scope>INVOLVEMENT IN LMNS</scope>
+</reference>
+<reference key="12">
+<citation type="journal article" date="1997" name="Lancet" volume="350" first="1511" last="1515">
+<title>Strong clustering and stereotyped nature of Notch3 mutations in CADASIL patients.</title>
+<authorList>
+<person name="Joutel A."/>
+<person name="Vahedi K."/>
+<person name="Corpechot C."/>
+<person name="Troesch A."/>
+<person name="Chabriat H."/>
+<person name="Vayssiere C."/>
+<person name="Cruaud C."/>
+<person name="Maciazek J."/>
+<person name="Weissenbach J."/>
+<person name="Bousser M.-G."/>
+<person name="Bach J.-F."/>
+<person name="Tournier-Lasserve E."/>
+</authorList>
+<dbReference type="PubMed" id="9388399"/>
+<dbReference type="DOI" id="10.1016/s0140-6736(97)08083-5"/>
+</citation>
+<scope>VARIANTS CADASIL1 TYR-49; CYS-71; CYS-90; CYS-110; CYS-133; CYS-141; ARG-146; CYS-153; CYS-169; CYS-171; CYS-182; ARG-185; SER-212; GLY-222; TYR-224; CYS-258; TYR-542; CYS-558; CYS-578; CYS-728; CYS-985; CYS-1006; CYS-1031; CYS-1231 AND ARG-1261</scope>
+<scope>VARIANTS ARG-170; LEU-496; GLN-1133; MET-1183 AND VAL-2223</scope>
+</reference>
+<reference key="13">
+<citation type="journal article" date="1999" name="Neurology" volume="52" first="1361" last="1367">
+<title>Quantitative MRI in CADASIL: correlation with disability and cognitive performance.</title>
+<authorList>
+<person name="Dichgans M."/>
+<person name="Filippi M."/>
+<person name="Bruening R."/>
+<person name="Iannucci G."/>
+<person name="Berchtenbreiter C."/>
+<person name="Minicucci L."/>
+<person name="Uttner I."/>
+<person name="Crispin A."/>
+<person name="Ludwig H."/>
+<person name="Gasser T."/>
+<person name="Yousry T.A."/>
+</authorList>
+<dbReference type="PubMed" id="10227618"/>
+<dbReference type="DOI" id="10.1212/wnl.52.7.1361"/>
+</citation>
+<scope>VARIANTS CADASIL1 CYS-90; PHE-117; CYS-133; CYS-141; CYS-169; TYR-174; CYS-182 AND ARG-183</scope>
+</reference>
+<reference key="14">
+<citation type="journal article" date="1999" name="Neurology" volume="52" first="1913" last="1915">
+<title>Diagnostic Notch3 sequence analysis in CADASIL: three new mutations in Dutch patients. Dutch CADASIL Research Group.</title>
+<authorList>
+<consortium name="Dutch CADASIL research group"/>
+<person name="Lesnik Oberstein S.A.J."/>
+<person name="Ferrari M.D."/>
+<person name="Bakker E."/>
+<person name="van Gestel J."/>
+<person name="Kneppers A.L.J."/>
+<person name="Frants R.R."/>
+<person name="Breuning M.H."/>
+<person name="Haan J."/>
+</authorList>
+<dbReference type="PubMed" id="10371548"/>
+<dbReference type="DOI" id="10.1212/wnl.52.9.1913"/>
+</citation>
+<scope>VARIANTS CADASIL1 CYS-133; CYS-141; CYS-153; CYS-182; CYS-207; CYS-544 AND ARG-1015</scope>
+</reference>
+<reference key="15">
+<citation type="journal article" date="2000" name="Eur. J. Hum. Genet." volume="8" first="280" last="285">
+<title>Small in-frame deletions and missense mutations in CADASIL: 3D models predict misfolding of Notch3 EGF-like repeat domains.</title>
+<authorList>
+<person name="Dichgans M."/>
+<person name="Ludwig H."/>
+<person name="Mueller-Hoecker J."/>
+<person name="Messerschmidt A."/>
+<person name="Gasser T."/>
+</authorList>
+<dbReference type="PubMed" id="10854111"/>
+<dbReference type="DOI" id="10.1038/sj.ejhg.5200460"/>
+</citation>
+<scope>VARIANTS CADASIL1 80-ASP--SER-84 DEL; CYS-90; PHE-93; CYS-110; PHE-117; PHE-123; CYS-133; CYS-141; SER-144; TYR-144; CYS-150; 153-ARG--CYS-155 DEL; CYS-153; CYS-169; TYR-174; CYS-182; ARG-183; SER-183; ARG-185 AND PHE-194</scope>
+</reference>
+<reference key="16">
+<citation type="journal article" date="2000" name="Hum. Mutat." volume="16" first="449" last="450">
+<title>Identification of a novel mutation C144F in the Notch3 gene in an Australian CADASIL pedigree.</title>
+<authorList>
+<person name="Grigg R."/>
+<person name="Lea R."/>
+<person name="Sullivan A.A."/>
+<person name="Curtain R."/>
+<person name="MacMillian J."/>
+<person name="Griffiths L."/>
+</authorList>
+<dbReference type="PubMed" id="11058919"/>
+<dbReference type="DOI" id="10.1002/1098-1004(200011)16:5&lt;449::aid-humu26>3.0.co;2-i"/>
+</citation>
+<scope>VARIANT CADASIL1 PHE-144</scope>
+</reference>
+<reference key="17">
+<citation type="journal article" date="2000" name="Hum. Mutat." volume="16" first="518" last="526">
+<title>Evaluation of DHPLC analysis in mutational scanning of Notch3, a gene with a high G-C content.</title>
+<authorList>
+<person name="Escary J.-L."/>
+<person name="Cecillon M."/>
+<person name="Maciazek J."/>
+<person name="Lathrop M."/>
+<person name="Tournier-Lasserve E."/>
+<person name="Joutel A."/>
+</authorList>
+<dbReference type="PubMed" id="11102981"/>
+<dbReference type="DOI" id="10.1002/1098-1004(200012)16:6&lt;518::aid-humu9>3.0.co;2-q"/>
+</citation>
+<scope>VARIANTS CADASIL1 TYR-49; CYS-54; CYS-90; CYS-110; 114-GLY--PRO-120 DEL; TYR-123; CYS-133; CYS-141; ARG-146; CYS-153; SER-162; CYS-169; TYR-174; CYS-180; CYS-182; ARG-185; TYR-194; TYR-206; CYS-207; SER-212; GLY-222; TYR-224; CYS-258; TYR-542; CYS-558; CYS-578; CYS-607; CYS-728; CYS-984; CYS-985; CYS-1006; CYS-1031; CYS-1231 AND ARG-1261</scope>
+</reference>
+<reference key="18">
+<citation type="journal article" date="2000" name="Neurology" volume="54" first="1874" last="1875">
+<title>Splice site mutation causing a seven amino acid Notch3 in-frame deletion in CADASIL.</title>
+<authorList>
+<person name="Joutel A."/>
+<person name="Chabriat H."/>
+<person name="Vahedi K."/>
+<person name="Domenga V."/>
+<person name="Vayssiere C."/>
+<person name="Ruchoux M.M."/>
+<person name="Lucas C."/>
+<person name="Leys D."/>
+<person name="Bousser M.-G."/>
+<person name="Tournier-Lasserve E."/>
+</authorList>
+<dbReference type="PubMed" id="10802807"/>
+<dbReference type="DOI" id="10.1212/wnl.54.9.1874"/>
+</citation>
+<scope>VARIANT CADASIL1 114-GLY--PRO-120 DEL</scope>
+</reference>
+<reference key="19">
+<citation type="journal article" date="2001" name="Arch. Neurol." volume="58" first="1418" last="1422">
+<title>A novel mutation in the Notch3 gene in an Italian family with cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy: genetic and magnetic resonance spectroscopic findings.</title>
+<authorList>
+<person name="Oliveri R.L."/>
+<person name="Muglia M."/>
+<person name="De Stefano N."/>
+<person name="Mazzei R."/>
+<person name="Labate A."/>
+<person name="Conforti F.L."/>
+<person name="Patitucci A."/>
+<person name="Gabriele A.L."/>
+<person name="Tagarelli G."/>
+<person name="Magariello A."/>
+<person name="Zappia M."/>
+<person name="Gambardella A."/>
+<person name="Federico A."/>
+<person name="Quattrone A."/>
+</authorList>
+<dbReference type="PubMed" id="11559313"/>
+<dbReference type="DOI" id="10.1001/archneur.58.9.1418"/>
+</citation>
+<scope>VARIANT CADASIL1 CYS-332</scope>
+</reference>
+<reference key="20">
+<citation type="journal article" date="2001" name="Lancet" volume="358" first="2049" last="2051">
+<title>Skin biopsy immunostaining with a Notch3 monoclonal antibody for CADASIL diagnosis.</title>
+<authorList>
+<person name="Joutel A."/>
+<person name="Favrole P."/>
+<person name="Labauge P."/>
+<person name="Chabriat H."/>
+<person name="Lescoat C."/>
+<person name="Andreux F."/>
+<person name="Domenga V."/>
+<person name="Cecillon M."/>
+<person name="Vahedi K."/>
+<person name="Ducros A."/>
+<person name="Cave-Riant F."/>
+<person name="Bousser M.G."/>
+<person name="Tournier-Lasserve E."/>
+</authorList>
+<dbReference type="PubMed" id="11755616"/>
+<dbReference type="DOI" id="10.1016/s0140-6736(01)07142-2"/>
+</citation>
+<scope>VARIANTS CADASIL1 CYS-110; CYS-133; TRP-134; CYS-141; CYS-153; CYS-182; GLY-185; CYS-207; SER-212; GLY-222; SER-428; CYS-558; CYS-985 AND CYS-1063</scope>
+</reference>
+<reference key="21">
+<citation type="journal article" date="2002" name="Acta Neuropathol." volume="103" first="188" last="192">
+<title>Reversible coma with raised intracranial pressure: an unusual clinical manifestation of CADASIL.</title>
+<authorList>
+<person name="Feuerhake F."/>
+<person name="Volk B."/>
+<person name="Ostertag C.B."/>
+<person name="Jungling F.D."/>
+<person name="Kassubek J."/>
+<person name="Orszagh M."/>
+<person name="Dichgans M."/>
+</authorList>
+<dbReference type="PubMed" id="11810186"/>
+<dbReference type="DOI" id="10.1007/s004010100439"/>
+</citation>
+<scope>VARIANT CADASIL1 TRP-134</scope>
+</reference>
+<reference key="22">
+<citation type="journal article" date="2002" name="Brain Pathol." volume="12" first="371" last="384">
+<title>CADASIL: a common form of hereditary arteriopathy causing brain infarcts and dementia.</title>
+<authorList>
+<person name="Kalimo H."/>
+<person name="Ruchoux M.-M."/>
+<person name="Viitanen M."/>
+<person name="Kalaria R.N."/>
+</authorList>
+<dbReference type="PubMed" id="12146805"/>
+<dbReference type="DOI" id="10.1111/j.1750-3639.2002.tb00451.x"/>
+</citation>
+<scope>VARIANTS CADASIL1 ARG-76; TYR-93; TYR-128; CYS-142; ARG-194; TYR-222; SER-233; ARG-251; CYS-420; GLY-440; CYS-449; CYS-953 AND CYS-1021</scope>
+</reference>
+<reference key="23">
+<citation type="journal article" date="2002" name="Neurology" volume="59" first="277" last="279">
+<title>C455R notch3 mutation in a Colombian CADASIL kindred with early onset of stroke.</title>
+<authorList>
+<person name="Arboleda-Velasquez J.F."/>
+<person name="Lopera F."/>
+<person name="Lopez E."/>
+<person name="Frosch M.P."/>
+<person name="Sepulveda-Falla D."/>
+<person name="Gutierrez J.E."/>
+<person name="Vargas S."/>
+<person name="Medina M."/>
+<person name="Martinez De Arrieta C."/>
+<person name="Lebo R.V."/>
+<person name="Slaugenhaupt S.A."/>
+<person name="Betensky R.A."/>
+<person name="Villegas A."/>
+<person name="Arcos-Burgos M."/>
+<person name="Rivera D."/>
+<person name="Restrepo J.C."/>
+<person name="Kosik K.S."/>
+</authorList>
+<dbReference type="PubMed" id="12136071"/>
+<dbReference type="DOI" id="10.1212/wnl.59.2.277"/>
+</citation>
+<scope>VARIANT CADASIL1 ARG-455</scope>
+</reference>
+<reference key="24">
+<citation type="journal article" date="2003" name="J. Korean Med. Sci." volume="18" first="141" last="144">
+<title>A novel mutation (C67Y)in the NOTCH3 gene in a Korean CADASIL patient.</title>
+<authorList>
+<person name="Moon S.-Y."/>
+<person name="Kim H.-Y."/>
+<person name="Seok J.-I."/>
+<person name="Kwon J.-C."/>
+<person name="Ki C.-S."/>
+<person name="Kim J.-W."/>
+<person name="Suh Y.-L."/>
+<person name="Na D.L."/>
+</authorList>
+<dbReference type="PubMed" id="12589106"/>
+<dbReference type="DOI" id="10.3346/jkms.2003.18.1.141"/>
+</citation>
+<scope>VARIANT CADASIL1 TYR-67</scope>
+</reference>
+<reference key="25">
+<citation type="journal article" date="2003" name="J. Neurol. Sci." volume="212" first="79" last="84">
+<title>Genetic, clinical and pathological studies of CADASIL in Japan: a partial contribution of Notch3 mutations and implications of smooth muscle cell degeneration for the pathogenesis.</title>
+<authorList>
+<person name="Santa Y."/>
+<person name="Uyama E."/>
+<person name="Chui D.H."/>
+<person name="Arima M."/>
+<person name="Kotorii S."/>
+<person name="Takahashi K."/>
+<person name="Tabira T."/>
+</authorList>
+<dbReference type="PubMed" id="12810003"/>
+<dbReference type="DOI" id="10.1016/s0022-510x(03)00109-6"/>
+</citation>
+<scope>VARIANTS CADASIL1 CYS-90; CYS-133; CYS-169; ARG-174; PHE-174 AND LYS-213</scope>
+</reference>
+<reference key="26">
+<citation type="journal article" date="2004" name="Brain" volume="127" first="2031" last="2038">
+<title>The influence of genetic and cardiovascular risk factors on the CADASIL phenotype.</title>
+<authorList>
+<person name="Singhal S."/>
+<person name="Bevan S."/>
+<person name="Barrick T."/>
+<person name="Rich P."/>
+<person name="Markus H.S."/>
+</authorList>
+<dbReference type="PubMed" id="15229130"/>
+<dbReference type="DOI" id="10.1093/brain/awh223"/>
+</citation>
+<scope>VARIANTS CADASIL1 ARG-76; CYS-90; CYS-110; CYS-141; CYS-153; CYS-169; CYS-182; ARG-183; CYS-189; SER-194; CYS-207; ARG-251; CYS-332; GLY-440; CYS-607; CYS-953 AND CYS-1231</scope>
+</reference>
+<reference key="27">
+<citation type="journal article" date="2004" name="Brain" volume="127" first="2533" last="2539">
+<title>Long-term prognosis and causes of death in CADASIL: a retrospective study in 411 patients.</title>
+<authorList>
+<person name="Opherk C."/>
+<person name="Peters N."/>
+<person name="Herzog J."/>
+<person name="Luedtke R."/>
+<person name="Dichgans M."/>
+</authorList>
+<dbReference type="PubMed" id="15364702"/>
+<dbReference type="DOI" id="10.1093/brain/awh282"/>
+</citation>
+<scope>VARIANTS CADASIL1 GLY-43; PHE-49; CYS-60; SER-65; TRP-76; 77-GLN--CYS-82 DEL; 80-ASP--SER-84 DEL; ARG-87; TYR-87; CYS-90; PHE-93; TRP-106; TYR-108; CYS-110; PHE-117; PHE-123; CYS-133; TRP-134; CYS-141; SER-144; TYR-144; CYS-145; CYS-149; CYS-150; 153-ARG--155-CYS DEL; CYS-153; SER-155; CYS-169; ARG-174; TYR-174; CYS-182; ARG-183; SER-183; PHE-183; ARG-185; PHE-194; TYR-201; CYS-207; TYR-233; 239-ASP--ASP-253 DEL; SER-240; ARG-245; TYR-260; CYS-332; CYS-335; CYS-337; SER-379; ARG-395; CYS-421; TYR-428; ARG-440; SER-446; TYR-484; TYR-495; ARG-511; TYR-549; CYS-558; CYS-985 AND TYR-1261</scope>
+</reference>
+<reference key="28">
+<citation type="journal article" date="2004" name="Eur. J. Hum. Genet." volume="12" first="813" last="819">
+<title>Detection of the founder effect in Finnish CADASIL families.</title>
+<authorList>
+<person name="Mykkaenen K."/>
+<person name="Savontaus M.L."/>
+<person name="Juvonen V."/>
+<person name="Sistonen P."/>
+<person name="Tuisku S."/>
+<person name="Tuominen S."/>
+<person name="Penttinen M."/>
+<person name="Lundkvist J."/>
+<person name="Viitanen M."/>
+<person name="Kalimo H."/>
+<person name="Peoyhoenen M."/>
+</authorList>
+<dbReference type="PubMed" id="15378071"/>
+<dbReference type="DOI" id="10.1038/sj.ejhg.5201221"/>
+</citation>
+<scope>VARIANT CADASIL1 CYS-133</scope>
+</reference>
+<reference key="29">
+<citation type="journal article" date="2004" name="Exp. Cell Res." volume="299" first="454" last="464">
+<title>CADASIL-associated Notch3 mutations have differential effects both on ligand binding and ligand-induced Notch3 receptor signaling through RBP-Jk.</title>
+<authorList>
+<person name="Peters N."/>
+<person name="Opherk C."/>
+<person name="Zacherle S."/>
+<person name="Capell A."/>
+<person name="Gempel P."/>
+<person name="Dichgans M."/>
+</authorList>
+<dbReference type="PubMed" id="15350543"/>
+<dbReference type="DOI" id="10.1016/j.yexcr.2004.06.004"/>
+</citation>
+<scope>CHARACTERIZATION OF VARIANTS CADASIL1 CYS-133; SER-183 AND ARG-455</scope>
+<scope>FUNCTION</scope>
+<scope>SUBCELLULAR LOCATION</scope>
+<scope>LIGAND-BINDING DOMAIN</scope>
+<scope>PROTEOLYTIC PROCESSING</scope>
+</reference>
+<reference key="30">
+<citation type="journal article" date="2004" name="Hum. Genet." volume="115" first="175" last="175">
+<title>Gene symbol: NOTCH3. Disease: CADASIL.</title>
+<authorList>
+<person name="Rojas-Marcos I."/>
+<person name="Encarnacion M."/>
+<person name="Martinez-Yelamos S."/>
+<person name="Ferrer I."/>
+<person name="Arbizu T."/>
+<person name="Gil-Peralta A."/>
+<person name="Garcia-Lozano J.R."/>
+</authorList>
+<dbReference type="PubMed" id="15300988"/>
+</citation>
+<scope>VARIANT CADASIL1 TRP-108</scope>
+</reference>
+<reference key="31">
+<citation type="journal article" date="2005" name="Arch. Neurol." volume="62" first="1091" last="1094">
+<title>Spectrum of mutations in biopsy-proven CADASIL: implications for diagnostic strategies.</title>
+<authorList>
+<person name="Peters N."/>
+<person name="Opherk C."/>
+<person name="Bergmann T."/>
+<person name="Castro M."/>
+<person name="Herzog J."/>
+<person name="Dichgans M."/>
+</authorList>
+<dbReference type="PubMed" id="16009764"/>
+<dbReference type="DOI" id="10.1001/archneur.62.7.1091"/>
+</citation>
+<scope>VARIANTS CADASIL1 GLY-43; PHE-49; CYS-60; SER-65; TRP-76; 80-ASP--SER-84 DEL; ARG-87; CYS-90; PHE-93; TYR-108; CYS-110; PHE-117; PHE-123; CYS-133; TRP-134; CYS-141; SER-144; TYR-144; CYS-149; CYS-150; CYS-153; 153-ARG--CYS-155 DEL; CYS-169; ARG-174; TYR-174; CYS-182; SER-183; PHE-183; ARG-185; PHE-194; CYS-207; TYR-233; SER-240; ARG-245; TYR-260; 239-ASP--ASP-253 DEL; CYS-319; CYS-332; CYS-335; CYS-337; SER-379; ARG-395; CYS-421; TYR-428; ARG-440; PHE-484; TYR-495; ARG-511; TYR-549; CYS-558; CYS-728; SER-775; CYS-985 AND TYR-1261</scope>
+</reference>
+<reference key="32">
+<citation type="journal article" date="2005" name="Hum. Genet." volume="116" first="242" last="242">
+<title>Gene symbol: NOTCH3. Disease: cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy.</title>
+<authorList>
+<person name="Soong B.W."/>
+<person name="Lee Y.-C."/>
+<person name="Lu Y.-C."/>
+</authorList>
+<dbReference type="PubMed" id="15818833"/>
+</citation>
+<scope>VARIANT CADASIL1 CYS-118</scope>
+</reference>
+<reference key="33">
+<citation type="journal article" date="2008" name="Hum. Mutat." volume="29" first="452" last="452">
+<title>Activating NOTCH3 mutation in a patient with small-vessel-disease of the brain.</title>
+<authorList>
+<person name="Fouillade C."/>
+<person name="Chabriat H."/>
+<person name="Riant F."/>
+<person name="Mine M."/>
+<person name="Arnoud M."/>
+<person name="Magy L."/>
+<person name="Bousser M.G."/>
+<person name="Tournier-Lasserve E."/>
+<person name="Joutel A."/>
+</authorList>
+<dbReference type="PubMed" id="18273901"/>
+<dbReference type="DOI" id="10.1002/humu.9527"/>
+</citation>
+<scope>VARIANT BRAIN SMALL-VESSEL-DISEASE PRO-1515</scope>
+</reference>
+<reference key="34">
+<citation type="journal article" date="2013" name="Am. J. Hum. Genet." volume="92" first="1001" last="1007">
+<title>Mutations in PDGFRB cause autosomal-dominant infantile myofibromatosis.</title>
+<authorList>
+<person name="Martignetti J.A."/>
+<person name="Tian L."/>
+<person name="Li D."/>
+<person name="Ramirez M.C."/>
+<person name="Camacho-Vanegas O."/>
+<person name="Camacho S.C."/>
+<person name="Guo Y."/>
+<person name="Zand D.J."/>
+<person name="Bernstein A.M."/>
+<person name="Masur S.K."/>
+<person name="Kim C.E."/>
+<person name="Otieno F.G."/>
+<person name="Hou C."/>
+<person name="Abdel-Magid N."/>
+<person name="Tweddale B."/>
+<person name="Metry D."/>
+<person name="Fournet J.C."/>
+<person name="Papp E."/>
+<person name="McPherson E.W."/>
+<person name="Zabel C."/>
+<person name="Vaksmann G."/>
+<person name="Morisot C."/>
+<person name="Keating B."/>
+<person name="Sleiman P.M."/>
+<person name="Cleveland J.A."/>
+<person name="Everman D.B."/>
+<person name="Zackai E."/>
+<person name="Hakonarson H."/>
+</authorList>
+<dbReference type="PubMed" id="23731542"/>
+<dbReference type="DOI" id="10.1016/j.ajhg.2013.04.024"/>
+</citation>
+<scope>VARIANT IMF2 PRO-1519</scope>
+</reference>
+<reference key="35">
+<citation type="journal article" date="2013" name="Hum. Mutat." volume="34" first="1486" last="1489">
+<title>Hypomorphic NOTCH3 alleles do not cause CADASIL in humans.</title>
+<authorList>
+<person name="Rutten J.W."/>
+<person name="Boon E.M."/>
+<person name="Liem M.K."/>
+<person name="Dauwerse J.G."/>
+<person name="Pont M.J."/>
+<person name="Vollebregt E."/>
+<person name="Maat-Kievit A.J."/>
+<person name="Ginjaar H.B."/>
+<person name="Lakeman P."/>
+<person name="van Duinen S.G."/>
+<person name="Terwindt G.M."/>
+<person name="Lesnik Oberstein S.A."/>
+</authorList>
+<dbReference type="PubMed" id="24000151"/>
+<dbReference type="DOI" id="10.1002/humu.22432"/>
+</citation>
+<scope>VARIANT CADASIL1 CYS-710</scope>
+</reference>
+<comment type="function">
+<text evidence="6 26">Functions as a receptor for membrane-bound ligands Jagged1, Jagged2 and Delta1 to regulate cell-fate determination (PubMed:15350543). Upon ligand activation through the released notch intracellular domain (NICD) it forms a transcriptional activator complex with RBPJ/RBPSUH and activates genes of the enhancer of split locus. Affects the implementation of differentiation, proliferation and apoptotic programs (By similarity).</text>
+</comment>
+<comment type="subunit">
+<text evidence="5 14 21 31 32">Heterodimer of a C-terminal fragment N(TM) and a N-terminal fragment N(EC) which are probably linked by disulfide bonds (By similarity). Interacts with MAML1, MAML2 and MAML3 which act as transcriptional coactivators for NOTCH3. Interacts with PSMA1. Interacts with HIF1AN.</text>
+</comment>
+<comment type="interaction">
+<interactant intactId="EBI-1236377">
+<id>Q9UM47</id>
+</interactant>
+<interactant intactId="EBI-1236377">
+<id>Q9UM47</id>
+</interactant>
+<organismsDiffer>false</organismsDiffer>
+<experiments>2</experiments>
+</comment>
+<comment type="interaction">
+<interactant intactId="EBI-1236377">
+<id>Q9UM47</id>
+</interactant>
+<interactant intactId="EBI-12754095">
+<id>P86480</id>
+<label>PRR20D</label>
+</interactant>
+<organismsDiffer>false</organismsDiffer>
+<experiments>3</experiments>
+</comment>
+<comment type="interaction">
+<interactant intactId="EBI-1236377">
+<id>Q9UM47</id>
+</interactant>
+<interactant intactId="EBI-991653">
+<id>Q9R1P4</id>
+<label>Psma1</label>
+</interactant>
+<organismsDiffer>true</organismsDiffer>
+<experiments>2</experiments>
+</comment>
+<comment type="subcellular location">
+<subcellularLocation>
+<location evidence="26">Cell membrane</location>
+<topology>Single-pass type I membrane protein</topology>
+</subcellularLocation>
+</comment>
+<comment type="subcellular location">
+<molecule>Notch 3 intracellular domain</molecule>
+<subcellularLocation>
+<location>Nucleus</location>
+</subcellularLocation>
+<text>Following proteolytical processing NICD is translocated to the nucleus.</text>
+</comment>
+<comment type="tissue specificity">
+<text>Ubiquitously expressed in fetal and adult tissues.</text>
+</comment>
+<comment type="domain">
+<text evidence="26">The EGF-like domains 10 and 11 are required for binding the ligands JAG1 and DLL1.</text>
+</comment>
+<comment type="PTM">
+<text evidence="26">Synthesized in the endoplasmic reticulum as an inactive form which is proteolytically cleaved by a furin-like convertase in the trans-Golgi network before it reaches the plasma membrane to yield an active, ligand-accessible form. Cleavage results in a C-terminal fragment N(TM) and a N-terminal fragment N(EC). Following ligand binding, it is cleaved by TNF-alpha converting enzyme (TACE) to yield a membrane-associated intermediate fragment called notch extracellular truncation (NEXT). This fragment is then cleaved by presenilin dependent gamma-secretase to release a notch-derived peptide containing the intracellular domain (NICD) from the membrane.</text>
+</comment>
+<comment type="PTM">
+<text evidence="5">Phosphorylated.</text>
+</comment>
+<comment type="PTM">
+<text evidence="34">Hydroxylated by HIF1AN.</text>
+</comment>
+<comment type="disease" evidence="9 10 11 12 13 15 16 17 18 19 20 22 23 24 25 26 27 28 29 30 36 39">
+<disease id="DI-01334">
+<name>Cerebral arteriopathy, autosomal dominant, with subcortical infarcts and leukoencephalopathy, 1</name>
+<acronym>CADASIL1</acronym>
+<description>A cerebrovascular disease characterized by multiple subcortical infarcts, pseudobulbar palsy, dementia, and the presence of granular deposits in small cerebral arteries producing ischemic stroke.</description>
+<dbReference type="MIM" id="125310"/>
+</disease>
+<text>The disease is caused by mutations affecting the gene represented in this entry.</text>
+</comment>
+<comment type="disease" evidence="35">
+<disease id="DI-03816">
+<name>Myofibromatosis, infantile 2</name>
+<acronym>IMF2</acronym>
+<description>A rare mesenchymal disorder characterized by the development of benign tumors in the skin, striated muscles, bones, and, more rarely, visceral organs. Subcutaneous or soft tissue nodules commonly involve the skin of the head, neck, and trunk. Skeletal and muscular lesions occur in about half of the patients. Lesions may be solitary or multicentric, and they may be present at birth or become apparent in early infancy or occasionally in adult life. Visceral lesions are associated with high morbidity and mortality.</description>
+<dbReference type="MIM" id="615293"/>
+</disease>
+<text>The disease is caused by mutations affecting the gene represented in this entry.</text>
+</comment>
+<comment type="disease" evidence="37">
+<disease id="DI-04541">
+<name>Lateral meningocele syndrome</name>
+<acronym>LMNS</acronym>
+<description>A very rare skeletal disorder with facial anomalies, hypotonia and neurologic dysfunction due to meningocele, a protrusion of the meninges, unaccompanied by neural tissue, through a bony defect in the skull or vertebral column. LMNS facial features include hypertelorism and telecanthus, high arched eyebrows, ptosis, mid-facial hypoplasia, micrognathia, high and narrow palate, low-set ears and a hypotonic appearance. Additional variable features are connective tissue abnormalities, aortic dilation, a high-pitched nasal voice, wormian bones and osteolysis.</description>
+<dbReference type="MIM" id="130720"/>
+</disease>
+<text>The disease is caused by mutations affecting the gene represented in this entry.</text>
+</comment>
+<comment type="similarity">
+<text evidence="40">Belongs to the NOTCH family.</text>
+</comment>
+<comment type="online information" name="Atlas of Genetics and Cytogenetics in Oncology and Haematology">
+<link uri="http://atlasgeneticsoncology.org/Genes/NOTCH3ID41557ch19p13.html"/>
+</comment>
+<dbReference type="EMBL" id="U97669">
+<property type="protein sequence ID" value="AAB91371.1"/>
+<property type="molecule type" value="mRNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058900">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058881">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058882">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058883">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058884">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058885">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058886">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058887">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058888">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058889">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058890">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058891">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058892">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058893">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058894">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058895">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058896">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058897">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058898">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AF058899">
+<property type="protein sequence ID" value="AAC14346.1"/>
+<property type="status" value="JOINED"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AC004257">
+<property type="protein sequence ID" value="AAC04897.1"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="EMBL" id="AC004663">
+<property type="protein sequence ID" value="AAC15789.1"/>
+<property type="molecule type" value="Genomic_DNA"/>
+</dbReference>
+<dbReference type="CCDS" id="CCDS12326.1"/>
+<dbReference type="PIR" id="S78549">
+<property type="entry name" value="S78549"/>
+</dbReference>
+<dbReference type="RefSeq" id="NP_000426.2">
+<property type="nucleotide sequence ID" value="NM_000435.2"/>
+</dbReference>
+<dbReference type="PDB" id="4ZLP">
+<property type="method" value="X-ray"/>
+<property type="resolution" value="2.48"/>
+<property type="chains" value="A/B=1378-1640"/>
+</dbReference>
+<dbReference type="PDB" id="5CZV">
+<property type="method" value="X-ray"/>
+<property type="resolution" value="3.19"/>
+<property type="chains" value="A=1378-1640"/>
+</dbReference>
+<dbReference type="PDB" id="5CZX">
+<property type="method" value="X-ray"/>
+<property type="resolution" value="2.10"/>
+<property type="chains" value="A/B=1378-1640"/>
+</dbReference>
+<dbReference type="PDBsum" id="4ZLP"/>
+<dbReference type="PDBsum" id="5CZV"/>
+<dbReference type="PDBsum" id="5CZX"/>
+<dbReference type="SMR" id="Q9UM47"/>
+<dbReference type="BioGrid" id="110916">
+<property type="interactions" value="71"/>
+</dbReference>
+<dbReference type="DIP" id="DIP-39827N"/>
+<dbReference type="ELM" id="Q9UM47"/>
+<dbReference type="IntAct" id="Q9UM47">
+<property type="interactions" value="37"/>
+</dbReference>
+<dbReference type="MINT" id="Q9UM47"/>
+<dbReference type="STRING" id="9606.ENSP00000263388"/>
+<dbReference type="BindingDB" id="Q9UM47"/>
+<dbReference type="ChEMBL" id="CHEMBL3407319"/>
+<dbReference type="GuidetoPHARMACOLOGY" id="2860"/>
+<dbReference type="iPTMnet" id="Q9UM47"/>
+<dbReference type="PhosphoSitePlus" id="Q9UM47"/>
+<dbReference type="BioMuta" id="NOTCH3"/>
+<dbReference type="DMDM" id="322510053"/>
+<dbReference type="EPD" id="Q9UM47"/>
+<dbReference type="jPOST" id="Q9UM47"/>
+<dbReference type="MassIVE" id="Q9UM47"/>
+<dbReference type="MaxQB" id="Q9UM47"/>
+<dbReference type="PaxDb" id="Q9UM47"/>
+<dbReference type="PeptideAtlas" id="Q9UM47"/>
+<dbReference type="PRIDE" id="Q9UM47"/>
+<dbReference type="ProteomicsDB" id="85176"/>
+<dbReference type="ABCD" id="Q9UM47"/>
+<dbReference type="Antibodypedia" id="3951">
+<property type="antibodies" value="669 antibodies"/>
+</dbReference>
+<dbReference type="Ensembl" id="ENST00000263388">
+<property type="protein sequence ID" value="ENSP00000263388"/>
+<property type="gene ID" value="ENSG00000074181"/>
+</dbReference>
+<dbReference type="GeneID" id="4854"/>
+<dbReference type="KEGG" id="hsa:4854"/>
+<dbReference type="UCSC" id="uc002nan.4">
+<property type="organism name" value="human"/>
+</dbReference>
+<dbReference type="CTD" id="4854"/>
+<dbReference type="DisGeNET" id="4854"/>
+<dbReference type="GeneCards" id="NOTCH3"/>
+<dbReference type="GeneReviews" id="NOTCH3"/>
+<dbReference type="HGNC" id="HGNC:7883">
+<property type="gene designation" value="NOTCH3"/>
+</dbReference>
+<dbReference type="HPA" id="ENSG00000074181">
+<property type="expression patterns" value="Low tissue specificity"/>
+</dbReference>
+<dbReference type="MalaCards" id="NOTCH3"/>
+<dbReference type="MIM" id="125310">
+<property type="type" value="phenotype"/>
+</dbReference>
+<dbReference type="MIM" id="130720">
+<property type="type" value="phenotype"/>
+</dbReference>
+<dbReference type="MIM" id="600276">
+<property type="type" value="gene"/>
+</dbReference>
+<dbReference type="MIM" id="615293">
+<property type="type" value="phenotype"/>
+</dbReference>
+<dbReference type="neXtProt" id="NX_Q9UM47"/>
+<dbReference type="OpenTargets" id="ENSG00000074181"/>
+<dbReference type="Orphanet" id="136">
+<property type="disease" value="CADASIL"/>
+</dbReference>
+<dbReference type="Orphanet" id="2591">
+<property type="disease" value="Infantile myofibromatosis"/>
+</dbReference>
+<dbReference type="Orphanet" id="2789">
+<property type="disease" value="Lateral meningocele syndrome"/>
+</dbReference>
+<dbReference type="PharmGKB" id="PA31685"/>
+<dbReference type="eggNOG" id="ENOG410IR7G">
+<property type="taxonomic scope" value="Eukaryota"/>
+</dbReference>
+<dbReference type="eggNOG" id="COG0666">
+<property type="taxonomic scope" value="LUCA"/>
+</dbReference>
+<dbReference type="GeneTree" id="ENSGT00940000160234"/>
+<dbReference type="HOGENOM" id="CLU_000576_0_0_1"/>
+<dbReference type="InParanoid" id="Q9UM47"/>
+<dbReference type="KO" id="K20995"/>
+<dbReference type="OMA" id="FRCTCPE"/>
+<dbReference type="OrthoDB" id="7525at2759"/>
+<dbReference type="PhylomeDB" id="Q9UM47"/>
+<dbReference type="TreeFam" id="TF351641"/>
+<dbReference type="Reactome" id="R-HSA-1912399">
+<property type="pathway name" value="Pre-NOTCH Processing in the Endoplasmic Reticulum"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-1912408">
+<property type="pathway name" value="Pre-NOTCH Transcription and Translation"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-1912420">
+<property type="pathway name" value="Pre-NOTCH Processing in Golgi"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-350054">
+<property type="pathway name" value="Notch-HLH transcription pathway"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-5083630">
+<property type="pathway name" value="Defective LFNG causes SCDO3"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-9013507">
+<property type="pathway name" value="NOTCH3 Activation and Transmission of Signal to the Nucleus"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-9013508">
+<property type="pathway name" value="NOTCH3 Intracellular Domain Regulates Transcription"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-9017802">
+<property type="pathway name" value="Noncanonical activation of NOTCH3"/>
+</dbReference>
+<dbReference type="SignaLink" id="Q9UM47"/>
+<dbReference type="SIGNOR" id="Q9UM47"/>
+<dbReference type="ChiTaRS" id="NOTCH3">
+<property type="organism name" value="human"/>
+</dbReference>
+<dbReference type="GeneWiki" id="Notch_3"/>
+<dbReference type="GenomeRNAi" id="4854"/>
+<dbReference type="Pharos" id="Q9UM47">
+<property type="development level" value="Tchem"/>
+</dbReference>
+<dbReference type="PRO" id="PR:Q9UM47"/>
+<dbReference type="Proteomes" id="UP000005640">
+<property type="component" value="Chromosome 19"/>
+</dbReference>
+<dbReference type="RNAct" id="Q9UM47">
+<property type="molecule type" value="protein"/>
+</dbReference>
+<dbReference type="Bgee" id="ENSG00000074181">
+<property type="expression patterns" value="Expressed in vagina and 218 other tissues"/>
+</dbReference>
+<dbReference type="ExpressionAtlas" id="Q9UM47">
+<property type="expression patterns" value="baseline and differential"/>
+</dbReference>
+<dbReference type="Genevisible" id="Q9UM47">
+<property type="organism ID" value="HS"/>
+</dbReference>
+<dbReference type="GO" id="GO:0015629">
+<property type="term" value="C:actin cytoskeleton"/>
+<property type="evidence" value="ECO:0000314"/>
+<property type="project" value="HPA"/>
+</dbReference>
+<dbReference type="GO" id="GO:0009986">
+<property type="term" value="C:cell surface"/>
+<property type="evidence" value="ECO:0000318"/>
+<property type="project" value="GO_Central"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005829">
+<property type="term" value="C:cytosol"/>
+<property type="evidence" value="ECO:0000314"/>
+<property type="project" value="HPA"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005789">
+<property type="term" value="C:endoplasmic reticulum membrane"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005576">
+<property type="term" value="C:extracellular region"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="GO" id="GO:0000139">
+<property type="term" value="C:Golgi membrane"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="GO" id="GO:0016021">
+<property type="term" value="C:integral component of membrane"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="UniProtKB-KW"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005654">
+<property type="term" value="C:nucleoplasm"/>
+<property type="evidence" value="ECO:0000314"/>
+<property type="project" value="HPA"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005886">
+<property type="term" value="C:plasma membrane"/>
+<property type="evidence" value="ECO:0000314"/>
+<property type="project" value="UniProtKB"/>
+</dbReference>
+<dbReference type="GO" id="GO:0043235">
+<property type="term" value="C:receptor complex"/>
+<property type="evidence" value="ECO:0000314"/>
+<property type="project" value="MGI"/>
+</dbReference>
+<dbReference type="GO" id="GO:0045296">
+<property type="term" value="F:cadherin binding"/>
+<property type="evidence" value="ECO:0007005"/>
+<property type="project" value="BHF-UCL"/>
+</dbReference>
+<dbReference type="GO" id="GO:0005509">
+<property type="term" value="F:calcium ion binding"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="InterPro"/>
+</dbReference>
+<dbReference type="GO" id="GO:0019899">
+<property type="term" value="F:enzyme binding"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0042802">
+<property type="term" value="F:identical protein binding"/>
+<property type="evidence" value="ECO:0000353"/>
+<property type="project" value="IntAct"/>
+</dbReference>
+<dbReference type="GO" id="GO:0038023">
+<property type="term" value="F:signaling receptor activity"/>
+<property type="evidence" value="ECO:0000315"/>
+<property type="project" value="UniProtKB"/>
+</dbReference>
+<dbReference type="GO" id="GO:0048844">
+<property type="term" value="P:artery morphogenesis"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0030900">
+<property type="term" value="P:forebrain development"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0072104">
+<property type="term" value="P:glomerular capillary formation"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0045665">
+<property type="term" value="P:negative regulation of neuron differentiation"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0045746">
+<property type="term" value="P:negative regulation of Notch signaling pathway"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="GO" id="GO:0000122">
+<property type="term" value="P:negative regulation of transcription by RNA polymerase II"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0048663">
+<property type="term" value="P:neuron fate commitment"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0007219">
+<property type="term" value="P:Notch signaling pathway"/>
+<property type="evidence" value="ECO:0000318"/>
+<property type="project" value="GO_Central"/>
+</dbReference>
+<dbReference type="GO" id="GO:0048661">
+<property type="term" value="P:positive regulation of smooth muscle cell proliferation"/>
+<property type="evidence" value="ECO:0000501"/>
+<property type="project" value="Ensembl"/>
+</dbReference>
+<dbReference type="GO" id="GO:0007221">
+<property type="term" value="P:positive regulation of transcription of Notch receptor target"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="GO" id="GO:0006367">
+<property type="term" value="P:transcription initiation from RNA polymerase II promoter"/>
+<property type="evidence" value="ECO:0000304"/>
+<property type="project" value="Reactome"/>
+</dbReference>
+<dbReference type="Gene3D" id="1.25.40.20">
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR002110">
+<property type="entry name" value="Ankyrin_rpt"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR020683">
+<property type="entry name" value="Ankyrin_rpt-contain_dom"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR036770">
+<property type="entry name" value="Ankyrin_rpt-contain_sf"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR024600">
+<property type="entry name" value="DUF3454_notch"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR001881">
+<property type="entry name" value="EGF-like_Ca-bd_dom"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR013032">
+<property type="entry name" value="EGF-like_CS"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR000742">
+<property type="entry name" value="EGF-like_dom"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR000152">
+<property type="entry name" value="EGF-type_Asp/Asn_hydroxyl_site"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR018097">
+<property type="entry name" value="EGF_Ca-bd_CS"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR009030">
+<property type="entry name" value="Growth_fac_rcpt_cys_sf"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR008297">
+<property type="entry name" value="Notch"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR035993">
+<property type="entry name" value="Notch-like_dom_sf"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR022331">
+<property type="entry name" value="Notch_3"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR000800">
+<property type="entry name" value="Notch_dom"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR010660">
+<property type="entry name" value="Notch_NOD_dom"/>
+</dbReference>
+<dbReference type="InterPro" id="IPR011656">
+<property type="entry name" value="Notch_NODP_dom"/>
+</dbReference>
+<dbReference type="Pfam" id="PF12796">
+<property type="entry name" value="Ank_2"/>
+<property type="match status" value="2"/>
+</dbReference>
+<dbReference type="Pfam" id="PF11936">
+<property type="entry name" value="DUF3454"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="Pfam" id="PF00008">
+<property type="entry name" value="EGF"/>
+<property type="match status" value="19"/>
+</dbReference>
+<dbReference type="Pfam" id="PF07645">
+<property type="entry name" value="EGF_CA"/>
+<property type="match status" value="5"/>
+</dbReference>
+<dbReference type="Pfam" id="PF12661">
+<property type="entry name" value="hEGF"/>
+<property type="match status" value="3"/>
+</dbReference>
+<dbReference type="Pfam" id="PF06816">
+<property type="entry name" value="NOD"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="Pfam" id="PF07684">
+<property type="entry name" value="NODP"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="Pfam" id="PF00066">
+<property type="entry name" value="Notch"/>
+<property type="match status" value="3"/>
+</dbReference>
+<dbReference type="PIRSF" id="PIRSF002279">
+<property type="entry name" value="Notch"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="PRINTS" id="PR01452">
+<property type="entry name" value="LNOTCHREPEAT"/>
+</dbReference>
+<dbReference type="PRINTS" id="PR01986">
+<property type="entry name" value="NOTCH3"/>
+</dbReference>
+<dbReference type="SMART" id="SM00248">
+<property type="entry name" value="ANK"/>
+<property type="match status" value="6"/>
+</dbReference>
+<dbReference type="SMART" id="SM01334">
+<property type="entry name" value="DUF3454"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="SMART" id="SM00181">
+<property type="entry name" value="EGF"/>
+<property type="match status" value="34"/>
+</dbReference>
+<dbReference type="SMART" id="SM00179">
+<property type="entry name" value="EGF_CA"/>
+<property type="match status" value="31"/>
+</dbReference>
+<dbReference type="SMART" id="SM00004">
+<property type="entry name" value="NL"/>
+<property type="match status" value="3"/>
+</dbReference>
+<dbReference type="SMART" id="SM01338">
+<property type="entry name" value="NOD"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="SMART" id="SM01339">
+<property type="entry name" value="NODP"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="SUPFAM" id="SSF48403">
+<property type="entry name" value="SSF48403"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="SUPFAM" id="SSF57184">
+<property type="entry name" value="SSF57184"/>
+<property type="match status" value="4"/>
+</dbReference>
+<dbReference type="SUPFAM" id="SSF90193">
+<property type="entry name" value="SSF90193"/>
+<property type="match status" value="3"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS50297">
+<property type="entry name" value="ANK_REP_REGION"/>
+<property type="match status" value="1"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS50088">
+<property type="entry name" value="ANK_REPEAT"/>
+<property type="match status" value="4"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS00010">
+<property type="entry name" value="ASX_HYDROXYL"/>
+<property type="match status" value="18"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS00022">
+<property type="entry name" value="EGF_1"/>
+<property type="match status" value="33"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS01186">
+<property type="entry name" value="EGF_2"/>
+<property type="match status" value="25"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS50026">
+<property type="entry name" value="EGF_3"/>
+<property type="match status" value="34"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS01187">
+<property type="entry name" value="EGF_CA"/>
+<property type="match status" value="16"/>
+</dbReference>
+<dbReference type="PROSITE" id="PS50258">
+<property type="entry name" value="LNR"/>
+<property type="match status" value="3"/>
+</dbReference>
+<proteinExistence type="evidence at protein level"/>
+<keyword id="KW-0002">3D-structure</keyword>
+<keyword id="KW-0010">Activator</keyword>
+<keyword id="KW-0040">ANK repeat</keyword>
+<keyword id="KW-1003">Cell membrane</keyword>
+<keyword id="KW-0217">Developmental protein</keyword>
+<keyword id="KW-0221">Differentiation</keyword>
+<keyword id="KW-0225">Disease mutation</keyword>
+<keyword id="KW-1015">Disulfide bond</keyword>
+<keyword id="KW-0245">EGF-like domain</keyword>
+<keyword id="KW-0325">Glycoprotein</keyword>
+<keyword id="KW-0472">Membrane</keyword>
+<keyword id="KW-0488">Methylation</keyword>
+<keyword id="KW-0914">Notch signaling pathway</keyword>
+<keyword id="KW-0539">Nucleus</keyword>
+<keyword id="KW-0597">Phosphoprotein</keyword>
+<keyword id="KW-0621">Polymorphism</keyword>
+<keyword id="KW-0675">Receptor</keyword>
+<keyword id="KW-1185">Reference proteome</keyword>
+<keyword id="KW-0677">Repeat</keyword>
+<keyword id="KW-0732">Signal</keyword>
+<keyword id="KW-0804">Transcription</keyword>
+<keyword id="KW-0805">Transcription regulation</keyword>
+<keyword id="KW-0812">Transmembrane</keyword>
+<keyword id="KW-1133">Transmembrane helix</keyword>
+<feature type="signal peptide" evidence="7">
+<location>
+<begin position="1"/>
+<end position="39"/>
+</location>
+</feature>
+<feature type="chain" description="Neurogenic locus notch homolog protein 3" id="PRO_0000007692">
+<location>
+<begin position="40"/>
+<end position="2321"/>
+</location>
+</feature>
+<feature type="chain" description="Notch 3 extracellular truncation" id="PRO_0000007693" evidence="5">
+<location>
+<begin position="1629"/>
+<end position="2321"/>
+</location>
+</feature>
+<feature type="chain" description="Notch 3 intracellular domain" id="PRO_0000007694" evidence="5">
+<location>
+<begin position="1662"/>
+<end position="2321"/>
+</location>
+</feature>
+<feature type="topological domain" description="Extracellular" evidence="7">
+<location>
+<begin position="40"/>
+<end position="1643"/>
+</location>
+</feature>
+<feature type="transmembrane region" description="Helical" evidence="7">
+<location>
+<begin position="1644"/>
+<end position="1664"/>
+</location>
+</feature>
+<feature type="topological domain" description="Cytoplasmic" evidence="7">
+<location>
+<begin position="1665"/>
+<end position="2321"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 1" evidence="8">
+<location>
+<begin position="40"/>
+<end position="77"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 2" evidence="8">
+<location>
+<begin position="78"/>
+<end position="118"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 3" evidence="8">
+<location>
+<begin position="119"/>
+<end position="156"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 4; calcium-binding" evidence="8">
+<location>
+<begin position="158"/>
+<end position="195"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 5" evidence="8">
+<location>
+<begin position="197"/>
+<end position="234"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 6; calcium-binding" evidence="8">
+<location>
+<begin position="236"/>
+<end position="272"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 7" evidence="8">
+<location>
+<begin position="274"/>
+<end position="312"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 8; calcium-binding" evidence="8">
+<location>
+<begin position="314"/>
+<end position="350"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 9" evidence="8">
+<location>
+<begin position="351"/>
+<end position="389"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 10; calcium-binding" evidence="8">
+<location>
+<begin position="391"/>
+<end position="429"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 11; calcium-binding" evidence="8">
+<location>
+<begin position="431"/>
+<end position="467"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 12; calcium-binding" evidence="8">
+<location>
+<begin position="469"/>
+<end position="505"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 13; calcium-binding" evidence="8">
+<location>
+<begin position="507"/>
+<end position="543"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 14; calcium-binding" evidence="8">
+<location>
+<begin position="545"/>
+<end position="580"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 15; calcium-binding" evidence="8">
+<location>
+<begin position="582"/>
+<end position="618"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 16; calcium-binding" evidence="8">
+<location>
+<begin position="620"/>
+<end position="655"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 17; calcium-binding" evidence="8">
+<location>
+<begin position="657"/>
+<end position="693"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 18" evidence="8">
+<location>
+<begin position="695"/>
+<end position="730"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 19" evidence="8">
+<location>
+<begin position="734"/>
+<end position="770"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 20" evidence="8">
+<location>
+<begin position="771"/>
+<end position="808"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 21; calcium-binding" evidence="8">
+<location>
+<begin position="810"/>
+<end position="847"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 22; calcium-binding" evidence="8">
+<location>
+<begin position="849"/>
+<end position="885"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 23; calcium-binding" evidence="8">
+<location>
+<begin position="887"/>
+<end position="922"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 24" evidence="8">
+<location>
+<begin position="924"/>
+<end position="960"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 25" evidence="8">
+<location>
+<begin position="962"/>
+<end position="998"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 26" evidence="8">
+<location>
+<begin position="1000"/>
+<end position="1034"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 27" evidence="40">
+<location>
+<begin position="1036"/>
+<end position="1082"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 28" evidence="8">
+<location>
+<begin position="1084"/>
+<end position="1120"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 29; calcium-binding" evidence="8">
+<location>
+<begin position="1122"/>
+<end position="1158"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 30; calcium-binding" evidence="8">
+<location>
+<begin position="1160"/>
+<end position="1203"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 31" evidence="8">
+<location>
+<begin position="1205"/>
+<end position="1244"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 32" evidence="8">
+<location>
+<begin position="1246"/>
+<end position="1287"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 33" evidence="8">
+<location>
+<begin position="1289"/>
+<end position="1325"/>
+</location>
+</feature>
+<feature type="domain" description="EGF-like 34" evidence="8">
+<location>
+<begin position="1335"/>
+<end position="1373"/>
+</location>
+</feature>
+<feature type="repeat" description="LNR 1">
+<location>
+<begin position="1387"/>
+<end position="1427"/>
+</location>
+</feature>
+<feature type="repeat" description="LNR 2">
+<location>
+<begin position="1428"/>
+<end position="1458"/>
+</location>
+</feature>
+<feature type="repeat" description="LNR 3">
+<location>
+<begin position="1467"/>
+<end position="1505"/>
+</location>
+</feature>
+<feature type="repeat" description="ANK 1">
+<location>
+<begin position="1838"/>
+<end position="1867"/>
+</location>
+</feature>
+<feature type="repeat" description="ANK 2">
+<location>
+<begin position="1871"/>
+<end position="1901"/>
+</location>
+</feature>
+<feature type="repeat" description="ANK 3">
+<location>
+<begin position="1905"/>
+<end position="1934"/>
+</location>
+</feature>
+<feature type="repeat" description="ANK 4">
+<location>
+<begin position="1938"/>
+<end position="1967"/>
+</location>
+</feature>
+<feature type="repeat" description="ANK 5">
+<location>
+<begin position="1971"/>
+<end position="2000"/>
+</location>
+</feature>
+<feature type="site" description="Cleavage; by furin-like protease" evidence="5">
+<location>
+<begin position="1571"/>
+<end position="1572"/>
+</location>
+</feature>
+<feature type="modified residue" description="Omega-N-methylarginine" evidence="4">
+<location>
+<position position="2174"/>
+</location>
+</feature>
+<feature type="glycosylation site" description="N-linked (GlcNAc...) asparagine" evidence="7">
+<location>
+<position position="1179"/>
+</location>
+</feature>
+<feature type="glycosylation site" description="N-linked (GlcNAc...) asparagine" evidence="7">
+<location>
+<position position="1336"/>
+</location>
+</feature>
+<feature type="glycosylation site" description="N-linked (GlcNAc...) asparagine" evidence="7">
+<location>
+<position position="1438"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="43"/>
+<end position="55"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="49"/>
+<end position="65"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="67"/>
+<end position="76"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="82"/>
+<end position="93"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="87"/>
+<end position="106"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="108"/>
+<end position="117"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="123"/>
+<end position="134"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="128"/>
+<end position="144"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="146"/>
+<end position="155"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="162"/>
+<end position="174"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="168"/>
+<end position="183"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="185"/>
+<end position="194"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="201"/>
+<end position="212"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="206"/>
+<end position="222"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="224"/>
+<end position="233"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="240"/>
+<end position="251"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="245"/>
+<end position="260"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="262"/>
+<end position="271"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="278"/>
+<end position="291"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="285"/>
+<end position="300"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="302"/>
+<end position="311"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="318"/>
+<end position="329"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="323"/>
+<end position="338"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="340"/>
+<end position="349"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="355"/>
+<end position="366"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="360"/>
+<end position="377"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="379"/>
+<end position="388"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="395"/>
+<end position="408"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="402"/>
+<end position="417"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="419"/>
+<end position="428"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="435"/>
+<end position="446"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="440"/>
+<end position="455"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="457"/>
+<end position="466"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="473"/>
+<end position="484"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="478"/>
+<end position="493"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="495"/>
+<end position="504"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="511"/>
+<end position="522"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="516"/>
+<end position="531"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="533"/>
+<end position="542"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="549"/>
+<end position="559"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="554"/>
+<end position="568"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="570"/>
+<end position="579"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="586"/>
+<end position="597"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="591"/>
+<end position="606"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="608"/>
+<end position="617"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="624"/>
+<end position="634"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="629"/>
+<end position="643"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="645"/>
+<end position="654"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="661"/>
+<end position="672"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="666"/>
+<end position="681"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="683"/>
+<end position="692"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="699"/>
+<end position="709"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="704"/>
+<end position="718"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="720"/>
+<end position="729"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="738"/>
+<end position="749"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="743"/>
+<end position="758"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="760"/>
+<end position="769"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="775"/>
+<end position="786"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="780"/>
+<end position="796"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="798"/>
+<end position="807"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="814"/>
+<end position="826"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="820"/>
+<end position="835"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="837"/>
+<end position="846"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="853"/>
+<end position="864"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="858"/>
+<end position="873"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="875"/>
+<end position="884"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="891"/>
+<end position="901"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="896"/>
+<end position="910"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="912"/>
+<end position="921"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="928"/>
+<end position="939"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="933"/>
+<end position="948"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="950"/>
+<end position="959"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="966"/>
+<end position="977"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="971"/>
+<end position="986"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="988"/>
+<end position="997"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1004"/>
+<end position="1015"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1009"/>
+<end position="1022"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1024"/>
+<end position="1033"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="40">
+<location>
+<begin position="1040"/>
+<end position="1061"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1055"/>
+<end position="1070"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1072"/>
+<end position="1081"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1088"/>
+<end position="1099"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1093"/>
+<end position="1108"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1110"/>
+<end position="1119"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1126"/>
+<end position="1137"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1131"/>
+<end position="1146"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1148"/>
+<end position="1157"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1164"/>
+<end position="1182"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1176"/>
+<end position="1191"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1193"/>
+<end position="1202"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1209"/>
+<end position="1222"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1214"/>
+<end position="1232"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1234"/>
+<end position="1243"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1250"/>
+<end position="1261"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1255"/>
+<end position="1275"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1277"/>
+<end position="1286"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1293"/>
+<end position="1304"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1298"/>
+<end position="1313"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1315"/>
+<end position="1324"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1339"/>
+<end position="1350"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1344"/>
+<end position="1361"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1363"/>
+<end position="1372"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1387"/>
+<end position="1410"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1392"/>
+<end position="1405"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1401"/>
+<end position="1417"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1428"/>
+<end position="1451"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1433"/>
+<end position="1446"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1442"/>
+<end position="1458"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1467"/>
+<end position="1493"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1475"/>
+<end position="1488"/>
+</location>
+</feature>
+<feature type="disulfide bond" evidence="5">
+<location>
+<begin position="1484"/>
+<end position="1500"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044230" evidence="27 30">
+<original>C</original>
+<variation>G</variation>
+<location>
+<position position="43"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs193921045." id="VAR_044231" evidence="27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="49"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012871" evidence="15 39">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="49"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555730189." id="VAR_044232" evidence="15">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="54"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044233" evidence="27 30">
+<original>S</original>
+<variation>C</variation>
+<location>
+<position position="60"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555730176." id="VAR_044234" evidence="27 30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="65"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044235" evidence="22">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="67"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs28937321." id="VAR_012872" evidence="39">
+<original>W</original>
+<variation>C</variation>
+<location>
+<position position="71"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729610." id="VAR_044236" evidence="20 24">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="76"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044237" evidence="27 30">
+<original>C</original>
+<variation>W</variation>
+<location>
+<position position="76"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044238" evidence="27">
+<location>
+<begin position="77"/>
+<end position="82"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044239" evidence="12 27 30">
+<location>
+<begin position="80"/>
+<end position="84"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044240" evidence="27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="87"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044241" evidence="27">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="87"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729604." id="VAR_012873" evidence="9 12 15 23 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="90"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044242" evidence="12 27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="93"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044243" evidence="20">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="93"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044244" evidence="27">
+<original>C</original>
+<variation>W</variation>
+<location>
+<position position="106"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044245" evidence="25">
+<original>C</original>
+<variation>W</variation>
+<location>
+<position position="108"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044246" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="108"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs775836288." id="VAR_012874" evidence="12 15 17 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="110"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012875" evidence="11 15">
+<location>
+<begin position="114"/>
+<end position="120"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs773539041." id="VAR_044247" evidence="9 12 27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="117"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044248" evidence="29">
+<original>S</original>
+<variation>C</variation>
+<location>
+<position position="118"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044249" evidence="12 27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="123"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044250" evidence="15">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="123"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044251" evidence="20">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="128"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; no effect on ligand-binding; no effect on cell membrane localization; reduced proteolytic processing; dbSNP:rs137852642." id="VAR_012876" evidence="9 10 12 15 17 23 26 27 28 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="133"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044252" evidence="17 18 27 30">
+<original>C</original>
+<variation>W</variation>
+<location>
+<position position="134"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012877" evidence="9 10 12 15 17 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="141"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044253" evidence="20">
+<original>F</original>
+<variation>C</variation>
+<location>
+<position position="142"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044254" evidence="13">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="144"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044255" evidence="12 27 30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="144"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044256" evidence="12 27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="144"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044257" evidence="27">
+<original>S</original>
+<variation>C</variation>
+<location>
+<position position="145"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729510." id="VAR_012878" evidence="15 39">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="146"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044258" evidence="27 30">
+<original>G</original>
+<variation>C</variation>
+<location>
+<position position="149"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044259" evidence="12 27 30">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="150"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044260" evidence="12 30">
+<location>
+<begin position="153"/>
+<end position="155"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs797045014." id="VAR_012879" evidence="10 12 15 17 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="153"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044261" evidence="27">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="155"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044262" evidence="15">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="162"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs28933696." id="VAR_012880" evidence="9 12 15 23 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="169"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs147373451." id="VAR_012881" evidence="39">
+<original>H</original>
+<variation>R</variation>
+<location>
+<position position="170"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012882" evidence="39">
+<original>G</original>
+<variation>C</variation>
+<location>
+<position position="171"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044263" evidence="23">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="174"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044264" evidence="23 27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="174"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729486." id="VAR_044265" evidence="9 12 15 27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="174"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044266" evidence="15">
+<original>S</original>
+<variation>C</variation>
+<location>
+<position position="180"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs28933697." id="VAR_012883" evidence="9 10 12 15 17 24 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="182"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044267" evidence="27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="183"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; no effect on ligand-binding; no effect on cell membrane localization; reduced proteolytic processing." id="VAR_044268" evidence="9 12 24 26 27">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="183"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044269" evidence="12 27 30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="183"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044270" evidence="17">
+<original>C</original>
+<variation>G</variation>
+<location>
+<position position="185"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012884" evidence="12 15 27 30 39">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="185"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044271" evidence="24">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="189"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044272" evidence="12 27 30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="194"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044273" evidence="20">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="194"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044274" evidence="24">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="194"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044275" evidence="15">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="194"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729468." id="VAR_044276" evidence="27">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="201"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044277" evidence="15">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="206"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs775267348." id="VAR_044278" evidence="10 15 17 24 27 30">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="207"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729455." id="VAR_012885" evidence="15 17 39">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="212"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044279" evidence="23">
+<original>R</original>
+<variation>K</variation>
+<location>
+<position position="213"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012886" evidence="15 17 39">
+<original>C</original>
+<variation>G</variation>
+<location>
+<position position="222"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729452." id="VAR_044280" evidence="20">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="222"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729451." id="VAR_012887" evidence="15 39">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="224"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044281" evidence="20">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="233"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044282" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="233"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044283" evidence="27 30">
+<location>
+<begin position="239"/>
+<end position="253"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044284" evidence="27 30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="240"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044285" evidence="27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="245"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044286" evidence="20 24">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="251"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012888" evidence="15 39">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="258"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044287" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="260"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; requires 2 nucleotide substitutions." id="VAR_044288" evidence="30">
+<original>A</original>
+<variation>C</variation>
+<location>
+<position position="319"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs137852641." id="VAR_044289" evidence="16 24 27 30">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="332"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044290" evidence="27 30">
+<original>S</original>
+<variation>C</variation>
+<location>
+<position position="335"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044291" evidence="27 30">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="337"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044292" evidence="27 30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="379"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044293" evidence="27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="395"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1323608032." id="VAR_044294" evidence="20">
+<original>G</original>
+<variation>C</variation>
+<location>
+<position position="420"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555729068." id="VAR_044295" evidence="27 30">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="421"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs267606915." id="VAR_044296" evidence="17">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="428"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044297" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="428"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044298" evidence="20 24">
+<original>C</original>
+<variation>G</variation>
+<location>
+<position position="440"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044299" evidence="27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="440"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044300" evidence="27">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="446"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044301" evidence="20">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="449"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; impaired ligand-binding; strongly reduced signaling activity; no effect on cell membrane localization; reduced proteolytic processing; dbSNP:rs28933698." id="VAR_044302" evidence="19 26">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="455"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044303" evidence="30">
+<original>C</original>
+<variation>F</variation>
+<location>
+<position position="484"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1313319587." id="VAR_044304" evidence="27">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="484"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044305" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="495"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs11670799." id="VAR_012889" evidence="39">
+<original>P</original>
+<variation>L</variation>
+<location>
+<position position="496"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044306" evidence="27 30">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="511"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012890" evidence="15 39">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="542"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs201118034." id="VAR_044307" evidence="10">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="544"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555728814." id="VAR_044308" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="549"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs75068032." id="VAR_012891" evidence="15 17 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="558"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs769773673." id="VAR_012892" evidence="15 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="578"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs777751303." id="VAR_044309" evidence="15 24">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="607"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; found in a compound heterozygote also carrying an intragenic frameshift deletion; dbSNP:rs1328784046." id="VAR_072080" evidence="36">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="710"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1057519101." id="VAR_012893" evidence="15 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="728"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044310" evidence="30">
+<original>C</original>
+<variation>S</variation>
+<location>
+<position position="775"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044311" evidence="20 24">
+<original>G</original>
+<variation>C</variation>
+<location>
+<position position="953"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044312" evidence="15">
+<original>F</original>
+<variation>C</variation>
+<location>
+<position position="984"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012894" evidence="15 17 27 30 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="985"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1555727942." id="VAR_012895" evidence="15 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="1006"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_044313" evidence="10">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="1015"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs35769976." id="VAR_044314">
+<original>A</original>
+<variation>P</variation>
+<location>
+<position position="1020"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1167405466." id="VAR_044315" evidence="20">
+<original>Y</original>
+<variation>C</variation>
+<location>
+<position position="1021"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012896" evidence="15 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="1031"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; requires 2 nucleotide substitutions." id="VAR_044316" evidence="17">
+<original>D</original>
+<variation>C</variation>
+<location>
+<position position="1063"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs112197217." id="VAR_012897" evidence="39">
+<original>H</original>
+<variation>Q</variation>
+<location>
+<position position="1133"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs10408676." id="VAR_012898" evidence="39">
+<original>V</original>
+<variation>M</variation>
+<location>
+<position position="1183"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs201680145." id="VAR_012899" evidence="15 24 39">
+<original>R</original>
+<variation>C</variation>
+<location>
+<position position="1231"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1." id="VAR_012900" evidence="15 39">
+<original>C</original>
+<variation>R</variation>
+<location>
+<position position="1261"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In CADASIL1; dbSNP:rs1209610920." id="VAR_044317" evidence="27 30">
+<original>C</original>
+<variation>Y</variation>
+<location>
+<position position="1261"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In brain small-vessel-disease; exhibits increased NOTCH3 signaling in a ligand-independent fashion." id="VAR_044318" evidence="33">
+<original>L</original>
+<variation>P</variation>
+<location>
+<position position="1515"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In IMF2; dbSNP:rs367543285." id="VAR_069927" evidence="35">
+<original>L</original>
+<variation>P</variation>
+<location>
+<position position="1519"/>
+</location>
+</feature>
+<feature type="sequence variant" description="In dbSNP:rs1044009." id="VAR_012901" evidence="38 39">
+<original>A</original>
+<variation>V</variation>
+<location>
+<position position="2223"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1389"/>
+<end position="1391"/>
+</location>
+</feature>
+<feature type="helix" evidence="2">
+<location>
+<begin position="1393"/>
+<end position="1395"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1398"/>
+<end position="1400"/>
+</location>
+</feature>
+<feature type="helix" evidence="1">
+<location>
+<begin position="1403"/>
+<end position="1405"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1408"/>
+<end position="1410"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1411"/>
+<end position="1414"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1415"/>
+<end position="1420"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1424"/>
+<end position="1427"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1431"/>
+<end position="1433"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1434"/>
+<end position="1437"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1439"/>
+<end position="1441"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1444"/>
+<end position="1446"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1449"/>
+<end position="1451"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1452"/>
+<end position="1456"/>
+</location>
+</feature>
+<feature type="turn" evidence="3">
+<location>
+<begin position="1457"/>
+<end position="1459"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1463"/>
+<end position="1465"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1469"/>
+<end position="1471"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1472"/>
+<end position="1478"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1481"/>
+<end position="1483"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1486"/>
+<end position="1488"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1491"/>
+<end position="1493"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1495"/>
+<end position="1498"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1510"/>
+<end position="1519"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1521"/>
+<end position="1526"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1528"/>
+<end position="1539"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1541"/>
+<end position="1545"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1555"/>
+<end position="1558"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1579"/>
+<end position="1587"/>
+</location>
+</feature>
+<feature type="turn" evidence="2">
+<location>
+<begin position="1589"/>
+<end position="1592"/>
+</location>
+</feature>
+<feature type="turn" evidence="1">
+<location>
+<begin position="1595"/>
+<end position="1597"/>
+</location>
+</feature>
+<feature type="strand" evidence="2">
+<location>
+<begin position="1598"/>
+<end position="1600"/>
+</location>
+</feature>
+<feature type="helix" evidence="3">
+<location>
+<begin position="1604"/>
+<end position="1616"/>
+</location>
+</feature>
+<feature type="strand" evidence="3">
+<location>
+<begin position="1626"/>
+<end position="1632"/>
+</location>
+</feature>
+<evidence key="1" type="ECO:0000244">
+<source>
+<dbReference type="PDB" id="4ZLP"/>
+</source>
+</evidence>
+<evidence key="2" type="ECO:0000244">
+<source>
+<dbReference type="PDB" id="5CZV"/>
+</source>
+</evidence>
+<evidence key="3" type="ECO:0000244">
+<source>
+<dbReference type="PDB" id="5CZX"/>
+</source>
+</evidence>
+<evidence key="4" type="ECO:0000244">
+<source>
+<dbReference type="PubMed" id="24129315"/>
+</source>
+</evidence>
+<evidence key="5" type="ECO:0000250"/>
+<evidence key="6" type="ECO:0000250">
+<source>
+<dbReference type="UniProtKB" id="Q9R172"/>
+</source>
+</evidence>
+<evidence key="7" type="ECO:0000255"/>
+<evidence key="8" type="ECO:0000255">
+<source>
+<dbReference type="PROSITE-ProRule" id="PRU00076"/>
+</source>
+</evidence>
+<evidence key="9" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="10227618"/>
+</source>
+</evidence>
+<evidence key="10" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="10371548"/>
+</source>
+</evidence>
+<evidence key="11" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="10802807"/>
+</source>
+</evidence>
+<evidence key="12" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="10854111"/>
+</source>
+</evidence>
+<evidence key="13" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11058919"/>
+</source>
+</evidence>
+<evidence key="14" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11101851"/>
+</source>
+</evidence>
+<evidence key="15" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11102981"/>
+</source>
+</evidence>
+<evidence key="16" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11559313"/>
+</source>
+</evidence>
+<evidence key="17" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11755616"/>
+</source>
+</evidence>
+<evidence key="18" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="11810186"/>
+</source>
+</evidence>
+<evidence key="19" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="12136071"/>
+</source>
+</evidence>
+<evidence key="20" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="12146805"/>
+</source>
+</evidence>
+<evidence key="21" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="12370315"/>
+</source>
+</evidence>
+<evidence key="22" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="12589106"/>
+</source>
+</evidence>
+<evidence key="23" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="12810003"/>
+</source>
+</evidence>
+<evidence key="24" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15229130"/>
+</source>
+</evidence>
+<evidence key="25" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15300988"/>
+</source>
+</evidence>
+<evidence key="26" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15350543"/>
+</source>
+</evidence>
+<evidence key="27" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15364702"/>
+</source>
+</evidence>
+<evidence key="28" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15378071"/>
+</source>
+</evidence>
+<evidence key="29" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="15818833"/>
+</source>
+</evidence>
+<evidence key="30" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="16009764"/>
+</source>
+</evidence>
+<evidence key="31" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="17292860"/>
+</source>
+</evidence>
+<evidence key="32" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="17573339"/>
+</source>
+</evidence>
+<evidence key="33" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="18273901"/>
+</source>
+</evidence>
+<evidence key="34" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="18299578"/>
+</source>
+</evidence>
+<evidence key="35" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="23731542"/>
+</source>
+</evidence>
+<evidence key="36" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="24000151"/>
+</source>
+</evidence>
+<evidence key="37" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="25394726"/>
+</source>
+</evidence>
+<evidence key="38" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="8878478"/>
+</source>
+</evidence>
+<evidence key="39" type="ECO:0000269">
+<source>
+<dbReference type="PubMed" id="9388399"/>
+</source>
+</evidence>
+<evidence key="40" type="ECO:0000305"/>
+<sequence length="2321" mass="243631" checksum="3E70EC12A59CD638" modified="2011-02-08" version="2" precursor="true">MGPGARGRRRRRRPMSPPPPPPPVRALPLLLLLAGPGAAAPPCLDGSPCANGGRCTQLPSREAACLCPPGWVGERCQLEDPCHSGPCAGRGVCQSSVVAGTARFSCRCPRGFRGPDCSLPDPCLSSPCAHGARCSVGPDGRFLCSCPPGYQGRSCRSDVDECRVGEPCRHGGTCLNTPGSFRCQCPAGYTGPLCENPAVPCAPSPCRNGGTCRQSGDLTYDCACLPGFEGQNCEVNVDDCPGHRCLNGGTCVDGVNTYNCQCPPEWTGQFCTEDVDECQLQPNACHNGGTCFNTLGGHSCVCVNGWTGESCSQNIDDCATAVCFHGATCHDRVASFYCACPMGKTGLLCHLDDACVSNPCHEDAICDTNPVNGRAICTCPPGFTGGACDQDVDECSIGANPCEHLGRCVNTQGSFLCQCGRGYTGPRCETDVNECLSGPCRNQATCLDRIGQFTCICMAGFTGTYCEVDIDECQSSPCVNGGVCKDRVNGFSCTCPSGFSGSTCQLDVDECASTPCRNGAKCVDQPDGYECRCAEGFEGTLCDRNVDDCSPDPCHHGRCVDGIASFSCACAPGYTGTRCESQVDECRSQPCRHGGKCLDLVDKYLCRCPSGTTGVNCEVNIDDCASNPCTFGVCRDGINRYDCVCQPGFTGPLCNVEINECASSPCGEGGSCVDGENGFRCLCPPGSLPPLCLPPSHPCAHEPCSHGICYDAPGGFRCVCEPGWSGPRCSQSLARDACESQPCRAGGTCSSDGMGFHCTCPPGVQGRQCELLSPCTPNPCEHGGRCESAPGQLPVCSCPQGWQGPRCQQDVDECAGPAPCGPHGICTNLAGSFSCTCHGGYTGPSCDQDINDCDPNPCLNGGSCQDGVGSFSCSCLPGFAGPRCARDVDECLSNPCGPGTCTDHVASFTCTCPPGYGGFHCEQDLPDCSPSSCFNGGTCVDGVNSFSCLCRPGYTGAHCQHEADPCLSRPCLHGGVCSAAHPGFRCTCLESFTGPQCQTLVDWCSRQPCQNGGRCVQTGAYCLCPPGWSGRLCDIRSLPCREAAAQIGVRLEQLCQAGGQCVDEDSSHYCVCPEGRTGSHCEQEVDPCLAQPCQHGGTCRGYMGGYMCECLPGYNGDNCEDDVDECASQPCQHGGSCIDLVARYLCSCPPGTLGVLCEINEDDCGPGPPLDSGPRCLHNGTCVDLVGGFRCTCPPGYTGLRCEADINECRSGACHAAHTRDCLQDPGGGFRCLCHAGFSGPRCQTVLSPCESQPCQHGGQCRPSPGPGGGLTFTCHCAQPFWGPRCERVARSCRELQCPVGVPCQQTPRGPRCACPPGLSGPSCRSFPGSPPGASNASCAAAPCLHGGSCRPAPLAPFFRCACAQGWTGPRCEAPAAAPEVSEEPRCPRAACQAKRGDQRCDRECNSPGCGWDGGDCSLSVGDPWRQCEALQCWRLFNNSRCDPACSSPACLYDNFDCHAGGRERTCNPVYEKYCADHFADGRCDQGCNTEECGWDGLDCASEVPALLARGVLVLTVLLPPEELLRSSADFLQRLSAILRTSLRFRLDAHGQAMVFPYHRPSPGSEPRARRELAPEVIGSVVMLEIDNRLCLQSPENDHCFPDAQSAADYLGALSAVERLDFPYPLRDVRGEPLEPPEPSVPLLPLLVAGAVLLLVILVLGVMVARRKREHSTLWFPEGFSLHKDVASGHKGRREPVGQDALGMKNMAKGESLMGEVATDWMDTECPEAKRLKVEEPGMGAEEAVDCRQWTQHHLVAADIRVAPAMALTPPQGDADADGMDVNVRGPDGFTPLMLASFCGGALEPMPTEEDEADDTSASIISDLICQGAQLGARTDRTGETALHLAARYARADAAKRLLDAGADTNAQDHSGRTPLHTAVTADAQGVFQILIRNRSTDLDARMADGSTALILAARLAVEGMVEELIASHADVNAVDELGKSALHWAAAVNNVEATLALLKNGANKDMQDSKEETPLFLAAREGSYEAAKLLLDHFANREITDHLDRLPRDVAQERLHQDIVRLLDQPSGPRSPPGPHGLGPLLCPPGAFLPGLKAAQSGSKKSRRPPGKAGLGPQGPRGRGKKLTLACPGPLADSSVTLSPVDSLDSPRPFGGPPASPGGFPLEGPYAAATATAVSLAQLGGPGRAGLGRQPPGGCVLSLGLLNPVAVPLDWARLPPPAPPGPSFLLPLAPGPQLLNPGTPVSPQERPPPYLAVPGHGEEYPAAGAHSSPPKARFLRVPSEHPYLTPSPESPEHWASPSPPSLSDWSESTPSPATATGAMATTTGALPAQPLPLSVPSSLAQAQTQLGPQPEVTPKRQVLA</sequence>
+</entry>
+<copyright>
+Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+Distributed under the Creative Commons Attribution (CC BY 4.0) License
+</copyright>
+</uniprot>

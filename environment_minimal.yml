@@ -1,4 +1,4 @@
-name: dsenv
+name: dsenv_minimal
 channels:
   - conda-forge
   - bioconda
@@ -10,14 +10,7 @@ dependencies:
   - pybedtools=0.8.2
   - adjusttext=0.7.3.1
   - seaborn=0.11.2
-  - mdanalysis=2.0.0
   - xmlschema=1.8.0
   - requests=2.26.0
   - python-wget=3.2
-  - pybigwig=0.3.18
-  - prody=2.0
-  - root=6.24.6
-  - pytest=6.2.5
-  - pytest-mpl=0.13
-  - pip:
-    - freesasa==2.1.0
+  - biopython=1.79

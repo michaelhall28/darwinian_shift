@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import glob
-from darwinian_shift.utils import get_sifts_alignment
+from darwinian_shift.utils import get_sifts_alignment_for_chain
 from .errors import MetricLookupException
 
 class FoldXLookupError(MetricLookupException): pass
@@ -85,20 +85,6 @@ class FoldXLookup:
         return self._get_scores(seq_object.pdb_id, seq_object.pdb_chain, seq_object.null_mutations,
                                 getattr(seq_object, 'foldx_results_dir', None))
 
-    def _get_sifts_alignment(self, pdb_id, pdb_chain):
-        sifts = get_sifts_alignment(pdb_id, self.sifts_directory, download=self.download_sifts)
-        if sifts is None:
-            print('SIFTS alignment for PDB structure {} not found'.format(pdb_id))
-        elif len(sifts) == 0:
-            print('No sifts alignment information, but file exists.')
-            sifts = None
-        else:
-            sifts = sifts[sifts['pdb chain'] == pdb_chain]
-            if len(sifts) == 0:
-                print('No sifts alignment information for the chain.')
-                sifts = None
-        return sifts
-
     def _convert_alt(self, row):
         if row['aa_mut'] in 'oe':
             return 'H'
@@ -163,7 +149,7 @@ class FoldXLookup:
         return all_results
 
     def _get_scores(self, pdb_id, pdb_chain, df, pdb_foldx_results_dir=None):
-        sifts = self._get_sifts_alignment(pdb_id, pdb_chain)
+        sifts = get_sifts_alignment_for_chain(pdb_id, pdb_chain, self.sifts_directory, self.download_sifts)
         if sifts is None:
             scores = None
         elif len(sifts['uniprot id'].unique()) > 1:

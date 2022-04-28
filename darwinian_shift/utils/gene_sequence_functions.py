@@ -1,3 +1,8 @@
+"""
+Functions for converting exon locations to nucleotide sequences, for getting the nucleotide contexts for mutational
+spectrum calculations, and for generating all possible coding mutations in a gene.
+"""
+
 import pandas as pd
 import numpy as np
 from collections import defaultdict
@@ -8,17 +13,28 @@ from .util_functions import reverse_complement
 
 def get_genomic_ranges_for_gene(exon_data, gene=None, transcript=None, print_transcript_warning=False):
     """
-    If transcript is not specified, use the longest one.
+    Given a gene name or an Ensembl transcript id, will select return the start and end of each exon in the reading
+    direction of the gene.
+
+    If transcript is not specified, will use the longest one.
     Biomart data needs Gene name, Transcript stable ID, Exon rank in transcript, Genomic coding start,
     Genomic coding end, Strand
     If transcript is not specified, also needs CDS Length
 
     Assumes that exons with null "Genomic coding start" have already been removed.
+
+    :param exon_data: Dataframe of data from Ensembl Biomart. Needs to include Gene name, Transcript stable ID,
+    Exon rank in transcript, Genomic coding start, Genomic coding end, Strand.
+    :param gene: The name of the gene. If not given, need to provide transcript
+    :param transcript: Ensemble transcript id. If not given, the longest transcript for the given gene will be used.
+    :param print_transcript_warning: If True, will print a warning if there are multiple transcripts that are the
+    longest for a gene. If this is the case, one transcript will arbitrarily be picked.
+    :return Tuple (exon_ranges [array], transcript [string], strand [int, 1 or -1], transcript_exons [pandas dataframe])
     """
     if gene is None and transcript is None:
         raise TypeError('get_genomic_ranges_for_gene requires either a gene name or transcript id')
 
-    if transcript is None:
+    if transcript is None:  # Pick the longest transcript for the gene.
         gene_exons = exon_data[(exon_data['Gene name'] == gene)]
         if len(gene_exons) == 0:
             print('No protein coding transcript matching gene name', gene)
@@ -46,19 +62,49 @@ def get_genomic_ranges_for_gene(exon_data, gene=None, transcript=None, print_tra
 
 
 def get_positions_from_ranges(exon_ranges, strand):
+    """
+    Converts an array of exon starts and ends to a list of all exonic positions.
+    :param exon_ranges: 2D Array. One row per exon, [start, end].
+    :param strand: 1 or -1.
+    :return: List of ints.
+    """
     cds_positions = []
     for start, end in exon_ranges:
         if strand == 1:
             cds_positions.extend(list(range(start, end + 1)))
         else:
+            # If on the reverse strand, need the positions to be from highest to lowest value.
             cds_positions.extend(list(range(start, end - 1, -1)))
     return cds_positions
 
 
 def get_gene_kmers_from_exon_ranges(chromosome_sequence, chrom_offset, exon_ranges, strand, ks,
                                     reference=None, chrom=None):
+    """
+    Return the context bases for every position in the exonic sequence of the gene. These are used to calculate the
+    mutational spectrum and assign expected mutation rates to all mutations.
+    Multiple k values can be given.
+    The context is symmetrical. So for example if k=3, then the context will include the base before and the base after
+    the nucleotide of interest.
+
+    :param chromosome_sequence: The nucleotide sequence of the chromosome. Does not have to be the entire chromosome,
+    chrom_offset defines the starting position of the sequence.  If None, can supply reference and chrom and read the
+    nucleotide sequence from a fasta file.
+    :param chrom_offset: The starting position of the chromosome sequence given.
+    :param exon_ranges: Array of exon positions. One row per exon, then the start and end of each exon. This is one of
+    the outputs of the function get_genomic_ranges_for_gene
+    :param strand: The strand of the gene.
+    :param ks: List or set of ints (unique values only). The number of context bases to use for the mutational spectra.
+    If an empty list, will only run with no context bases.
+    :param reference: Path to a (compressed) fasta file containing the reference genome.
+    Only required if chromsome_sequence is None.
+    :param chrom: The chromosome for the gene. Only required if chromsome_sequence is None.
+    :return: Tuple. (Dictionary, key=k, value=list of all k-mers in the exonic sequence of the gene.
+    String exonic gene sequence)
+    """
     assert isinstance(exon_ranges, np.ndarray)
 
+    # Get the maximum context required.
     if len(ks) == 0:
         max_k = 0
     else:
@@ -69,11 +115,11 @@ def get_gene_kmers_from_exon_ranges(chromosome_sequence, chrom_offset, exon_rang
     else:
         context = int((max_k-1)/2)
 
-    gene_start = int(exon_ranges.min() - context)  # Give one extra base for context
-    gene_end = int(exon_ranges.max() + context)  # Give one extra base for context
+    gene_start = int(exon_ranges.min() - context)  # Give extra bases for context
+    gene_end = int(exon_ranges.max() + context)  # Give extra bases for context
 
     if gene_start < 1:
-        raise ValueError('gene_start too close to start of chomosome. Cannot include required context bases for spectrum')
+        raise ValueError('gene_start too close to start of chromosome. Cannot include required context bases for spectrum')
 
     if chromosome_sequence is not None:
         assert chrom_offset is not None
@@ -88,6 +134,9 @@ def get_gene_kmers_from_exon_ranges(chromosome_sequence, chrom_offset, exon_rang
             print('Did not recognize chromosome', chrom)
             return []
 
+    # The kmers are put together by collecting sequences offset by 1 base.
+    # For k=3, there is the gene sequence, and the gene sequence shifted one-base before and one-base after.
+    # These sequences are then zipped together to create the nucleotide k-mers.
     gene_kmers = defaultdict(list)
     exonic_gene_sequence = ""
     for start, end in exon_ranges:
@@ -119,6 +168,14 @@ def get_gene_kmers_from_exon_ranges(chromosome_sequence, chrom_offset, exon_rang
 
 
 def get_all_possible_single_nucleotide_mutations(gene_sequence, gene_kmers, sort_results=True):
+    """
+    For an exonic gene sequence, returns a dataframe containing all possible single nucleotide mutations, including
+    the effect (missense, synonymous, nonsense, stop_lost, start_lost) and the nucleotide context.
+    :param gene_sequence: String, exonic gene sequence. Second output of the function get_gene_kmers_from_exon_ranges
+    :param gene_kmers: Dictionary. First output of the function. get_gene_kmers_from_exon_ranges
+    :param sort_results: If True, will return the dataframe sorted by position and the alternate nucleotide.
+    :return: pandas dataframe.
+    """
     length = len(gene_sequence)
     assert length % 3 == 0, 'Transcript nucleotide sequence not multiple of 3'
     assert gene_kmers is not None

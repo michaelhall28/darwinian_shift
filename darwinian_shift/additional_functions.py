@@ -1,3 +1,8 @@
+"""
+A few functions that are useful for exploring mutations in genes using UniProt or PDBe-KB features, and for listing
+available PDB structures.
+"""
+
 from darwinian_shift.lookup_classes import UniprotLookup, PDBeKBLookup
 from darwinian_shift.lookup_classes.uniprot_lookup import UniprotLookupError
 from darwinian_shift.general_functions import DarwinianShift
@@ -137,16 +142,28 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
 
 
 def _get_uniprot_counts(section, spectrum, uniprot_lookup):
+    """
+    Get the expected and observed number of mutations in each UniProt feature.
+    :param section: Section object.
+    :param spectrum: The mutational spectrum to use for the expected mutation rates.
+    :param uniprot_lookup: UniprotLookup to use for annotating the mutations with the UniProt features.
+    :return:
+    """
 
+    # Load the mutations in the section and apply the expected mutation rate
     section.load_section_mutations()
     null_mutations = spectrum.apply_spectrum(section, section.null_mutations)
+
+    # Annotate the null mutations (all possible mutations in the region) with the UniProt features.
     annotated_null_mutations, feature_columns = uniprot_lookup.annotate_dataframe(null_mutations,
                                                                                   section.transcript_id)
 
+    # Apply the UniProt annotations to the observed mutations.
     annotated_observed_mutations = pd.merge(section.observed_mutations, annotated_null_mutations,
                                             on=['pos', 'ref', 'mut'], suffixes=["_x", ""],
                                             how='left')
 
+    # Calculate the total expected and observed mutations in each UniProt feature.
     mut_rates = annotated_null_mutations[spectrum.rate_column]
     annotated_null_mutations['norm_mut_rate'] = mut_rates / mut_rates.sum() * len(section.observed_mutations)
     total_mutations = len(annotated_observed_mutations)
@@ -167,6 +184,15 @@ def _get_uniprot_counts(section, spectrum, uniprot_lookup):
 
 
 def _plot_uniprot_counts(expected_counts, observed_counts, feature_columns, title, output_file_name_template=None):
+    """
+    A bar plot of the expected and observed mutation counts in UniProt features.
+    :param expected_counts:
+    :param observed_counts:
+    :param feature_columns:
+    :param title:
+    :param output_file_name_template:
+    :return:
+    """
     width = 0.4
     xe = np.arange(len(expected_counts))
     xo = xe + width
@@ -186,6 +212,13 @@ def _get_binom_pvalues_dict(expected, observed, feature_columns, total_muts):
                                                                                                feature_columns)}
 
 def _multiple_test_correct(results_dataframe, feature_columns):
+    """
+    Run Benjamini-Hochberg multiple test correction on the p-values from the UniProt exploration and add the q-values
+    as columns to the dataframe.
+    :param results_dataframe:
+    :param feature_columns:
+    :return:
+    """
     p_value_columns = [col+'_pvalue' for col in feature_columns]
     if not results_dataframe[p_value_columns].empty:
         pvals = results_dataframe[p_value_columns].values.ravel()
@@ -222,8 +255,17 @@ def get_bins_for_uniprot_features(uniprot_features_df,
     interval will be (X-1, Y].
     The bins may therefore mark the end of each uniprot feature, not the start.
 
+    This function is mostly used for a bar plot showing mutations per domain
+    (function plot_mutation_counts_in_uniprot_features below).
+
+    :param uniprot_features_df: dataframe of uniprot features from UniprotLookup.get_uniprot_data
+    :param feature_types: List of the Uniprot feature types to include. For example, ['domain', 'repeat']
+    :param start_from_zero: Include a bin prior to the first listed features
     :param min_gap: Setting this to >0 will count residues in small gaps between features as belonging to the next
     feature.
+    :param last_residue: The last residue in the protein (or at least the last residue in the plot). Will add a bin from
+    the end of the last feature to the last_residue.
+    :return: bins array, types list, descriptions list
     """
     if feature_types is not None:
         features = uniprot_features_df[uniprot_features_df['type'].isin(feature_types)]
@@ -312,11 +354,27 @@ def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, f
 
 def annotate_data(ds_object, output_file=None, verbose=False, annotation_separator="|||", remove_spectra_columns=False,
                   transcripts=None, lookup=None):
-    # Set up a ds_object with a lookup.
-    # Annotated the mutations with the lookup information
-    # If only want lookup annotation, run ds with spectra=EvenMutationalSpectrum() to save time
-    # Mutations that are not in any transcripts will not appear in the results.
-    # Mutations in multiple transcripts will appear multiple times in the results
+    """
+    Annotate the input mutations for a DarwinianShift object with the lookup values. Will add the score, and any other
+    information added by the annotate_dataframe function of the lookup class.
+
+    If you only want lookup annotation, run ds with spectra=EvenMutationalSpectrum() to save time
+    Mutations that are not in any transcripts will not appear in the results.
+    Mutations in multiple transcripts will appear multiple times in the results
+
+    Will only work for lookup classes which have an annotate_dataframe function.
+    :param ds_object: DarwinianShift object.
+    :param output_file: File path to output a tab-separated file with the annotated mutations. If None, will return the
+    results as a dataframe.
+    :param verbose: If True, will print the progress through each transcript being run.
+    :param annotation_separator: String to separate multiple annotations.
+    :param remove_spectra_columns: If True, will remove columns including expected mutation rates.
+    :param transcripts: List of transcripts to run.  If None, will run all transcripts from the DarwinianShift object
+    (which will usually by the longest transcripts of any genes with mutations).
+    :param lookup: Lookup object. If None, will use the lookup already associated with the DarwinianShift object.
+    :return: If output_file is None, pandas DataFrame. If output_file is a file path, returns None.
+    """
+
     all_annotated_mutations = []
     output_columns = list(ds_object.data.columns)
     if transcripts is None:
@@ -366,10 +424,10 @@ SUMMARY_URL = "https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/"
 def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, method=None, reject_mutants=True,
                     uniprot_lookup_kwargs=None):
     """
-    Uses Uniprot to get a list of available protein structures for a protein.
+    Uses UniProt to get a list of available protein structures for a protein.
 
-    :param transcript_id: Used to find the uniprot accession
-    :param uniprot_lookup: Can provide a UniprotLookup object if wanting to use non-default arguments.
+    :param transcript_id: Used to find the UniProt accession
+    :param uniprot_lookup: Use this to provide a UniprotLookup object if wanting to use non-default arguments.
     Alternatively can pass these arguments to uniprot_lookup_kwargs.
     :param min_resolution: Will exclude structures with a resolution value above this threshold
     :param method:  Will only keep structures found using this method, e.g. 'X-ray'
@@ -381,7 +439,11 @@ def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, met
         if uniprot_lookup_kwargs is None:
             uniprot_lookup_kwargs = {}
         uniprot_lookup = UniprotLookup(**uniprot_lookup_kwargs)
+
+    # Get the full list of PDB structures for the protein
     pdbs = uniprot_lookup.get_pdb_structures_for_transcript(transcript_id)
+
+    # Then filter the results
     if min_resolution is not None:
         if 'resolution' in pdbs.columns:
             pdbs = pdbs[pdbs['resolution'] <= min_resolution]
@@ -392,9 +454,12 @@ def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, met
 
     if len(pdbs) == 0:
         return pd.DataFrame()
+
+    # Add more details about each PDB file using the PDBe API
+    # Make one line per PDB chain
     details = []
     for i, p in pdbs.iterrows():
-        if is_current(p['pdb_id']):
+        if is_current(p['pdb_id']):  # Exclude structures which are not current
             title = get_pdb_title(p['pdb_id'])
             chain_details = get_chain_details(p['pdb_id'])
             chains = p['chains'].split('/')
@@ -417,6 +482,11 @@ def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, met
 
 
 def is_current(pdb_id):
+    """
+    Check if a PDB file is current or has been deprecated.
+    :param pdb_id: String
+    :return: Boolean
+    """
     r = requests.get(STATUS_URL + pdb_id + '?pretty=false')
     j = r.json()
     if j:  #  Removed theoretical models may return {}
@@ -427,6 +497,11 @@ def is_current(pdb_id):
 
 
 def get_chain_details(pdb_id):
+    """
+    Get all chains and their mutation flags in the given PDB structure
+    :param pdb_id: String
+    :return: pandas DataFrame
+    """
     r = requests.get(MOLECULE_URL + pdb_id + '?pretty=false')
     molecules = r.json()[pdb_id.lower()]
     mol_df = []
@@ -441,6 +516,11 @@ def get_chain_details(pdb_id):
 
 
 def get_pdb_title(pdb_id):
+    """
+
+    :param pdb_id:
+    :return: String
+    """
     r = requests.get(SUMMARY_URL + pdb_id + '?pretty=false')
     title = r.json()[pdb_id.lower()][0]['title']
     return title
@@ -450,18 +530,31 @@ def get_pdb_title(pdb_id):
 def pdbe_kb_exploration(ds_object, gene=None, transcript_id=None, score_methods=None, data_label='accession',
                         verbose=False, spectrum=None):
     """
-    For a DarwninianShift object with default Globk3 spectrum.
-    Score methods dictionary of the scoring of non-boolean cases e.g. {
+    Runs an analysis of the gene mutations against the data in PDBe-KB.
+    This database contains various analyses of the protein structure and binding to other molecules.
+    See the PDBeKBLookup class for more information.
+
+    This function has not been extensively tested.
+
+    Running outside of the usual system to reduce redundancy of scoring mutations.
+
+    :param ds_object: DarwinianShift object
+    :param gene: Gene to analyse. Alternative, use transcript_id.
+    :param transcript_id: Ensembl transcript id to analyse. Use instead of gene.
+    :param score_methods: A dictionary of the scoring of non-boolean cases e.g. {
           'cath-funsites': 'mean',
           'efoldmine': 'mean',
           'backbone': 'mean',
           'complex_residue_depth': 'mean',
           'monomeric_residue_depth': 'mean'
         }
-    Not extensively tested.
-
-    Running outside of the usual system to reduce redundancy of scoring mutations.
+    Scores not listed here are assumed to be true for listed residues and false for all residues not listed.
+    :param data_label:
+    :param verbose:
+    :param spectrum:
+    :return: pandas dataframe
     """
+
     if not isinstance(ds_object.lookup, PDBeKBLookup):
         raise TypeError("ds_object must have a PDBeKBLookup as its lookup attribute")
     if score_methods is None:

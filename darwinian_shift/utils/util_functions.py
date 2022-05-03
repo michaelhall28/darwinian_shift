@@ -83,6 +83,13 @@ def sort_multiple_arrays_using_one(*arrays):
 PDB_DOWNLOAD_BASE_URL="https://files.rcsb.org/download"
 
 def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
+    """
+    Downloads a PDB file from RCSB.
+    :param pdb_id: String. The PDB ID.
+    :param output_dir: The output directory.
+    :param file_type: The file type, e.g. pdb or pdb.gz
+    :return: None.
+    """
     url = PDB_DOWNLOAD_BASE_URL + "/{}.{}".format(pdb_id, file_type)
     try:
         wget.download(url, output_dir, bar=None)
@@ -93,6 +100,11 @@ def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
 
 UNIPROT_UPLOADLISTS_URL = 'https://www.uniprot.org/uploadlists/'
 def get_uniprot_acc_from_transcript_id(transcript_id):
+    """
+    Uses the UniProt API to get the UniProt accession associated with the given Ensembl transcript ID.
+    :param transcript_id: Ensembl transcript ID
+    :return: String
+    """
     params = {
     'from': 'ENSEMBL_TRS_ID',
     'to': 'ACC',
@@ -110,6 +122,8 @@ def get_uniprot_acc_from_transcript_id(transcript_id):
 
 def read_sbs_from_vcf(vcf_file):
     """
+    Basic VCF reader.
+
     Only reads the chrom, pos, ref and alts from the VCF file.
     Not strict about checking the headers, and will not filter any mutations.
     Lines with multiple alts will be split into one mutation for each alt.
@@ -150,10 +164,13 @@ def read_sbs_from_vcf(vcf_file):
 # Functions to add the required columns to COSMIC TSV data.
 def _get_cosmic_sbs_muts(row):
     """
-    We want the chromosome, position, reference, alternate
+    Converts the information in a COSMIC entry to get the chromosome, position, reference and alternate for a mutation.
+    Only interested in exonic single base substitutions.
+    :param row: Row from a pandas dataframe of COSMIC mutations (see process_cosmic_mutations function)
     """
     chrom, pos = row['Mutation genome position'].split(':')
 
+    # Convert the chromosome from a number to the usual chromosome names.
     if chrom == '23':
         chrom = 'X'
     elif chrom == '24':

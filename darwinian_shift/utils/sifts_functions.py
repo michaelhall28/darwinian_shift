@@ -153,7 +153,7 @@ def get_pdb_positions(residues, pdb_id, pdb_chain, sifts_directory, download=Tru
     :param sifts_directory: The directory in which the SIFTS xml and TSV files are saved
     :param download:  If True and the SIFTS files do not already exist, will download the SIFTS information. If False,
     will only use files that have already been downloaded.
-    :return: pandas dataframe, or None is the SIFTS alignment is not available.  
+    :return: pandas dataframe, or None if the SIFTS alignment is not available.
     """
     sifts_alignment = get_sifts_alignment_for_chain(pdb_id, pdb_chain, sifts_directory, download=download)
     if sifts_alignment is None:

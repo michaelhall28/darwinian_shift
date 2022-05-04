@@ -7,6 +7,29 @@ from matplotlib.patches import FancyBboxPatch, Rectangle
 def _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
                                   marker_size_from_count, base_marker_size, colour, label, alpha,
                                   hotspots_in_foreground, marker=None, ax=None, zorder=None):
+    """
+    General function for plotting two columns of a mutation dataframe as a scatter plot. Called from a few of the
+    scatter plots.
+
+    :param muts: Dataframe of mutations.
+    :param mut_counts: The counts associated with each mutation, will usually be the output of
+    pandas.Series.value_counts() run on the column that defines the grouping of the mutations. Used for the marker sizes.
+    :param xcol: The dataframe column for the x-values of the scatter plot.
+    :param ycol: The dataframe column for the y-values of the scatter plot.
+    :param marker_size_from_count: If True, the size of each marker will be proportional to the mut_counts values.
+    :param base_marker_size: The size of all markers if marker_size_from_count=False or mut_counts=None. Otherwise, the
+    marker size is the base_marker_size * the mut_count.
+    :param colour: Color for the matplotlib scatter function.
+    :param label: Label for matplotlib. Will appear on the legend.
+    :param alpha: Alpha for the scatter.
+    :param hotspots_in_foreground: If True, the most common mutations (with larger markers) will appear in the
+    foreground - this can hide less frequent mutations behind the larger markers. If false, the smaller markers are in
+    the foreground.
+    :param marker: The marker shape.
+    :param ax: Axis to plot on.
+    :param zorder: Zorder for matplotlib.
+    :return: None.
+    """
     if ax is None:
         ax = plt.gca()
 
@@ -24,7 +47,7 @@ def _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
     if marker_size_from_count and mut_counts is not None:
         counts = dedup_muts['count']
         s = base_marker_size * counts
-        linewidth = [0 if size < 20 else 0.2 for size in s]
+        linewidth = [0 if size < 20 else 0.2 for size in s]  # Only use outlines for the larger markers.
     else:
         s = base_marker_size
         linewidth = 0
@@ -35,6 +58,35 @@ def _plot_single_scatter_category(muts, mut_counts, xcol, ycol,
 def colour_mutations_by_scores(mutation_df, mut_counts, xcol, ycol, sections_for_colours, score_regions_for_colours,
                                score_region_colours, marker_size_from_count, base_marker_size, alpha,
                                hotspots_in_foreground, ax=None, use_null=False, marker=None, zorder=None):
+    """
+    Plots a series of scatter plots in various colours. Uses the sections_for_colours to define the mutations in
+    each colour.
+    For example, could plot all mutations with a ∆∆G value > 2 kcal/mol in red and mutations on an interface in blue.
+
+    :param mutation_df: Dataframe of mutations to plot. Only those mutations which overlap with the sections_for_colours
+    and score_regions_for_colours will be plotted.
+    :param mut_counts: pd.Series.value_counts output for the mutation counts. Used for the marker size.
+    :param xcol: The dataframe column for the x-values of the scatter plot.
+    :param ycol: The dataframe column for the y-values of the scatter plot.
+    :param sections_for_colours: List of Section objects with mutations already scored.
+    :param score_regions_for_colours: List of tuples of the lower and upper bounds for the coloured region associated
+    with each Section in sections_for_colours.
+    :param score_region_colours: List of colours for each region.
+    :param marker_size_from_count: Boolean. If True, the size of each marker will be proportional to the
+    mut_counts values.
+    :param base_marker_size: Float. The size of all markers if marker_size_from_count=False or mut_counts=None.
+    Otherwise, the marker size is the base_marker_size * the mut_count.
+    :param alpha: Alpha for the scatter.
+    :param hotspots_in_foreground: If True, the most common mutations (with larger markers) will appear in the
+    foreground - this can hide less frequent mutations behind the larger markers. If false, the smaller markers are in
+    the foreground.
+    :param ax: Axis to plot on.
+    :param use_null: Will use the null_mutations to score the regions. Means every scored mutation, observed or not, can
+    be shown (what will actually be shown will depend on the contents of the mutation_df).
+    :param marker: The marker shape.
+    :param zorder: Zorder for matplotlib.
+    :return: pandas DataFrame including all mutations that were not plotted.
+    """
     mut_df_copy = mutation_df.copy()  # Make sure not to edit the original dataframe
     if score_region_colours is None:
         score_region_colours = plt.rcParams['axes.prop_cycle'].by_key()['color'][4:]  # Default colour cycle
@@ -307,6 +359,18 @@ def plot_scatter_two_scores(section1, section2, sections_for_colours=None, score
 
 def annotate_mutations_on_plot(ax, mutations_to_annotate, annotation_column, xcol, ycol,
                                         annotation_offset=(0, 0)):
+    """
+    Use matplotlib annotation to add text to plot for the dataframe of mutations given.
+    :param ax: The axis to plot on.
+    :param mutations_to_annotate: Dataframe of mutations to annotated. Must include the xcol, ycol and annotation_column
+    as columns.
+    :param annotation_column: The value in this column will be used for the text annotation.
+    :param xcol: The column to use for the x-position of the text (+ annotation_offset[0])
+    :param ycol: The column to use for the x-position of the text (+ annotation_offset[1])
+    :param annotation_offset: Tuple (number, number). x and y offset for the annotation relative to the xcol and ycol
+    values. The same offset is used for all mutations.
+    :return: None.
+    """
     for i, row in mutations_to_annotate.iterrows():
         ax.annotate(row[annotation_column], (row[xcol] + annotation_offset[0],
                                              row[ycol] + annotation_offset[1]))
@@ -314,6 +378,25 @@ def annotate_mutations_on_plot(ax, mutations_to_annotate, annotation_column, xco
 
 def plot_domain_structure(bins, colours, height, figsize=(15, 1), end_pos=None, linewidth=4, linecolour='C7',
                           round_edges=True, vertical_offset=0, rounding_size=None, pad=0, ax=None):
+    """
+    Plots a series of blocks in a horizontal line, intended for plotting domains across protein residues.
+    A line will be plotted behind the domains. For a gap between domains, use a height of 0 for that bin.
+
+    :param bins: List of boundary points between the domains/regions. Length=number of regions + 1.
+    :param colours: Colour for each region.
+    :param height: Float/int or list of floats/ints. If single number, a single height will be used for all regions.
+    If list, then one height value for each region.
+    :param figsize: Tuple. Figure size.
+    :param end_pos: The last position for the line (it will start from zero). If None, will use the last bin.
+    :param linewidth: The width of the line behind the domain boxes.
+    :param linecolour: The colour for the line behind the domain boxes.
+    :param round_edges: If True, will use rounded corners for the boxes.
+    :param vertical_offset: Used for the FancyBboxPatch with round edges.
+    :param rounding_size: Used to define the rounding of if round_edges=True.
+    :param pad: Used for the pad of the rounded boxes.
+    :param ax: The axis to plot on.
+    :return: None.
+    """
     if ax is None:
         fig, ax = plt.subplots(figsize=figsize)
 
@@ -353,6 +436,12 @@ def plot_domain_structure(bins, colours, height, figsize=(15, 1), end_pos=None, 
 
 
 def hide_top_and_right_axes(ax=None):
+    """
+    Convenient function to remove the right and top axes from a plot.
+
+    :param ax: 
+    :return:
+    """
     if ax is None:
         ax = plt.gca()
     ax.spines['right'].set_visible(False)

@@ -1,3 +1,7 @@
+"""
+Classes for storing the mutational spectra of datasets.
+"""
+
 import pandas as pd
 from collections import Counter
 import json
@@ -5,9 +9,11 @@ from .utils.util_functions import reverse_complement
 
 
 class MutationalSpectrum:
-    # Base class. Should not be used.
-    # Just a few functions that are used in all spectra
-    # And means we can check if an object is a spectrum of any type
+    """
+    Base class. Should not be used directly.
+    Just a few functions that are used in all spectra
+    And using a base class means we can check if an object is a spectrum of any type
+    """
     precalculated = None
 
     def set_project(self, project):
@@ -37,7 +43,10 @@ class MutationalSpectrum:
         pass
 
 class EvenMutationalSpectrum(MutationalSpectrum):
-    # All mutations have the same probability
+    """
+    The simplest mutational spectrum.
+    All mutations have the same probability of occuring
+    """
     default_name = 'EvenMutationalSpectrum'
     precalculated=True
     def __init__(self, name=None):
@@ -61,23 +70,44 @@ class EvenMutationalSpectrum(MutationalSpectrum):
         pass
 
     def apply_spectrum(self, seq_obj, df):
-        # Apply to a dataframe of mutations.
+        """
+        Apply to a dataframe of mutations.
+        :param seq_obj: Section object. Not used here. Argument kept to be consistent with the other spectrum classes.
+        :param df: Dataframe of mutations.
+        :return:
+        """
+        # Set the mutation rate to be equal for all mutations
+        # The relative mutation rate is used, so the absolute value doesn't matter. Use 1.0.
         df.loc[:, self.rate_column] = 1.0
         return df
 
 ###### Spectra calculated from the given data set
 class KmerMutationalSpectrum(MutationalSpectrum):
+    """
+    Class for spectra based on the nucleotide change and the surrounding nucleotide context of the reference base.
+    This can be used for trinucleotide spectra for example.
+
+    Inherited by the classes GlobalKmerSpectrum (all genes share the same mutational spectrum) and
+    TranscriptKmerSpectrum (each transcript has a mutational spectrum calculated from just the transcript mutations).
+    """
     write_attrs = ('name', 'ignore_strand', 'centre_index', 'k', 'missing_value', 'kmer_column_raw')
     output_columns = ()
     collect_counts = True
 
-    def __init__(self, deduplicate_spectrum=False,
-                 k=3,  # Size of kmer nucleotide context. Use 3 for trinucleotides.
-                 ignore_strand=False,
-                 missing_value=0,  # To replace missing values. Useful to make non-zero in some cases.
-                 name=None,
-                 run_init=True  # Is set to false when using a file to input spectrum
-                 ):
+    def __init__(self, deduplicate_spectrum=False, k=3, ignore_strand=False, missing_value=0, name=None, run_init=True):
+        """
+
+        :param deduplicate_spectrum: Remove duplicate mutations (same position, reference and alternate base)
+        before calculating the mutation rate.
+        :param k: Size of kmer nucleotide context. Use 3 for trinucleotides.
+        :param ignore_strand: If True, the equivalent mutations in the opposite strand will be combined into a single
+        category. E.g. A>C will be the same as T>G.
+        :param missing_value: Used to replace missing values (where no mutations of that type are observed).
+        Useful to make non-zero in some cases.
+        :param name: Name to give the spectrum. Will be added to some columns in the statistical results to
+        differentiate the output from the different spectra used.
+        :param run_init: This is set to false when using a file to input spectrum
+        """
         self.k = None
         self.centre_index = None
         self.deduplicate_spectrum = None
@@ -216,6 +246,12 @@ class KmerMutationalSpectrum(MutationalSpectrum):
         return spectrum
 
     def write_to_file(self, output_file):
+        """
+        Output the spectrum to a text file.
+        Includes a header with the spectrum information.
+        :param output_file:
+        :return:
+        """
         output_dict = {'spectrum_type': self.__class__.__name__}
         for a in self.write_attrs:
             output_dict[a] = getattr(self, a)
@@ -229,6 +265,10 @@ class KmerMutationalSpectrum(MutationalSpectrum):
 
 
 class GlobalKmerSpectrum(KmerMutationalSpectrum):
+    """
+    Kmer spectrum calculated from all exonic mutations in a dataset.
+    For example, a trinucleotide spectrum.
+    """
 
     default_name = 'glob_k{}'
     output_columns = ('kmer_column', 'strand_mut_column', 'rate_column', 'mut_count_column', 'seq_count_column')
@@ -245,8 +285,14 @@ class GlobalKmerSpectrum(KmerMutationalSpectrum):
         self.spectrum = self.get_spectrum_dataframe(self.kmer_counts, self.observed_mut_counts)
 
     def apply_spectrum(self, seq_obj, df):
-        # Apply to a dataframe of mutations.
-        # The dataframe must already have the kmer and strand_mut column and
+        """
+        Apply to a dataframe of mutations.
+        The dataframe must already have the kmer and strand_mut column
+
+        :param seq_obj: Section object. Not used here. Argument kept to be consistent with the other spectrum classes.
+        :param df: Dataframe of mutations.
+        :return:
+        """
         df[self.kmer_column] = df[self.kmer_column_raw]
         df[self.strand_mut_column] = df['strand_mut']
         if self.ignore_strand:
@@ -258,6 +304,10 @@ class GlobalKmerSpectrum(KmerMutationalSpectrum):
 
 
 class TranscriptKmerSpectrum(KmerMutationalSpectrum):
+    """
+    Kmer spectrum where each transcript has a spectrum calculated from only the exonic mutations in that transcript.
+    For example, a trinucleotide spectrum.
+    """
     default_name = 'tran_k{}'
     output_columns = ('transcript_id_col', 'kmer_column', 'strand_mut_column', 'rate_column', 'mut_count_column', 'seq_count_column')
     transcript_id_col = 'transcript_id'  # so can use the same function to read spectrum from file as the global spectrum class
@@ -309,8 +359,14 @@ class TranscriptKmerSpectrum(KmerMutationalSpectrum):
         return self.spectrum
 
     def apply_spectrum(self, seq_obj, df):
-        # Apply to a dataframe of mutations.
-        # The dataframe must already have the kmer and strand_mut column and
+        """
+        Apply to a dataframe of mutations.
+        The dataframe must already have the kmer and strand_mut column
+
+        :param seq_obj: Section object.
+        :param df: Dataframe of mutations.
+        :return:
+        """
         spectrum = self.get_transcript_spectrum(seq_obj.transcript)
         df[self.kmer_column] = df[self.kmer_column_raw]
         df[self.strand_mut_column] = df['strand_mut']
@@ -325,15 +381,30 @@ class TranscriptKmerSpectrum(KmerMutationalSpectrum):
 
 ###### Spectra read from a file
 def read_spectrum(input_file, name=None):
-    # This can be expanded with more input formats
+    """
+    Load a spectrum from an input file.
+    :param input_file:
+    :param name: Name to give the new spectrum. If not given, the name in the input file will be used.
+    :return:
+    """
+    # This can be expanded in future with more input formats if needed
+    # For now, only set up for the Kmer spectrum classes above.
     return read_kmer_spectrum(input_file, name)
 
 
 def read_kmer_spectrum(input_file, name=None):
+    """
+    Load a kmer mutational spectrum from a file.
+    :param input_file:
+    :param name: If not None, will overwrite the name in the file.
+    :return: A GlobalKmerSpectrum or TranscriptKmerSpectrum object.
+    """
+    # Read the first line of the file to get the header information.
     with open(input_file) as fh:
         line = fh.readline()
         spectrum_dict = json.loads(line.strip())
 
+    # Set up the spectrum class and attributes based on the header information.
     spectrum_type = spectrum_dict.pop('spectrum_type')
     if spectrum_type == 'GlobalKmerSpectrum':
         spectrum = GlobalKmerSpectrum(run_init=False)
@@ -342,7 +413,6 @@ def read_kmer_spectrum(input_file, name=None):
     else:
         raise ValueError('Do not recognise input file format')
 
-
     for a, v in spectrum_dict.items():
         if a != 'name':
             setattr(spectrum, a, v)
@@ -350,6 +420,8 @@ def read_kmer_spectrum(input_file, name=None):
             setattr(spectrum, a, v)
 
     spectrum.set_name_and_columns()
+
+    # Read the spectrum itself and assigne to the class.  
     spectrum.spectrum = pd.read_csv(input_file, skiprows=1, header=None,
                                 names=[getattr(spectrum, c) for c in spectrum.output_columns])
     spectrum.precalculated = True

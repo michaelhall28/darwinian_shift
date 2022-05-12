@@ -5,6 +5,7 @@ from adjustText import adjust_text
 from scipy.stats import fisher_exact
 from statsmodels.stats.multitest import multipletests
 import matplotlib.pylab as plt
+from matplotlib import collections
 from matplotlib.patches import Arc
 from matplotlib.cm import autumn, winter
 from matplotlib.colors import Normalize, Colormap
@@ -389,19 +390,24 @@ class Section:
                                      expected_counts, observed_counts, fig, ax, xlim, start, end, ylim,
                                      show_legend, legend_args, show_residues, show_plot, ylabel,
                                      observed_label='Observed', divide_by_window_size=True, plot_kwargs_obs=None,
-                                     plot_kwargs_exp=None):
+                                     plot_kwargs_exp=None, show_expected=True):
+        obs_linewidth = 3
         if plot_kwargs_obs is None:
             plot_kwargs_obs = {}
+        elif 'linewidth' in plot_kwargs_obs:
+            obs_linewidth = plot_kwargs_obs.pop('linewidth')
+
         if plot_kwargs_exp is None:
             plot_kwargs_exp = {}
 
         plot_x = (starts + window_size / 2 - 0.5)
-        for spectrum, colour in zip(spectra, colours[1:]):
-            if divide_by_window_size:
-                exp_ = expected_counts[spectrum.name] / window_size
-            else:
-                exp_ = expected_counts[spectrum.name]
-            ax.plot(plot_x, exp_, label=spectrum.name, c=colour, **plot_kwargs_exp)
+        if show_expected:
+            for spectrum, colour in zip(spectra, colours[1:]):
+                if divide_by_window_size:
+                    exp_ = expected_counts[spectrum.name] / window_size
+                else:
+                    exp_ = expected_counts[spectrum.name]
+                ax.plot(plot_x, exp_, label=spectrum.name, c=colour, **plot_kwargs_exp)
 
         if divide_by_window_size:
             obs_ = observed_counts / window_size
@@ -409,7 +415,7 @@ class Section:
             obs_ = observed_counts
 
         ax.plot(plot_x, obs_, label=observed_label, c=colours[0],
-                 linewidth=3, **plot_kwargs_obs)
+                 linewidth=obs_linewidth, **plot_kwargs_obs)
         if xlim is not None:
             ax.set_xlim(xlim)
         else:
@@ -438,7 +444,7 @@ class Section:
                             spectra=None, show_legend=True, figsize=(15, 5), legend_args=None, show_plot=False,
                             colours=None, return_fig=False, show_residues=False, xlim=None, ylim=None, ax=None,
                             divide_by_expected_rate=False, observed_label='Observed', return_values=False,
-                            yaxis_right=False, plot_kwargs_obs=None, plot_kwargs_exp=None):
+                            yaxis_right=False, plot_kwargs_obs=None, plot_kwargs_exp=None, show_expected=True):
         """
         Plots a sliding window of mutation counts across the residues analysed. By default will show the observed data
         and the expected results under each mutational spectrum given. Alternatively, if divide_by_expected_rate=True,
@@ -464,6 +470,7 @@ class Section:
         :param yaxis_right: If True, will show the y-axis on the right of the plot.
         :param plot_kwargs_obs: Additional kwargs for the appearance of the observed line.
         :param plot_kwargs_exp: Additional kwargs for the appearance of the expected lines.
+        :param show_expected: Set to False to hide the expected sliding window.
         :return: By default, None.
         If return_values=True, will return a tuple (observed_counts, expected_counts), where observed_counts is a
         numpy array and expected_counts is a dictionary of numpy arrays.
@@ -533,7 +540,7 @@ class Section:
                                           show_legend, legend_args, show_residues, show_plot,
                                           ylabel='Mutations per codon', observed_label=observed_label,
                                               plot_kwargs_obs=plot_kwargs_obs,
-                                              plot_kwargs_exp=plot_kwargs_exp)
+                                              plot_kwargs_exp=plot_kwargs_exp, show_expected=show_expected)
             if return_values:
                 return observed_counts, expected_counts
 
@@ -1178,7 +1185,8 @@ class Section:
                                figsize=(15, 5), spectra=None, colours=None, show_legend=True, legend_args=None,
                                show_arcs=False, arc_scale=0.001, arc_alpha=0.01, min_arc_residue_gap=5,
                                show_plot=False, colourmap=autumn, colourmap_different_chain=winter, return_fig=False,
-                               show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False):
+                               show_residues=False, xlim=None, ylim=None, ax=None, yaxis_right=False,
+                               show_expected=True):
         """
         Plot of mutation counts with a given distance from the residue in the protein structure. Requires a pdb_id and
         pdb_chain to be defined for the section.
@@ -1208,11 +1216,14 @@ class Section:
         :param ylim: Limits for the y-axis.
         :param ax: Matplotlib axis to plot on. If None, will create a new figure.
         :param yaxis_right: If True, will show the y-axis on the right of the plot.
+        :param show_expected: Set to False to hide the expected sliding window.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         if "MDAnalysis" not in sys.modules:
             raise ImportError("Must install MDAnalysis package to use this function")
-        if self.pdb_id is not None:
+        if self.pdb_id is None:
+            raise ValueError("No pdb_id and pdb_chain defined for this Section")
+        else:
             try:
                 u = MDAnalysis.Universe(os.path.join(self.project.pdb_directory, self.pdb_id.lower() + '.pdb.gz'))
             except FileNotFoundError as e:
@@ -1249,8 +1260,8 @@ class Section:
             if include_chains is None:
                 include_chains = {self.pdb_chain}
 
-            drawn_arcs_same_chain = set()
-            drawn_arcs_different_chain = set()
+            arcs_same_chain = set()
+            arcs_different_chain = set()
 
             expected_counts = {spectrum.name: np.zeros(len(seq_pdb_residues)) for spectrum in spectra}
             observed_counts = np.zeros(len(seq_pdb_residues))
@@ -1268,13 +1279,11 @@ class Section:
                         for r in surrounding_res:
                             tup = (min(res, r[1]), max((res, r[1])))
                             if r[0] == self.pdb_chain and abs(r[1] - res) >= min_arc_residue_gap and \
-                                    tup not in drawn_arcs_same_chain:
-                                plot_arc(ax, res, r[1], colourmap, colourmap_norm, arc_scale=arc_scale, alpha=arc_alpha)
-                                drawn_arcs_same_chain.add(tup)
-                            elif r[0] != self.pdb_chain and tup not in drawn_arcs_different_chain:
-                                plot_arc(ax, res, r[1], colourmap_different_chain, colourmap_norm,
-                                         arc_scale=arc_scale, alpha=arc_alpha)
-                                drawn_arcs_different_chain.add(tup)
+                                    tup not in arcs_same_chain:
+                                arcs_same_chain.add(tup)
+                            elif r[
+                                0] != self.pdb_chain and tup not in arcs_different_chain and tup not in arcs_same_chain:
+                                arcs_different_chain.add(tup)
 
                     window_mutations = self.observed_mutations[self.observed_mutations['residue'].isin(residue_window)]
                     obs = len(window_mutations)
@@ -1288,9 +1297,16 @@ class Section:
 
                     observed_counts[i] = obs / norm_fac
 
-            for spectrum, colour in zip(spectra, colours[1:]):
-                ax.plot(seq_pdb_residues, expected_counts[spectrum.name],
-                         label=spectrum.name, c=colour)
+            if arcs_same_chain:
+                plot_arcs(arcs_same_chain, arc_scale, colourmap, colourmap_norm, ax, alpha=arc_alpha)
+            if arcs_different_chain:
+                plot_arcs(arcs_different_chain, arc_scale, colourmap_different_chain, colourmap_norm, ax,
+                          alpha=arc_alpha)
+
+            if show_expected:
+                for spectrum, colour in zip(spectra, colours[1:]):
+                    ax.plot(seq_pdb_residues, expected_counts[spectrum.name],
+                            label=spectrum.name, c=colour)
             observed_counts = np.array(observed_counts)
             ax.plot(seq_pdb_residues, observed_counts, c=colours[0], label='Observed', linewidth=3)
             if xlim is not None:
@@ -1924,15 +1940,67 @@ def get_3D_window(u, chain, residue, distance):
     return residues
 
 
-def plot_arc(ax, res1, res2, colourmap, colourmap_norm, arc_scale, alpha=0.1):
-    x = (res1+res2)/2
-    a = abs(res1-res2)
-    min_res = min(res1, res2)
-    b = a*arc_scale
-    if b != 0:
-        # Arcs
-        if isinstance(colourmap, Colormap):
-            c = colourmap(colourmap_norm(min_res))
-        else:
-            c = colourmap  # Assume this is a str, or rgb tuple rather than a colour map. Do not scale.
-        ax.add_patch(Arc((x, 0), a, b, theta1=180.0, theta2=360.0, edgecolor=c, alpha=alpha))
+def get_arcs(starts, ends, scale):
+    """
+    Get the x and y values for plotting arc from the start points to the end points.
+    These are plotted below the x-axis.
+    The arcs are half-ellipses
+    :param starts: Numpy array of numbers or a single number. In practice will be integers.
+    :param ends: Numpy array of numbers or a single number. In practice will be integers. Should be larger than the
+    start values.
+    :param scale: The height of each arc will be scale * arc length / 2
+    :return: List of 2D arrays containing the coordinates of each arc.
+    It is the correct format to draw the arcs using matplotlib.collections.LineCollection
+    """
+    # Convert the starts and ends to arrays if required.
+    if isinstance(starts, (int, np.number, float)):
+        starts = np.array([starts])
+    elif isinstance(starts, (list, tuple)):
+        starts = np.array(starts)
+
+    if isinstance(ends, (int, np.number, float)):
+        ends = np.array([ends])
+    elif isinstance(ends, (list, tuple)):
+        ends = np.array(ends)
+
+    # Use 100 points for each arc.
+    x = np.linspace(starts, ends, 100)
+    half_lengths = (ends - starts) / 2
+    height = scale * half_lengths
+
+    # Draw the arcs below the x-axis, so have a minus sign
+    y = -height / half_lengths * np.sqrt(half_lengths ** 2 - (x - starts - half_lengths) ** 2)
+
+    # Stack the x and y values
+    s = np.stack([x.T, y.T])
+    # Convert to the format required for matplotlib.collections.LineCollection
+    arcs = [s[:, i, :].T for i in range(s.shape[1])]
+    return arcs
+
+
+def plot_arcs(arcs, scale, colourmap, colourmap_norm, ax, alpha=0.5):
+    """
+    Use matplotlib.collections.LineCollection to plot a set of arcs under the x-axis.
+    :param arcs: List/set of tuples with (arc_start, arc_end)
+    :param scale: The height of each arc will be scale * arc length / 2
+    :param colourmap: Matplotlib colormap or a single colour.
+    :param colourmap_norm: A normalisation for the colourmap colours.
+    :param ax: Axes to plot on.
+    :param alpha: Alpha of the arcs.
+    :return:
+    """
+    # Get the coordinates for the arcs
+    starts, ends = list(zip(*arcs))
+    arcs = get_arcs(starts, ends, scale)
+
+    # Plot as a LineCollection
+    col = collections.LineCollection(arcs)
+    ax.add_collection(col, autolim=True)
+
+    # Set the colours and the alpha of the arcs. 
+    if isinstance(colourmap, Colormap):
+        colors = colourmap(colourmap_norm(starts))
+    else:
+        colors = colourmap  # Assume this is a str, or rgb tuple rather than a colour map. Do not scale.
+    col.set_color(colors)
+    col.set_alpha(alpha)

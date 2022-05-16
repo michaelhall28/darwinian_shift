@@ -6,7 +6,6 @@ from scipy.stats import fisher_exact
 from statsmodels.stats.multitest import multipletests
 import matplotlib.pylab as plt
 from matplotlib import collections
-from matplotlib.patches import Arc
 from matplotlib.cm import autumn, winter
 from matplotlib.colors import Normalize, Colormap
 from matplotlib.ticker import MaxNLocator, StrMethodFormatter

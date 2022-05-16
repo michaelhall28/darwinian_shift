@@ -44,7 +44,7 @@ class DarwinianShift:
                  source_genome=None, ensembl_release=None,
                  exon_file=None, reference_fasta=None,
                  # Measurements and statistics
-                 lookup=None,  # A class which will return metric value. See lookup_classes directory
+                 lookup=None,  # A class which will return metric values. See lookup_classes directory
                  statistics=None,
                  # Options
                  sections=None,  # Tab separated file or dataframe.
@@ -81,32 +81,57 @@ class DarwinianShift:
                  ):
         """
 
-        :param data:
-        :param source_genome:
-        :param ensembl_release:
-        :param exon_file:
-        :param reference_fasta:
-        :param lookup:
-        :param statistics:
-        :param sections:
-        :param pdb_directory:
-        :param sifts_directory:
-        :param download_sifts:
-        :param spectra: Spectrum object or list of Spectrum objects. The mutational spectrum is calculated from the data.
+        :param data: Pandas DataFrame or path to a tab-separated file of mutations. In either case, must include
+        "chr", "pos", "ref" and "mut" columns.
+        :param source_genome: String, e.g. homo_sapiens. If supplying the name of the source_genome,
+        pre-downloaded ensembl data in the reference_data directory will be used. If there are multiple versions in that
+        directory, the latest will be used unless the ensembl_release parameter is given. Special case, can specify
+        source_genome="GRCh37" to use that human build.
+        :param ensembl_release: The ensembl release number to use a specific version of the source genome. If not given,
+        the most recent release that has been downloaded will be used.
+        :param exon_file: Path to a tab-separated file of exon locations. See the README and the Tutorial notebook for
+        details of the required format and functions to download the file. Can be used with reference_fasta. Or can be
+        used with source_genome to replace the default exon locations with a custom set.
+        :param reference_fasta: Path to a reference genome fa.gz file. the file must be compressed with bgzip and with a
+        faidx index file.  Alternative to giving the source_genome, must be used with exon_file.
+        :param lookup: A class which will return a metric value for each mutation. See lookup_classes directory and
+        the Tutorial notebook.
+        :param statistics: Classes to run statistical tests on the mutational data. See the Tutorial notebook. Multiple
+        statistical tests can be given in a list.
+        :param sections: Tab separated file or dataframe. For running through analysis of multiple regions
+        that require more specification than just a gene name or transcript id.
+        :param pdb_directory: Path to a directory to store PDB files.
+        :param sifts_directory: Path to a directory to store files of data downloaded from SIFTS.
+        :param download_sifts: If False, will access any files already in the sifts_directory but will not download
+        any new files. If True, will first check for a file in the sifts_directory before trying to download new data.
+        :param spectra: Spectrum object/list of Spectrum objects, or file path to a saved spectrum/list of file paths.
+        If any spectrum given is not precalculated/read from a file, it mutational spectrum is calculated from the data.
         To skip this process, use EvenMutationalSpectrum or "Even", although this will impact the statistical results.
         Default is a global trinucleotide spectrum.
-        :param gene_list:
-        :param transcript_list:
-        :param deduplicate:
-        :param use_longest_transcript_only:
-        :param excluded_positions:
-        :param excluded_mutation_types:
-        :param included_mutation_types:
-        :param chunk_size:
-        :param low_mem:
-        :param random_seed:
-        :param testing_random_seed:
-        :param verbose:
+        :param gene_list: List of genes to use. This is used for calculation of the mutational spectra and for analysis.
+        The longest transcript for each gene is used unless use_longest_transcript_only is set to False (which will run
+        for all transcripts in the exon_file and may end up double counting mutations that overlap will multiple
+        transcripts). To use specific transcripts, use transcript_list instead. If gene_list and transcript_list are both
+        not given, all genes containing mutations in the data set will be used.
+        :param transcript_list: List of Ensemble transcript ids to use. This is used for calculation of the mutational
+        spectra and for analysis. If multiple transcripts are given that overlap (for example multiple transcripts in
+        the same gene) then some mutations may be double counted in the calculation of the mutational spectrum.
+        If gene_list and transcript_list are both not given, all genes containing mutations in the data set will be used.
+        :param deduplicate: If True, will remove duplicate mutations (same chromosome, genomic position and mutant base).
+        :param use_longest_transcript_only: Default option is True. Will use the longest transcript for each gene.
+        If False, all transcripts containing a mutation will be used.
+        :param excluded_positions: Dict, key=chrom, val=positions. E.g. {'1': [1, 2, 3]}. Positions to exclude from the
+        analysis. This will not affect the mutational spectrum calculation.
+        :param excluded_mutation_types: Mutations types to ignore in the analysis. E.g. ['synonymous', 'nonsense'].
+        :param included_mutation_types: Mutations types to include in the analysis. E.g. ['synonymous', 'nonsense'].
+        This has priority over excluded mutation_types
+        :param chunk_size: How many bases of a chromosome will be processed at once for the mutational spectrum
+        calculations. Bigger=quicker but more memory. Default=50000000
+        :param low_mem: If False, will keep the sequence data loaded into memory during the spectrum calculation for
+        later reuse. It is quicker, but can use a lot of memory.
+        :param random_seed: Int. Sets the numpy random seed before running the overall analysis.
+        :param testing_random_seed: Int. Resets the numpy random seed before every statistical test.
+        :param verbose: If True, will print more information during the running.
         """
 
         self.verbose=verbose
@@ -239,6 +264,15 @@ class DarwinianShift:
         self.scored_data = []
 
     def _get_reference_data(self, source_genome, ensembl_release, exon_file, reference_fasta):
+        """
+        Get the correct reference fasta file and exon file. These are used to define the transcript sequences (which
+        are also used to calculate the mutational spectra).
+        :param source_genome: String. E.g. homo_sapiens
+        :param ensembl_release: If None, will use the latest release.
+        :param exon_file: Path to a file of exon locations.
+        :param reference_fasta: Path to a bgzipped and indexed fasta file of the genome reference.
+        :return: Path to the exon file and reference file to be used.
+        """
         if source_genome is None and (exon_file is None or reference_fasta is None):
             raise TypeError('Must provide a source_genome or an exon_file and a reference_fasta')
         if source_genome is not None and (exon_file is None or reference_fasta is None):

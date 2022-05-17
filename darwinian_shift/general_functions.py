@@ -203,7 +203,7 @@ class DarwinianShift:
 
         self.transcript_objs = {}
         # If transcripts not specified, will use longest transcript per gene to calculate signature.
-        self.signature_transcript_list = None
+        self.spectrum_transcript_list = None
         self.alternative_transcripts = None
 
         self.reference_fasta = reference_fasta
@@ -527,34 +527,43 @@ class DarwinianShift:
             return None
 
     def _set_up_exon_data(self):
-        if self.transcript_list is not None:
-            if self.section_transcripts:
+        """
+        Filter the full exon data to only contain the selected transcripts or those that overlap with the mutation data.
+        :return: None.
+        """
+        if self.transcript_list is not None:  # The transcript list takes priority if it is defined.
+            if self.section_transcripts:  # Add any transcripts specified in the section list/table.
                 transcript_list_total = set(self.transcript_list).union(self.section_transcripts)
             else:
                 transcript_list_total = self.transcript_list
+
+            # Filter and sort the exon data.
             self.exon_data = self.exon_data[self.exon_data['Transcript stable ID'].isin(transcript_list_total)]
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
             if set(self.transcript_list).difference(self.exon_data['Transcript stable ID'].unique()):
                 raise ValueError('Not all requested transcripts found in exon data.')
         elif self.gene_list is not None:  # Given genes. Will use longest transcript for each.
-            if self.section_transcripts:
+            if self.section_transcripts:  # Include any transcripts specified in the section list/table.
                 self.exon_data = self.exon_data[(self.exon_data['Gene name'].isin(self.gene_list)) |
                                                 (self.exon_data['Transcript stable ID'].isin(self.section_transcripts))]
             else:
+                # Filter the exon data using the gene name.
                 self.exon_data = self.exon_data[self.exon_data['Gene name'].isin(self.gene_list)]
-            if self.use_longest_transcript_only:
+            if self.use_longest_transcript_only:  # Remove any transcripts that aren't the longest for the gene
                 self._remove_unused_transcripts()
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
             if set(self.gene_list).difference(self.exon_data['Gene name'].unique()):
                 raise ValueError('Not all requested genes found in exon data.')
         else:
+            # If no gene_list or transcript_list, find the transcripts that overlap with the mutation data.
             overlapped_transcripts = self.get_overlapped_transcripts(self.data, self.exon_data)
             if overlapped_transcripts is None:
                 raise ValueError('No transcripts found matching the mutations')
+            # Filter and sort the exon data
             self.exon_data = self.exon_data[
                 self.exon_data['Transcript stable ID'].isin(overlapped_transcripts['Transcript stable ID'])]
             self.exon_data = self.exon_data.sort_values(['Chromosome/scaffold name', 'Genomic coding start'])
-            if self.use_longest_transcript_only:
+            if self.use_longest_transcript_only: # Remove any transcripts that aren't the longest for the gene
                 self._remove_unused_transcripts()
                 if self.verbose:
                     print(len(self.exon_data['Gene name'].unique()), 'genes')
@@ -562,13 +571,19 @@ class DarwinianShift:
         # Record the transcripts that are associated with each gene so they can be looked up
         ed = self.exon_data[['Gene name', 'Transcript stable ID']].drop_duplicates()
         for g, t in zip(ed['Gene name'], ed['Transcript stable ID']):
-            self.transcript_gene_map[t] = g
-            self.gene_transcripts_map[g].add(t)
+            self.transcript_gene_map[t] = g   # One gene per transcript.
+            self.gene_transcripts_map[g].add(t)  # There might be more than one transcript per gene.
 
     def _remove_unused_transcripts(self):
+        """
+
+        :return:
+        """
         if self.verbose:
+            # The unfiltered exon data is used to list possible alternative transcripts containing mutations.
             self.unfiltered_exon_data = self.exon_data.copy()
 
+        # Find the longest transcript by CDS length for each gene.
         transcripts = set()
         for gene, gene_df in self.exon_data.groupby('Gene name'):
             longest_cds = gene_df['CDS Length'].max()
@@ -576,14 +591,23 @@ class DarwinianShift:
             if len(transcript_df) > 0:
                 transcripts.add(transcript_df.iloc[0]['Transcript stable ID'])
 
-        self.signature_transcript_list = list(transcripts)
+        # Use the longest transcripts for the spectrum calculations
+        # Any that are defined in the sections but not in the transcript_list/gene_list will not be used for this.
+        self.spectrum_transcript_list = list(transcripts)
 
         if self.section_transcripts is not None:
             transcripts = transcripts.union(self.section_transcripts)
 
+        # Filter the exon data to remove the shorter transcripts.
         self.exon_data = self.exon_data[self.exon_data['Transcript stable ID'].isin(transcripts)]
 
     def _check_non_included_mutations(self):
+        """
+        For the verbose=True case. Will find exonic mutations in the data set that are not in the transcripts used.
+        Prints a list of genes that contain those mutations. Alternative transcripts that contain these mutations
+        are stored in self.alternative_transcripts.
+        :return: None.
+        """
         # annotated mutations are those included in one of the given transcripts
         if not self.checked_included and self.unfiltered_exon_data is not None:
             non_annotated_mutations = self.data[~self.data['included']]
@@ -601,6 +625,11 @@ class DarwinianShift:
         self.checked_included = True
 
     def _get_processing_chunks(self):
+        """
+        Breaks the genome up into manageable chunks for analysis.
+        Generally, up to a point, the bigger the chunks, the faster it runs, but it uses more memory.
+        :return:
+        """
         # Divide the genes/transcripts into sections which are nearby in chromosomes
         chunks = []
         for chrom, chrom_df in self.exon_data.groupby('Chromosome/scaffold name'):
@@ -623,6 +652,12 @@ class DarwinianShift:
         return chunks
 
     def _chunk_iterator(self):
+        """
+        An iterator for running through the transcript to analyse.
+        Loads one chunk of genomic sequence at a time then yields each transcript in that region.
+        :return: tuple. (transcript_id, genomic sequence of the chunk, start position of the chunk,
+        chunk exon data, chunk mutation data).
+        """
         chunks = self._get_processing_chunks()
         f = FastaFile(self.reference_fasta)
         if len(self.ks) == 0:
@@ -647,19 +682,28 @@ class DarwinianShift:
                 yield t, chunk_seq, offset, c['exon_data'], c['mut_data']
 
     def _calculate_spectra(self, verbose=False):
-
+        """
+        Iterates through all the transcripts used, counts the occurrence of each reference category
+        (e.g. trinucleotide) in the transcript sequences and the number of observed mutations of each type.
+        Uses this to calculate the relative mutation rate of each type of mutation.
+        :param verbose:
+        :return:
+        """
+        # Use the _chunk_iterator to loop through all transcripts.
         for transcript_id, chunk_seq, offset, region_exons, region_mutations in self._chunk_iterator():
-            if self.signature_transcript_list is not None and transcript_id not in self.signature_transcript_list:
+            if self.spectrum_transcript_list is not None and transcript_id not in self.spectrum_transcript_list:
                 continue
             try:
-                # Get the trinucleotides from the transcript.
+                # Get the trinucleotides/other kmer from the transcript.
                 t = self.make_transcript(transcript_id=transcript_id, genomic_sequence_chunk=chunk_seq, offset=offset,
                                          region_exons=region_exons, region_mutations=region_mutations)
                 for s in self.spectra:
-                    s.add_transcript_muts(t)
+                    s.add_transcript_muts(t)  # Add the mutations to each spectrum.
                 if t.mismatches > 0:
+                    # Keep track of cases where the mutation reference base does not match the genomic sequence given
+                    # If this number is high it may mean you are using the wrong reference genome!
                     self.total_spectrum_ref_mismatch += t.mismatches
-                elif t.dedup_mismatches > 0:  # If all signature deduplicate, just count those mismatches.
+                elif t.dedup_mismatches > 0:  # If all spectra are deduplicated, just count those mismatches.
                     self.total_spectrum_ref_mismatch += t.dedup_mismatches
                 if verbose:
                     print('{}:{}'.format(t.gene, t.transcript_id), end=" ")
@@ -672,6 +716,7 @@ class DarwinianShift:
         if verbose:
             print()
 
+        # Calculate the relative mutation rates from the counts
         for sig in self.spectra:
             sig.get_spectrum()
 

@@ -81,8 +81,8 @@ class DarwinianShift:
                  ):
         """
 
-        :param data: Pandas DataFrame or path to a tab-separated file of mutations. In either case, must include
-        "chr", "pos", "ref" and "mut" columns.
+        :param data: Pandas DataFrame or path to a tab-separated file of mutations or a VCF file.
+        For the pandas DataFrame or the tab-separated file, they must include "chr", "pos", "ref" and "mut" columns.
         :param source_genome: String, e.g. homo_sapiens. If supplying the name of the source_genome,
         pre-downloaded ensembl data in the reference_data directory will be used. If there are multiple versions in that
         directory, the latest will be used unless the ensembl_release parameter is given. Special case, can specify
@@ -182,6 +182,7 @@ class DarwinianShift:
         if hasattr(self.lookup, "setup_project"):
             self.lookup.setup_project(self)
 
+        # Get the files paths to the exon data and the genome reference to use.
         exon_file, reference_fasta = self._get_reference_data(source_genome, ensembl_release, exon_file, reference_fasta)
 
         self.exon_data = pd.read_csv(exon_file, sep="\t")
@@ -221,8 +222,10 @@ class DarwinianShift:
         self.chunk_size = chunk_size
         self.section_transcripts = None  # Transcripts required for the sections.
         self.sections = None
+        # Load the list of sections to run (if any). Include any extra columns there in the results.
         additional_results_columns = self._get_sections(sections)
 
+        # Select the transcripts to run over and filter the exon data accordingly.
         self._set_up_exon_data()
 
         self.checked_included = False
@@ -298,17 +301,24 @@ class DarwinianShift:
         self.data.drop_duplicates(subset=['chr', 'pos', 'ref', 'mut'], inplace=True)
 
     def _process_spectra(self, spectra):
+        """
+        Set up the mutational spectrum used for analysis.
+        :param spectra: Spectrum object/list of Spectrum objects, or file path to a saved spectrum/list of file paths.
+        :return: None
+        """
         if spectra is None:
+            # Use the default spectrum. A trinucleotide spectrum calculated from all exonic mutations in the dataset.
             self.spectra = [
                 GlobalKmerSpectrum()
             ]
         elif isinstance(spectra, (list, tuple, set)):
+            # Multiple spectra have been given.
             try:
                 processed_spectra = []
                 for s in spectra:
-                    if isinstance(s, MutationalSpectrum):
+                    if isinstance(s, MutationalSpectrum):   # A spectrum object
                         processed_spectra.append(s)
-                    elif isinstance(s, str):
+                    elif isinstance(s, str):   # A file path. Need to load into a spectrum object
                         processed_spectra.append(read_spectrum(s))
                     else:
                         raise TypeError(
@@ -320,18 +330,20 @@ class DarwinianShift:
                     'Each spectrum must be a MutationalSpectrum object or file path to precalculated spectrum, {} given'.format(
                         type(s)))
         elif isinstance(spectra, MutationalSpectrum):
+            # A single MutationalSpectrum object. Place in a single item list for consistency.
             self.spectra = [spectra]
         elif isinstance(spectra, str):
             if spectra.lower() == 'even':
                 self.spectra = [EvenMutationalSpectrum()]
             else:
-                # File path
+                # File path. Need to load the spectrum into a MutationalSpectrum object.
                 self.spectra = [read_spectrum(spectra)]
         else:
             raise TypeError(
                 'spectra must be a MutationalSpectrum object or list of MutationalSpectrum objects, {} given'.format(
                     type(spectra)))
 
+        # Set up each spectrum object ready for the calculation of the spectra from the data.
         for i, s in enumerate(self.spectra):
             s.set_project(self)
             s.reset()  # Makes sure counts start from zero in case using same spectrum object again.
@@ -355,11 +367,12 @@ class DarwinianShift:
 
     def make_section(self, section_dict=None, transcript_id=None, gene=None, lookup=None, **kwargs):
         """
+        Creat a Section object ready for analysis or plotting.
 
         :param section_dict: Can be dictionary or pandas Series. Must contain "transcript_id" or "gene" and any
         other information required to define a section (e.g. start/end or pdb_id and pdb_chain)
-        :param transcript_id:
-        :param gene:
+        :param transcript_id: Ensembl transcript id for the section.
+        :param gene: Gene name.
         :param lookup: A Lookup object, if given will override the lookup for the DarwinianShift object. Alternatively,
         this can be provided in the section_dict under the key "lookup"
         :return:
@@ -394,12 +407,24 @@ class DarwinianShift:
         return sec
 
     def get_transcript_obj(self, transcript_id):
+        """
+        Get a transcript object from a transcript id string.
+        :param transcript_id: Ensembl transcript id.
+        :return: Transcript object
+        """
         t = self.transcript_objs.get(transcript_id, None)
         if t is None:
             t = self.make_transcript(transcript_id=transcript_id)
         return t
 
     def get_transcript_id(self, gene):
+        """
+        Get a transcript id for the gene. This is based on the transcripts used in the analysis.
+        If there are multiple transcripts associated with a gene, only a single (arbitrary) transcript id will be
+        returned.
+        :param gene:
+        :return: String. Transcript id.
+        """
         t = self.gene_transcripts_map.get(gene, None)
         if t is not None and len(t) == 1:
             return list(t)[0]
@@ -407,10 +432,17 @@ class DarwinianShift:
             return t
 
     def get_gene_name(self, transcript_id):
+        """
+        Get a gene name from a transcript id.
+        Will only work for the transcripts used for the current analysis.
+        :param transcript_id: Ensembl transcript id
+        :return:
+        """
         return self.transcript_gene_map.get(transcript_id, None)
 
     def get_gene_list(self):
         """
+        Returns the gene list used for analysis/calculation of the spectra.
         If no gene_list or transcript_list has been given for __init__,
         this will be a list of the genes that overlap with the data.
         :return:
@@ -422,6 +454,7 @@ class DarwinianShift:
 
     def get_transcript_list(self):
         """
+        Returns the transcript list used for analysis/calculation of the spectra.
         If no gene_list or transcript_list has been given for __init__,
         this will be a list of the genes that overlap with the data.
         :return:
@@ -434,27 +467,51 @@ class DarwinianShift:
     def make_transcript(self, gene=None, transcript_id=None, genomic_sequence_chunk=None, offset=None,
                         region_exons=None, region_mutations=None):
         """
-        Makes a new transcript object and adds to the gene-transcript maps
-        :param gene:
-        :param transcript_id:
-        :return:
+        Makes a new transcript object and adds to the gene-transcript maps.
+        Set up to take part of the data/genome for processing the full dataset in chunks.
+        :param gene: gene name. Need to provide this or a transcript id.
+        :param transcript_id: Ensembl trasncript id. Need to provide this or a gene name.
+        :param genomic_sequence_chunk: Genomic sequence containing the transcript region. If not given, will read the
+        sequence from the reference_fasta file associated with this DarwinianShift object.
+        :param offset: Genomic coordinate of the start of the genomic_sequence_chunk (if using)
+        :param region_exons: Part of the exon data that contains the transcript exon locations. If not given, will
+        find them in the full self.exon_data dataframe.
+        :param region_mutations: Dataframe of mutations in this region. If not given, will filter out the transcript
+        mutations from the full self.data dataframe.
+        :return: Transcript object.
         """
         if gene is None and transcript_id is None:
             raise ValueError('Need to supply gene or transcript_id')
+
+        # Make the transcript object.
         t = Transcript(self, gene=gene, transcript_id=transcript_id,
                        genomic_sequence_chunk=genomic_sequence_chunk, offset=offset, region_exons=region_exons,
                        region_mutations=region_mutations)
-        self.transcript_gene_map[t.transcript_id] = t.gene
+
         t.get_observed_mutations()
+
+        # Add to the transcript->gene map and the gene->transcript map
+        self.transcript_gene_map[t.transcript_id] = t.gene
         self.gene_transcripts_map[t.gene].add(t.transcript_id)
+
         if self.verbose:
             self.data.loc[t.transcript_data_locs, 'included'] = True
         if not self.low_mem:
+            # If not low_mem, keep the transcript in a dictionary for access later.
             self.transcript_objs[t.transcript_id] = t
         return t
 
     def get_overlapped_transcripts(self, mut_data, exon_data):
+        """
+        Use bedtools to find all of the transcripts in the exon data that overlap with the mutations in the mut data.
+        :param mut_data: Dataframe of mutations with a 'chr' and a 'pos' column.
+        :param exon_data: Dataframe of exon locations with all of the columns in BED_COLS.
+        :return: Dataframe with 'Gene name' and 'Transcript stable ID' columns.
+        """
+
         mut_data = mut_data.sort_values(['chr', 'pos'])
+
+        # Convert the dataframes to beds, intersect the beds, then convert back to a dataframe. 
         mut_bed = pybedtools.BedTool.from_dataframe(mut_data[['chr', 'pos', 'pos']])
         exon_bed = pybedtools.BedTool.from_dataframe(exon_data[BED_COLS])
         try:

@@ -421,7 +421,7 @@ def read_kmer_spectrum(input_file, name=None):
 
     spectrum.set_name_and_columns()
 
-    # Read the spectrum itself and assigne to the class.  
+    # Read the spectrum itself and assign to the class.
     spectrum.spectrum = pd.read_csv(input_file, skiprows=1, header=None,
                                 names=[getattr(spectrum, c) for c in spectrum.output_columns])
     spectrum.precalculated = True

@@ -876,14 +876,14 @@ class DarwinianShift:
         results = []
         scored_data = []
 
-        for t, chunk_seq, offset, region_exons, region_mutations in self._chunk_iterator():
-            if self.sections is not None:  # Sections are defined.
-                if t not in self.section_transcripts:
+        for transcript_id, chunk_seq, offset, region_exons, region_mutations in self._chunk_iterator():
+            if self.sections is not None:  # Sections are defined so only run those transcripts.
+                if transcript_id not in self.section_transcripts:
                     continue
-            transcript_obj = self.transcript_objs.get(t)
-            if transcript_obj is None:
+            transcript_obj = self.transcript_objs.get(transcript_id)  # Load an existing Transcript object if available
+            if transcript_obj is None:   # Make a Transcript object if it doesn't already exist
                 try:
-                    transcript_obj = self.make_transcript(transcript_id=t, genomic_sequence_chunk=chunk_seq,
+                    transcript_obj = self.make_transcript(transcript_id=transcript_id, genomic_sequence_chunk=chunk_seq,
                                                       offset=offset, region_exons=region_exons,
                                                           region_mutations=region_mutations)
                 except (NoTranscriptError, CodingTranscriptError) as e:
@@ -899,7 +899,7 @@ class DarwinianShift:
                 for i, row in transcript_sections_df.iterrows():
                     transcript_sections.append(self.make_section(row))
 
-            for section in transcript_sections:
+            for section in transcript_sections:   # Run the statistical analysis on all sections of the transcript
                 res = self.run_section(section, verbose=verbose, spectra=spectra, statistics=statistics)
                 if res is not None:
                     scored_data.append(res.observed_mutations)
@@ -907,6 +907,7 @@ class DarwinianShift:
 
         if results:
             self.results = pd.DataFrame(results)
+            # Run multiple-test correction on each column of p-values.
             for col in self.results.columns:
                 if col.endswith('_pvalue'):
                     self.results[col.replace("pvalue", "qvalue")] = multipletests(self.results[col], method='fdr_bh')[1]
@@ -917,9 +918,12 @@ class DarwinianShift:
             self._check_non_included_mutations()
 
     def _generate_sections(self):
-        # Go through the process of getting the scores and sequences.
-        # Just don't do the tests.
-        # Useful for outputting to oncodrive or other external tools
+        """
+        This goes through the process of getting the scores and sequences, it just doesn't do the statistical tests.
+        Can be useful for outputting scores to external tools.
+        :return:
+        """
+
         chunks = self._get_processing_chunks()
         f = FastaFile(self.reference_fasta)
         max_k = max(self.ks)
@@ -946,14 +950,45 @@ class DarwinianShift:
 
 
     def get_spectrum(self, spectrum_name):
+        """
+        Return the Spectrum object with this name.
+        :param spectrum_name:
+        :return:
+        """
         for s in self.spectra:
             if s.name == spectrum_name:
                 return s
         print('No spectrum with name', spectrum_name)
 
     def volcano_plot(self, sig_col, shift_col, qcutoff=0.05, shift_cutoff_low=None, shift_cutoff_high=None,
-                     show_labels=True, colours=('C0', 'C3'), zero_p_offset=None):
+                     show_labels=True, colours=('C0', 'C3'), zero_p_offset=None, label_col='gene'):
+        """
+        Plot the -log10 of the significance against the shift or effect size for each result.
+        self.run_all must be run first to create the self.results dataframe.
+
+        Extreme values (below a q-value threshold, above or below a threshold shift from neutral) are plotted in a
+        different colour.
+        Results with a p/q-value of 0 are plotted using a triangle marker and the position on the y-axis is controlled
+        with the zero_p_offset argument.
+        :param sig_col: The column to use for the significance, e.g. a column ending in pvalue or qvalue
+        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF shift
+        :param qcutoff: Results with q/p values below this cutoff (and that are beyond the shift_cutoff_low or
+        shift_cutoff_high if used) are shown using the second colour.
+        :param shift_cutoff_low: Results with a shift value below this (and that have a lower q/p value than the
+         qcutoff if if used) are shown using the second colour.
+        :param shift_cutoff_high: Results with a shift value above this (and that have a lower q/p value than the
+         qcutoff if if used) are shown using the second colour.
+        :param show_labels: If True, will label the cases more extreme than the cutoffs (qcutoff, shift_cutoff_low,
+        shift_cutoff_high) with the value in the label_col (the gene name by default).
+        :param colours: Tuple, (colour for non-extreme results, colour for the extreme results).
+        :param zero_p_offset: Value to use for the q/p-value instead of zero so those results can be shown.
+        :param label_col: Column to use to label the extreme results if show_labels=True. Default is the gene name.
+        :return: None.
+        """
+        # Plot all of the reusults first. Some markers will be hidden by the highlighted cases later.
         plt.scatter(self.results[shift_col], -np.log10(self.results[sig_col]), c=colours[0], linewidths=0)
+
+        # log of zero p-values will be infinite. Plot these by defining a finite value on the y-axis for them.
         zero_q = self.results[self.results[sig_col] == 0]
         if len(zero_q) > 0 and zero_p_offset is None:
             zero_p_offset = self.results[self.results[sig_col] >= 0].min()/2
@@ -962,6 +997,8 @@ class DarwinianShift:
 
         plt.ylabel('Significance (-log10 {})'.format(sig_col))
         plt.xlabel(shift_col)
+
+        # Show any cases that are very significant and have large shift values in the second colour.
         if qcutoff is not None or shift_cutoff_low is not None or shift_cutoff_high is not None:
             sig_res = self.results
             if qcutoff is not None:
@@ -984,15 +1021,46 @@ class DarwinianShift:
                 texts = []
                 non_zero_q = sig_res[sig_res[sig_col] > 0]
                 for i, row in non_zero_q.iterrows():
-                    texts.append(plt.text(row[shift_col], -np.log10(row[sig_col]), row['gene']))
+                    texts.append(plt.text(row[shift_col], -np.log10(row[sig_col]), row[label_col]))
                 for i, row in zero_q.iterrows():
-                    texts.append(plt.text(row[shift_col], -np.log10(row[sig_col] + zero_p_offset), row['gene']))
+                    texts.append(plt.text(row[shift_col], -np.log10(row[sig_col] + zero_p_offset), row[label_col]))
                 adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red', alpha=0.4))
 
     def volcano_plot_colour_by_gene(self, genes, sig_col, shift_col,
             colours=None,   # List of colours if not wanting matplotlib default. First colour is for the other genes if shown.
             show_other_genes=True,  colour_sig_only=False,
-            qcutoff=0.05, shift_cutoff_low=None, shift_cutoff_high=None, show_labels=True, zero_p_offset=None):
+            qcutoff=0.05, shift_cutoff_low=None, shift_cutoff_high=None, show_labels=True, zero_p_offset=None,
+            label_col='gene'):
+        """
+        Similar to self.volcano_plot. Intended for cases where multiple sections are run per gene, for example if there
+        are multiple structures for a protein that have been analysed.
+        self.run_all must be run first to create the self.results dataframe.
+
+        The markers for extreme results (below the qcutoff threshold and beyond the shift_cutoff_low or
+        shift_cutoff_high) will be coloured according to the gene. To colour all results by gene you can use 1 for the
+        qcutoff and do not set a shift_cutoff_low or shift_cutoff_high.
+
+        :param genes: List of genes to highlight with different colours.
+        :param sig_col: The column to use for the significance, e.g. a column ending in pvalue or qvalue
+        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF shift
+        :param colours: List of colours for the genes. If show_other_genes=True, the first colour in the list is for
+        all genes not in the genes argument. If None, the default matplotlib colours will be used.
+        :param show_other_genes: If True, will show all genes not given in the genes argument as the same colour (the
+        first in the colours list. If False, will only show results for genes in the genes argument.
+        :param colour_sig_only: If True, will only colour the results that are more extreme than the qcutoff and
+        theh shift_cutoff_low/high if used.
+        :param qcutoff: Results with q/p values below this cutoff (and that are beyond the shift_cutoff_low or
+        shift_cutoff_high if used) are shown using the second colour.
+        :param shift_cutoff_low: Results with a shift value below this (and that have a lower q/p value than the
+         qcutoff if if used) are shown using the second colour.
+        :param shift_cutoff_high: Results with a shift value above this (and that have a lower q/p value than the
+         qcutoff if if used) are shown using the second colour.
+        :param show_labels: If True, will label the cases more extreme than the cutoffs (qcutoff, shift_cutoff_low,
+        shift_cutoff_high) with the value in the label_col (the gene name by default).
+        :param zero_p_offset: Value to use for the q/p-value instead of zero so those results can be shown.
+        :param label_col: Column to use to label the extreme results if show_labels=True. Default is the gene name.
+        :return: None.
+        """
         colour_idx = 0
         if colours is None:
             colours = ["C{}".format(i%10) for i in range(len(genes)+1)]
@@ -1038,9 +1106,9 @@ class DarwinianShift:
                 if show_labels:
                     non_zero_q = gene_res[gene_res[sig_col] > 0]
                     for i, row in non_zero_q.iterrows():
-                        texts.append(plt.text(row[shift_col], -np.log10(row[sig_col]), row['gene']))
+                        texts.append(plt.text(row[shift_col], -np.log10(row[sig_col]), row[label_col]))
                     for i, row in zero_q.iterrows():
-                        texts.append(plt.text(row[shift_col], -np.log10(row[sig_col] + zero_p_offset), row['gene']))
+                        texts.append(plt.text(row[shift_col], -np.log10(row[sig_col] + zero_p_offset), row[label_col]))
 
             if show_labels:
                 adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red', alpha=0.4))
@@ -1048,11 +1116,28 @@ class DarwinianShift:
         plt.tight_layout()
 
     def plot_result_distribution(self, column):
+        """
+        Quick plot to show all values in column from the results from low to high.
+        Useful for looking at the distribution of p-values or for quickly seeing how many outliers there are and
+        where to place thresholds.
+        self.run_all must be run first to create the self.results dataframe.
+
+        :param column: Column from the self.results dataframe.
+        :return: None
+        """
         ordered_values = sorted(self.results[column])
         plt.scatter(range(len(ordered_values)), ordered_values)
         plt.ylabel(column)
 
     def change_lookup(self, new_lookup, inplace=False):
+        """
+        Replace the lookup of the project with a new one.
+        This can either do this inplace or can produce a copy.
+        Useful for running multiple analyses on the same dataset.
+        :param new_lookup: Lookup object (one of the classes from darwninian_shift.lookup_classes or otherwise).
+        :param inplace: If True, will change the lookup of this object. If False will make a copy.
+        :return: If inplace = True, will return a DarwinianShift object. Otherwise, None. 
+        """
         if not inplace:
             # Temporarily set the old lookup to None, as some lookups cannot be copied in this manner
             old_lookup = self.lookup

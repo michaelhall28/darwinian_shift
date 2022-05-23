@@ -93,6 +93,6 @@ d = DarwinianShift(data=data_file,
 
 notch3 = d.run_gene('NOTCH3')
 notch3_results = notch3.get_results_dictionary()
-print(notch3_results['CDF_perm_glob_k3_pvalue'])
+print(notch3_results['CDF_MC_glob_k3_pvalue'])
 notch3.plot_boxplot()
 ```

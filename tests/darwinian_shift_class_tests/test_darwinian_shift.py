@@ -8,7 +8,7 @@ import pytest
 from darwinian_shift import DarwinianShift
 from darwinian_shift import GlobalKmerSpectrum, TranscriptKmerSpectrum, EvenMutationalSpectrum
 from darwinian_shift.lookup_classes import *
-from darwinian_shift import PermutationTest, CDFPermutationTest, ChiSquareTest, KSTest
+from darwinian_shift import MonteCarloTest, CDFMonteCarloTest, ChiSquareTest, KSTest
 
 # Test the class functions of the DarwinianShift class.
 # Also test that the results of the full process is consistent
@@ -58,8 +58,8 @@ def run_full_process(spectra, lookup, gene_list, transcript_list, deduplicate, e
                           str(int(use_longest_transcript_only)), str(int(exclude_synonymous)),
                           str(int(exclude_nonsense))])
 
-    statistics = [CDFPermutationTest(num_permutations=1000), ChiSquareTest(),
-                  PermutationTest(stat_function=np.mean, num_permutations=1000),
+    statistics = [CDFMonteCarloTest(num_draws=1000), ChiSquareTest(),
+                  MonteCarloTest(stat_function=np.mean, num_draws=1000),
                   KSTest()]
 
     d = DarwinianShift(data=MUTATION_DATA_FILE,
@@ -190,7 +190,7 @@ def test_section_input_process(sections, lookup):
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lookup,
                        sections=sections,
-                       statistics=[CDFPermutationTest(), ChiSquareTest()],
+                       statistics=[CDFMonteCarloTest(), ChiSquareTest()],
                        testing_random_seed=1,
                        verbose=True
                        )

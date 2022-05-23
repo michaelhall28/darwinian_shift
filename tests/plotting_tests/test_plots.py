@@ -2,7 +2,7 @@ import pytest
 import matplotlib.pyplot as plt
 import numpy as np
 from darwinian_shift import DarwinianShift, EvenMutationalSpectrum, GlobalKmerSpectrum, TranscriptKmerSpectrum
-from darwinian_shift import PermutationTest, CDFPermutationTest, ChiSquareTest, BinomTest
+from darwinian_shift import MonteCarloTest, CDFMonteCarloTest, ChiSquareTest, BinomTest
 from darwinian_shift.additional_functions import get_bins_for_uniprot_features
 from darwinian_shift.lookup_classes import DummyValuesRandom, UniprotLookup
 from darwinian_shift import plot_scatter_two_scores
@@ -18,7 +18,7 @@ def proj():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=DummyValuesRandom(random_function=np.random.random, testing_random_seed=0),
-                       statistics=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       statistics=[CDFMonteCarloTest(testing_random_seed=0), ChiSquareTest()],
                        spectra=(EvenMutationalSpectrum(),
                                 TranscriptKmerSpectrum(k=1),
                                 GlobalKmerSpectrum(k=3))
@@ -48,7 +48,7 @@ def seq_pdb():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=DummyValuesRandom(random_function=np.random.random, testing_random_seed=0),
-                       statistics=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       statistics=[CDFMonteCarloTest(testing_random_seed=0), ChiSquareTest()],
                        spectra=(EvenMutationalSpectrum(),
                                 TranscriptKmerSpectrum(k=1),
                                 GlobalKmerSpectrum(k=3)),
@@ -65,7 +65,7 @@ def seq_pdb():
 @pytest.mark.mpl_image_compare(filename='volcano.png')
 def test_volcano(proj):
     fig = plt.figure()
-    proj.volcano_plot(sig_col='CDF_perm_glob_k3_qvalue', shift_col='CDF_perm_glob_k3_cdf_mean', colours=['C0', 'C3'],
+    proj.volcano_plot(sig_col='CDF_MC_glob_k3_qvalue', shift_col='CDF_MC_glob_k3_cdf_mean', colours=['C0', 'C3'],
                       qcutoff=0.05, shift_cutoff_low=0.6, shift_cutoff_high=0.65)
     return fig
 
@@ -73,7 +73,7 @@ def test_volcano(proj):
 def test_volcano_by_gene(proj):
     fig = plt.figure()
     proj.volcano_plot_colour_by_gene(genes=['NOTCH3', 'KEAP1', 'AKT2'],
-                                     sig_col='CDF_perm_glob_k3_qvalue', shift_col='CDF_perm_glob_k3_cdf_mean'
+                                     sig_col='CDF_MC_glob_k3_qvalue', shift_col='CDF_MC_glob_k3_cdf_mean'
                                      )
     return fig
 
@@ -166,18 +166,18 @@ def test_mutation_rate_vs_score_scatter(seq_pdb):
                                               mutations_to_annotate=seq_pdb.observed_mutations.iloc[:2],
                                               annotation_offset=(0.01, 0.05))
 
-# Plots from the permutation tests
-@pytest.mark.mpl_image_compare(filename='perm.png')
-def test_perm(seq):
+# Plots from the Monte Carlo tests
+@pytest.mark.mpl_image_compare(filename='mc.png')
+def test_MC(seq):
     fig = plt.figure()
-    p = PermutationTest(testing_random_seed=1, num_permutations=1000)
+    p = MonteCarloTest(testing_random_seed=1, num_draws=1000)
     p(seq, seq.project.spectra[0], plot=True, show_plot=False)
     return fig
 
-@pytest.mark.mpl_image_compare(filename='cdf_perm.png')
-def test_cdf_perm(seq):
+@pytest.mark.mpl_image_compare(filename='cdf_mc.png')
+def test_cdf_MC(seq):
     fig = plt.figure()
-    p = CDFPermutationTest(testing_random_seed=1, num_permutations=1000)
+    p = CDFMonteCarloTest(testing_random_seed=1, num_draws=1000)
     p(seq, seq.project.spectra[0], plot=True, show_plot=False)
     return fig
 

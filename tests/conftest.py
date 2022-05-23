@@ -1,7 +1,7 @@
 import pytest
 import os
 from darwinian_shift import DarwinianShift, GlobalKmerSpectrum, TranscriptKmerSpectrum
-from darwinian_shift import CDFPermutationTest, ChiSquareTest
+from darwinian_shift import CDFMonteCarloTest, ChiSquareTest
 from darwinian_shift.section import Section
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -37,7 +37,7 @@ def project():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lambda x: [1]*len(x.null_mutations),  # Make simple lookup here
-                       # stats=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       # stats=[CDFMonteCarloTest(testing_random_seed=0), ChiSquareTest()],
                        spectra=[GlobalKmerSpectrum(k=3)],
                        low_mem=False)
     return d
@@ -50,7 +50,7 @@ def project_spectrum():
                        exon_file=EXON_FILE,
                        reference_fasta=REFERENCE_FASTA_FILE,
                        lookup=lambda x: [1]*len(x.null_mutations),  # Make simple lookup here
-                       # stats=[CDFPermutationTest(testing_random_seed=0), ChiSquareTest()],
+                       # stats=[CDFMonteCarloTest(testing_random_seed=0), ChiSquareTest()],
                        low_mem=False,
                        spectra=[GlobalKmerSpectrum(deduplicate_spectrum=False,
                                                     k=3,  # Size of kmer nucleotide context. Use 3 for trinucleotides.

@@ -11,7 +11,7 @@ from darwinian_shift.section import Section, NoMutationsError
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
 from darwinian_shift.mutation_spectrum import MutationalSpectrum, GlobalKmerSpectrum, read_spectrum, \
     EvenMutationalSpectrum
-from darwinian_shift.statistics import CDFPermutationTest
+from darwinian_shift.statistics import CDFMonteCarloTest
 from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths
 from darwinian_shift.lookup_classes.errors import MetricLookupException
 from darwinian_shift.utils import read_sbs_from_vcf
@@ -241,8 +241,8 @@ class DarwinianShift:
 
         if statistics is None:
             # Use the default statistics only
-            # Use the cdf permutation test as the default as it is appropriate for a wide range of null distributions.
-            self.statistics = [CDFPermutationTest()]
+            # Use the CDF Monte Carlo test as the default as it is appropriate for a wide range of null distributions.
+            self.statistics = [CDFMonteCarloTest()]
         elif not isinstance(statistics, (list, tuple)):
             self.statistics = [statistics]
         else:
@@ -359,7 +359,6 @@ class DarwinianShift:
                 self.sections = sections
             else:
                 raise ValueError('Do not recognize input sections. Should be file path or pandas dataframe')
-            print(len(self.sections), 'sections')
             additional_results_columns = [c for c in self.sections.columns if c != 'transcript_id']
             self.section_transcripts = self.sections['transcript_id'].unique()
 
@@ -532,7 +531,7 @@ class DarwinianShift:
         :return: None.
         """
         if self.transcript_list is not None:  # The transcript list takes priority if it is defined.
-            if self.section_transcripts:  # Add any transcripts specified in the section list/table.
+            if self.section_transcripts is not None:  # Add any transcripts specified in the section list/table.
                 transcript_list_total = set(self.transcript_list).union(self.section_transcripts)
             else:
                 transcript_list_total = self.transcript_list
@@ -543,7 +542,7 @@ class DarwinianShift:
             if set(self.transcript_list).difference(self.exon_data['Transcript stable ID'].unique()):
                 raise ValueError('Not all requested transcripts found in exon data.')
         elif self.gene_list is not None:  # Given genes. Will use longest transcript for each.
-            if self.section_transcripts:  # Include any transcripts specified in the section list/table.
+            if self.section_transcripts is not None:  # Include any transcripts specified in the section list/table.
                 self.exon_data = self.exon_data[(self.exon_data['Gene name'].isin(self.gene_list)) |
                                                 (self.exon_data['Transcript stable ID'].isin(self.section_transcripts))]
             else:
@@ -849,7 +848,7 @@ class DarwinianShift:
 
             if verbose:
                 print('Running', section.section_id, section.gene)
-            section.run(plot_permutations=plot, spectra=spectra, statistics=statistics)
+            section.run(plot_mc=plot, spectra=spectra, statistics=statistics)
             if plot:
                 section.plot()
             return section
@@ -971,7 +970,7 @@ class DarwinianShift:
         Results with a p/q-value of 0 are plotted using a triangle marker and the position on the y-axis is controlled
         with the zero_p_offset argument.
         :param sig_col: The column to use for the significance, e.g. a column ending in pvalue or qvalue
-        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF shift
+        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF mean
         :param qcutoff: Results with q/p values below this cutoff (and that are beyond the shift_cutoff_low or
         shift_cutoff_high if used) are shown using the second colour.
         :param shift_cutoff_low: Results with a shift value below this (and that have a lower q/p value than the
@@ -1042,7 +1041,7 @@ class DarwinianShift:
 
         :param genes: List of genes to highlight with different colours.
         :param sig_col: The column to use for the significance, e.g. a column ending in pvalue or qvalue
-        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF shift
+        :param shift_col: The column to show the shift from neutral. E.g. the mean shift, median shift or CDF mean
         :param colours: List of colours for the genes. If show_other_genes=True, the first colour in the list is for
         all genes not in the genes argument. If None, the default matplotlib colours will be used.
         :param show_other_genes: If True, will show all genes not given in the genes argument as the same colour (the
@@ -1136,7 +1135,7 @@ class DarwinianShift:
         Useful for running multiple analyses on the same dataset.
         :param new_lookup: Lookup object (one of the classes from darwninian_shift.lookup_classes or otherwise).
         :param inplace: If True, will change the lookup of this object. If False will make a copy.
-        :return: If inplace = True, will return a DarwinianShift object. Otherwise, None. 
+        :return: If inplace = True, will return a DarwinianShift object. Otherwise, None.
         """
         if not inplace:
             # Temporarily set the old lookup to None, as some lookups cannot be copied in this manner

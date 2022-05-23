@@ -141,31 +141,31 @@ def test_get_samples_from_mutational_spectrum(exp_values, mut_rates):
     np.testing.assert_array_almost_equal(samples, expected_res)
 
 
-def test_permutation(exp_values, mut_rates, observed_values):
+def test_mc(exp_values, mut_rates, observed_values):
     for metric_function in [np.mean, np.median]:
         print(metric_function)
-        res = permutation_test(exp_values, mut_rates, observed_values, metric_function, 1000, plot=False,
+        res = monte_carlo_test(exp_values, mut_rates, observed_values, metric_function, 1000, plot=False,
                                testing_random_seed=1, rerr=0)
 
         # output new test file. Do not uncomment unless results have changed and confident new results are correct
-        # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_perm_{}_results.pickle'.format(metric_function.__name__)),
+        # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_mc_{}_results.pickle'.format(metric_function.__name__)),
         #                         'wb'))
 
         expected_res = pickle.load(open(os.path.join(FILE_DIR,
-                                                     'reference_perm_{}_results.pickle'.format(metric_function.__name__)),
+                                                     'reference_mc_{}_results.pickle'.format(metric_function.__name__)),
                                         'rb'))
 
         assert res == expected_res
 
 
-def test_permutation_cdf(exp_values, mut_rates, observed_values):
-    res = permutation_test_cdf_sum(exp_values, mut_rates, observed_values, 1000, plot=False,
-                               testing_random_seed=1)
+def test_mc_cdf(exp_values, mut_rates, observed_values):
+    res = monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, 1000, plot=False,
+                                   testing_random_seed=1)
 
     # output new test file. Do not uncomment unless results have changed and confident new results are correct
-    # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_perm_cdf_results.pickle'), 'wb'))
+    # pickle.dump(res, open(os.path.join(FILE_DIR, 'reference_mc_cdf_results.pickle'), 'wb'))
 
-    expected_res = pickle.load(open(os.path.join(FILE_DIR, 'reference_perm_cdf_results.pickle'), 'rb'))
+    expected_res = pickle.load(open(os.path.join(FILE_DIR, 'reference_mc_cdf_results.pickle'), 'rb'))
 
     assert res == expected_res
 

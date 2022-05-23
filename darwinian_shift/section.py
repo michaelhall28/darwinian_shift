@@ -188,10 +188,10 @@ class Section:
 
         self._add_mutation_id_column()
 
-    def run(self, plot_permutations=False, spectra=None, statistics=None):
+    def run(self, plot_mc=False, spectra=None, statistics=None):
         """
         Run the statistical analysis of the section.
-        :param plot_permutations: If True, will plot a histogram of the output of any permutation tests used.
+        :param plot_mc: If True, will plot a histogram of the output of any Monte Carlo tests used.
         :param spectra: The mutational spectrum or list of mutational spectra to use for the statistical tests. If None,
         will run for all of the spectra in the project.
         :param statistics: The statistical tests to run. If None, will run all of the statistical tests in the project.
@@ -200,7 +200,7 @@ class Section:
         self.apply_scores()
 
         # Compare distributions
-        self._run_statistical_tests(plot_permutations, spectra=spectra, statistics=statistics)
+        self._run_statistical_tests(plot_mc, spectra=spectra, statistics=statistics)
 
     def get_results_dictionary(self):
         """

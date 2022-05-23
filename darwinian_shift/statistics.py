@@ -7,14 +7,14 @@ from darwinian_shift.utils import sort_multiple_arrays_using_one
 import math
 
 
-class PermutationTest:
-    # Runs a permutation test for a given statistic like the median or mean.
-    def __init__(self, stat_function=np.mean, num_permutations=10000, name=None,
+class MonteCarloTest:
+    # Runs a Monte Carlo test for a given statistic like the median or mean.
+    def __init__(self, stat_function=np.mean, num_draws=10000, name=None,
                  testing_random_seed=None):
         self.stat_function = stat_function
-        self.num_permutations = num_permutations
+        self.num_draws = num_draws
         if name is None:
-            self.name = stat_function.__name__ + "_perm"
+            self.name = stat_function.__name__ + "_MC"
         else:
             self.name = name
         self.testing_random_seed=testing_random_seed
@@ -23,19 +23,19 @@ class PermutationTest:
         self.testing_random_seed = s
 
     def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
-        res = permutation_test(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
+        res = monte_carlo_test(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
                                seq_object.observed_values,
-                               self.stat_function, self.num_permutations, plot=plot,
+                               self.stat_function, self.num_draws, plot=plot,
                                plot_title=" - ".join(['Monte Carlo Test', self.name, spectrum.name]),
                                testing_random_seed=self.testing_random_seed, show_plot=show_plot)
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 
 
-class CDFPermutationTest:
-    # Runs a permutation test using the cdf of the null distribution instead of the raw value
+class CDFMonteCarloTest:
+    # Runs a Monte Carlo test using the cdf of the null distribution instead of the raw value
     # May be more robust to outlier values
-    def __init__(self, num_permutations=10000, name='CDF_perm', testing_random_seed=None):
-        self.num_permutations = num_permutations
+    def __init__(self, num_draws=10000, name='CDF_MC', testing_random_seed=None):
+        self.num_draws = num_draws
         self.name = name
         self.testing_random_seed=testing_random_seed
 
@@ -43,15 +43,15 @@ class CDFPermutationTest:
         self.testing_random_seed = s
 
     def __call__(self, seq_object, spectrum, plot=False, show_plot=True):
-        res = permutation_test_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
-                                       seq_object.observed_values, self.num_permutations, plot=plot,
+        res = monte_carlo_test_cdf_sum(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column].values,
+                                       seq_object.observed_values, self.num_draws, plot=plot,
                                        plot_title='Monte Carlo Test - CDF sum - ' + spectrum.name,
                                        testing_random_seed=self.testing_random_seed, show_plot=show_plot)
         return {"_".join([self.name, spectrum.name, k]): v for k, v in res.items()}
 
 
 class CDFZTest:
-    # Using the central limit theorem to get a the normal distribution limit of the CDF permutation test.
+    # Using the central limit theorem to get a the normal distribution limit of the CDF Monte Carlo test.
     def __init__(self, name='CDF_Z'):
         self.name = name
 
@@ -214,7 +214,7 @@ def ks_test(all_gene_values, mut_rates, observed_values):
         }
     return results
 
-# Functions for permutation tests
+# Functions for Monte Carlo tests
 def get_samples_from_mutational_spectrum(values, mut_rates, num_per_sample=1000000, num_samples=1):
     mut_rates = np.array(mut_rates)
     weights = mut_rates / mut_rates.sum()
@@ -223,37 +223,37 @@ def get_samples_from_mutational_spectrum(values, mut_rates, num_per_sample=10000
     return samples.reshape(num_samples, num_per_sample)
 
 
-def permutation_p_value(num_permutations, perm_metrics, obs_metric, rerr=1e-7):
+def monte_carlo_p_value(num_draws, mc_metrics, obs_metric, rerr=1e-7):
     """
 
-    :param num_permutations:
-    :param perm_metrics:
+    :param num_draws:
+    :param mc_metrics:
     :param obs_metric:
-    :param rerr: Relative compensation for errors in summing of floating points. The values from the permutations will
+    :param rerr: Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
     :return:
     """
-    num_smaller_or_equal = bisect_right(perm_metrics, obs_metric*(1+rerr)) + 1  # +1 to include the observation itself
-    num_larger_or_equal = num_permutations - bisect_left(perm_metrics,
-                                                         obs_metric*(1-rerr)) + 1 # +1 to include the observation itself
-    pvalue = min(num_smaller_or_equal, num_larger_or_equal) / (num_permutations + 1) * 2  # Two-tailed p-value
+    num_smaller_or_equal = bisect_right(mc_metrics, obs_metric * (1 + rerr)) + 1  # +1 to include the observation itself
+    num_larger_or_equal = num_draws - bisect_left(mc_metrics,
+                                                  obs_metric * (1-rerr)) + 1 # +1 to include the observation itself
+    pvalue = min(num_smaller_or_equal, num_larger_or_equal) / (num_draws + 1) * 2  # Two-tailed p-value
     pvalue = min(pvalue, 1)
     return pvalue, num_smaller_or_equal, num_larger_or_equal
 
 
-def permutation_test(exp_values, mut_rates, observed_values, metric_function, num_permutations, plot=False,
+def monte_carlo_test(exp_values, mut_rates, observed_values, metric_function, num_draws, plot=False,
                      num_plot_bins=100, plot_title=None, testing_random_seed=None, show_plot=True, rerr=1e-7):
     """
-    Use a chosen metric e.g. np.median, np.mean, np.sum etc for the permutation test.
+    Use a chosen metric e.g. np.median, np.mean, np.sum etc for the Monte Carlo test.
     :param exp_values:
     :param mut_rates:
     :param observed_values:
     :param metric_function:
-    :param num_permutations:
+    :param num_draws:
     :param plot:
     :param num_plot_bins:
     :param testing_random_seed:
-    :param rerr:  Relative compensation for errors in summing of floating points. The values from the permutations will
+    :param rerr:  Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
     :return:
     """
@@ -261,15 +261,15 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
         np.random.seed(testing_random_seed)
 
     if plot_title is None:
-        plot_title = 'Permutation Test - {}'.format(metric_function.__name__)
+        plot_title = 'Monte Carlo Test - {}'.format(metric_function.__name__)
 
     num_obs = len(observed_values)
     obs_metric = metric_function(observed_values)
-    samples = get_samples_from_mutational_spectrum(exp_values, mut_rates, num_obs, num_permutations)
-    perm_metrics = np.sort(metric_function(samples, axis=1))
+    samples = get_samples_from_mutational_spectrum(exp_values, mut_rates, num_obs, num_draws)
+    mc_metrics = np.sort(metric_function(samples, axis=1))
     if plot:
-        bins = np.linspace(min(min(perm_metrics), obs_metric), max(max(perm_metrics), obs_metric), num_plot_bins)
-        plt.hist(perm_metrics, bins=bins)
+        bins = np.linspace(min(min(mc_metrics), obs_metric), max(max(mc_metrics), obs_metric), num_plot_bins)
+        plt.hist(mc_metrics, bins=bins)
         ylim = plt.gca().get_ylim()
         plt.vlines(obs_metric, 0, ylim[1], color='k')
         plt.ylim(ylim)
@@ -279,13 +279,13 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
         if show_plot:
             plt.show()
 
-    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics,
+    pvalue, num_smaller_or_equal, num_larger_or_equal = monte_carlo_p_value(num_draws, mc_metrics,
                                                                             obs_metric, rerr)
 
     results = {
         'observed': obs_metric,
-        'null_mean': np.mean(perm_metrics),
-        'null_median': np.median(perm_metrics),
+        'null_mean': np.mean(mc_metrics),
+        'null_median': np.median(mc_metrics),
         'pvalue': pvalue,
         'num_smaller_or_equal': num_smaller_or_equal,
         'num_larger_or_equal': num_larger_or_equal
@@ -293,20 +293,20 @@ def permutation_test(exp_values, mut_rates, observed_values, metric_function, nu
     return results
 
 
-def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permutations, plot=False,
-                               num_plot_bins=100, plot_title='CDF sum', testing_random_seed=None, show_plot=True,
+def monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, num_draws, plot=False,
+                             num_plot_bins=100, plot_title='CDF sum', testing_random_seed=None, show_plot=True,
                              rerr=1e-7):
     """
-    Use the sum of the cdf values for the permutation test.
+    Use the sum of the cdf values for the Monte Carlo test.
     For tied values, using the average of the cdf values.
     :param exp_values:
     :param mut_rates:
     :param observed_values:
-    :param num_permutations:
+    :param num_draws:
     :param plot:
     :param num_plot_bins:
     :param testing_random_seed:
-    :param rerr:  Relative compensation for errors in summing of floating points. The values from the permutations will
+    :param rerr:  Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
     :return:
     """
@@ -330,14 +330,14 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
 
     observed_cumsum = cumsum[np.searchsorted(sorted_exp_values, observed_values)]
 
-    samples = get_samples_from_mutational_spectrum(cumsum, sorted_mut_rates, num_obs, num_permutations)
+    samples = get_samples_from_mutational_spectrum(cumsum, sorted_mut_rates, num_obs, num_draws)
     samples = np.concatenate([samples, np.array(observed_cumsum, ndmin=2)])  # Add the observed values at the end
-    perm_metrics = samples.sum(axis=1)
-    perm_metrics, obs_metric = perm_metrics[:-1], perm_metrics[-1]
-    perm_metrics.sort()
+    mc_metrics = samples.sum(axis=1)
+    mc_metrics, obs_metric = mc_metrics[:-1], mc_metrics[-1]
+    mc_metrics.sort()
     if plot:
-        bins = np.linspace(min(min(perm_metrics), obs_metric), max(max(perm_metrics), obs_metric), num_plot_bins)
-        plt.hist(perm_metrics, bins=bins, density=True)
+        bins = np.linspace(min(min(mc_metrics), obs_metric), max(max(mc_metrics), obs_metric), num_plot_bins)
+        plt.hist(mc_metrics, bins=bins, density=True)
         ylim = plt.gca().get_ylim()
         plt.vlines(obs_metric, 0, ylim[1], color='k')
         # plt.vlines(len(observed_values)*0.5, 0, ylim[1], linestyles='dashed')
@@ -348,7 +348,7 @@ def permutation_test_cdf_sum(exp_values, mut_rates, observed_values, num_permuta
         if show_plot:
             plt.show()
 
-    pvalue, num_smaller_or_equal, num_larger_or_equal = permutation_p_value(num_permutations, perm_metrics,
+    pvalue, num_smaller_or_equal, num_larger_or_equal = monte_carlo_p_value(num_draws, mc_metrics,
                                                                             obs_metric, rerr)
 
     results = {
@@ -373,12 +373,12 @@ def ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False,
                   plot_title='CDF sum', show_plot=True):
     """
     Use the sum of the cdf values
-    The central limit theorem to get the normal distribution limit of the permutation test
+    The central limit theorem to get the normal distribution limit of the Monte Carlo test
     For tied values, using the average of the cdf values.
     :param exp_values:
     :param mut_rates:
     :param observed_values:
-    :param num_permutations:
+    :param num_draws:
     :param plot:
     :param num_plot_bins:
     :param testing_random_seed:

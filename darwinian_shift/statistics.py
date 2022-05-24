@@ -8,9 +8,21 @@ import math
 
 
 class MonteCarloTest:
-    # Runs a Monte Carlo test for a given statistic like the median or mean.
+    """
+    Runs a Monte Carlo test for a given statistic like the median or mean.
+    """
+
     def __init__(self, stat_function=np.mean, num_draws=10000, name=None,
                  testing_random_seed=None):
+        """
+
+        :param stat_function: Function that takes an array of floats as an input and returns a number. For example,
+        numpy.mean or numpy.median
+        :param num_draws: The number of random draws to use to build the null distribution of values.
+        :param name: String. Name for the test to appear in results tables/dictionaries.
+        :param testing_random_seed: Int. If this is set, it will reset the numpy random seed before every time the test
+        is run.
+        """
         self.stat_function = stat_function
         self.num_draws = num_draws
         if name is None:
@@ -32,9 +44,17 @@ class MonteCarloTest:
 
 
 class CDFMonteCarloTest:
-    # Runs a Monte Carlo test using the cdf of the null distribution instead of the raw value
-    # May be more robust to outlier values
+    """
+    Runs a Monte Carlo test using the cdf of the null distribution instead of the raw value
+    May be more robust to outlier values than a MonteCarloTest using the mean of the raw values.
+    """
     def __init__(self, num_draws=10000, name='CDF_MC', testing_random_seed=None):
+        """
+
+        :param num_draws: The number of random draws to use to build the null distribution of values.
+        :param name: String. Name for the test to appear in results tables/dictionaries.
+        :param testing_random_seed: Int. If this is set, it will reset the numpy random seed before every time the test
+        """
         self.num_draws = num_draws
         self.name = name
         self.testing_random_seed=testing_random_seed
@@ -51,7 +71,11 @@ class CDFMonteCarloTest:
 
 
 class CDFZTest:
-    # Using the central limit theorem to get a the normal distribution limit of the CDF Monte Carlo test.
+    """
+    Using the central limit theorem to get a the normal distribution limit of the CDF Monte Carlo test.
+    May not be appropriate for all cases, but where it does work, it will be much faster and can calculate much smaller
+    p-values than the Monte Carlo test.
+    """
     def __init__(self, name='CDF_Z'):
         self.name = name
 
@@ -64,10 +88,27 @@ class CDFZTest:
 
 
 class ChiSquareTest:
-    # A non-directional test for differences in the distribution
-    # Differences between the null and the observed distributions may indicate selection or inappropriate null assumptions
-    # Selection detected here may not correlate with the chosen metric
+    """
+    A non-directional test for differences in the distribution
+    Differences between the null and the observed distributions may indicate selection or inappropriate null assumptions
+    Selection detected here may not correlate with the chosen metric
+    """
     def __init__(self, bins=None, max_bins=10, min_exp_freq=5, name='chi_square', CI_num_samples=10000, CI_alpha=0.05):
+        """
+
+        :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+        If None, the bins will be created based on the null distribution.
+        :param max_bins: Int. Maximum number of bins if calculating boundaries automatically from the null distribution
+        of scores. There may end up with fewer bins if it is not possible to have max_bins with at least the minimum
+        expected frequency (min_exp_freq) in each.
+        :param min_exp_freq: Float. If calculating boundaries automatically from the null distribution, this sets the
+        minimum expected counts in each bin. Fewer than max_bins bins may be created to ensure this condition is met.
+        :param name: String. Name for the test to appear in results tables/dictionaries.
+        :param CI_num_samples: Number of samples used to calculate the confidence intervals (Monte Carlo samples from
+        null distribution for the expected counts, bootstrap samples from the observed mutations for the observed
+        counts).
+        :param CI_alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+        """
         if isinstance(bins, tuple):
             self.bins = list(bins)   #Needs to be mutable
         else:
@@ -99,6 +140,15 @@ class BinomTest:
     """
     def __init__(self, threshold=0.5, name='binom', CI_num_samples=10000,
                  CI_alpha=0.05):
+        """
+
+        :param threshold: Value to split the scores. Default value of 0.5 is set to split boolean 1/0 scores.
+        :param name: String. Name for the test to appear in results tables/dictionaries.
+        :param CI_num_samples: Number of samples used to calculate the confidence intervals (Monte Carlo samples from
+        null distribution for the expected counts, bootstrap samples from the observed mutations for the observed
+        counts).
+        :param CI_alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+        """
         self.threshold = threshold
         self.name = name
 
@@ -118,10 +168,13 @@ class BinomTest:
 
 
 class KSTest:
-    # A non-directional test for differences in the distribution
-    # Differences between the null and the observed distributions may indicate selection or inappropriate null assumptions
-    # Selection detected here may not correlate with the chosen metric
-    # Just for continuous distributions. Use repeat_proportion to check if the results may be valid.
+    """
+    A non-directional test for differences in the distribution
+    Differences between the null and the observed distributions may indicate selection or inappropriate null assumptions
+    Selection detected here may not correlate with the chosen metric
+    Just for continuous distributions.
+    """
+
     name = 'ks'
     def __call__(self, seq_object, spectrum, plot=False):
         res = ks_test(seq_object.null_scores, seq_object.null_mutations[spectrum.rate_column], seq_object.observed_values)
@@ -129,6 +182,12 @@ class KSTest:
 
 
 def calculate_repeat_proportion(null_values):
+    """
+    Counts the proportion of values that are repeats. Can be useful for checking if the KS test might be appropriate (it
+    is not appropriate if there are too many repeat values).
+    :param null_values:
+    :return:
+    """
     num_unique = len(np.unique(null_values))
     num_total = len(null_values)
     repeat_prop = (num_total-num_unique)/num_total
@@ -158,8 +217,18 @@ def get_vectorized_quantile_function(values, mut_rates):
     return quantiler
 
 def get_median(values, mut_rates):
-    # This may be very slightly off in some cases due to floating point errors
-    # Generally because the floating point errors in the cumsum do not hit 0.5 exactly. Can catch some cases.
+    """
+    Calculates the median of the null distribution based on the mutation scores and the expected mutation rates of the
+    mutations.
+
+    This may be very slightly off in some cases due to floating point errors
+    Generally because the floating point errors in the cumsum do not hit 0.5 exactly. Can catch some cases.
+
+    :param values: List or numpy array of the scores for each mutation
+    :param mut_rates: List or numpy array of the mutation rates for each mutation.
+    :return: Number
+    """
+    #
     if len(values) == 1:
         return values[0]
     mut_rates = np.array(mut_rates)
@@ -183,10 +252,15 @@ def get_median(values, mut_rates):
         return values[idx]
 
 def get_cdf(values, mut_rates):
+    """
+    Makes a vectorized CDF function for the null of the 1-sample Kolmogorov-Smirnov test
+    :param values: List or numpy array of the scores for each mutation
+    :param mut_rates: List or numpy array of the mutation rates for each mutation.
+    :return:
+    """
     # Order from low to high.
     # Weight by the mutational spectrum.
     # Take the cumulative sum
-    # Only appropriate if (effectively) continuous data
     mut_rates = np.array(mut_rates)
     weights = mut_rates / mut_rates.sum()
     values, weights = sort_multiple_arrays_using_one(values, weights)
@@ -199,9 +273,18 @@ def get_cdf(values, mut_rates):
     cdf = np.vectorize(cdf)
     return cdf
 
-def ks_test(all_gene_values, mut_rates, observed_values):
-    if len(all_gene_values) > 0 and len(observed_values) > 0:
-        cdf = get_cdf(all_gene_values, mut_rates)
+def ks_test(null_values, mut_rates, observed_values):
+    """
+
+    :param null_values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :return:
+    """
+    if len(null_values) > 0 and len(observed_values) > 0:
+        # Get a CDF function for the 1-sample SciPy kstest
+        cdf = get_cdf(null_values, mut_rates)
+
         k = kstest(observed_values, cdf)
         results = {
             'statistic':k.statistic,
@@ -216,22 +299,39 @@ def ks_test(all_gene_values, mut_rates, observed_values):
 
 # Functions for Monte Carlo tests
 def get_samples_from_mutational_spectrum(values, mut_rates, num_per_sample=1000000, num_samples=1):
+    """
+    Draws multiple samples from a multinomial distribution.
+    The values of the multinomial distribution are the scores of the mutations and the probabilities are the relative
+    expected mutation rates of the mutations.
+
+    :param values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param num_per_sample: Number of mutations per sample. Should match the number of observed mutations.
+    :param num_samples: Number of samples to take.
+    :return: 2D array, one row per sample, one column per mutation.
+    """
     mut_rates = np.array(mut_rates)
-    weights = mut_rates / mut_rates.sum()
+    weights = mut_rates / mut_rates.sum()   # Normalise the mutation rates
+
+    # Draw the number of times each score is repeated across *all samples* in a single call to np.random.multinomial
+    # Then each mutation score (from values) is repeated that number of times
     samples = np.repeat(values, np.random.multinomial(num_per_sample * num_samples, weights))
+    # Shuffle the order of the sample values and then reshape to split into the multiple samples.
     np.random.shuffle(samples)
     return samples.reshape(num_samples, num_per_sample)
 
 
 def monte_carlo_p_value(num_draws, mc_metrics, obs_metric, rerr=1e-7):
     """
+    Calculate the p-value from the null distribution of summary statistics and the observed summary statistic.
 
-    :param num_draws:
-    :param mc_metrics:
-    :param obs_metric:
+    :param num_draws: Number of samples used in the Monte Carlo test.
+    :param mc_metrics: The summary statistic of each of the Monte Carlo samples.
+    :param obs_metric: The summary statistic of the observed sample.
     :param rerr: Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
-    :return:
+    :return: Tuple (float, int, int)
+    (P-value, no. of null samples smaller than the observed value, no. of null samples larger than the observed value.)
     """
     num_smaller_or_equal = bisect_right(mc_metrics, obs_metric * (1 + rerr)) + 1  # +1 to include the observation itself
     num_larger_or_equal = num_draws - bisect_left(mc_metrics,
@@ -241,21 +341,23 @@ def monte_carlo_p_value(num_draws, mc_metrics, obs_metric, rerr=1e-7):
     return pvalue, num_smaller_or_equal, num_larger_or_equal
 
 
-def monte_carlo_test(exp_values, mut_rates, observed_values, metric_function, num_draws, plot=False,
+def monte_carlo_test(null_values, mut_rates, observed_values, metric_function, num_draws, plot=False,
                      num_plot_bins=100, plot_title=None, testing_random_seed=None, show_plot=True, rerr=1e-7):
     """
     Use a chosen metric e.g. np.median, np.mean, np.sum etc for the Monte Carlo test.
-    :param exp_values:
-    :param mut_rates:
-    :param observed_values:
-    :param metric_function:
-    :param num_draws:
-    :param plot:
-    :param num_plot_bins:
-    :param testing_random_seed:
+    :param null_values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param metric_function: Function that takes an array of floats as an input and returns a number. For example,
+    numpy.mean or numpy.median
+    :param num_draws: The number of random draws to use to build the null distribution of values.
+    :param plot: If True, will plot a histogram of the null distribution and show the observed value.
+    :param num_plot_bins: Number of bins to use for the histogram if plot=True
+    :param testing_random_seed: Int. If this is set, it will reset the numpy random seed before every time the test
+    is run.
     :param rerr:  Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
-    :return:
+    :return: Dictionary
     """
     if testing_random_seed is not None:
         np.random.seed(testing_random_seed)
@@ -265,7 +367,7 @@ def monte_carlo_test(exp_values, mut_rates, observed_values, metric_function, nu
 
     num_obs = len(observed_values)
     obs_metric = metric_function(observed_values)
-    samples = get_samples_from_mutational_spectrum(exp_values, mut_rates, num_obs, num_draws)
+    samples = get_samples_from_mutational_spectrum(null_values, mut_rates, num_obs, num_draws)
     mc_metrics = np.sort(metric_function(samples, axis=1))
     if plot:
         bins = np.linspace(min(min(mc_metrics), obs_metric), max(max(mc_metrics), obs_metric), num_plot_bins)
@@ -293,28 +395,29 @@ def monte_carlo_test(exp_values, mut_rates, observed_values, metric_function, nu
     return results
 
 
-def monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, num_draws, plot=False,
+def monte_carlo_test_cdf_sum(null_values, mut_rates, observed_values, num_draws, plot=False,
                              num_plot_bins=100, plot_title='CDF sum', testing_random_seed=None, show_plot=True,
                              rerr=1e-7):
     """
     Use the sum of the cdf values for the Monte Carlo test.
     For tied values, using the average of the cdf values.
-    :param exp_values:
-    :param mut_rates:
-    :param observed_values:
-    :param num_draws:
-    :param plot:
-    :param num_plot_bins:
-    :param testing_random_seed:
+    :param null_values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param num_draws: The number of random draws to use to build the null distribution of values.
+    :param plot: If True, will plot a histogram of the null distribution and show the observed value.
+    :param num_plot_bins: Number of bins to use for the histogram if plot=True
+    :param testing_random_seed: Int. If this is set, it will reset the numpy random seed before every time the test
+    is run.
     :param rerr:  Relative compensation for errors in summing of floating points. The values from the draws will
     be compared to the observed value * (1±rerr) (the more conservative case for each tail).
-    :return:
+    :return: Dictionary
     """
     if testing_random_seed is not None:
         np.random.seed(testing_random_seed)
 
     num_obs = len(observed_values)
-    sorted_exp_values, sorted_mut_rates = sort_multiple_arrays_using_one(exp_values, mut_rates)
+    sorted_exp_values, sorted_mut_rates = sort_multiple_arrays_using_one(null_values, mut_rates)
 
     # Reduce to unique values. May reduce length by a lot for discrete distributions
     # Method from https://stackoverflow.com/a/43094244
@@ -332,6 +435,8 @@ def monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, num_draws, 
 
     samples = get_samples_from_mutational_spectrum(cumsum, sorted_mut_rates, num_obs, num_draws)
     samples = np.concatenate([samples, np.array(observed_cumsum, ndmin=2)])  # Add the observed values at the end
+
+    # Sum the individual mutation scores for each sample to get the summary statistic for the Monte Carlo test
     mc_metrics = samples.sum(axis=1)
     mc_metrics, obs_metric = mc_metrics[:-1], mc_metrics[-1]
     mc_metrics.sort()
@@ -340,7 +445,6 @@ def monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, num_draws, 
         plt.hist(mc_metrics, bins=bins, density=True)
         ylim = plt.gca().get_ylim()
         plt.vlines(obs_metric, 0, ylim[1], color='k')
-        # plt.vlines(len(observed_values)*0.5, 0, ylim[1], linestyles='dashed')
         plt.ylim(ylim)
         plt.title(plot_title)
         plt.xlabel("CDF sum")
@@ -360,32 +464,42 @@ def monte_carlo_test_cdf_sum(exp_values, mut_rates, observed_values, num_draws, 
 
 
 def z_pvalue(observed_value, loc, scale):
+    """
+    Get a two-sided p-value from a value in a normal distribution
+    :param observed_value: Float/int.
+    :param loc: The mean of the normal distribution
+    :param scale: The standard deviation of the normal distribution.
+    :return: Float. Two-tailed p-value.
+    """
     p_low = norm.cdf(observed_value, loc=loc, scale=scale)
     p_high = norm.sf(observed_value, loc=loc, scale=scale)
     return min(p_low, p_high) * 2  # Multiply by two to get two-tailed p-value
 
 
 def get_cdf_var(cumsum, weights):
+    """
+    Get the variance of the null distribution of CDF values.
+    :param cumsum: The CDF values of the null scores for each mutation.
+    :param weights: The mutation rates for each mutation.
+    :return: Float.
+    """
     return (cumsum**2*weights).sum() - (cumsum*weights).sum()**2
 
 
-def ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False,
+def ztest_cdf_sum(null_values, mut_rates, observed_values, plot=False,
                   plot_title='CDF sum', show_plot=True):
     """
     Use the sum of the cdf values
     The central limit theorem to get the normal distribution limit of the Monte Carlo test
     For tied values, using the average of the cdf values.
-    :param exp_values:
-    :param mut_rates:
-    :param observed_values:
-    :param num_draws:
-    :param plot:
-    :param num_plot_bins:
-    :param testing_random_seed:
-    :return:
+    :param null_values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param plot: If True, will plot a histogram of the null distribution and show the observed value.
+    :return: Dictionary
     """
     num_obs = len(observed_values)
-    sorted_exp_values, sorted_mut_rates = sort_multiple_arrays_using_one(exp_values, mut_rates)
+    sorted_exp_values, sorted_mut_rates = sort_multiple_arrays_using_one(null_values, mut_rates)
 
     # Reduce to unique values. May reduce length by a lot for discrete distributions
     # Method from https://stackoverflow.com/a/43094244
@@ -432,20 +546,28 @@ def ztest_cdf_sum(exp_values, mut_rates, observed_values, plot=False,
 # Functions for chi-squared test
 def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_exp_freq=5):
     """
+    Automatically select bin boundaries for the chi-squared test.
+
     Use bin definitions like numpy histogram.
     e.g. bins = [1, 2, 3] means first (and middle) bins half-open like [1, 2), last is closed like [2, 3]
 
-    This will not create the optimum evenly sized categories (if that is important). Will start from the least and
-    create the smallest contiguous categories until the end, when there may be a bigger or smaller bin.
-
     This assumes that there are no conditions on the observed counts for the chi-squared test to be valid.
+    :param values: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param max_bins: Maximum number of bins. There may end up with fewer bins if it is not possible to have max_bins
+    with at least the minimum expected frequency (min_exp_freq) in each.
+    :param total_count: Total number of observed mutations.
+    :param min_exp_freq: Float. Minimum expected counts in each bin. Fewer than max_bins bins may be created to
+     ensure this condition is met.
+    :return: Tuple. Bins (list), expected mutation counts in each bin (list)
     """
 
     mut_rates = np.array(mut_rates)
     weights = mut_rates / mut_rates.sum() * total_count
     values, weights = sort_multiple_arrays_using_one(values, weights)
-    d = pd.DataFrame(np.array([values, weights]).T).groupby(0).agg({1: np.sum})
 
+    # Group the mutations by unique value and count the total weight for each value.
+    d = pd.DataFrame(np.array([values, weights]).T).groupby(0).agg({1: np.sum})
     values, weights = d.index.values, d[1].values
 
     if len(values) == 1:  # Can't run the test. Only a single unique value.
@@ -513,6 +635,14 @@ def get_bins_and_expected_counts(values, mut_rates, max_bins, total_count, min_e
 
 
 def get_expected_frequency_for_bins(null_scores, mut_rates, total_count, bins):
+    """
+
+    :param null_scores: List or numpy array of the scores for every mutation in the null model
+    :param mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param total_count: Total number of observed mutations.
+    :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+    :return: Numpy array. Expected mutation counts in each bin.
+    """
     bins = bins.copy()   # Make sure original is not edited
     mut_rates = np.array(mut_rates)
     weights = mut_rates / mut_rates.sum() * total_count
@@ -533,6 +663,18 @@ def get_expected_frequency_for_bins(null_scores, mut_rates, total_count, bins):
 
 
 def get_intervals_from_random_sample_bin_counts(samples, bins, num_samples=1000, alpha=0.05):
+    """
+    For multiple samples of scores.
+    For each sample, counts the number of mutations in each bin.
+    Then calculated the 1-alpha interval for the number of mutations in each bin.
+
+    Used to calculate confidence intervals. E.g. if alpha=0.05, returns the upper and lower bounds of the 95% interval.
+    :param samples: 2D array of scores. One row per sample, one column per observed mutation.
+    :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+    :param num_samples: Number of samples.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple, (CI_low, CI_high).
+    """
     sample_bin_counts = np.empty((num_samples, len(bins)-1))
     for i, s in enumerate(samples):
         sample_bin_counts[i] = np.histogram(s, bins=bins)[0]
@@ -542,22 +684,63 @@ def get_intervals_from_random_sample_bin_counts(samples, bins, num_samples=1000,
 
 
 def bootstrap_binned_confint_method(observed_values, bins, num_samples=10000, alpha=0.05):
+    """
+    Use bootstrapping to get confidence intervals on the number of mutations in each bin.
+    :param observed_values: List or numpy array of scores for the observed mutations.
+    :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+    :param num_samples: Number of samples to take to calculate the confidence intervals.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple, (CI_low, CI_high).
+    """
+    # Take samples with replacement for the bootstrap
     samples = np.random.choice(observed_values, size=(num_samples, len(observed_values)), replace=True)
     return get_intervals_from_random_sample_bin_counts(samples, bins, num_samples, alpha)
 
 
 def get_null_binned_confint(null_scores, null_mut_rates, num_obs, bins, num_samples=10000, alpha=0.05):
+    """
+    Use Monte Carlo to get confidence intervals on the number of mutations in each bin.
+    :param null_scores: List or numpy array of the scores for every mutation in the null model
+    :param null_mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param num_obs: Total number of observed mutations.
+    :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+    :param num_samples: Number of samples to take to calculate the confidence intervals.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple, (CI_low, CI_high).
+    """
+    # Take samples from the null distribution
     null_samples = get_samples_from_mutational_spectrum(null_scores, null_mut_rates, num_obs, num_samples)
     return get_intervals_from_random_sample_bin_counts(null_samples, bins, num_samples, alpha)
 
 
 def binned_chisquare(null_scores, null_mut_rates, observed_values, bins=None, max_bins=10,
                      min_exp_freq=5, CI_sample_num=10000, CI_alpha=0.05):
+    """
+    Run a chi square test comparing the expected counts in each bin to the counts observed.
+    :param null_scores: List or numpy array of the scores for every mutation in the null model
+    :param null_mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param bins: List of boundaries for the bins to group scores into. If there are N bins, need a list of N+1 values.
+    If None, the bins will be created based on the null distribution.
+    :param max_bins: Int. Maximum number of bins if calculating boundaries automatically from the null distribution
+    of scores. There may end up with fewer bins if it is not possible to have max_bins with at least the minimum
+    expected frequency (min_exp_freq) in each.
+    :param min_exp_freq: Float. If calculating boundaries automatically from the null distribution, this sets the
+    minimum expected counts in each bin. Fewer than max_bins bins may be created to ensure this condition is met.
+    :param CI_sample_num: Number of samples used to calculate the confidence intervals (Monte Carlo samples from
+    null distribution for the expected counts, bootstrap samples from the observed mutations for the observed
+    counts).
+    :param CI_alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Dictionary
+    """
     num_obs = len(observed_values)
     if bins is None:
+        # Create some bins based on the null distribution
+        # Calculate the expected frequency in each bin.
         bins, expected_frequencies = get_bins_and_expected_counts(null_scores, null_mut_rates, max_bins, num_obs,
                                                                   min_exp_freq=min_exp_freq)
     else:
+        # Calculate the expected frequency in each bin.
         expected_frequencies = get_expected_frequency_for_bins(null_scores, null_mut_rates, num_obs, bins)
 
     observed_counts = np.histogram(observed_values, bins=bins)[0]
@@ -596,6 +779,19 @@ def binned_chisquare(null_scores, null_mut_rates, observed_values, bins=None, ma
 
 
 def binomial_test(null_scores, null_mut_rates, observed_values, threshold, CI_sample_num=10000, CI_alpha=0.05):
+    """
+    Run a binomial test comparing the expected counts above a threshold with the counts observed.
+    :param null_scores: List or numpy array of the scores for every mutation in the null model
+    :param null_mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param threshold: Float. Threshold to split the scores. The results are based on the counts of mutations above this
+    threshold.
+    :param CI_sample_num: Number of samples used to calculate the confidence intervals (Monte Carlo samples from
+    null distribution for the expected counts, bootstrap samples from the observed mutations for the observed
+    counts).
+    :param CI_alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Dictionary
+    """
     total_rate = null_mut_rates.sum()
     rate_high = null_mut_rates[null_scores>threshold].sum()/total_rate   # Expected proportion of mutations in high bin
     count_high = (observed_values > threshold).sum()
@@ -628,6 +824,12 @@ def binomial_test(null_scores, null_mut_rates, observed_values, threshold, CI_sa
 
 # Functions for plotting intervals on CDF plots
 def get_cdf_from_sample(sample, xvals):
+    """
+    Get the y-values for a plot of the cumulative distribution of the sample values.
+    :param sample: List of values
+    :param xvals: The x-values for the plot
+    :return: Numpy array.
+    """
     sorted_values = sorted(sample)
     xvals_idx = np.searchsorted(sorted_values, xvals, side='right')  # Match to the sample values
     cdf_vals = np.arange(0, len(sorted_values) + 1) / len(sorted_values)
@@ -636,6 +838,16 @@ def get_cdf_from_sample(sample, xvals):
 
 
 def get_intervals_from_sample_cdfs(samples, xvals, num_samples=1000, alpha=0.05):
+    """
+    Get lower and upper bounds of a confidence interval around a cumulative distribution plot.
+    For the null model the samples can come from random samples from the null distribution.
+    For the observed data, the samples can be bootstrapped.
+    :param samples: List/array of samples. Must be iterable with each sample being a list of values.
+    :param xvals: x-values for the cdf plot.
+    :param num_samples: Number of samples.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple of arrays, (CI_low, CI_high).
+    """
     sample_cdfs = np.empty((num_samples, len(xvals)))
     for i, s in enumerate(samples):
         sample_cdfs[i] = get_cdf_from_sample(s, xvals)
@@ -645,10 +857,30 @@ def get_intervals_from_sample_cdfs(samples, xvals, num_samples=1000, alpha=0.05)
 
 
 def bootstrap_cdf_confint_method(observed_values, xvals, num_samples=10000, alpha=0.05):
+    """
+    Boostrap confidence intervals for the CDF plot.
+    :param observed_values: List or numpy array of the scores for the observed mutations.
+    :param xvals: x-values for the cdf plot.
+    :param num_samples: Number of bootstrap samples to calculate the interval.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple of arrays, (CI_low, CI_high).
+    """
+    # Take a number of bootstap samples with replacement.
     samples = np.random.choice(observed_values, size=(num_samples, len(observed_values)), replace=True)
     return get_intervals_from_sample_cdfs(samples, xvals, num_samples, alpha)
 
 
 def get_null_cdf_confint(null_scores, null_mut_rates, num_obs, xvals, num_samples=10000, alpha=0.05):
+    """
+    Monte Carlo confidence intervals for the CDF plot.
+    :param null_scores: List or numpy array of the scores for every mutation in the null model
+    :param null_mut_rates: List or numpy array of the mutation rates for every mutation in the null model
+    :param num_obs: Number of observed mutations. Determines the size of each sample.
+    :param xvals: x-values for the cdf plot.
+    :param num_samples: Number of random samples to calculate the interval.
+    :param alpha: Alpha for the 1-alpha confidence interval. Default value of 0.05 produces a 95% CI.
+    :return: Tuple of arrays, (CI_low, CI_high).
+    """
+    # Take a number of random samples from the null distribution
     null_samples = get_samples_from_mutational_spectrum(null_scores, null_mut_rates, num_obs, num_samples)
     return get_intervals_from_sample_cdfs(null_samples, xvals, num_samples, alpha)

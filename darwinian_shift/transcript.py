@@ -7,9 +7,24 @@ class NoTranscriptError(ValueError): pass
 class CodingTranscriptError(ValueError): pass
 
 class Transcript:
+    """
+    A class to calculate and store the transcript nucleotide sequence, kmer counts for mutational spectra, and the
+    mutations in the transcript.
+    """
     def __init__(self, project, gene=None, transcript_id=None, genomic_sequence_chunk=None, offset=None,
                  region_exons=None, region_mutations=None):
-        self.project = project  # The distribution shift class that runs over multiple sequences
+        """
+
+        :param project: DarwinianShift object containing the mutation data and reference data.
+        :param gene: Gene associated with the transcript. Required if transcript_id is None.
+        :param transcript_id: The Ensembl transcript id. Required if gene is None.
+        :param genomic_sequence_chunk: Optional. Can provide a part of the chromosome sequence containing this transcript
+        instead of going back to the fasta file. Is more efficient for processing multiple transcripts.
+        :param offset: The chromosomal start position of the genomic_sequence_chunk
+        :param region_exons: Dataframe of exon locations including the transcript exons.
+        :param region_mutations: Dataframe of mutations including mutations overlapping with this transcript.
+        """
+        self.project = project
         self.transcript_id = transcript_id
         self.gene = gene
         self.genomic_sequence_chunk = genomic_sequence_chunk
@@ -43,6 +58,11 @@ class Transcript:
             self.region_mutations = region_mutations
 
     def _get_sequences(self):
+        """
+        Loads the nucleotide sequence of the transcript and counts the kmers for the mutational spectrum calculations.
+        Sets various attributes of the Transcript object.
+        :return: None
+        """
         if self.gene is not None:
             transcripts = self.project.gene_transcripts_map[self.gene]
             if len(transcripts) == 0:
@@ -81,7 +101,7 @@ class Transcript:
                                                                         self.project.ks,
                                                                         reference=self.project.reference_fasta,
                                                                         chrom=self.chrom)
-        self.genomic_sequence_chunk = None  # Remove reference so chunk can be deleted
+        self.genomic_sequence_chunk = None  # Remove reference so chunk can be deleted from memory
 
         if len(self.nuc_sequence) % 3 != 0:
             raise CodingTranscriptError('Transcript nucleotide sequence not multiple of 3, {}:{}. Cannot run.'.format(
@@ -97,6 +117,13 @@ class Transcript:
         self.length = len(self.nuc_sequence)
 
     def get_possible_mutations(self, return_copy=True):
+        """
+        Creates a dataframe containing all possible exonic single nucleotide substitutions in the transcript.
+        The dataframe is stored in self.all_possible_sn_mutations.
+
+        :param return_copy: Will return a copy of self.all_possible_sn_mutations instead of the original
+        :return: Pandas dataframe
+        """
         if self.all_possible_sn_mutations is None:
             if self.kmers is None:
                 self._get_sequences()
@@ -122,13 +149,18 @@ class Transcript:
             return self.all_possible_sn_mutations
 
     def _get_chrom_pos_from_cds_pos(self):
+        """
+        Converts CDS positions in the transcript to chromosomal positions for all mutations in the
+        self.all_possible_sn_mutations dataframe.
+        :return:
+        """
         cds_positions = self.all_possible_sn_mutations['cdspos']
         chrom_positions = self.chromosomal_positions
         positions = np.empty(len(self.all_possible_sn_mutations), dtype=int)
         last_c = -1
         last_pos = -1
         for i, c in enumerate(cds_positions):
-            if c == last_c:
+            if c == last_c:  # Another mutation on the same nucleotide as the previous
                 positions[i] = last_pos
             else:
                 last_pos = chrom_positions[c - 1]
@@ -137,6 +169,11 @@ class Transcript:
         self.all_possible_sn_mutations['pos'] = positions
 
     def get_observed_mutations(self, return_copy=True):
+        """
+        Return a dataframe of all exonic mutations overlapping with the transcript.
+        :param return_copy:
+        :return: Pandas dataframe
+        """
         if self.transcript_data_locs is None:
             self.transcript_data_locs = self.region_mutations.index[
                 self.region_mutations['pos'].isin(self.chromosomal_positions)]
@@ -148,6 +185,16 @@ class Transcript:
             return self.transcript_mutations
 
     def _get_kmer_counts_for_observed_mutations(self):
+        """
+        Count the number of mutations in each category in the mutational spectrum.
+        E.g. for a trinucleotide transcript, count the number of AAA>ACA, the number of AAC>ACC etc. for all of the
+        different categories in the spectrum.
+
+        :return: Dictionary of dictionaries of collections.Counter.
+        Structure is {True/False: {1: {'A>C': 3, .... } ... } ... }
+        where the True/False = spectrum.deduplicate_spectrum, the number is spectrum.k, and the innermost part is the
+        Counter of mutation types.
+        """
         if self.transcript_obs_kmer_counts is None:
             # If lots of spectra with the same k, may be worth refactoring to collect based on k, not for each spectrum
             spectra = self.project.spectra
@@ -177,7 +224,7 @@ class Transcript:
                 last_p = -1
                 last_ref = None
                 last_kmer = None
-                ks = {s.k for s in non_depdup_spectra}
+                ks = {s.k for s in non_depdup_spectra}  # Use a set to only get unique k values
                 for p, r, m in observed_mutations[['pos', 'strand_ref', 'strand_mut']].sort_values('pos').values:
                     if p == last_p:
                         if r == last_ref:

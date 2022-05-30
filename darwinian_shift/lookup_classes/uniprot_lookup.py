@@ -52,7 +52,8 @@ class UniprotLookup:
          'sequence conflict', 'helix', 'strand'.
         :param description_contains: Text that the description must contain. E.g. you might want only topological domains
         with "Cytoplasmic" in the description
-        :param uniprot_upload_lists: URL for downloading the Uniprot xml files using a transcript_id.
+        :param uniprot_upload_lists: URL for downloading the Uniprot xml files using a transcript_id.  FROM 25/05/22 THIS
+        IS REPLACED TO A REQUEST TO https://rest.uniprot.org/uniprotkb/
         :param uniprot_xml_url: URL for downloading the Uniprot xml files from a Uniprot accession number.
         :param schema_location: Location of the Uniprot xml schema.
         :param transcript_uniprot_mapping: Sometimes uniprot may not know which entry matches the transcript, or will
@@ -126,16 +127,26 @@ class UniprotLookup:
         return response.decode('utf-8')
 
     def get_uniprot_xml_from_transcript_id(self, transcript_id):
-        params = {
-            'from': 'ENSEMBL_TRS_ID',
-            'to': 'ACC',
-            'format': 'xml',
-            'query': transcript_id
-        }
+        """
+        From 25/05/22, the request to convert from ENSEMBL_TRS_ID to ACC no longer works without the version number on
+        the transcript id. This may be made more flexible in the future.
 
-        data = urllib.parse.urlencode(params)
-        data = data.encode('utf-8')
-        req = urllib.request.Request(self.uniprot_upload_lists, data)
+        In the meantime, replacing with a request to rest.uniprot.org/uniprotkb/.
+
+        :param transcript_id:
+        :return:
+        """
+        # params = {
+        #     'from': 'ENSEMBL_TRS_ID',
+        #     'to': 'ACC',
+        #     'format': 'xml',
+        #     'query': transcript_id
+        # }
+
+        # data = urllib.parse.urlencode(params)
+        # data = data.encode('utf-8')
+        BASE_XML_URL = "https://rest.uniprot.org/uniprotkb/stream?format=xml&query=%28xref%3Aensembl-{}%29"
+        req = urllib.request.Request(BASE_XML_URL.format(transcript_id))
         with urllib.request.urlopen(req) as f:
             response = f.read()
         return response.decode('utf-8')

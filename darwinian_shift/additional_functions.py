@@ -31,7 +31,7 @@ example_description_contains=(None, None, None, "Extracellular", 'Cytoplasmic', 
 
 def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=None, data=None, exon_file=None, fasta_file=None,
                         spectrum=None, output_plot_file_name_template=None, plot=True,
-                        **uniprot_kargs):
+                        **uniprot_kwargs):
     """
     Tests for enrichment or depletion of mutations in uniprot features.
     Uses the UniprotLookup class for the annotating of mutations - the options for defining uniprot feature categories
@@ -52,7 +52,7 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
     :param output_plot_file_name_template: Name for the output plots. The name of the region analysed will be added with
     .format.
     :param plot: If True, will plot the expected and observed mutation counts for each category.
-    :param uniprot_kargs: Any arguments to pass to the UniprotLookup
+    :param uniprot_kwargs: Any arguments to pass to the UniprotLookup
     :return: A dataframe of the statistical results. Includes q-values from multiple test correction.
     """
     # Only runs for one spectrum at a time
@@ -92,12 +92,12 @@ def uniprot_exploration(genes=None, transcripts=None, sections=None, ds_object=N
                        lookup=None,
                        spectra=spectrum)
 
-    if isinstance(ds_object.lookup, UniprotLookup) and len(uniprot_kargs) == 0:
+    if isinstance(ds_object.lookup, UniprotLookup) and len(uniprot_kwargs) == 0:
         # the ds object already has a uniprot lookup so use that
         uniprot_lookup = ds_object.lookup
     else:
         # Make a new lookup if either ds has a different lookup type, or new kwargs have been given.
-        uniprot_lookup = UniprotLookup(**uniprot_kargs)
+        uniprot_lookup = UniprotLookup(**uniprot_kwargs)
 
     if spectrum is None:
         spectrum = ds_object.spectra[0]  # Use the first spectrum from the ds object

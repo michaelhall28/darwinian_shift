@@ -98,23 +98,32 @@ def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
         raise e
 
 
-UNIPROT_UPLOADLISTS_URL = 'https://www.uniprot.org/uploadlists/'
+# UNIPROT_UPLOADLISTS_URL = 'https://www.uniprot.org/uploadlists/'
+UNIPROT_QUERY_BASE = "https://rest.uniprot.org/uniprotkb/stream?format=list&query=%28xref%3Aensembl-{}%29"
 def get_uniprot_acc_from_transcript_id(transcript_id):
     """
     Uses the UniProt API to get the UniProt accession associated with the given Ensembl transcript ID.
+
+    From 25/05/22, the request to convert from ENSEMBL_TRS_ID to ACC no longer works without the version number on
+    the transcript id. This may be made more flexible in the future.
+
+    In the meantime, replacing with a request to rest.uniprot.org/uniprotkb/.
+
     :param transcript_id: Ensembl transcript ID
     :return: String
     """
-    params = {
-    'from': 'ENSEMBL_TRS_ID',
-    'to': 'ACC',
-    'format': 'list',
-    'query': transcript_id
-    }
+    # params = {
+    # 'from': 'ENSEMBL_TRS_ID',
+    # 'to': 'ACC',
+    # 'format': 'list',
+    # 'query': transcript_id
+    # }
+    #
+    # data = urllib.parse.urlencode(params)
+    # data = data.encode('utf-8')
+    # req = urllib.request.Request(UNIPROT_UPLOADLISTS_URL, data)
 
-    data = urllib.parse.urlencode(params)
-    data = data.encode('utf-8')
-    req = urllib.request.Request(UNIPROT_UPLOADLISTS_URL, data)
+    req = urllib.request.Request(UNIPROT_QUERY_BASE.format(transcript_id))
     with urllib.request.urlopen(req) as f:
         response = f.read()
     return response.decode('utf-8').strip()

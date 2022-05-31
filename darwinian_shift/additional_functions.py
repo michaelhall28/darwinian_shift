@@ -8,7 +8,7 @@ from darwinian_shift.lookup_classes.uniprot_lookup import UniprotLookupError
 from darwinian_shift.general_functions import DarwinianShift
 from darwinian_shift.transcript import Transcript, NoTranscriptError, CodingTranscriptError
 from darwinian_shift.section import Section
-from darwinian_shift.statistics import binned_chisquare, ztest_cdf_sum
+from darwinian_shift.statistics import binomial_test, ztest_cdf_sum
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -581,9 +581,9 @@ def pdbe_kb_exploration(ds_object, gene=None, transcript_id=None, score_methods=
         obs = annotated_observed[~pd.isnull(annotated_observed[col])]
         if not obs.empty:
             if score_methods.get(col, None) is None:
-                stats = binned_chisquare(null_scores=null[col].values.astype(float),
+                stats = binomial_test(null_scores=null[col].values.astype(float),
                                          null_mut_rates=null[spectrum.rate_column].values,
-                                         observed_values=obs[col].astype(float), bins=[-0.5, 0.5, 1.5])
+                                         observed_values=obs[col].astype(float), threshold=0.5)
             else:
                 stats = ztest_cdf_sum(null[col], null[spectrum.rate_column].values, obs[col])
 

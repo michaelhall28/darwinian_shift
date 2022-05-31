@@ -46,7 +46,13 @@ class PDBeKBLookup:
                                         ('backbone', 'mean'),
                                         ('complex_residue_depth', 'mean'),
                                         ('monomeric_residue_depth', 'mean'),
-                                        ('14-3-3-pred', 'mean')
+                                        ('14-3-3-pred', 'mean'),
+                                        ('Total SASA', 'mean'),
+                                        ('Hydrophilic SASA', 'mean'),
+                                        ('Hydrophobic SASA', 'mean'),
+                                        ('DynaMine', 'mean'),
+                                        ('ASA alone', 'mean'),
+                                        ('ASA in assembly', 'mean'),
                                         ]
 
     def __init__(self, pdbekb_dir='.', verbose=False, force_download=False, store_json=False,
@@ -118,7 +124,7 @@ class PDBeKBLookup:
         else:
             # Download the data if it hasn't been found.
             url = self.base_url.format(uniprot_subsection, uniprot_acc)
-            data = requests.get(url.format(uniprot_acc)).json()
+            data = requests.get(url).json()
             if self.store_json:  # Save for future use
                 with gzip.open(file_name, 'wt', encoding="ascii") as fh:
                     json.dump(data, fh)

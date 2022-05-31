@@ -6,6 +6,7 @@ import urllib.parse
 import urllib.request
 import gzip
 import pandas as pd
+from functools import lru_cache
 
 COMPLEMENTS = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'N':'N'}
 
@@ -100,6 +101,7 @@ def download_pdb_file(pdb_id, output_dir='.', file_type='pdb'):
 
 # UNIPROT_UPLOADLISTS_URL = 'https://www.uniprot.org/uploadlists/'
 UNIPROT_QUERY_BASE = "https://rest.uniprot.org/uniprotkb/stream?format=list&query=%28xref%3Aensembl-{}%29"
+@lru_cache(maxsize=None)   # Cache values.
 def get_uniprot_acc_from_transcript_id(transcript_id):
     """
     Uses the UniProt API to get the UniProt accession associated with the given Ensembl transcript ID.

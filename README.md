@@ -101,5 +101,5 @@ notch3.plot_boxplot()
 
 There are various tutorials available in the [GitHub wiki](https://github.com/michaelhall28/darwinian_shift/wiki). 
 
-The UniProt update in May 2022 altered their ID mapping (which was used to convert Ensembl transcript IDs to UniProt accessions). If you want to use the `UniProtLookup` or `PDBeKBLookup` classes or the `uniprot_exploration` or `pdbe_kb_exploration` functions, make sure you have the lastest code from the repository (30/05/22 or later).    
+The UniProt update in May 2022 altered their ID mapping (which was used to convert Ensembl transcript IDs to UniProt accessions). If you want to use the `UniProtLookup` or `PDBeKBLookup` classes or the `uniprot_exploration` or `pdbe_kb_exploration` functions, make sure you have the latest code from the repository (30/05/22 or later).    
 

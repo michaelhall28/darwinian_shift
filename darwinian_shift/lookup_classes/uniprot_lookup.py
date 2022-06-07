@@ -307,7 +307,7 @@ class UniprotLookup:
         else:
             return value + sep + new_text
 
-    def annotate_dataframe(self, df, transcript_id, sep='|||'):
+    def annotate_dataframe(self, df, transcript_id, sep='|||', return_feature_columns=False):
         feature_columns = []  # List the columns used for the annotating of the mutations
         transcript_features = self.get_uniprot_data(transcript_id)
         if transcript_features is not None:
@@ -378,11 +378,13 @@ class UniprotLookup:
                                                                                                          'description'],
                                                                                                      sep))
 
-        return df, feature_columns
+        if return_feature_columns:
+            return df, feature_columns
+        return df
 
     def _get_scores(self, df, transcript_id):
         try:
-            df, _ = self.annotate_dataframe(df, transcript_id)
+            df = self.annotate_dataframe(df, transcript_id)
         except UniprotLookupError as e:
             print(type(e).__name__, e)
             return None

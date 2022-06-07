@@ -82,5 +82,5 @@ class ClinvarLookup:
 
         return score.astype(float)
 
-    def annotate_df(self, chrom, df):
+    def annotate_dataframe(self, df, chrom):
         return self._merge_with_clinvar(chrom, df)

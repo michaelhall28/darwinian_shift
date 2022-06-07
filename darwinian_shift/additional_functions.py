@@ -155,8 +155,8 @@ def _get_uniprot_counts(section, spectrum, uniprot_lookup):
     null_mutations = spectrum.apply_spectrum(section, section.null_mutations)
 
     # Annotate the null mutations (all possible mutations in the region) with the UniProt features.
-    annotated_null_mutations, feature_columns = uniprot_lookup.annotate_dataframe(null_mutations,
-                                                                                  section.transcript_id)
+    annotated_null_mutations, feature_columns = uniprot_lookup.annotate_dataframe(null_mutations, section.transcript_id,
+                                                                                  return_feature_columns=True)
 
     # Apply the UniProt annotations to the observed mutations.
     annotated_observed_mutations = pd.merge(section.observed_mutations, annotated_null_mutations,
@@ -304,7 +304,7 @@ def get_bins_for_uniprot_features(uniprot_features_df,
     return bins, types, descriptions
 
 
-def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, feature_types=None,
+def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=0, feature_types=None,
                            colours=None, labels="descriptions", figsize=(10, 3), linewidth=1,
                            normalise_by_region_size=True, return_bins=False):
     """
@@ -350,68 +350,6 @@ def plot_mutation_counts_in_uniprot_features(section, uniprot_data, min_gap=1, f
 
     if return_bins:
         return bins, types, descriptions
-
-
-def annotate_data(ds_object, output_file=None, verbose=False, annotation_separator="|||", remove_spectra_columns=False,
-                  transcripts=None, lookup=None):
-    """
-    Annotate the input mutations for a DarwinianShift object with the lookup values. Will add the score, and any other
-    information added by the annotate_dataframe function of the lookup class.
-
-    If you only want lookup annotation, run ds with spectra=EvenMutationalSpectrum() to save time
-    Mutations that are not in any transcripts will not appear in the results.
-    Mutations in multiple transcripts will appear multiple times in the results
-
-    Will only work for lookup classes which have an annotate_dataframe function.
-    :param ds_object: DarwinianShift object.
-    :param output_file: File path to output a tab-separated file with the annotated mutations. If None, will return the
-    results as a dataframe.
-    :param verbose: If True, will print the progress through each transcript being run.
-    :param annotation_separator: String to separate multiple annotations.
-    :param remove_spectra_columns: If True, will remove columns including expected mutation rates.
-    :param transcripts: List of transcripts to run.  If None, will run all transcripts from the DarwinianShift object
-    (which will usually by the longest transcripts of any genes with mutations).
-    :param lookup: Lookup object. If None, will use the lookup already associated with the DarwinianShift object.
-    :return: If output_file is None, pandas DataFrame. If output_file is a file path, returns None.
-    """
-
-    all_annotated_mutations = []
-    output_columns = list(ds_object.data.columns)
-    if transcripts is None:
-        transcripts = ds_object.exon_data['Transcript stable ID'].unique()
-
-    if lookup is None:
-        lookup = ds_object.lookup
-
-    for transcript_id in transcripts:
-        if verbose:
-            print(transcript_id)
-        try:
-            transcript_obj = ds_object.make_transcript(transcript_id=transcript_id)
-            transcript_mutations = transcript_obj.get_observed_mutations()
-            transcript_mutations = pd.merge(transcript_mutations, transcript_obj.get_possible_mutations(),
-                                            on=['pos', 'ref', 'mut'],
-                                            how='left')
-            annotated_df, new_columns = lookup.annotate_dataframe(transcript_mutations, transcript_id,
-                                                                               sep=annotation_separator)
-            all_annotated_mutations.append(annotated_df)
-            for n in new_columns:
-                if n not in output_columns:
-                    output_columns.append(n)
-
-        except (NoTranscriptError, CodingTranscriptError):
-            pass
-
-    all_annotated_mutations = pd.concat(all_annotated_mutations, sort=False)
-    if remove_spectra_columns:
-        all_annotated_mutations = all_annotated_mutations.reindex(columns=output_columns)
-
-    if output_file is None:
-        return all_annotated_mutations
-    else:
-        all_annotated_mutations.to_csv(output_file, sep="\t", index=False)
-
-
 
 
 # Functions to get pdb structure details from Uniprot and the PDBe API
@@ -476,7 +414,7 @@ def get_pdb_details(transcript_id, uniprot_lookup=None, min_resolution=None, met
     if len(details) > 0:
         df = pd.concat(details)
         df['transcript_id'] = transcript_id
-        return df.reset_index()
+        return df.reset_index(drop=True)
     else:
         return pd.DataFrame()
 
@@ -565,8 +503,8 @@ def pdbe_kb_exploration(ds_object, gene=None, transcript_id=None, score_methods=
     section = ds_object.make_section(gene=gene, transcript_id=transcript_id)
     section.load_section_mutations()
     old_cols = section.null_mutations.columns
-    annotated_null = ds_object.lookup.annotate_df(transcript_id=section.transcript_id, df=section.null_mutations,
-                                                  score_methods=score_methods, data_label=data_label)
+    annotated_null = ds_object.lookup.annotate_dataframe(transcript_id=section.transcript_id, df=section.null_mutations,
+                                                         score_methods=score_methods, data_label=data_label)
     new_cols = [c for c in annotated_null.columns if c not in old_cols]
     annotated_observed = pd.merge(section.observed_mutations,
                                   annotated_null[['pos', 'ref', 'mut'] + new_cols], on=['pos', 'ref', 'mut'],

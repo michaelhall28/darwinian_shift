@@ -240,10 +240,9 @@ class PDBeKBLookup:
                 silent = True
             return res
 
-    def annotate_df(self, df, transcript_id, score_methods=None, data_label='accession'):
+    def annotate_dataframe(self, df, transcript_id, score_methods=None, data_label='accession'):
         if score_methods is None:
             score_methods = dict(self.annotation_default_score_methods)
-            print(score_methods)
 
         silent = False
         for us in self.uniprot_subsections:
@@ -253,10 +252,10 @@ class PDBeKBLookup:
                 score_method = score_methods.get(label, None)
                 if score_method is None:
                     residues = self._get_sites_from_all_entries([d])
-                    df[label] = df['residue'].isin(residues)
+                    df[label] = df['residue'].isin(residues).values
                 else:
                     scores = self._get_scores_from_all_entries([d], score_method)
-                    df[label] = pd.merge(df[['residue']], scores, on='residue', how='left')['score']
+                    df[label] = pd.merge(df[['residue']], scores, on='residue', how='left')['score'].values
             silent = True
         return df
 

@@ -1,5 +1,5 @@
 from .general_functions import DarwinianShift
-from .additional_functions import uniprot_exploration, annotate_data, get_bins_for_uniprot_features, get_pdb_details, \
+from .additional_functions import uniprot_exploration, get_bins_for_uniprot_features, get_pdb_details, \
     plot_mutation_counts_in_uniprot_features, pdbe_kb_exploration
 from .lookup_classes import *
 from .mutation_spectrum import GlobalKmerSpectrum, TranscriptKmerSpectrum, EvenMutationalSpectrum, read_spectrum

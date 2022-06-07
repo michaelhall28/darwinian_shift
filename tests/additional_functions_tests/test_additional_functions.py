@@ -1,4 +1,4 @@
-from darwinian_shift.additional_functions import uniprot_exploration, annotate_data, get_bins_for_uniprot_features
+from darwinian_shift.additional_functions import uniprot_exploration, get_bins_for_uniprot_features
 from darwinian_shift.additional_functions import pdbe_kb_exploration
 from darwinian_shift import UniprotLookup, PDBeKBLookup
 from pandas.testing import assert_frame_equal
@@ -8,10 +8,9 @@ import pickle
 
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-def test_uniprot_annotation(project):
+def test_uniprot_annotation(seq_object):
     uniprot_lookup = UniprotLookup(uniprot_directory=TEST_DATA_DIR)
-    p2 = project.change_lookup(uniprot_lookup, inplace=False)
-    annotated_data = annotate_data(p2)
+    annotated_data = uniprot_lookup.annotate_dataframe(seq_object.observed_mutations, seq_object.transcript_id)
 
     # output new test file. Do not uncomment unless results have changed and confident new results are correct
     # pickle.dump(annotated_data, open(os.path.join(FILE_DIR, "annotated_data.pickle"), 'wb'))

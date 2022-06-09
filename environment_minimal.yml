@@ -14,3 +14,4 @@ dependencies:
   - requests=2.26.0
   - python-wget=3.2
   - biopython=1.79
+  - samtools=1.15.1

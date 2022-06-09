@@ -19,6 +19,13 @@ Then either install the code:
 `pip install .`  
 Or add the repository to your PYTHONPATH.  
 
+#### Issues with ROOT on MacOS
+There have been some problems getting ROOT to install and run using Conda with more recent versions of MacOS/Xcode. See [this thread](https://root-forum.cern.ch/t/conda-root-and-macos-12/48626) as an example.  
+
+If you do not need the functions for dataset comparison (which is likely), you can delete the `  - root=6.24.6` line from environment.yml before running `conda env create -f environment.yml` and then don't run `root -b -l -q darwinian_shift/dataset_comparison/root/homtests.C+`.  
+
+If you do need the dataset comparison functions, you may need to find alternative methods to install ROOT. Try searching the forums at [root-forum.cern.ch] for possible solutions.  
+It may be that by the time you are reading this, there is an updated version of ROOT available through Conda, in which case try updating the ROOT version in environment.yml. 
 
 ### Installing with fewer dependencies
 
@@ -97,7 +104,7 @@ print(notch3_results['CDF_MC_glob_k3_pvalue'])
 notch3.plot_boxplot()
 ```
 
-## Tips
+## Tips/Notes
 
 There are various tutorials available in the [GitHub wiki](https://github.com/michaelhall28/darwinian_shift/wiki). 
 

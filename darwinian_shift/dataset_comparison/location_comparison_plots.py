@@ -6,32 +6,40 @@ from .root.homtests import chi2_test_window
 
 
 ## CDF plot
-def weighted_cdf(section, spectrum=None, position_col='residue', unweighted=False):
+def weighted_cdf(section, spectrum=None, position_col='residue', value_col=None, unweighted=False):
     # Weight by the inverse of the signature.
     null = section.null_mutations
     obs = section.observed_mutations
     if spectrum is None:
         spectrum = section.project.spectra[0]  # Use the first spectrum set up for the section
 
-    agg_null = null.groupby(position_col).agg(sum)
-    agg_obs = obs.groupby(position_col).agg('count')[['chr']]
+    if value_col is None:
+        value_col = position_col
+
+    agg_null = null.groupby([position_col, value_col])[spectrum.rate_column].agg(sum)
+    agg_obs = obs.groupby([position_col, value_col]).agg('count')[['chr']]
     agg_obs.columns = ['count']
+
     muts = pd.merge(agg_null, agg_obs, how='left', left_index=True, right_index=True)
     muts['count'] = muts['count'].fillna(0)
-
     if unweighted:
         muts['weight'] = 1
     else:
-        muts['weight'] = 1/ muts[spectrum.rate_column]
-    muts['pdf_value'] = muts['weight'] * muts['count']
-    cdf = np.cumsum(muts['pdf_value'].values)
+        muts['weight'] = 1 / muts[spectrum.rate_column]
 
-    cdf = cdf / cdf[-1]
+    muts['pdf_value'] = muts['weight'] * muts['count']
+
+    muts = muts.sort_index(level=1)
+    muts = muts.groupby(level=1).agg(sum)
+    cdf = muts['pdf_value'].cumsum()
+    cdf = cdf / cdf.iloc[-1]
+
     return cdf
 
 
-def cdf_comparison_plot(section1, section2, spectrum1=None, spectrum2=None, position_col='residue',
-                        figsize=(5, 5), ax=None, label1='Section1', label2='Section2'):
+def cdf_comparison_plot(section1, section2, spectrum1=None, spectrum2=None, position_col='residue', value_col=None,
+                        figsize=(5, 5), ax=None, label1='Section1', label2='Section2', show_unweighted=False,
+                        show_weighted=True):
     """
     For comparing the position of mutations in the same gene/transcript/section from two datasets.
     Plots the uncorrected CDF of the positions (residue numbers by default) and the CDF adjusted by the mutational
@@ -49,11 +57,20 @@ def cdf_comparison_plot(section1, section2, spectrum1=None, spectrum2=None, posi
     """
     if ax is None:
         fig, ax = plt.subplots(figsize=figsize)
-    ax.plot(weighted_cdf(section1, spectrum1, position_col, unweighted=True), 'C0--', label=label1 + ' Unweighted')
-    ax.plot(weighted_cdf(section2, spectrum2, position_col, unweighted=True), 'C1--', label=label1 + ' Unweighted')
-    ax.plot(weighted_cdf(section1, spectrum1, position_col, unweighted=False), label=label1)
-    ax.plot(weighted_cdf(section2, spectrum2, position_col, unweighted=False), label=label2)
-    ax.set_xlabel(position_col.capitalize())
+
+    if show_unweighted:
+        ax.plot(weighted_cdf(section1, spectrum1, position_col, value_col, unweighted=True),
+                'C0--', label=label1 + ' Unweighted')
+        ax.plot(weighted_cdf(section2, spectrum2, position_col, value_col, unweighted=True),
+                'C1--', label=label1 + ' Unweighted')
+
+    if show_weighted:
+        ax.plot(weighted_cdf(section1, spectrum1, position_col, value_col, unweighted=False), label=label1)
+        ax.plot(weighted_cdf(section2, spectrum2, position_col, value_col, unweighted=False), label=label2)
+
+    if value_col is None:
+        value_col = position_col
+    ax.set_xlabel(value_col.capitalize())
     ax.set_ylabel('CDF')
     ax.legend()
 

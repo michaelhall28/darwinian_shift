@@ -1,6 +1,7 @@
 import os
 import pickle
-from darwinian_shift import DarwinianShift, homtest_sections
+from darwinian_shift import DarwinianShift
+from darwinian_shift.dataset_comparison import homtest_sections
 
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 

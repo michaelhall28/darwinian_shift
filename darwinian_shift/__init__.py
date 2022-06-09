@@ -7,6 +7,5 @@ from .statistics import MonteCarloTest, CDFMonteCarloTest, ChiSquareTest, KSTest
 from .additional_plotting_functions import plot_scatter_two_scores, plot_domain_structure, hide_top_and_right_axes
 from .reference_data import get_source_genome_reference_file_paths, download_grch37_reference_data, \
     download_reference_data_from_latest_ensembl, get_latest_ensembl_release_and_assembly
-from .dataset_comparison import *
 from .utils import download_pdb_file, get_uniprot_acc_from_transcript_id, read_sbs_from_vcf, get_sifts_alignment, \
     get_sifts_alignment_for_chain, get_pdb_positions, sort_multiple_arrays_using_one, reverse_complement

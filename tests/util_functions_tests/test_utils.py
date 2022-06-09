@@ -1,7 +1,9 @@
 from darwinian_shift.utils.util_functions import *
 from tests.conftest import sort_dataframe, compare_sorted_files, MUTATION_DATA_FILE, TEST_DATA_DIR
-from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths
+from darwinian_shift.reference_data.reference_utils import get_source_genome_reference_file_paths, \
+    convert_to_bgzip_and_index
 from pandas.testing import assert_frame_equal
+import subprocess
 import filecmp
 import os
 
@@ -78,3 +80,13 @@ def test_read_vcf():
     tsv_df['chr'] = tsv_df['chr'].astype(str)
 
     assert_frame_equal(sort_dataframe(tsv_df[['chr', 'pos', 'ref', 'mut']]), sort_dataframe(vcf_df))
+
+
+def test_convert_to_bgzip_and_index():
+    """Basically just a test bgzip is in the path"""
+    convert_to_bgzip_and_index(os.path.join(FILE_DIR, "reference_transcript_nuc.fa"))
+
+    convert_to_bgzip_and_index(os.path.join(FILE_DIR, "reference_transcript_nuc.fa.gz"))
+
+    # Unzip the file for the test next time/other tests
+    subprocess.run(["gunzip", os.path.join(FILE_DIR, "reference_transcript_nuc.fa.gz")])

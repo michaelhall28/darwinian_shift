@@ -56,8 +56,8 @@ def get_positions_and_weights(section, spectrum=None, position_col='residue', va
     """
     Get the positions/values and weighting (the inverse of the mutation rate) for each observed mutation.
     For the tests the relative weighting is the important thing, so the mutation rates do not have to be scaled first.
-    :param section:
-    :param spectrum:
+    :param section: Section object
+    :param spectrum: The spectrum to use. Default uses the first spectrum.
     :param position_col: Used for grouping the mutations. E.g. if it is residue, the weighting for a mutation will be
     based on the total expected mutation rate for the residue.
     :param value_col: If None, the "value" returned for each mutation is its value from the position column. Otherwise,
@@ -84,18 +84,27 @@ def get_positions_and_weights(section, spectrum=None, position_col='residue', va
     return muts[value_col].values, muts['weight'].values
 
 
-def homtest_sections(section1, section2, spectrum1=None, spectrum2=None, position_col='residue', use_weights=True):
+def homtest_sections(section1, section2, spectrum1=None, spectrum2=None, position_col='residue',
+                     value_col=None, use_weights=True):
     """
-    Compare the distribution of mutations in two sections for the same protein.
-    :param section1:
-    :param section2:
-    :param spectrum:
-    :param position_col:
-    :param use_weights:
-    :return:
+    Compare the distribution of mutations in two sections for the same protein from different datasets.
+
+    This weights mutations by the inverse of their expected mutation rate (by default grouped by codon to reduce
+    fluctuations) to counteract the bias from the mutational spectra.
+    This uses the homogeniety tests (weighted Anderson-Darling, weighted Kolmogorov-Smirnov and weighted
+    Cramer von Mises) from Trusina et al 2020
+    :param section1: Section object for the gene/region from the first dataset.
+    :param section2: Section object for the same gene/region from the second dataset.
+    :param spectrum1: Spectrum to use for the first dataset. By default will use the first spectrum.
+    :param spectrum2: Spectrum to use for the second dataset. By default will use the first spectrum.
+    :param position_col: The column to group mutations for the expected mutation rate correction. Default is 'residue'.
+    :param value_col: The column to use for the scoring of mutations. If not given, will use the position_col.
+    :param use_weights: Set to False to run without correcting for the mutational spectra.
+    :return: Dictionary
     """
-    positions1, weights1 = get_positions_and_weights(section1, spectrum1, position_col)
-    positions2, weights2 = get_positions_and_weights(section2, spectrum2, position_col)
+    # Convert each section to an array of values (positions) and an array of weights for each value
+    positions1, weights1 = get_positions_and_weights(section1, spectrum1, position_col, value_col)
+    positions2, weights2 = get_positions_and_weights(section2, spectrum2, position_col, value_col)
     if not use_weights:
         weights1 = np.ones(len(positions1))
         weights2 = np.ones(len(positions2))

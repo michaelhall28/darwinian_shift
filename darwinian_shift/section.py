@@ -183,6 +183,9 @@ class Section:
         self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['null_exists'])]
         self.observed_mutations = self.observed_mutations.drop('null_exists', axis=1)
         self.null_mutations = self.null_mutations.drop('null_exists', axis=1)
+        # Any rows missing in the null will have had nan and made the int columns floats. Convert back.
+        int_cols = ['residue', 'base', 'cdspos', 'mut_count_glob_k3', 'seq_count_glob_k3']
+        self.observed_mutations = self.observed_mutations.astype({c: int for c in int_cols})
 
         self.num_mutations = len(self.observed_mutations)  # Initial number of observed mutations (may be filtered later)
 

@@ -23,10 +23,10 @@ HOMTEST_RESULT = namedtuple('HOMTEST_RESULT', ('statistic', 'pvalue'))
 def root_homtest(arr1, weights1, arr2, weights2):
     """
     A wrapper for the ROOT code.
-    :param arr1:
-    :param weights1:
-    :param arr2:
-    :param weights2:
+    :param arr1: Array of values for each mutation (e.g. the residue number or a metric score).
+    :param weights1: The weights for each mutation (e.g. the inverse of the expected mutation rate)
+    :param arr2: Array of values for each mutation in the second dataset
+    :param weights2: The weights for each mutation in the second dataset
     :return: dictionary of statistics and pvalues.
     """
     ROOT.gErrorIgnoreLevel = 1001  # Do not print the warnings from the ROOT files
@@ -62,7 +62,7 @@ def get_positions_and_weights(section, spectrum=None, position_col='residue', va
     based on the total expected mutation rate for the residue.
     :param value_col: If None, the "value" returned for each mutation is its value from the position column. Otherwise,
     it is the value in the value_col.
-    :return:
+    :return: Tuple of arrays (values, weights).
     """
     if spectrum is None:
         spectrum = section.project.spectra[0]  # Use the first spectrum set up for the section
@@ -113,25 +113,33 @@ def homtest_sections(section1, section2, spectrum1=None, spectrum2=None, positio
 
 def root_chi2(arr1, weights1, arr2, weights2, bin_boundaries, verbose=False, allow_low_counts=False):
     """
-
-    :param arr1:
-    :param weights1:
-    :param arr2:
-    :param weights2:
-    :param bin_boundaries:
-    :param verbose:
-    :param allow_low_counts: If False, raise a ValueError if not enough effective events in all bins
+    Wrapper for the ROOT Chi2Test on weighted histograms.
+    :param arr1: Array of values for each mutation (e.g. the residue number or a metric score).
+    :param weights1: The weights for each mutation (e.g. the inverse of the expected mutation rate)
+    :param arr2: Array of values for each mutation in the second dataset
+    :param weights2: The weights for each mutation in the second dataset
+    :param bin_boundaries: Array. Edges of the bins. Must be one longer than the number of bins.
+    :param verbose: If True, prints the unweighted and weighted contingency tables, the chi2 statistic and the degrees
+    of freedom.
+    :param allow_low_counts: If False, raise a ValueError if not enough effective events in all bins.
+    allow_low_counts=True is not recommended.
     :return: float. pvalue
     """
     ROOT.gErrorIgnoreLevel = 1001  # Do not print the warnings from the ROOT files
     bin_boundaries = np.array(bin_boundaries, dtype=float)
     num_bins = len(bin_boundaries) - 1
+
+    # Create the histograms
     h1 = ROOT.TH1F('h1', '1', num_bins, bin_boundaries)
     h2 = ROOT.TH1F('h2', '2', num_bins, bin_boundaries)
 
+    # Fill the histograms with the data
     h1.FillN(len(arr1), arr1, weights1)
     h2.FillN(len(arr2), arr2, weights2)
     if verbose:
+        # Print the contingency tables.
+
+        # Need to create new histograms to get the raw count (unweighted) contingency tables
         h1_uw = ROOT.TH1F('h1_uw', '1', num_bins, bin_boundaries)
         h2_uw = ROOT.TH1F('h2_uw', '2', num_bins, bin_boundaries)
         h1_uw.FillN(len(arr1), arr1, np.ones_like(arr1))
@@ -146,10 +154,15 @@ def root_chi2(arr1, weights1, arr2, weights2, bin_boundaries, verbose=False, all
         print('Weighted Counts1', w_counts1)
         print('Weighted Counts2', w_counts2)
 
+        del h1_uw, h2_uw  # Delete the histograms when finished
+
+    # Set up empty arrays to contain the output of the chi2 test
     chi = array.array('d', [0])
     ndf = array.array('i', [0])
     igood = array.array('i', [0])
     resids = np.empty(num_bins)
+
+    # Run the test. "WW" means weighted vs weighted.
     p = h1.Chi2TestX(h2, chi, ndf, igood, 'WW', resids)
     if verbose:
         print('chi', chi[0])
@@ -157,6 +170,9 @@ def root_chi2(arr1, weights1, arr2, weights2, bin_boundaries, verbose=False, all
         print('igood', igood[0])
         print('Residuals', np.frombuffer(resids, count=num_bins))
     warning = igood[0]
+
+    del h1, h2   # Delete the histograms when finished with them
+
     if warning > 0 and not allow_low_counts:
         """
         From the ROOT docs
@@ -193,12 +209,21 @@ def chi2_test_sections(section1, section2, bin_boundaries, spectrum1=None, spect
                        value_col=None):
     """
     Compare the distribution of mutations in two sections for the same protein.
-    :param section1:
-    :param section2:
-    :param spectrum:
-    :param position_col:
-    :param use_weights:
-    :return:
+    :param section1: Section object for the gene/protein/region in one dataset
+    :param section2: Section object for the same gene/protein/region in another dataset
+    :param bin_boundaries: Array. Edges of the bins. Must be one longer than the number of bins.
+    :param spectrum1: The mutational spectrum to use for the first dataset.
+    :param spectrum2: The mutational spectrum to use for the second dataset.
+    :param position_col: Column to use for grouping the mutations for mutation rate calculations. By default, all
+    mutations on a residue are grouped together.
+    :param use_weights: If False, equivalent to running assuming an equal mutation rate for all mutations.
+    :param verbose: If True, prints the unweighted and weighted contingency tables, the chi2 statistic and the degrees
+    of freedom.
+    :param allow_low_counts: If False, raise a ValueError if not enough effective events in all bins.
+    allow_low_counts=True is not recommended.
+    :param value_col: If None, the "value" used for each mutation is its value from the position column. Otherwise,
+    it is the value in the value_col. These is used to split the mutations into bins.
+    :return: float p-value
     """
     positions1, weights1 = get_positions_and_weights(section1, spectrum1, position_col, value_col=value_col)
     positions2, weights2 = get_positions_and_weights(section2, spectrum2, position_col, value_col=value_col)
@@ -214,13 +239,15 @@ def chi2_test_window(section1, section2, start, end, verbose=True, allow_low_cou
     A shortcut function for testing the relative mutation count in a subsection of a gene.
     I.e. similar to just running chi2_test_sections, but the regions before and after the window are combined
     in a single bin.
-    :param section1:
-    :param section2:
-    :param start:
-    :param end:
-    :param verbose:
-    :param allow_low_counts:
-    :return:
+    :param section1: Section object for the gene/protein/region in one dataset
+    :param section2: Section object for the same gene/protein/region in another dataset
+    :param start: First residue of the gene subsection
+    :param end: Last residue of the gene subsection
+    :param verbose: If True, prints the unweighted and weighted contingency tables, the chi2 statistic and the degrees
+    of freedom.
+    :param allow_low_counts: If False, raise a ValueError if not enough effective events in all bins.
+    allow_low_counts=True is not recommended.
+    :return: float p-value
     """
     section1.null_mutations['in_window'] = ((section1.null_mutations['residue'] > start) &
                                           (section1.null_mutations['residue'] < end)).astype(float)

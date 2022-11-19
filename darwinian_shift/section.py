@@ -178,13 +178,31 @@ class Section:
         # Check for mismatching reference bases
         self._check_mismatches()
 
-        self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left',
-                                           on=['pos', 'ref', 'mut'], suffixes=('_input', ''))
+        if self.project.aa_mut_input:
+            # Ignore the nucleotides and just use the amino acid changes.
+            # Merge the mutations together if they have the same aachange.
+            aachange_rates = self.null_mutations.groupby('aachange').agg(sum)
+            self.null_mutations = self.null_mutations.drop_duplicates('aachange').set_index('aachange')
+            for spectra in self._get_spectra():
+                self.null_mutations[spectra.rate_column] = aachange_rates[spectra.rate_column]
+            self.null_mutations = self.null_mutations.reset_index()
+            self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left',
+                                               on=['aachange'], suffixes=('_input', ''))
+            if 'chr' not in self.observed_mutations:
+                self.observed_mutations['chr'] = self.chrom  #Used for some plots
+        else:
+            self.observed_mutations = pd.merge(self.observed_mutations, self.null_mutations, how='left',
+                                               on=['pos', 'ref', 'mut'], suffixes=('_input', ''))
+
         self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['null_exists'])]
         self.observed_mutations = self.observed_mutations.drop('null_exists', axis=1)
         self.null_mutations = self.null_mutations.drop('null_exists', axis=1)
+
         # Any rows missing in the null will have had nan and made the int columns floats. Convert back.
-        int_cols = ['residue', 'base', 'cdspos']
+        if self.project.aa_mut_input:
+            int_cols = ['residue']
+        else:
+            int_cols = ['residue', 'base', 'cdspos']
         int_cols.extend(['mut_count_{}'.format(spectrum.name) for spectrum in self.project.spectra])
         int_cols.extend(['seq_count_{}'.format(spectrum.name) for spectrum in self.project.spectra])
         int_cols = set(int_cols).intersection(self.observed_mutations)
@@ -244,10 +262,16 @@ class Section:
             self.null_scores = self.null_mutations['score'].values
 
             # Match the observed mutations with the null mutations.
-            self.observed_mutations = pd.merge(self.observed_mutations,
-                                               self.null_mutations[['pos', 'ref', 'mut', 'score']],
-                                               on=['pos', 'ref', 'mut'],
-                                               how='left', suffixes=["_x", ""])
+            if self.project.aa_mut_input:
+                self.observed_mutations = pd.merge(self.observed_mutations,
+                                                   self.null_mutations[['aachange', 'score']],
+                                                   on=['aachange'],
+                                                   how='left', suffixes=["_x", ""])
+            else:
+                self.observed_mutations = pd.merge(self.observed_mutations,
+                                                   self.null_mutations[['pos', 'ref', 'mut', 'score']],
+                                                   on=['pos', 'ref', 'mut'],
+                                                   how='left', suffixes=["_x", ""])
 
             # Exclude all cases without a score. These haven't matched against a null mutation.
             self.observed_mutations = self.observed_mutations[~pd.isnull(self.observed_mutations['score'])]
@@ -263,6 +287,8 @@ class Section:
             self._scoring_complete=True
 
     def _get_mutation_id(self, row):
+        if self.project.aa_mut_input:
+            return row['aachange']
         return '{}:{}>{}'.format(row['pos'], row['ref'], row['mut'])
 
     def _add_mutation_id_column(self):
@@ -273,13 +299,17 @@ class Section:
 
     def _check_mismatches(self):
         # All mutations are single base substitutions. So the base should be identical if the position is the same.
-        null_refs = self.null_mutations[['pos', 'ref']].drop_duplicates()
-        merged_df = pd.merge(self.observed_mutations, null_refs, on='pos')
-        self.ref_mismatch_count = (merged_df['ref_x'] != merged_df['ref_y']).sum()
-        if self.ref_mismatch_count > 0:
-            print('Warning: {}/{} mutations do not match reference base in {}'.format(self.ref_mismatch_count,
-                                                                                      len(self.observed_mutations),
-                                                                                   self.section_id))
+        if self.project.aa_mut_input:
+            # TODO
+            pass
+        else:
+            null_refs = self.null_mutations[['pos', 'ref']].drop_duplicates()
+            merged_df = pd.merge(self.observed_mutations, null_refs, on='pos')
+            self.ref_mismatch_count = (merged_df['ref_x'] != merged_df['ref_y']).sum()
+            if self.ref_mismatch_count > 0:
+                print('Warning: {}/{} mutations do not match reference base in {}'.format(self.ref_mismatch_count,
+                                                                                          len(self.observed_mutations),
+                                                                                       self.section_id))
 
     def _get_spectra(self, spectra=None):
         if spectra is None:

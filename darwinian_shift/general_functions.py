@@ -136,8 +136,8 @@ class DarwinianShift:
         :param verbose: If True, will print more information during the running.
         :param aa_mut_input: If True, will not look for any nucleotide changes in the data, will only use
         amino acid changes defined in an 'aachange' column with ref amino acid, residue number, alt amino acid
-        joined with no separator e.g. R20G. Genes or transcripts must also be defined in a 'gene' or 'transcript' column.
-        Currently, this will only work with an EvenMutationalSpectrum.
+        joined with no separator e.g. R20G. Genes or transcripts must also be defined in a 'gene' or 'transcript_id'
+        column. Currently, this will not calculate spectra from amino acid changes.
         """
 
         self.verbose=verbose
@@ -165,8 +165,8 @@ class DarwinianShift:
             self.data.loc[:, 'chr'] = self.data['chr'].astype(str)
             self.chromosomes = self.data['chr'].unique()
         else:
-            if 'gene' not in data.columns and 'transcript' not in data.columns:
-                raise ValueError("data must include a 'gene' or a 'transcript' column")
+            if 'gene' not in data.columns and 'transcript_id' not in data.columns:
+                raise ValueError("data must include a 'gene' or a 'transcript_id' column")
             if 'aachange' not in data.columns:
                 raise ValueError("data must include an 'aachange' column with aa_mut_input=True")
 
@@ -222,7 +222,7 @@ class DarwinianShift:
             if 'gene' in self.data.columns:
                 self.gene_list = self.data['gene'].unique()
             else:
-                self.transcript_list = self.data['transcript'].unique()
+                self.transcript_list = self.data['transcript_id'].unique()
 
 
         self.transcript_objs = {}

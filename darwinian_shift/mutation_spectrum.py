@@ -45,7 +45,9 @@ class MutationalSpectrum:
 class EvenMutationalSpectrum(MutationalSpectrum):
     """
     The simplest mutational spectrum.
-    All mutations have the same probability of occuring
+    All mutations have the same probability of occurring
+    The `even_aa` argument determines whether the 'mutations' are defined by the nucleotide
+    or the amino acid substitution.
     """
     default_name = 'EvenMutationalSpectrum'
     precalculated=True

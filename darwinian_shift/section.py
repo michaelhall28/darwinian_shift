@@ -206,7 +206,17 @@ class Section:
         int_cols.extend(['mut_count_{}'.format(spectrum.name) for spectrum in self.project.spectra])
         int_cols.extend(['seq_count_{}'.format(spectrum.name) for spectrum in self.project.spectra])
         int_cols = set(int_cols).intersection(self.observed_mutations)
-        self.observed_mutations = self.observed_mutations.astype({c: int for c in int_cols})
+        try:
+            self.observed_mutations = self.observed_mutations.astype({c: int for c in int_cols})
+        except pd.errors.IntCastingNaNError as e:
+            # Cannot cast all columns to integers.
+            # Do all we can.
+            for c in int_cols:
+                try:
+                    self.observed_mutations[c] = self.observed_mutations[c].astype(int)
+                except pd.errors.IntCastingNaNError as e:
+                    pass
+
 
         self.num_mutations = len(self.observed_mutations)  # Initial number of observed mutations (may be filtered later)
 

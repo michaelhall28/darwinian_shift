@@ -52,7 +52,14 @@ class Transcript:
 
         self._get_sequences()
 
-        if region_mutations is None:
+        if self.project.aa_mut_input:
+            if self.transcript_id is not None and 'transcript_id' in self.project.data.columns:
+                self.region_mutations = self.project.data[self.project.data['transcript_id'] == self.transcript_id]
+            elif self.gene is not None and 'gene' in self.project.data.columns:
+                self.region_mutations = self.project.data[self.project.data['gene'] == self.gene]
+            else:
+                raise ValueError('Must provide either a gene name or transcript_id')
+        elif region_mutations is None:
             self.region_mutations = self.project.data[self.project.data['chr'] == self.chrom]
         else:
             self.region_mutations = region_mutations
@@ -174,11 +181,16 @@ class Transcript:
         :param return_copy:
         :return: Pandas dataframe
         """
-        if self.transcript_data_locs is None:
-            self.transcript_data_locs = self.region_mutations.index[
-                self.region_mutations['pos'].isin(self.chromosomal_positions)]
+        if self.project.aa_mut_input:
+            # Assume all mutations labelled with the transcript or gene are those to keep.
+            self.transcript_mutations = self.region_mutations
+        else:
+            if self.transcript_data_locs is None:
+                self.transcript_data_locs = self.region_mutations.index[
+                    self.region_mutations['pos'].isin(self.chromosomal_positions)]
 
-        self.transcript_mutations = self.region_mutations.loc[self.transcript_data_locs]
+            self.transcript_mutations = self.region_mutations.loc[self.transcript_data_locs]
+
         if return_copy:
             return self.transcript_mutations.copy()
         else:

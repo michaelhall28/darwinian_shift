@@ -45,12 +45,23 @@ class MutationalSpectrum:
 class EvenMutationalSpectrum(MutationalSpectrum):
     """
     The simplest mutational spectrum.
-    All nucleotide substitutions have the same probability of occurring
+    All mutations have the same probability of occurring
+    The `even_aa` argument determines whether the 'mutations' are defined by the nucleotide
+    or the amino acid substitution.
+    even_aa=False -> all nucleotide substitutions have the same probability of occurring
+    even_aa=True -> all amino acid substitutions have the same probability of occurring
     """
     default_name = 'EvenMutationalSpectrum'
     precalculated=True
-    def __init__(self, name=None):
+    def __init__(self, name=None, even_aa=False):
+        """
+
+        :param name:
+        :param even_aa: If True, will make all amino acid changes equally likely. If False, each nucleotide mutation
+        will be made equally likely.
+        """
         self.name = name
+        self.even_aa = even_aa
         self.set_name_and_columns()
         
     def set_name_and_columns(self):
@@ -76,9 +87,16 @@ class EvenMutationalSpectrum(MutationalSpectrum):
         :param df: Dataframe of mutations.
         :return:
         """
-        # Set the mutation rate to be equal for all mutations
-        # The relative mutation rate is used, so the absolute value doesn't matter. Use 1.0.
-        df.loc[:, self.rate_column] = 1.0
+        if self.even_aa is False:
+            # Set the mutation rate to be equal for all mutations
+            # The relative mutation rate is used, so the absolute value doesn't matter. Use 1.0.
+            df.loc[:, self.rate_column] = 1.0
+        else:
+            # Set the mutation rate to be equal for each amino acid change.
+            # So set the mutation rate for each nucleotide change to be 1/(no. muts with same AA change)
+            aachange_counts = df['aachange'].value_counts()  #Number of nucleotide mutations leading to same aachange
+            df.loc[:, self.rate_column] = df.apply(lambda x: 1/aachange_counts[x['aachange']], axis=1)
+
         return df
 
 ###### Spectra calculated from the given data set

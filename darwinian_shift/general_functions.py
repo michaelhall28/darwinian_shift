@@ -77,7 +77,9 @@ class DarwinianShift:
                  random_seed=None,  # Int. Set this to return consistent results.
                  testing_random_seed=None,  # Int. Set to get same results, even if changing order or spectra/tests.
 
-                 verbose=False
+                 verbose=False,
+
+                 aa_mut_input=False  # No nucleotide changes in the input data, only amino acid changes.
                  ):
         """
 
@@ -132,10 +134,15 @@ class DarwinianShift:
         :param random_seed: Int. Sets the numpy random seed before running the overall analysis.
         :param testing_random_seed: Int. Resets the numpy random seed before every statistical test.
         :param verbose: If True, will print more information during the running.
+        :param aa_mut_input: If True, will not look for any nucleotide changes in the data, will only use
+        amino acid changes defined in an 'aachange' column with ref amino acid, residue number, alt amino acid
+        joined with no separator e.g. R20G. Genes or transcripts must also be defined in a 'gene' or 'transcript_id'
+        column. Currently, this will not calculate spectra from amino acid changes.
         """
 
         self.verbose=verbose
         self.low_mem=low_mem
+        self.aa_mut_input = aa_mut_input
         if random_seed is not None:
             np.random.seed(random_seed)
 
@@ -143,24 +150,33 @@ class DarwinianShift:
             self.data = data
         elif isinstance(data, str):  # File path given
             if data.endswith('.vcf') or data.endswith('.vcf.gz'):
+                if self.aa_mut_input:
+                    raise ValueError("vcf input not compatible with amino acid mutation input")
                 self.data = read_sbs_from_vcf(data)
             else:  # Assume the data is in a tab-delimited file including "chr", "pos", "ref" and "mut" columns.
                 self.data = pd.read_csv(data, sep="\t")
 
-        # Filter non-snv mutations.
-        bases = ['A', 'C', 'G', 'T']
-        # Take copy here to deal with pandas SettingWithCopyWarning
-        # From here on, want to be editing views of the following copy of the data and ignore previous unfiltered data.
-        self.data = self.data[(self.data['ref'].isin(bases)) & (self.data['mut'].isin(bases))].copy()
-        self.data.loc[:, 'chr'] = self.data['chr'].astype(str)
+        if not self.aa_mut_input:
+            # Filter non-snv mutations.
+            bases = ['A', 'C', 'G', 'T']
+            # Take copy here to deal with pandas SettingWithCopyWarning
+            # From here on, want to be editing views of the following copy of the data and ignore previous unfiltered data.
+            self.data = self.data[(self.data['ref'].isin(bases)) & (self.data['mut'].isin(bases))].copy()
+            self.data.loc[:, 'chr'] = self.data['chr'].astype(str)
+            self.chromosomes = self.data['chr'].unique()
+        else:
+            if 'gene' not in data.columns and 'transcript_id' not in data.columns:
+                raise ValueError("data must include a 'gene' or a 'transcript_id' column")
+            if 'aachange' not in data.columns:
+                raise ValueError("data must include an 'aachange' column with aa_mut_input=True")
+
+
         self.data = self.data.reset_index(drop=True)  # Make sure every mutation has a unique index
 
         if self.verbose:
             # For tracking which mutations are included in used transcripts.
             # Slows process, so only done if verbose=True.
             self.data.loc[:, 'included'] = False
-
-        self.chromosomes = self.data['chr'].unique()
 
         if deduplicate:
             self._deduplicate_data()
@@ -187,8 +203,9 @@ class DarwinianShift:
 
         self.exon_data = pd.read_csv(exon_file, sep="\t")
         self.exon_data.loc[:, 'Chromosome/scaffold name'] = self.exon_data['Chromosome/scaffold name'].astype(str)
-        # This filter helps to remove obscure scaffolds so they will not be matched.
-        self.exon_data = self.exon_data[self.exon_data['Chromosome/scaffold name'].isin(self.chromosomes)]
+        if not self.aa_mut_input:
+            # This filter helps to remove obscure scaffolds so they will not be matched.
+            self.exon_data = self.exon_data[self.exon_data['Chromosome/scaffold name'].isin(self.chromosomes)]
         # Removes exons without any coding bases
         self.exon_data = self.exon_data[~pd.isnull(self.exon_data['Genomic coding start'])]
         self.exon_data['Genomic coding start'] = self.exon_data['Genomic coding start'].astype(int)
@@ -200,6 +217,13 @@ class DarwinianShift:
         self.use_longest_transcript_only = use_longest_transcript_only
         self.gene_list = gene_list
         self.transcript_list = transcript_list
+        if self.aa_mut_input and self.gene_list is None and self.transcript_list is None:
+            # This ensures the exon data is filtered correctly for the amino acid input
+            if 'gene' in self.data.columns:
+                self.gene_list = self.data['gene'].unique()
+            else:
+                self.transcript_list = self.data['transcript_id'].unique()
+
 
         self.transcript_objs = {}
         # If transcripts not specified, will use longest transcript per gene to calculate signature.
@@ -307,10 +331,15 @@ class DarwinianShift:
         :return: None
         """
         if spectra is None:
-            # Use the default spectrum. A trinucleotide spectrum calculated from all exonic mutations in the dataset.
-            self.spectra = [
-                GlobalKmerSpectrum()
-            ]
+            if self.aa_mut_input:
+                # Not yet set up for any fancier spectrum calculations
+                # Can provide pre-calculated spectra from nucleotide mutation data if desired.
+                self.spectra = [EvenMutationalSpectrum()]
+            else:
+                # Use the default spectrum. A trinucleotide spectrum calculated from all exonic mutations in the dataset.
+                self.spectra = [
+                    GlobalKmerSpectrum()
+                ]
         elif isinstance(spectra, (list, tuple, set)):
             # Multiple spectra have been given.
             try:
@@ -348,6 +377,8 @@ class DarwinianShift:
             s.set_project(self)
             s.reset()  # Makes sure counts start from zero in case using same spectrum object again.
             # Run s.fix_spectrum() for each spectrum to prevent reset.
+            if self.aa_mut_input and not s.precalculated:
+                raise ValueError(f'Spectrum of type {type(s)} cannot be calculated from amino acid data')
 
     def _get_sections(self, sections):
         additional_results_columns = []

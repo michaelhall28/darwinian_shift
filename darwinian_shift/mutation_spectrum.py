@@ -48,6 +48,8 @@ class EvenMutationalSpectrum(MutationalSpectrum):
     All mutations have the same probability of occurring
     The `even_aa` argument determines whether the 'mutations' are defined by the nucleotide
     or the amino acid substitution.
+    even_aa=False -> all nucleotide substitutions have the same probability of occurring
+    even_aa=True -> all amino acid substitutions have the same probability of occurring
     """
     default_name = 'EvenMutationalSpectrum'
     precalculated=True

@@ -1,0 +1,9 @@
+
+Install pytest to run the tests.
+Install pytest-mpl to run the tests of the figure generation.
+
+To run all tests:
+`pytest --mpl --runslow`
+
+To skip the figures, leave out `--mpl`.
+To skip the very slow tests, leave out '--runslow'.

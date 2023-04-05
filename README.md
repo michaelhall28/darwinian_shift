@@ -1,11 +1,22 @@
 # darwinian_shift
 Statistical testing of selection of quantifiable features of somatic mutations.  
 
-Some basic instructions are provided in this readme. More detailed examples are in the Tutorial.ipynb notebook.
+Some basic instructions are provided in this readme. More detailed examples are in 
+the [Wiki](https://github.com/michaelhall28/darwinian_shift/wiki).
 
 The Root code for weighted Anderson-Darling tests is from Trusina et. al. https://doi.org/10.1088/1742-6596/1525/1/012109
 
 ## Installation
+
+### Prerequisites
+Before you can install the code from this repo, you'll need to have [bedtools](https://bedtools.readthedocs.io) 
+and [bgzip](https://www.htslib.org/) installed.   
+To follow the instructions below, you need [Conda](https://docs.conda.io) installed. Alternatively, you
+can install the python packages listed in the environment file using another 
+package manager.  
+To use the experimental dataset comparison functions, you need to install [Root](https://root.cern.ch/).
+
+### Full installation
 To install, clone the git repository  
 `git clone https://github.com/michaelhall28/darwinian_shift`  
 

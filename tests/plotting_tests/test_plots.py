@@ -138,6 +138,18 @@ def test_binom(seq_bool):
     return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest(),
                                   figsize=(15, 5))
 
+@pytest.mark.mpl_image_compare(filename='binom.png')
+def test_binom_ax(seq_bool):
+    fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(15, 5))
+    return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest(),
+                                  figsize=(15, 5), ax=ax)
+
+@pytest.mark.mpl_image_compare(filename='binom_single.png')
+def test_binom_ax2(seq_bool):
+    fig, ax = plt.subplots()
+    return seq_bool.plot_binomial(show_plot=False, return_fig=True, show_CI=True, binom_test=BinomTest(),
+                                  figsize=(15, 5), ax=ax, spectra=seq_bool.project.spectra[0])
+
 @pytest.mark.mpl_image_compare(filename='aa.png')
 def test_aa(seq):
     return seq.plot_aa_abundance(show_plot=False, return_fig=True, figsize=(15, 5))

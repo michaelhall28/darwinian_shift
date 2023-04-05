@@ -9,6 +9,7 @@ from matplotlib import collections
 from matplotlib.cm import autumn, winter
 from matplotlib.colors import Normalize, Colormap
 from matplotlib.ticker import MaxNLocator, StrMethodFormatter
+import matplotlib
 import seaborn as sns
 try:
     import MDAnalysis
@@ -866,8 +867,26 @@ class Section:
         if return_fig:
             return fig
 
+    @staticmethod
+    def _check_axes_numbers(ax, num_rows=1, num_columns=1):
+        error_msg = 'The number of axes for plotting must match the required number of plots'
+        if (num_rows > 1 or num_columns > 1) and isinstance(ax, matplotlib.axes.Axes):
+            raise ValueError(error_msg)
+        elif num_rows == 1 and num_columns == 1 and isinstance(ax, matplotlib.axes.Axes):
+            # single axes given. Convert to list of list with one item so it can be iterated
+            axes = np.array([[ax]])
+            print(axes)
+            fig = ax.figure
+        else:
+            ax = np.reshape(ax, (num_rows, num_columns))
+            if ax.shape != (num_rows, num_columns):
+                raise ValueError(error_msg)
+            fig = ax[0][0].figure
+            axes = ax
+        return fig, axes
+
     def plot_chi_sq_counts(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
-                           show_legend=True, legend_args=None, chi_tests=None, show_CI=True):
+                           show_legend=True, legend_args=None, chi_tests=None, show_CI=True, ax=None):
         """
 
         :param spectra: The mutational spectrum or list of mutational spectra to use.
@@ -881,6 +900,7 @@ class Section:
         :param chi_tests: ChiSquareTest of list of ChiSquareTest objects to use. Will create one subplot per test.
         If None, will use any ChiSquareTests already run for this Section.
         :param show_CI: Show 95% confidence intervals
+        :param ax: Matplotlib axes or array of axes to plot on. If None, will create a new figure.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         spectra = self._get_spectra(spectra)
@@ -906,8 +926,10 @@ class Section:
         if len(chi_tests) == 0:
             print('No chi square tests to plot')
         else:
-
-            fig, axes = plt.subplots(nrows=len(chi_tests), ncols=len(spectra), squeeze=False, figsize=figsize)
+            if ax is not None:
+                fig, axes = self._check_axes_numbers(ax, len(chi_tests), len(spectra))
+            else:
+                fig, axes = plt.subplots(nrows=len(chi_tests), ncols=len(spectra), squeeze=False, figsize=figsize)
             legend_items = []
             for i, chi_test in enumerate(chi_tests):
                 chi_name = chi_test.name
@@ -969,7 +991,7 @@ class Section:
 
     def plot_binned_counts(self, spectra=None, show_plot=False, figsize=(15, 5), colours=None, return_fig=False,
                            linewidth=0, hatches=None, show_legend=True, legend_args=None, bins=(-1, 0.5, 2),
-                           show_CI=True, CI_num_samples=10000, CI_alpha=0.05):
+                           show_CI=True, CI_num_samples=10000, CI_alpha=0.05, ax=None):
         """
         Bar plot of observed and expected counts of mutations with scores in the given bins.
         :param spectra: The mutational spectrum or list of mutational spectra to use.
@@ -986,6 +1008,7 @@ class Section:
         :param show_CI: Show 95% confidence intervals
         :param CI_num_samples: Number of random samples used to calculate the CIs. Default 10000.
         :param CI_alpha:  The alpha for the CIs. The default is 0.05 (95% confidence intervals).
+        :param ax: Matplotlib axis to plot on. If None, will create a new figure.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         spectra = self._get_spectra(spectra)
@@ -1002,7 +1025,10 @@ class Section:
         for spectrum in spectra:
             statistical_results.update(chi_test(self, spectrum, plot=False))
 
-        fig, ax = plt.subplots(figsize=figsize)
+        if ax is None:
+            fig, ax = plt.subplots(figsize=figsize)
+        else:
+            fig = ax.figure
         legend_items = []
 
         w = 0.8 / (len(spectra) + 1)
@@ -1073,7 +1099,7 @@ class Section:
             return fig
 
     def plot_binomial(self, spectra=None, show_plot=False, figsize=(2, 3), colours=None, return_fig=False,
-                           show_legend=True, legend_args=None, binom_test=None, show_CI=True):
+                           show_legend=True, legend_args=None, binom_test=None, show_CI=True, ax=None):
         """
         Bar plot of the expected and observed counts of mutations with scores above the threshold for a BinomTest
         :param spectra: The mutational spectrum or list of mutational spectra to use.
@@ -1087,6 +1113,7 @@ class Section:
         :param binom_test: BinomTest or list of BinomTests to use. If None, will use the first BinomTest run on this
         Section (if any).
         :param show_CI: Show 95% confidence intervals
+        :param ax: Matplotlib axes or array of axes to plot on. If None, will create a new figure.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         spectra = self._get_spectra(spectra)
@@ -1106,7 +1133,10 @@ class Section:
         if binom_test is None:
             print('No binomial tests to plot')
         else:
-            fig, axes = plt.subplots(nrows=len(spectra), squeeze=False, figsize=figsize)
+            if ax is not None:
+                fig, axes = self._check_axes_numbers(ax, num_rows=len(spectra))
+            else:
+                fig, axes = plt.subplots(nrows=len(spectra), squeeze=False, figsize=figsize)
             axes = axes[:, 0]
             legend_items = []
             test_name = binom_test.name
@@ -1159,7 +1189,7 @@ class Section:
                 return fig
 
     def plot_aa_abundance(self, spectra=None, sig_threshold=0.05, use_qval=True, show_plot=False, max_texts=10,
-                          figsize=(5, 5), return_fig=False):
+                          figsize=(5, 5), return_fig=False, ax=None):
         """
         Scatter plot of expected and observed amino acid changes.
         :param spectra: The mutational spectrum or list of mutational spectra to use.
@@ -1169,11 +1199,15 @@ class Section:
         :param max_texts: Max number of labels on the plot. Will start from most significant cases.
         :param figsize: Size of the figure.
         :param return_fig: If True, will return the figure. Used for testing.
+        :param ax: Matplotlib axes or array of axes to plot on. If None, will create a new figure.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         spectra = self._get_spectra(spectra)
 
-        fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
+        if ax is not None:
+            fig, axes = self._check_axes_numbers(ax, num_columns=len(spectra))
+        else:
+            fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
 
         for i, spectrum in enumerate(spectra):
             ax = axes[0, i]
@@ -1479,7 +1513,7 @@ class Section:
                                    sections_for_colours=None, score_regions_for_colours=None,
                                    score_region_colours=None, colour_unmutated_by_scores=False,
                                    hotspots_in_foreground=False, observed_marker=None, unobserved_marker=None,
-                                   show_observed_only=False, show_unobserved_only=False):
+                                   show_observed_only=False, show_unobserved_only=False, ax=None):
         """
         Plots the expected mutation rate of mutations against their metric score.
         :param spectra: The mutational spectrum or list of mutational spectra to use.
@@ -1523,6 +1557,7 @@ class Section:
         :param unobserved_marker: Shape of the marker to use for unobserved mutations.
         :param show_observed_only: If True, will not show the unobserved mutations.
         :param show_unobserved_only: If True, will only show the unobserved mutations.
+        :param ax: Matplotlib axes or array of axes to plot on. If None, will create a new figure.
         :return: By default, None. If return_fig=True, will return the figure.
         """
         spectra = self._get_spectra(spectra)
@@ -1530,7 +1565,10 @@ class Section:
         if mutations_to_annotate is not None:
             mutations_to_annotate = mutations_to_annotate.drop_duplicates(subset=['ds_mut_id'])
 
-        fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
+        if ax is not None:
+            fig, axes = self._check_axes_numbers(ax, num_columns=len(spectra))
+        else:
+            fig, axes = plt.subplots(nrows=1, ncols=len(spectra), squeeze=False, figsize=figsize)
 
         if len(self.observed_mutations) == 0:
             show_unobserved_only = True

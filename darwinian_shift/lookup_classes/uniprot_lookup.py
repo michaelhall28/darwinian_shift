@@ -39,7 +39,8 @@ class UniprotLookup:
     def __init__(self, uniprot_directory=None, store_xml=False, feature_types=None,
                  description_contains=None, uniprot_upload_lists='https://www.uniprot.org/uploadlists/',
                  uniprot_xml_url="https://www.uniprot.org/uniprot/{}.xml",
-                 schema_location='https://www.uniprot.org/docs/uniprot.xsd', transcript_uniprot_mapping=None,
+                 schema_location='https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot.xsd',
+                 transcript_uniprot_mapping=None,
                  force_download=False, match_variant_change=True, name='Uniprot', verbose=False):
         """
 
